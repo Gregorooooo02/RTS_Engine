@@ -6,6 +6,6 @@ dotnet new --install MonoGame.Templates.CSharp
 ```
 If anyone needs to understand the code that's in the solution, please refer to [this](https://monogame.net/articles/getting_started/3_understanding_the_code.html) official documentation.
 
-This project also includes the wrapped version of ImGui for the debug purposes. I added the package specifically for the MonoGame framework that uses the ImGuiNet library.
+This project also includes the wrapped version of ImGui for the debug purposes. It was simply added as a package from the NuGet repository.
 
-Link to the repository: [MonoGame.ImGuiNet](https://github.com/Mezo-hx/MonoGame.ImGuiNet)
+Link to the repository: [ImGui.NET](https://github.com/ImGuiNET/ImGui.NET?tab=readme-ov-file)
