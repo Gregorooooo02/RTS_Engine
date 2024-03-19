@@ -10,7 +10,6 @@
 
 # Directiories
 .idea/
-.config/
 
 # AWS User-specific
 .idea/**/aws.xml
