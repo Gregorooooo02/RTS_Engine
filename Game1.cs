@@ -12,7 +12,9 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     private Model _model;
+    private Texture2D _texture;
     
+    private Num.Vector3 _position = new Num.Vector3(0,0,10);
     private Matrix _world = Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.0f));
     private Matrix _view = Matrix.CreateLookAt(
         new Vector3(0.0f, 0.0f, 10.0f),
@@ -48,9 +50,12 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
-        _model = Content.Load<Model>("cube");
+        _model = Content.Load<Model>("SimpleShip/Ship");
+        _texture = Content.Load<Texture2D>("smile");
 
         // TODO: use this.Content to load your game content here
+
+        
     }
 
     protected override void Update(GameTime gameTime)
@@ -67,8 +72,16 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(new Color(_clearColor));
         
+        _view = Matrix.CreateLookAt(
+        _position,
+        new Vector3(0.0f),
+        -Vector3.UnitY);
         DrawModel(_model, _world, _view, _projection);
-        
+
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
+        _spriteBatch.End();
+
         // TODO: Add your drawing code here
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
@@ -95,5 +108,8 @@ public class Game1 : Game
     {
         ImGui.Text("Change the color of the background");
         ImGui.ColorEdit3("Background Color", ref _clearColor);
+        ImGui.SliderFloat3("Camera position", ref _position,-10,10);
     }
+
+  
 }
