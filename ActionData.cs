@@ -19,7 +19,7 @@ public class ActionData
         this.action = action;
     }
 
-    public void UpdateAction(bool isPressed = true)
+    public virtual void UpdateAction(bool isPressed = true)
     {
         if (isPressed)
         {
