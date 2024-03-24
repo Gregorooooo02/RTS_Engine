@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ImGuiNET;
@@ -42,7 +44,8 @@ public class Game1 : Game
 
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
-        
+
+        InputManager.Initialize();
         base.Initialize();
     }
 
@@ -60,8 +63,10 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+        InputManager.Instance.PollInput();
+        if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
+        
+        Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
 
         // TODO: Add your update logic here
 
@@ -109,6 +114,7 @@ public class Game1 : Game
         ImGui.Text("Change the color of the background");
         ImGui.ColorEdit3("Background Color", ref _clearColor);
         ImGui.SliderFloat3("Camera position", ref _position,-10,10);
+        ImGui.Text(ImGui.GetIO().Framerate + " FPS");
     }
 
   
