@@ -11,4 +11,5 @@ public abstract class Component
         return GetType() == type;
     }
     public abstract void Update();
+    public abstract void Initialize();
 }

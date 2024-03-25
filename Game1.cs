@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using ImGuiNET;
 using Num = System.Numerics;
 
@@ -27,6 +25,8 @@ public class Game1 : Game
     
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
+
+    private GameObject _gameObject;
     
     public Game1()
     {
@@ -47,6 +47,10 @@ public class Game1 : Game
 
         InputManager.Initialize();
         base.Initialize();
+
+        _gameObject = new GameObject();
+        _gameObject.AddComponent<Transform>();
+        _gameObject.AddComponent<MeshRenderer>();
     }
 
     protected override void LoadContent()
@@ -57,8 +61,6 @@ public class Game1 : Game
         _texture = Content.Load<Texture2D>("smile");
 
         // TODO: use this.Content to load your game content here
-
-        
     }
 
     protected override void Update(GameTime gameTime)
