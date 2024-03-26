@@ -32,6 +32,11 @@
 /processorParam:TextureFormat=Compressed
 /build:cube.obj
 
+#begin KeyBindings.xml
+/importer:XmlImporter
+/processor:PassThroughProcessor
+/build:KeyBindings.xml
+
 #begin SimpleShip/Ship.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
