@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -43,9 +44,11 @@ public class InputManager
 
     public void PopulateDict()
     {
+        FileManager.Initialize();
+        
         //open config file here and fill dictionary with it
         _rawKeyboardToAction.Clear();
-        _rawKeyboardToAction.Add(Keys.W,GameAction.FORWARD);
+        _rawKeyboardToAction.Add(FileManager.Instance.KeyboardKeys[0],FileManager.Instance.KeyboardActions[0]);
         _rawKeyboardToAction.Add(Keys.S,GameAction.BACKWARD);
         _rawKeyboardToAction.Add(Keys.A,GameAction.LEFT);
         _rawKeyboardToAction.Add(Keys.D,GameAction.RIGHT);

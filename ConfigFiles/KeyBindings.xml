@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+    <KeyBindings>
+        <KeyBinding>
+            <Key>W</Key>
+            <Action>FORWARD</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>S</Key>
+            <Action>BACKWARD</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>A</Key>
+            <Action>LEFT</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>D</Key>
+            <Action>RIGHT</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>Escape</Key>
+            <Action>EXIT</Action>
+        </KeyBinding>
+    </KeyBindings>
+</Root>
