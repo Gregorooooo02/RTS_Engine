@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using System.Diagnostics;
 
 namespace RTS_Engine;
 
@@ -49,8 +50,7 @@ public class Game1 : Game
         base.Initialize();
 
         _gameObject = new GameObject();
-        _gameObject.AddComponent<Transform>();
-        _gameObject.AddComponent<MeshRenderer>();
+        _gameObject.AddComponent(new MeshRenderer(_gameObject,Content.Load<Model>("defaultCube")));
     }
 
     protected override void LoadContent()
@@ -73,6 +73,8 @@ public class Game1 : Game
         // TODO: Add your update logic here
 
         base.Update(gameTime);
+        _gameObject.Transform.SetLocalRotation(new Vector3(0,100 * (float)gameTime.TotalGameTime.TotalSeconds,0));
+        _gameObject.Update();
     }
 
     protected override void Draw(GameTime gameTime)
@@ -83,7 +85,8 @@ public class Game1 : Game
         _position,
         new Vector3(0.0f),
         -Vector3.UnitY);
-        DrawModel(_model, _world, _view, _projection);
+
+        _gameObject.Draw();
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
@@ -115,7 +118,7 @@ public class Game1 : Game
     {
         ImGui.Text("Change the color of the background");
         ImGui.ColorEdit3("Background Color", ref _clearColor);
-        ImGui.SliderFloat3("Camera position", ref _position,-10,10);
+        ImGui.SliderFloat3("Camera position", ref _position,-100,100);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
     }
 

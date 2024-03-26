@@ -6,13 +6,20 @@ namespace RTS_Engine;
 
 public class GameObject
 {
+    public Transform Transform;
     private List<Component> _components = new();
     
-    private List<GameObject> _children = new();
-    private GameObject _parent;
+    public List<GameObject> Children = new();
+    public GameObject Parent;
+
+    public GameObject()
+    {
+        Transform = new Transform(this);
+    }
 
     public void Update()
     {
+        Transform.Update();
         //Update all components
         foreach (Component c in _components)
         {
@@ -20,12 +27,28 @@ public class GameObject
         }
         
         //Update all children
-        foreach (GameObject gameObject in _children)
+        foreach (GameObject gameObject in Children)
         {
             gameObject.Update();
         }
     }
-    
+
+    public void Draw()
+    {
+        Transform.Draw();
+        //'Draw' all components
+        foreach(Component c in _components)
+        {
+            c.Draw();
+        }
+
+        //Propegate throuth all children
+        foreach (GameObject gameObject in Children)
+        {
+            gameObject.Draw();
+        }
+    }
+
     public T GetComponent<T>() where T : Component
     {
         return (T)_components.Find(x => x.GetType() == typeof(T));
@@ -34,10 +57,10 @@ public class GameObject
     
     public void AddComponent<T>() where T : Component,new()
     {
-        T component = new T
-        {
-            ParentObject = this
-        };
+        if(typeof(T) == typeof(Transform))return;
+        
+        T component = new T();
+        component.ParentObject = this;
         component.Initialize();
         _components.Add(component);
     }
@@ -53,6 +76,7 @@ public class GameObject
     }
     public void AddComponent(Component component)
     {
+        if(component.GetType() == typeof(Transform))return;
         _components.Add(component);
     }
 

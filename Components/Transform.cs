@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
@@ -7,36 +8,11 @@ namespace RTS_Engine;
 
 public class Transform : Component
 {
-    //Hierarchy
-    public Transform ParentTransform = null;
-    public List<Transform> Children;
-    
-    public override void Initialize()
+    public override void Initialize(){}
+    public Transform(GameObject parent)
     {
-        Children = new List<Transform>();
-        ParentTransform = ParentObject.GetComponent<Transform>();
-        ParentTransform?.AddChild(this);
+        ParentObject = parent;
     }
-    public Transform()
-    {
-        Initialize();
-    }
-
-    ~Transform()
-    {
-        ParentTransform?.RemoveChild(this);
-    }
-    
-    private void AddChild(Transform transform)
-    {
-        Children.Add(transform);
-    }
-
-    private void RemoveChild(Transform transform)
-    {
-        Children.Remove(transform);
-    }
-    
     //Actual data
     private Vector3 _pos = Vector3.Zero;
     private Vector3 _rot = Vector3.Zero;
@@ -57,18 +33,20 @@ public class Transform : Component
     
     private void ForcedUpdate()
     {
-        if (ParentTransform != null)
+        if (ParentObject.Parent != null)
         {
-            ModelMatrix = ParentTransform.ModelMatrix * GetLocalModelMatrix();
+            ModelMatrix = ParentObject.Parent.Transform.ModelMatrix * GetLocalModelMatrix();
         }
         else
         {
             ModelMatrix = GetLocalModelMatrix();
         }
 
-        foreach (var child in Children)
+        
+
+        foreach (GameObject child in ParentObject.Children)
         {
-            child.ForcedUpdate();
+            child.Transform.ForcedUpdate();
         }
     }
 
@@ -89,6 +67,11 @@ public class Transform : Component
         _scl = newScale;
         _isDirty = true;
     }
+
+    public Vector3 GetLocalRotation()
+    {
+        return _rot;
+    }
     
     private Matrix GetLocalModelMatrix()
     {
@@ -96,5 +79,10 @@ public class Transform : Component
                                 Matrix.CreateRotationX((float)(Math.PI / 180) * _rot.X) *
                                 Matrix.CreateRotationZ((float)(Math.PI / 180) * _rot.Z);
         return Matrix.CreateTranslation(_pos) * rotationMatrix * Matrix.CreateScale(_scl);
+    }
+
+    public override void Draw()
+    {
+        
     }
 }

@@ -6,7 +6,19 @@ namespace RTS_Engine;
 public class MeshRenderer : Component
 {
     private Model _model;
-    
+
+
+    //---------------------------Temporary---------------------------
+    Matrix _view = Matrix.CreateLookAt(
+        new Vector3(5, 5, 20),
+        new Vector3(0.0f),
+        -Vector3.UnitY);
+
+    private Matrix _projection =
+        Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 500.0f);
+    //-------------------------------------------------------------------
+
+
     public MeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
@@ -23,11 +35,7 @@ public class MeshRenderer : Component
         Initialize();
     }
     
-    public override void Update()
-    {
-        //TODO: Implement globally accessible View and Projection matrices. Then use them here
-        DrawModel(_model,ParentObject.GetComponent<Transform>().ModelMatrix,Matrix.Identity, Matrix.Identity);
-    }
+    public override void Update(){}
 
     public override void Initialize()
     {
@@ -47,5 +55,11 @@ public class MeshRenderer : Component
             }
             mesh.Draw();
         }
+    }
+
+    public override void Draw()
+    {
+        //TODO: Implement globally accessible View and Projection matrices. Then use them here
+        DrawModel(_model, ParentObject.Transform.ModelMatrix, _view, _projection);
     }
 }
