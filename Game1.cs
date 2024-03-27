@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿#define _DEBUG
+
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using ImGuiNET;
 using Num = System.Numerics;
 
@@ -85,11 +85,12 @@ public class Game1 : Game
         DrawModel(_model, _world, _view, _projection);
         
         // TODO: Add your drawing code here
-        
+#if _DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
-
+#endif
+        
         base.Draw(gameTime);
     }
 
