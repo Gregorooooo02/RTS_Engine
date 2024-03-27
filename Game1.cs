@@ -14,7 +14,6 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     private Model _model;
-    private Texture2D _texture;
     
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     private Matrix _world = Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.0f));
@@ -54,11 +53,8 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         _model = Content.Load<Model>("SimpleShip/Ship");
-        _texture = Content.Load<Texture2D>("smile");
 
         // TODO: use this.Content to load your game content here
-
-        
     }
 
     protected override void Update(GameTime gameTime)
@@ -87,12 +83,9 @@ public class Game1 : Game
         new Vector3(0.0f),
         -Vector3.UnitY);
         DrawModel(_model, _world, _view, _projection);
-
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
-        _spriteBatch.End();
-
+        
         // TODO: Add your drawing code here
+        
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
@@ -116,11 +109,32 @@ public class Game1 : Game
 
     protected virtual void ImGuiLayout()
     {
-        ImGui.Text("Change the color of the background");
-        ImGui.ColorEdit3("Background Color", ref _clearColor);
-        ImGui.SliderFloat3("Camera position", ref _position,-10,10);
-        ImGui.Text(ImGui.GetIO().Framerate + " FPS");
-    }
+        ImGui.Begin("Debug");
+            ImGui.Text("Change the color of the background");
+            ImGui.ColorEdit3("Background Color", ref _clearColor);
+            ImGui.SliderFloat3("Camera position", ref _position,-10,10);
+        ImGui.End();
 
-  
+        ImGui.Begin("KeyBinds");
+            ImGui.Text("Keyboard Action - Key");
+            for (int i = 0; i < FileManager.Instance.KeyboardKeys.Count; i++)
+            {
+                ImGui.BulletText(FileManager.Instance.KeyboardActions[i].ToString());
+                ImGui.SameLine(100);
+                ImGui.Text(FileManager.Instance.KeyboardKeys[i].ToString());
+            }
+            ImGui.Spacing();
+            ImGui.Text("Mouse Action - Key");
+            for (int i = 0; i < FileManager.Instance.MouseKeys.Count; i++)
+            {
+                ImGui.BulletText(FileManager.Instance.MouseActions[i].ToString());
+                ImGui.SameLine(100);
+                ImGui.Text(FileManager.Instance.MouseKeys[i].ToString());
+            }
+        ImGui.End();
+
+        ImGui.Begin("FPS Counter");
+            ImGui.Text("FPS: " + ImGui.GetIO().Framerate);
+        ImGui.End();
+    }
 }
