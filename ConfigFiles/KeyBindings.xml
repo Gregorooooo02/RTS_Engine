@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Root>
-    <KeyBindings>
+    <Keyboard>
         <KeyBinding>
             <Key>W</Key>
             <Action>FORWARD</Action>
@@ -21,5 +21,19 @@
             <Key>Escape</Key>
             <Action>EXIT</Action>
         </KeyBinding>
-    </KeyBindings>
+    </Keyboard>
+    <Mouse>
+        <MouseBinding>
+            <Key>0</Key>
+            <Action>LMB</Action>
+        </MouseBinding>
+        <MouseBinding>
+            <Key>1</Key>
+            <Action>MMB</Action>
+        </MouseBinding>
+        <MouseBinding>
+            <Key>2</Key>
+            <Action>RMB</Action>
+        </MouseBinding>
+    </Mouse>
 </Root>
