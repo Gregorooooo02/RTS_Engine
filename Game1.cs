@@ -122,8 +122,10 @@ public class Game1 : Game
 
     protected virtual void ImGuiLayout()
     {
+#if DEBUG
         ImGui.Checkbox("Hierarchy", ref Globals.Instance.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.Instance.InspectorVisible);
+#endif
 
         ImGui.Text("Change the color of the background");
         ImGui.ColorEdit3("Background Color", ref _clearColor);
