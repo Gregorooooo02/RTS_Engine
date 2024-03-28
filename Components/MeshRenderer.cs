@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace RTS_Engine;
 
@@ -10,9 +11,9 @@ public class MeshRenderer : Component
 
     //---------------------------Temporary---------------------------
     Matrix _view = Matrix.CreateLookAt(
-        new Vector3(5, 5, 20),
+        new Vector3(0, 4, 20),
         new Vector3(0.0f),
-        -Vector3.UnitY);
+        Vector3.UnitY);
 
     private Matrix _projection =
         Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 500.0f);

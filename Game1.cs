@@ -49,8 +49,14 @@ public class Game1 : Game
         InputManager.Initialize();
         base.Initialize();
 
+
         _gameObject = new GameObject();
         _gameObject.AddComponent(new MeshRenderer(_gameObject,Content.Load<Model>("defaultCube")));
+        GameObject gameObject2 = new GameObject();
+        gameObject2.AddComponent(new MeshRenderer(gameObject2, Content.Load<Model>("defaultCube")));
+        gameObject2.Transform.SetLocalPosition(new Vector3(4, 0, 0));
+        _gameObject.AddChildObject(gameObject2);
+
     }
 
     protected override void LoadContent()
@@ -73,7 +79,7 @@ public class Game1 : Game
         // TODO: Add your update logic here
 
         base.Update(gameTime);
-        _gameObject.Transform.SetLocalRotation(new Vector3(0,100 * (float)gameTime.TotalGameTime.TotalSeconds,0));
+        _gameObject.Transform.SetLocalRotation(new Vector3(0,180 * MathF.Sin((float)gameTime.TotalGameTime.TotalSeconds),0));
         _gameObject.Update();
     }
 
@@ -89,7 +95,7 @@ public class Game1 : Game
         _gameObject.Draw();
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
+        //_spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
         _spriteBatch.End();
 
         // TODO: Add your drawing code here

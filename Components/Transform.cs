@@ -14,11 +14,11 @@ public class Transform : Component
         ParentObject = parent;
     }
     //Actual data
-    private Vector3 _pos = Vector3.Zero;
-    private Vector3 _rot = Vector3.Zero;
-    private Vector3 _scl = Vector3.One;
+    public Vector3 _pos { get; private set; } = Vector3.Zero;
+    public Vector3 _rot { get; private set; } = Vector3.Zero;
+    public Vector3 _scl { get; private set; } = Vector3.One;
 
-    public Matrix ModelMatrix = Matrix.Identity;
+    public Matrix ModelMatrix { get; private set; } = Matrix.Identity;
 
     private bool _isDirty = true;
     
@@ -35,15 +35,12 @@ public class Transform : Component
     {
         if (ParentObject.Parent != null)
         {
-            ModelMatrix = ParentObject.Parent.Transform.ModelMatrix * GetLocalModelMatrix();
+            ModelMatrix = GetLocalModelMatrix() * ParentObject.Parent.Transform.ModelMatrix;
         }
         else
         {
             ModelMatrix = GetLocalModelMatrix();
         }
-
-        
-
         foreach (GameObject child in ParentObject.Children)
         {
             child.Transform.ForcedUpdate();
@@ -78,7 +75,7 @@ public class Transform : Component
         Matrix rotationMatrix = Matrix.CreateRotationY((float)(Math.PI / 180) * _rot.Y) *
                                 Matrix.CreateRotationX((float)(Math.PI / 180) * _rot.X) *
                                 Matrix.CreateRotationZ((float)(Math.PI / 180) * _rot.Z);
-        return Matrix.CreateTranslation(_pos) * rotationMatrix * Matrix.CreateScale(_scl);
+        return Matrix.CreateScale(_scl) * rotationMatrix *  Matrix.CreateTranslation(_pos);
     }
 
     public override void Draw()

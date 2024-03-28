@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RTS_Engine;
@@ -8,9 +9,9 @@ public class GameObject
 {
     public Transform Transform;
     private List<Component> _components = new();
-    
-    public List<GameObject> Children = new();
-    public GameObject Parent;
+
+    public List<GameObject> Children {get; private set;} = new(); 
+    public GameObject Parent {get; private set;}
 
     public GameObject()
     {
@@ -41,7 +42,6 @@ public class GameObject
         {
             c.Draw();
         }
-
         //Propegate throuth all children
         foreach (GameObject gameObject in Children)
         {
@@ -83,5 +83,11 @@ public class GameObject
     public bool RemoveComponent(Component component)
     {
         return _components.Remove(component);
+    }
+
+    public void AddChildObject(GameObject gameObject)
+    {
+        Children.Add(gameObject);
+        gameObject.Parent = this;
     }
 }
