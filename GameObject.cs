@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ImGuiNET;
 
 namespace RTS_Engine;
 
 public class GameObject
 {
+    public string Name = "NewObject";
+    public bool Active = true;
+
     public Transform Transform;
     private List<Component> _components = new();
 
@@ -20,6 +24,7 @@ public class GameObject
 
     public void Update()
     {
+        if (!Active) return;
         Transform.Update();
         //Update all components
         foreach (Component c in _components)
@@ -36,6 +41,7 @@ public class GameObject
 
     public void Draw()
     {
+        if(!Active) return;
         Transform.Draw();
         //'Draw' all components
         foreach(Component c in _components)
@@ -90,4 +96,47 @@ public class GameObject
         Children.Add(gameObject);
         gameObject.Parent = this;
     }
+
+#if DEBUG
+    public void DrawTree()
+    {
+        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.OpenOnArrow;
+        if(Children.Count == 0)
+        {
+            flags |= ImGuiTreeNodeFlags.Leaf;
+        }
+        if(this == Globals.Instance.CurrentlySelectedObject)
+        {
+            flags |= ImGuiTreeNodeFlags.Selected;
+        }
+        string _name = "#";
+        if(this.Name != "")
+        {
+            _name = this.Name; 
+        }
+        bool node_open = ImGui.TreeNodeEx(_name, flags);
+        if(ImGui.IsItemClicked() && !ImGui.IsItemToggledOpen()) Globals.Instance.CurrentlySelectedObject = this;
+        if(node_open)
+        {
+            foreach(GameObject g in Children)
+            {
+                g.DrawTree();
+            }
+            ImGui.TreePop();
+        }
+    }
+
+    public void DrawInspector()
+    {
+        ImGui.Begin("Inspector");
+        ImGui.Checkbox("Active", ref Active);
+        ImGui.InputText("Object name", ref Name, 20);
+        Transform.Inspect();
+        foreach(Component c in _components)
+        {
+            c.Inspect();
+        }
+        ImGui.End();
+    }
+#endif
 }

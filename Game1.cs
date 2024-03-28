@@ -47,6 +47,7 @@ public class Game1 : Game
         _imGuiRenderer.RebuildFontAtlas();
 
         InputManager.Initialize();
+        Globals.Initialize();
         base.Initialize();
 
 
@@ -122,11 +123,27 @@ public class Game1 : Game
 
     protected virtual void ImGuiLayout()
     {
+        ImGui.Checkbox("Hierarchy", ref Globals.Instance.HierarchyVisible);
+        ImGui.Checkbox("Inspector",ref Globals.Instance.InspectorVisible);
+
         ImGui.Text("Change the color of the background");
         ImGui.ColorEdit3("Background Color", ref _clearColor);
         ImGui.SliderFloat3("Camera position", ref _position,-100,100);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
-    }
 
-  
+#if DEBUG
+        if (Globals.Instance.HierarchyVisible)
+        {
+            ImGui.Begin("Hierarchy");
+            _gameObject.DrawTree();
+            ImGui.AlignTextToFramePadding();
+            ImGui.End();
+        }
+        if(Globals.Instance.InspectorVisible) {
+            ImGui.Begin("Inspector");
+            Globals.Instance.CurrentlySelectedObject?.DrawInspector();
+            ImGui.End();
+        }
+#endif
+    }
 }

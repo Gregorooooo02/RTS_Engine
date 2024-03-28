@@ -5,6 +5,7 @@ namespace RTS_Engine;
 public abstract class Component
 {
     public GameObject ParentObject;
+    public bool Active = true;
     
     public bool IsType(Type type)
     {
@@ -14,4 +15,8 @@ public abstract class Component
 
     public abstract void Draw();
     public abstract void Initialize();
+
+#if DEBUG
+     public abstract void Inspect();
+#endif
 }

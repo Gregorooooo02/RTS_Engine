@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using ImGuiNET;
 
 namespace RTS_Engine;
 
@@ -60,7 +61,16 @@ public class MeshRenderer : Component
 
     public override void Draw()
     {
+        if(!Active) return;
         //TODO: Implement globally accessible View and Projection matrices. Then use them here
         DrawModel(_model, ParentObject.Transform.ModelMatrix, _view, _projection);
     }
+
+#if DEBUG
+    public override void Inspect()
+    {
+        ImGui.Text("Mesh Renderer");
+        ImGui.Checkbox("Mesh active", ref Active);
+    }
+#endif
 }
