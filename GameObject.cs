@@ -131,6 +131,7 @@ public class GameObject
         ImGui.Begin("Inspector");
         ImGui.Checkbox("Active", ref Active);
         ImGui.InputText("Object name", ref Name, 20);
+        ImGui.Text("");
         Transform.Inspect();
         foreach(Component c in _components)
         {

@@ -69,8 +69,10 @@ public class MeshRenderer : Component
 #if DEBUG
     public override void Inspect()
     {
-        ImGui.Text("Mesh Renderer");
-        ImGui.Checkbox("Mesh active", ref Active);
+        if(ImGui.CollapsingHeader("Mesh Renderer"))
+        {
+            ImGui.Checkbox("Mesh active", ref Active);
+        }   
     }
 #endif
 }

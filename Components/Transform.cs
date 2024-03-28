@@ -90,25 +90,26 @@ public class Transform : Component
 #if DEBUG
     public override void Inspect()
     {
-        ImGui.Text("Transform");
-        ImGui.Checkbox("Transform active", ref this.Active);
-        System.Numerics.Vector3 pos = _pos.ToNumerics();
-        if(ImGui.InputFloat3("Position",ref pos))
-        {
-            _isDirty = true;
-            _pos = pos;
-        }
-        System.Numerics.Vector3 rot = _rot.ToNumerics();
-        if (ImGui.InputFloat3("Rotation", ref rot))
-        {
-            _isDirty = true;
-            _rot = rot;
-        }
-        System.Numerics.Vector3 scl = _scl.ToNumerics();
-        if (ImGui.InputFloat3("Scale", ref scl))
-        {
-            _isDirty = true;
-            _scl = scl;
+        if(ImGui.CollapsingHeader("Transform")){
+            ImGui.Checkbox("Transform active", ref this.Active);
+            System.Numerics.Vector3 pos = _pos.ToNumerics();
+            if (ImGui.InputFloat3("Position", ref pos))
+            {
+                _isDirty = true;
+                _pos = pos;
+            }
+            System.Numerics.Vector3 rot = _rot.ToNumerics();
+            if (ImGui.InputFloat3("Rotation", ref rot))
+            {
+                _isDirty = true;
+                _rot = rot;
+            }
+            System.Numerics.Vector3 scl = _scl.ToNumerics();
+            if (ImGui.InputFloat3("Scale", ref scl))
+            {
+                _isDirty = true;
+                _scl = scl;
+            }
         }
     }
 #endif
