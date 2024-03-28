@@ -75,11 +75,6 @@ public class Game1 : Game
         
         Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
 
-        if (InputManager.Instance.IsActive(GameAction.LMB))
-        {
-            Console.WriteLine("LMB is pressed!");
-        }
-
         // TODO: Add your update logic here
 
         base.Update(gameTime);

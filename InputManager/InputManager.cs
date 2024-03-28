@@ -46,18 +46,17 @@ public class InputManager
     {
         FileManager.Initialize();
         
-        //open config file here and fill dictionary with it
         _rawKeyboardToAction.Clear();
-        _rawKeyboardToAction.Add(FileManager.Instance.KeyboardKeys[0], FileManager.Instance.KeyboardActions[0]);
-        _rawKeyboardToAction.Add(Keys.S,GameAction.BACKWARD);
-        _rawKeyboardToAction.Add(Keys.A,GameAction.LEFT);
-        _rawKeyboardToAction.Add(Keys.D,GameAction.RIGHT);
-        _rawKeyboardToAction.Add(Keys.Escape,GameAction.EXIT);
-        
+        for(int i = 0;i < FileManager.Instance.KeyboardActions.Count;i++)
+        {
+            _rawKeyboardToAction.Add(FileManager.Instance.KeyboardKeys[i], FileManager.Instance.KeyboardActions[i]);
+        }
+
         _rawMouseToAction.Clear();
-        _rawMouseToAction.Add(FileManager.Instance.MouseKeys[0], FileManager.Instance.MouseActions[0]);
-        _rawMouseToAction.Add(1,GameAction.MMB);
-        _rawMouseToAction.Add(2,GameAction.RMB);
+        for(int i = 0; i < FileManager.Instance.MouseActions.Count; i++)
+        {
+            _rawMouseToAction.Add(FileManager.Instance.MouseKeys[i], FileManager.Instance.MouseActions[i]);
+        }
     }
 
     public void PollInput()
