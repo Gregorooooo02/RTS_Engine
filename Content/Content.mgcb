@@ -13,8 +13,8 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin cube.obj
-/importer:OpenAssetImporter
+#begin cube.fbx
+/importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
@@ -27,10 +27,10 @@
 /processorParam:RotationX=0
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
-/processorParam:Scale=1
+/processorParam:Scale=0.2
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:cube.obj
+/build:cube.fbx;defaultCube.fbx
 
 #begin SimpleShip/Ship.fbx
 /importer:FbxImporter

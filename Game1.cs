@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using System.Diagnostics;
 
 namespace RTS_Engine;
 
@@ -24,6 +25,8 @@ public class Game1 : Game
     
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
+
+    private GameObject _gameObject;
     
     public Game1()
     {
@@ -43,7 +46,17 @@ public class Game1 : Game
         _imGuiRenderer.RebuildFontAtlas();
 
         InputManager.Initialize();
+        Globals.Initialize();
         base.Initialize();
+
+
+        _gameObject = new GameObject();
+        _gameObject.AddComponent(new MeshRenderer(_gameObject,Content.Load<Model>("defaultCube")));
+        GameObject gameObject2 = new GameObject();
+        gameObject2.AddComponent(new MeshRenderer(gameObject2, Content.Load<Model>("defaultCube")));
+        gameObject2.Transform.SetLocalPosition(new Vector3(4, 0, 0));
+        _gameObject.AddChildObject(gameObject2);
+
     }
 
     protected override void LoadContent()
@@ -70,6 +83,8 @@ public class Game1 : Game
         // TODO: Add your update logic here
 
         base.Update(gameTime);
+        _gameObject.Transform.SetLocalRotation(new Vector3(0,180 * MathF.Sin((float)gameTime.TotalGameTime.TotalSeconds),0));
+        _gameObject.Update();
     }
 
     protected override void Draw(GameTime gameTime)
@@ -80,8 +95,13 @@ public class Game1 : Game
         _position,
         new Vector3(0.0f),
         -Vector3.UnitY);
-        DrawModel(_model, _world, _view, _projection);
-        
+
+        _gameObject.Draw();
+
+        _spriteBatch.Begin();
+        //_spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
+        _spriteBatch.End();
+
         // TODO: Add your drawing code here
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
@@ -107,32 +127,27 @@ public class Game1 : Game
 
     protected virtual void ImGuiLayout()
     {
-        ImGui.Begin("Debug");
-            ImGui.Text("Change the color of the background");
-            ImGui.ColorEdit3("Background Color", ref _clearColor);
-            ImGui.SliderFloat3("Camera position", ref _position,-10,10);
-        ImGui.End();
+        ImGui.Checkbox("Hierarchy", ref Globals.Instance.HierarchyVisible);
+        ImGui.Checkbox("Inspector",ref Globals.Instance.InspectorVisible);
 
-        ImGui.Begin("KeyBinds");
-            ImGui.Text("Keyboard Action - Key");
-            for (int i = 0; i < FileManager.Instance.KeyboardKeys.Count; i++)
-            {
-                ImGui.BulletText(FileManager.Instance.KeyboardActions[i].ToString());
-                ImGui.SameLine(100);
-                ImGui.Text(FileManager.Instance.KeyboardKeys[i].ToString());
-            }
-            ImGui.Spacing();
-            ImGui.Text("Mouse Action - Key");
-            for (int i = 0; i < FileManager.Instance.MouseKeys.Count; i++)
-            {
-                ImGui.BulletText(FileManager.Instance.MouseActions[i].ToString());
-                ImGui.SameLine(100);
-                ImGui.Text(FileManager.Instance.MouseKeys[i].ToString());
-            }
-        ImGui.End();
+        ImGui.Text("Change the color of the background");
+        ImGui.ColorEdit3("Background Color", ref _clearColor);
+        ImGui.SliderFloat3("Camera position", ref _position,-100,100);
+        ImGui.Text(ImGui.GetIO().Framerate + " FPS");
 
-        ImGui.Begin("FPS Counter");
-            ImGui.Text("FPS: " + ImGui.GetIO().Framerate);
-        ImGui.End();
+#if DEBUG
+        if (Globals.Instance.HierarchyVisible)
+        {
+            ImGui.Begin("Hierarchy");
+            _gameObject.DrawTree();
+            ImGui.AlignTextToFramePadding();
+            ImGui.End();
+        }
+        if(Globals.Instance.InspectorVisible) {
+            ImGui.Begin("Inspector");
+            Globals.Instance.CurrentlySelectedObject?.DrawInspector();
+            ImGui.End();
+        }
+#endif
     }
 }
