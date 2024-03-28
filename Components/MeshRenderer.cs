@@ -41,7 +41,7 @@ public class MeshRenderer : Component
 
     public override void Initialize()
     {
-        //TODO: Load default model here
+        _model = Globals.Instance.defaultModel;
     }
 
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
@@ -72,6 +72,10 @@ public class MeshRenderer : Component
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
+            if (ImGui.Button("Remove component"))
+            {
+                ParentObject.RemoveComponent(this);
+            }
         }   
     }
 #endif

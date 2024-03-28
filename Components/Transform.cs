@@ -91,7 +91,7 @@ public class Transform : Component
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Transform")){
-            ImGui.Checkbox("Transform active", ref this.Active);
+            //ImGui.Checkbox("Transform active", ref this.Active);
             System.Numerics.Vector3 pos = _pos.ToNumerics();
             if (ImGui.InputFloat3("Position", ref pos))
             {
