@@ -1,6 +1,4 @@
-﻿#define _DEBUG
-
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
@@ -85,12 +83,11 @@ public class Game1 : Game
         DrawModel(_model, _world, _view, _projection);
         
         // TODO: Add your drawing code here
-#if _DEBUG
+#if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
 #endif
-        
         base.Draw(gameTime);
     }
 
