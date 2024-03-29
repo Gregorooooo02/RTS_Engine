@@ -45,6 +45,7 @@ public class Game1 : Game
 
         InputManager.Initialize();
         Globals.Initialize(Content);
+
         base.Initialize();
     }
 
@@ -52,6 +53,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         // TODO: use this.Content to load your game content here
+        _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new BaseScene());
     }
 
@@ -103,6 +105,7 @@ public class Game1 : Game
 #if DEBUG
         ImGui.Checkbox("Hierarchy", ref Globals.Instance.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.Instance.InspectorVisible);
+        ImGui.Checkbox("Scene Selection", ref Globals.Instance.SceneSelectionVisible);
 #endif
 
         ImGui.Text("Change the color of the background");
@@ -114,9 +117,7 @@ public class Game1 : Game
         if (Globals.Instance.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
-            
             _sceneManager.GetCurrentScene().DrawHierarchy();
-
             ImGui.AlignTextToFramePadding();
             ImGui.End();
         }
@@ -124,6 +125,9 @@ public class Game1 : Game
             ImGui.Begin("Inspector");
             Globals.Instance.CurrentlySelectedObject?.DrawInspector();
             ImGui.End();
+        }
+        if (Globals.Instance.SceneSelectionVisible) {
+            _sceneManager.DrawSelection();
         }
 #endif
     }

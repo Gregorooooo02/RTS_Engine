@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 
 namespace RTS_Engine;
 
@@ -29,6 +28,22 @@ public class BaseScene : IScene
         foreach (GameObject gameObject in GameObjects)
         {
             gameObject.Draw();
+        }
+    }
+
+    public void Activate()
+    {
+        foreach (GameObject gameObject in GameObjects)
+        {
+            gameObject.Active = true;
+        }
+    }
+
+    public void Deactivate()
+    {
+        foreach (GameObject gameObject in GameObjects)
+        {
+            gameObject.Active = false;
         }
     }
 
