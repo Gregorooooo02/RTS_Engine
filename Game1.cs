@@ -11,8 +11,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
-    private Model _model;
+    private SceneManager _sceneManager;
     
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     private Matrix _world = Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.0f));
@@ -25,8 +24,6 @@ public class Game1 : Game
     
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
-
-    private GameObject _gameObject;
     
     public Game1()
     {
@@ -41,6 +38,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
+        _sceneManager = new SceneManager();
 
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
@@ -48,24 +46,13 @@ public class Game1 : Game
         InputManager.Initialize();
         Globals.Initialize(Content);
         base.Initialize();
-
-
-        _gameObject = new GameObject();
-        _gameObject.AddComponent(new MeshRenderer(_gameObject,Content.Load<Model>("defaultCube")));
-        GameObject gameObject2 = new GameObject();
-        gameObject2.AddComponent(new MeshRenderer(gameObject2, Content.Load<Model>("defaultCube")));
-        gameObject2.Transform.SetLocalPosition(new Vector3(4, 0, 0));
-        _gameObject.AddChildObject(gameObject2);
-
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        
-        _model = Content.Load<Model>("SimpleShip/Ship");
-
         // TODO: use this.Content to load your game content here
+        _sceneManager.AddScene(new BaseScene());
     }
 
     protected override void Update(GameTime gameTime)
@@ -76,28 +63,19 @@ public class Game1 : Game
         Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
 
         // TODO: Add your update logic here
-
         base.Update(gameTime);
-        _gameObject.Transform.SetLocalRotation(new Vector3(0,180 * MathF.Sin((float)gameTime.TotalGameTime.TotalSeconds),0));
-        _gameObject.Update();
+        _sceneManager.GetCurrentScene().Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(new Color(_clearColor));
         
-        _view = Matrix.CreateLookAt(
-        _position,
-        new Vector3(0.0f),
-        -Vector3.UnitY);
-
-        _gameObject.Draw();
-
-        _spriteBatch.Begin();
-        //_spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
-        _spriteBatch.End();
+        _view = Matrix.CreateLookAt(_position, new Vector3(0.0f), -Vector3.UnitY);
 
         // TODO: Add your drawing code here
+        _sceneManager.GetCurrentScene().Draw();
+
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
@@ -136,7 +114,9 @@ public class Game1 : Game
         if (Globals.Instance.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
-            _gameObject.DrawTree();
+            
+            _sceneManager.GetCurrentScene().DrawHierarchy();
+
             ImGui.AlignTextToFramePadding();
             ImGui.End();
         }

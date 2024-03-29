@@ -33,9 +33,8 @@ namespace RTS_Engine
             Assembly assembly = Assembly.GetExecutingAssembly();
             return assembly.GetTypes().Where(x => baseType.IsAssignableFrom(x) && x != baseType && x != transform).ToList();
         }
-
+        
         public List<Type> ComponentsTypes;
-            
         public GameObject CurrentlySelectedObject;
 
         //Switches for debug windows UWU
