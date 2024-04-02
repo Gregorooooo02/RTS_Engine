@@ -62,6 +62,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        Globals.Instance.SpriteBatch = _spriteBatch;
         
         _model = Content.Load<Model>("SimpleShip/Ship");
 
@@ -90,12 +91,13 @@ public class Game1 : Game
         _position,
         new Vector3(0.0f),
         -Vector3.UnitY);
-
-        _gameObject.Draw();
-
+        
         _spriteBatch.Begin();
-        //_spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
+        _gameObject.Draw();
         _spriteBatch.End();
+        
+        //_spriteBatch.Draw(_texture, new Rectangle(0,0,500,500), Color.White);
+        
 
         // TODO: Add your drawing code here
 #if DEBUG

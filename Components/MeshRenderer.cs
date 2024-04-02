@@ -41,7 +41,7 @@ public class MeshRenderer : Component
 
     public override void Initialize()
     {
-        _model = Globals.Instance.defaultModel;
+        _model = Globals.Instance.DefaultModel;
     }
 
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.

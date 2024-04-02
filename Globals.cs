@@ -13,10 +13,16 @@ namespace RTS_Engine
         public static void Initialize(ContentManager content) 
         {
             Instance = new Globals();
-            Instance.defaultModel = content.Load<Model>("defaultCube");
+            Instance.DefaultModel = content.Load<Model>("defaultCube");
+            Instance.DefaultSprite = content.Load<Texture2D>("smile");
+            Instance.DefaultFont = content.Load<SpriteFont>("defaultFont");
         }
 
-        public Model defaultModel;
+        public Model DefaultModel;
+        public Texture2D DefaultSprite;
+        public SpriteFont DefaultFont;
+        
+        public SpriteBatch SpriteBatch;
 
         private Globals()
         {
