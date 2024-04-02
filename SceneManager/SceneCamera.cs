@@ -121,4 +121,67 @@ public class SceneCamera
     {
         get { return projectionMatrix; }
     }
+
+    /// <summary>
+    /// Update the matrices of the camera when the camera is moved or rotated.
+    /// </summary>
+    private void UpdateWorldAndView()
+    {
+        if (cameraType == CAM_FIXED) {
+            up = Vector3.Up;
+        }
+        if (cameraType == CAM_UI_OPTION_EDITOR) {
+            up = camerasWorld.Up;
+        }
+
+        camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, camerasWorld.Forward, up);
+        viewMatrix = Matrix.CreateLookAt(camerasWorld.Translation, camerasWorld.Forward + camerasWorld.Translation, camerasWorld.Up);
+    }
+
+    /// <summary>
+    /// Changes the perspective matrix to a new near, far and field of view.
+    /// </summary>
+    public void UpdateProjectionMatrix(GraphicsDevice graphicsDevice, float fovDegrees) 
+    {
+        projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), graphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
+    }
+
+    /// <summary>
+    /// Changes the perspective matrxi to a new near, far and field of view.
+    /// The projection matrix is only set up once at the start of the game.
+    /// </summary>
+    public void UpdateProjectionMatrix(float fov, float near, float far) 
+    {
+        this.fovDegrees = fov;
+        this.nearPlane = near;
+        this.farPlane = far;
+
+        projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), _graphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
+    }
+
+    /// <summary>
+    /// Update the camera
+    /// </summary>
+    public void Update(GameTime gameTime) {
+        if (fpsKeyboardLayout == CAM_UI_OPTION_FPS) {
+            UpdateFPSKeyboardLayout(gameTime);
+        }
+        if (fpsKeyboardLayout == CAM_UI_OPTION_EDITOR) {
+            UpdateEditorKeyboardLayout(gameTime);
+        }
+    }
+
+    /// <summary>
+    /// Update the camera with the FPS keyboard layout.
+    /// </summary>
+    private void UpdateFPSKeyboardLayout(GameTime gameTime) {
+
+    }
+
+    /// <summary>
+    /// Update the camera with the Editor keyboard layout.
+    /// </summary>
+    private void UpdateEditorKeyboardLayout(GameTime gameTime) {
+
+    }
 }
