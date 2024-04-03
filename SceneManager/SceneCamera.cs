@@ -24,10 +24,10 @@ public class SceneCamera
     private bool isMouseLookUsed = true;
 
     private int fpsKeyboardLayout = 1;
-    private int cameraType = 0;
+    private int cameraType = 1;
 
-    public const int CAM_UI_OPTION_FPS = 0;
-    public const int CAM_UI_OPTION_EDITOR = 1;
+    public const int CAM_UI_OPTION_FPS = 1;
+    public const int CAM_UI_OPTION_EDITOR = 0;
 
     public const int CAM_FIXED = 0;
     public const int CAM_FREE = 1;
@@ -232,15 +232,13 @@ public class SceneCamera
             }
         }
 
-        if (mState.LeftButton == ButtonState.Pressed)
+        if (mState.RightButton == ButtonState.Pressed)
         {
-            if (isMouseLookUsed == false)
-            {
-                isMouseLookUsed = true;
-            } else
-            {
-                isMouseLookUsed = false;
-            }
+            isMouseLookUsed = true;
+        }
+        else
+        {
+            isMouseLookUsed = false;
         }
 
         if (isMouseLookUsed)
