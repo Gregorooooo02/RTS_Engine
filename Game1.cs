@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using System.Diagnostics;
 
 namespace RTS_Engine;
 
@@ -47,13 +46,14 @@ public class Game1 : Game
 
         InputManager.Initialize();
         Globals.Initialize(Content);
+        AssetManager.Initialize(Content);
         base.Initialize();
 
 
         _gameObject = new GameObject();
-        _gameObject.AddComponent(new MeshRenderer(_gameObject,Content.Load<Model>("defaultCube")));
+        _gameObject.AddComponent<MeshRenderer>();
         GameObject gameObject2 = new GameObject();
-        gameObject2.AddComponent(new MeshRenderer(gameObject2, Content.Load<Model>("defaultCube")));
+        gameObject2.AddComponent<MeshRenderer>();
         gameObject2.Transform.SetLocalPosition(new Vector3(4, 0, 0));
         _gameObject.AddChildObject(gameObject2);
 
@@ -74,8 +74,10 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
-        Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-
+        //Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
+        
+        //Console.WriteLine(AssetManager.test());
+        
         // TODO: Add your update logic here
 
         base.Update(gameTime);

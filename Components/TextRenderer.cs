@@ -34,7 +34,7 @@ public class TextRenderer : Component
 
     public override void Initialize()
     {
-        Font = Globals.Instance.DefaultFont;
+        Font = AssetManager.DefaultFont;
     }
 
 #if DEBUG

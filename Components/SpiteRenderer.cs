@@ -35,7 +35,7 @@ public class SpiteRenderer : Component
 
     public override void Initialize()
     {
-        Sprite = Globals.Instance.DefaultSprite;
+        Sprite = AssetManager.DefaultSprite;
     }
 
 #if DEBUG

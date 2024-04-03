@@ -10,12 +10,12 @@ namespace RTS_Engine
     internal class Globals
     {
         public static Globals Instance;
-        public static void Initialize(ContentManager content) 
+        public static void Initialize(ContentManager asset) 
         {
             Instance = new Globals();
-            Instance.DefaultModel = content.Load<Model>("defaultCube");
-            Instance.DefaultSprite = content.Load<Texture2D>("smile");
-            Instance.DefaultFont = content.Load<SpriteFont>("defaultFont");
+            Instance.DefaultModel = asset.Load<Model>("defaultCube");
+            Instance.DefaultSprite = asset.Load<Texture2D>("smile");
+            Instance.DefaultFont = asset.Load<SpriteFont>("defaultFont");
         }
 
         public Model DefaultModel;

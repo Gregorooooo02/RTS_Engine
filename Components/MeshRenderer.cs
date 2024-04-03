@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using ImGuiNET;
 
 namespace RTS_Engine;
@@ -36,12 +36,17 @@ public class MeshRenderer : Component
     {
         Initialize();
     }
+
+    ~MeshRenderer()
+    {
+        AssetManager.FreeModel(_model);
+    }
     
     public override void Update(){}
 
     public override void Initialize()
     {
-        _model = Globals.Instance.DefaultModel;
+        _model = AssetManager.GetModel("SimpleShip/Ship");
     }
 
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
@@ -75,6 +80,7 @@ public class MeshRenderer : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
+                this.ParentObject = null;
             }
         }   
     }
