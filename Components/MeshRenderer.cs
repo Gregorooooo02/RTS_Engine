@@ -11,13 +11,13 @@ public class MeshRenderer : Component
 
 
     //---------------------------Temporary---------------------------
-    Matrix _view = Matrix.CreateLookAt(
-        new Vector3(0, 4, 20),
-        new Vector3(0.0f),
-        Vector3.UnitY);
+    // Matrix _view = Matrix.CreateLookAt(
+    //     new Vector3(0, 4, 20),
+    //     new Vector3(0.0f),
+    //     Vector3.UnitY);
 
-    private Matrix _projection =
-        Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 500.0f);
+    // private Matrix _projection =
+    //     Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 500.0f);
     //-------------------------------------------------------------------
 
 
@@ -59,7 +59,7 @@ public class MeshRenderer : Component
         }
     }
 
-    public override void Draw()
+    public override void Draw(Matrix _view, Matrix _projection)
     {
         if(!Active) return;
         //TODO: Implement globally accessible View and Projection matrices. Then use them here

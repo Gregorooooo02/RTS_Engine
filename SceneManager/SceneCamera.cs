@@ -14,19 +14,17 @@ public class SceneCamera
     private MouseState _mouseState = default(MouseState);
     private KeyboardState _keyboardState = default(KeyboardState);
 
-    public float MovementSpeed { get; set; } = 0.1f;
-    public float RotationSpeed { get; set; } = 0.1f;
+    public float MovementSpeed { get; set; } = 0.01f;
+    public float RotationSpeed { get; set; } = 0.01f;
 
     public float fovDegrees = 45.0f;
     public float nearPlane = 0.05f;
     public float farPlane = 2000.0f;
 
-    private float yMouseAngle = 0.0f;
-    private float xMouseAngle = 0.0f;
     private bool isMouseLookUsed = true;
 
     private int fpsKeyboardLayout = 1;
-    private int cameraType = 1;
+    private int cameraType = 0;
 
     public const int CAM_UI_OPTION_FPS = 0;
     public const int CAM_UI_OPTION_EDITOR = 1;
@@ -37,6 +35,8 @@ public class SceneCamera
     public SceneCamera(GraphicsDevice graphicsDevice)
     {
         _graphicsDevice = graphicsDevice;
+        UpdateWorldAndView();
+        UpdateProjectionMatrix(graphicsDevice, fovDegrees);
     }
 
     public void CameraUI(int UIOption) {

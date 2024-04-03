@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
@@ -39,19 +40,19 @@ public class GameObject
         }
     }
 
-    public void Draw()
+    public void Draw(Matrix _view, Matrix _projection)
     {
         if(!Active) return;
-        Transform.Draw();
+        Transform.Draw(_view, _projection);
         //'Draw' all components
         foreach(Component c in _components)
         {
-            c.Draw();
+            c.Draw(_view, _projection);
         }
         //Propegate throuth all children
         foreach (GameObject gameObject in Children)
         {
-            gameObject.Draw();
+            gameObject.Draw(_view, _projection);
         }
     }
 

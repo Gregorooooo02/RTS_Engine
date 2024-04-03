@@ -6,7 +6,7 @@ public interface IScene
 {
     public void Initialize();
     public void Update(GameTime gameTime);
-    public void Draw();
+    public void Draw(Matrix _view, Matrix _projection);
     public void Activate();
     public void Deactivate();
     public void AddGameObject(GameObject gameObject);

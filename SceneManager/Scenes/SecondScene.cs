@@ -25,11 +25,11 @@ public class SecondScene : IScene
         }
     }
 
-    public void Draw()
+    public void Draw(Matrix _view, Matrix _projection)
     {
         foreach (GameObject gameObject in GameObjects)
         {
-            gameObject.Draw();
+            gameObject.Draw(_view, _projection);
         }
     }
 

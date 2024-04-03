@@ -12,15 +12,10 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
+    private SceneCamera _sceneCamera;
+    private BasicEffect _basicEffect;
     
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
-    private Matrix _world = Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, 0.0f));
-    private Matrix _view = Matrix.CreateLookAt(
-        new Vector3(0.0f, 0.0f, 10.0f),
-        new Vector3(0.0f),
-        -Vector3.UnitY);
-    private Matrix _projection =
-        Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 100.0f); 
     
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
@@ -37,9 +32,10 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        _basicEffect = new BasicEffect(_graphics.GraphicsDevice);
         // TODO: Add your initialization logic here
         _sceneManager = new SceneManager();
-
+    
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
 
@@ -52,6 +48,10 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
+        _sceneCamera.Position = _position;
+
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new BaseScene());
@@ -66,17 +66,19 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
         base.Update(gameTime);
+        _sceneCamera.Update(gameTime);
         _sceneManager.GetCurrentScene().Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(new Color(_clearColor));
-        
-        _view = Matrix.CreateLookAt(_position, new Vector3(0.0f), -Vector3.UnitY);
-
         // TODO: Add your drawing code here
-        _sceneManager.GetCurrentScene().Draw();
+        _basicEffect.World = Matrix.Identity;
+        _basicEffect.View = _sceneCamera.View;
+        _basicEffect.Projection = _sceneCamera.Projection;
+
+        _sceneManager.GetCurrentScene().Draw(_basicEffect.View, _basicEffect.Projection);
 
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
@@ -84,20 +86,6 @@ public class Game1 : Game
         _imGuiRenderer.AfterLayout();
 #endif
         base.Draw(gameTime);
-    }
-
-    private void DrawModel(Model model, Matrix wrld, Matrix vw, Matrix proj)
-    {
-        foreach (ModelMesh mesh in model.Meshes)
-        {
-            foreach (BasicEffect effect in mesh.Effects)
-            {
-                effect.World = wrld;
-                effect.View = vw;
-                effect.Projection = proj;
-            }
-            mesh.Draw();
-        }
     }
 
     protected virtual void ImGuiLayout()
