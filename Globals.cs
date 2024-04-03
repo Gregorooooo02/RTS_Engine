@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace RTS_Engine
@@ -10,17 +9,11 @@ namespace RTS_Engine
     internal class Globals
     {
         public static Globals Instance;
-        public static void Initialize(ContentManager asset) 
+        public static void Initialize() 
         {
             Instance = new Globals();
-            Instance.DefaultModel = asset.Load<Model>("defaultCube");
-            Instance.DefaultSprite = asset.Load<Texture2D>("smile");
-            Instance.DefaultFont = asset.Load<SpriteFont>("defaultFont");
-        }
 
-        public Model DefaultModel;
-        public Texture2D DefaultSprite;
-        public SpriteFont DefaultFont;
+        }
         
         public SpriteBatch SpriteBatch;
 

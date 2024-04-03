@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,22 +7,22 @@ namespace RTS_Engine;
 
 public class AssetManager
 {
-    private static AssetManager Instance;
-    private ContentManager content;
+    private static AssetManager _instance;
+    private readonly ContentManager _content;
 
-    private List<ModelData> _models;
-    private List<SpriteData> _sprites;
-    private List<FontData> _fonts;
+    private readonly List<ModelData> _models;
+    private readonly List<SpriteData> _sprites;
+    private readonly List<FontData> _fonts;
 
-    public static Model DefaultModel;
-    public static Texture2D DefaultSprite;
-    public static SpriteFont DefaultFont;
+    public static Model DefaultModel {get; private set;}
+    public static Texture2D DefaultSprite{get; private set;}
+    public static SpriteFont DefaultFont{get; private set;}
 
     private class ModelData
     {
-        public Model Model;
+        public readonly Model Model;
         public int Uses;
-        public string Name;
+        public readonly string Name;
 
         public ModelData(Model model,string name)
         {
@@ -34,9 +33,9 @@ public class AssetManager
     
     private class SpriteData
     {
-        public Texture2D Sprite;
+        public readonly Texture2D Sprite;
         public int Uses;
-        public string Name;
+        public readonly string Name;
 
         public SpriteData(Texture2D sprite,string name)
         {
@@ -47,9 +46,9 @@ public class AssetManager
     
     private class FontData
     {
-        public SpriteFont Font;
+        public readonly SpriteFont Font;
         public int Uses;
-        public string Name;
+        public readonly string Name;
 
         public FontData(SpriteFont font,string name)
         {
@@ -60,69 +59,93 @@ public class AssetManager
     
     public static void Initialize(ContentManager content)
     {
-        Instance = new AssetManager(content);
+        _instance = new AssetManager(content);
     }
 
     private AssetManager(ContentManager content)
     {
-        this.content = content;
+        this._content = content;
         _models = new List<ModelData>();
         _sprites = new List<SpriteData>();
         _fonts = new List<FontData>();
 
-        DefaultModel = this.content.Load<Model>("defaultCube");
-        DefaultSprite = this.content.Load<Texture2D>("smile");
-        DefaultFont = this.content.Load<SpriteFont>("defaultFont");
+        DefaultModel = this._content.Load<Model>("defaultCube");
+        DefaultSprite = this._content.Load<Texture2D>("smile");
+        DefaultFont = this._content.Load<SpriteFont>("defaultFont");
     }
 
     public static Model GetModel(string name)
     {
-        Model temp = Instance._models.Find(x => x.Name == name)?.Model;
+        ModelData temp = _instance._models.Find(x => x.Name == name);
         if (temp == null)
         {
-            Instance._models.Add(new ModelData(Instance.content.Load<Model>(name),name));
-            Instance._models.Last().Uses++;
-            temp = Instance._models.Last().Model;
+            _instance._models.Add(new ModelData(_instance._content.Load<Model>(name),name));
+            _instance._models.Last().Uses++;
+            return _instance._models.Last().Model;
         }
-        return temp;
+        temp.Uses++;
+        return temp.Model;
     }
 
     public static Texture2D GetSprite(string name)
     {
-        Texture2D temp = Instance._sprites.Find(x => x.Name == name)?.Sprite;
+        SpriteData temp = _instance._sprites.Find(x => x.Name == name);
         if (temp == null)
         {
-            temp = Instance.content.Load<Texture2D>(name);
-            Instance._sprites.Add(new SpriteData(temp, name));
+            _instance._sprites.Add(new SpriteData(_instance._content.Load<Texture2D>(name), name));
+            _instance._sprites.Last().Uses++;
+            return _instance._sprites.Last().Sprite;
         }
-        return temp;
+
+        temp.Uses++;
+        return temp.Sprite;
     }
 
     public static SpriteFont GetFont(string name)
     {
-        SpriteFont temp = Instance._fonts.Find(x => x.Name == name)?.Font;
+        FontData temp = _instance._fonts.Find(x => x.Name == name);
         if (temp == null)
         {
-            temp = Instance.content.Load<SpriteFont>(name);
-            Instance._fonts.Add(new FontData(temp,name));
+            _instance._fonts.Add(new FontData(_instance._content.Load<SpriteFont>(name),name));
+            _instance._fonts.Last().Uses++;
+            return _instance._fonts.Last().Font;
         }
-        return temp;
+
+        temp.Uses++;
+        return temp.Font;
     }
 
     public static void FreeModel(Model model)
     {
-        ModelData data = Instance._models.Find(x => x.Model == model);
+        ModelData data = _instance._models.Find(x => x.Model == model);
         if(data == null) return;
         
         data.Uses--;
         if (data.Uses == 0)
         {
-            Instance._models.Remove(data);
+            _instance._models.Remove(data);
         }
     }
 
-    public static int test()
+    public static void FreeSprite(Texture2D sprite)
     {
-        return Instance._models.Count;
+        SpriteData data = _instance._sprites.Find(x => x.Sprite == sprite);
+        if(data == null) return;
+        data.Uses--;
+        if (data.Uses == 0)
+        {
+            _instance._sprites.Remove(data);
+        }
+    }
+
+    public static void FreeFont(SpriteFont font)
+    {
+        FontData data = _instance._fonts.Find(x => x.Font == font);
+        if(data == null) return;
+        data.Uses--;
+        if (data.Uses == 0)
+        {
+            _instance._fonts.Remove(data);
+        }
     }
 }

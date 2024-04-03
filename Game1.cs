@@ -45,7 +45,7 @@ public class Game1 : Game
         _imGuiRenderer.RebuildFontAtlas();
 
         InputManager.Initialize();
-        Globals.Initialize(Content);
+        Globals.Initialize();
         AssetManager.Initialize(Content);
         base.Initialize();
 
@@ -74,9 +74,7 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
-        //Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-        
-        //Console.WriteLine(AssetManager.test());
+        Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
         
         // TODO: Add your update logic here
 

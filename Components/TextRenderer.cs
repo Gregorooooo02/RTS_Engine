@@ -51,6 +51,7 @@ public class TextRenderer : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
+                AssetManager.FreeFont(Font);
             }
         }   
     }

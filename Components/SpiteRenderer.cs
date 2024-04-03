@@ -52,6 +52,7 @@ public class SpiteRenderer : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
+                AssetManager.FreeSprite(Sprite);
             }
         }   
     }

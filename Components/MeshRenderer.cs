@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ImGuiNET;
 
@@ -34,19 +33,14 @@ public class MeshRenderer : Component
 
     public MeshRenderer()
     {
-        Initialize();
-    }
-
-    ~MeshRenderer()
-    {
-        AssetManager.FreeModel(_model);
+        
     }
     
     public override void Update(){}
 
     public override void Initialize()
     {
-        _model = AssetManager.GetModel("SimpleShip/Ship");
+        _model = AssetManager.DefaultModel;
     }
 
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
@@ -80,7 +74,7 @@ public class MeshRenderer : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
-                this.ParentObject = null;
+                AssetManager.FreeModel(_model);
             }
         }   
     }
