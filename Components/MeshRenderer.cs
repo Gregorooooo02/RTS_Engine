@@ -23,6 +23,7 @@ public class MeshRenderer : Component
     public MeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
+        Initialize();
     }
 
     public MeshRenderer(GameObject parentObject, Model model)

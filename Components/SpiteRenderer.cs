@@ -18,7 +18,7 @@ public class SpiteRenderer : Component
     
     public SpiteRenderer()
     {
-        Initialize();
+        
     }
     
     public override void Update(){}
@@ -30,7 +30,13 @@ public class SpiteRenderer : Component
                 (int)ParentObject.Transform._pos.X,
                 (int)ParentObject.Transform._pos.Y,
                 (int)(Sprite.Width * ParentObject.Transform._scl.X),
-                (int)(Sprite.Height * ParentObject.Transform._scl.Y)),Color);
+                (int)(Sprite.Height * ParentObject.Transform._scl.Y)),
+                null,
+                Color,
+                MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+                Vector2.Zero,
+                SpriteEffects.None,
+                1);
     }
 
     public override void Initialize()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ImGuiNET;
+using System;
 
 namespace RTS_Engine;
 
@@ -14,17 +15,18 @@ public class TextRenderer : Component
 
     public TextRenderer()
     {
-        Initialize();
+        
     }
 
     public override void Draw()
     {
+        if(!Active) return;
         Globals.Instance.SpriteBatch.DrawString(
             Font,
             Content,
             new Vector2(ParentObject.Transform._pos.X,ParentObject.Transform._pos.Y),
             Color,
-            ParentObject.Transform._rot.Z,
+            MathHelper.ToRadians(ParentObject.Transform._rot.Z),
             new Vector2(0,0),
             new Vector2(ParentObject.Transform._scl.X,ParentObject.Transform._scl.Y),
             SpriteEffects.None,
