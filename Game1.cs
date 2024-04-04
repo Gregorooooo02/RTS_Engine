@@ -97,10 +97,7 @@ public class Game1 : Game
         ImGui.Checkbox("Inspector",ref Globals.Instance.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.Instance.SceneSelectionVisible);
 #endif
-
-        ImGui.Text("Change the color of the background");
         ImGui.ColorEdit3("Background Color", ref _clearColor);
-        ImGui.SliderFloat3("Camera position", ref _position,-100,100);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
 
 #if DEBUG
