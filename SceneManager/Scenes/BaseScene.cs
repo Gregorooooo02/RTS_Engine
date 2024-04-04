@@ -5,6 +5,7 @@ namespace RTS_Engine;
 
 public class BaseScene : IScene
 {
+    public string Name = "BaseScene";
     private List<GameObject> GameObjects;
 
     public void Initialize() {
