@@ -12,7 +12,7 @@ public class BaseScene : IScene
         GameObjects = new List<GameObject>();
         GameObject gameObject = new GameObject();
 
-        gameObject.AddComponent(new MeshRenderer(gameObject, Globals.Instance.defaultModel));
+        gameObject.AddComponent<MeshRenderer>();
         GameObjects.Add(gameObject);
     }
 

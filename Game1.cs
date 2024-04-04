@@ -42,15 +42,6 @@ public class Game1 : Game
         Globals.Initialize();
         AssetManager.Initialize(Content);
         base.Initialize();
-
-
-        _gameObject = new GameObject();
-        _gameObject.AddComponent<MeshRenderer>();
-        GameObject gameObject2 = new GameObject();
-        gameObject2.AddComponent<MeshRenderer>();
-        gameObject2.Transform.SetLocalPosition(new Vector3(4, 0, 0));
-        _gameObject.AddChildObject(gameObject2);
-
     }
 
     protected override void LoadContent()
@@ -86,8 +77,10 @@ public class Game1 : Game
         _basicEffect.World = Matrix.Identity;
         _basicEffect.View = _sceneCamera.View;
         _basicEffect.Projection = _sceneCamera.Projection;
-
+        
+        _spriteBatch.Begin();
         _sceneManager.GetCurrentScene().Draw(_basicEffect.View, _basicEffect.Projection);
+        _spriteBatch.End();
 
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);

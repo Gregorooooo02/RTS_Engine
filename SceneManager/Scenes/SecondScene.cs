@@ -12,7 +12,7 @@ public class SecondScene : IScene
         GameObjects = new List<GameObject>();
         GameObject gameObject = new GameObject();
 
-        gameObject.AddComponent(new MeshRenderer(gameObject, Globals.Instance.monkeModel));
+        gameObject.AddComponent<MeshRenderer>();
         gameObject.Transform.SetLocalRotation(new Vector3(-90, 0, 0));
         GameObjects.Add(gameObject);
     }

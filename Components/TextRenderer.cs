@@ -18,7 +18,7 @@ public class TextRenderer : Component
         
     }
 
-    public override void Draw()
+    public override void Draw(Matrix _view, Matrix _projection)
     {
         if(!Active) return;
         Globals.Instance.SpriteBatch.DrawString(

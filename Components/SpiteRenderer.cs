@@ -23,7 +23,7 @@ public class SpiteRenderer : Component
     
     public override void Update(){}
 
-    public override void Draw()
+    public override void Draw(Matrix _view, Matrix _projection)
     {
         Globals.Instance.SpriteBatch?.Draw(Sprite,
             new Rectangle(
