@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace RTS_Engine
@@ -10,15 +9,13 @@ namespace RTS_Engine
     internal class Globals
     {
         public static Globals Instance;
-        public static void Initialize(ContentManager content) 
+        public static void Initialize() 
         {
             Instance = new Globals();
-            Instance.defaultModel = content.Load<Model>("defaultCube");
-            Instance.monkeModel = content.Load<Model>("monke");
-        }
 
-        public Model defaultModel;
-        public Model monkeModel;
+        }
+        
+        public SpriteBatch SpriteBatch;
 
         private Globals()
         {

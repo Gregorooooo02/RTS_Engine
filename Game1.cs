@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using System.Diagnostics;
 
 namespace RTS_Engine;
 
@@ -40,9 +39,18 @@ public class Game1 : Game
         _imGuiRenderer.RebuildFontAtlas();
 
         InputManager.Initialize();
-        Globals.Initialize(Content);
-
+        Globals.Initialize();
+        AssetManager.Initialize(Content);
         base.Initialize();
+
+
+        _gameObject = new GameObject();
+        _gameObject.AddComponent<MeshRenderer>();
+        GameObject gameObject2 = new GameObject();
+        gameObject2.AddComponent<MeshRenderer>();
+        gameObject2.Transform.SetLocalPosition(new Vector3(4, 0, 0));
+        _gameObject.AddChildObject(gameObject2);
+
     }
 
     protected override void LoadContent()
@@ -51,6 +59,7 @@ public class Game1 : Game
 
         _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
         _sceneCamera.Position = _position;
+        Globals.Instance.SpriteBatch = _spriteBatch;
 
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
@@ -63,7 +72,7 @@ public class Game1 : Game
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
         Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-
+        
         // TODO: Add your update logic here
         base.Update(gameTime);
         _sceneCamera.Update(gameTime);

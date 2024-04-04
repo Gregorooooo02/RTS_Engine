@@ -32,6 +32,13 @@
 /processorParam:TextureFormat=Compressed
 /build:cube.fbx;defaultCube.fbx
 
+#begin defaultFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:defaultFont.spritefont
+
 #begin monke.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
