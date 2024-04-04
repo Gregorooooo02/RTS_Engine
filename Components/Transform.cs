@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Numerics;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
@@ -91,21 +88,20 @@ public class Transform : Component
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Transform")){
-            //ImGui.Checkbox("Transform active", ref this.Active);
             System.Numerics.Vector3 pos = _pos.ToNumerics();
-            if (ImGui.InputFloat3("Position", ref pos))
+            if (ImGui.DragFloat3("Position", ref pos,0.1f))
             {
                 _isDirty = true;
                 _pos = pos;
             }
             System.Numerics.Vector3 rot = _rot.ToNumerics();
-            if (ImGui.InputFloat3("Rotation", ref rot))
+            if (ImGui.DragFloat3("Rotation", ref rot))
             {
                 _isDirty = true;
                 _rot = rot;
             }
             System.Numerics.Vector3 scl = _scl.ToNumerics();
-            if (ImGui.InputFloat3("Scale", ref scl))
+            if (ImGui.DragFloat3("Scale", ref scl,0.05f,0))
             {
                 _isDirty = true;
                 _scl = scl;
