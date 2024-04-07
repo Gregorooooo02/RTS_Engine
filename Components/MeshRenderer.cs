@@ -7,7 +7,7 @@ namespace RTS_Engine;
 public class MeshRenderer : Component
 {
     private Model _model;
-
+    private string name;
 
     //---------------------------Temporary---------------------------
     // Matrix _view = Matrix.CreateLookAt(
@@ -42,6 +42,7 @@ public class MeshRenderer : Component
     public override void Initialize()
     {
         _model = AssetManager.DefaultModel;
+        name = "defaultCube";
     }
 
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
@@ -67,15 +68,43 @@ public class MeshRenderer : Component
     }
 
 #if DEBUG
+
+    private bool _switchingModel = false;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
+            ImGui.Text(name);
+            if (ImGui.Button("Switch mesh"))
+            {
+                _switchingModel = true;
+            }
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
                 AssetManager.FreeModel(_model);
+            }
+
+            if (_switchingModel)
+            {
+                ImGui.Begin("Switching models");
+                foreach (string n in AssetManager.ModelNames)
+                {
+                    if (ImGui.Button(n))
+                    {
+                        AssetManager.FreeModel(_model);
+                        _model = AssetManager.GetModel(n);
+                        _switchingModel = false;
+                        name = n;
+                    }
+                }
+                
+                if (ImGui.Button("Cancel selection"))
+                {
+                    _switchingModel = false;
+                }
+                ImGui.End();
             }
         }   
     }

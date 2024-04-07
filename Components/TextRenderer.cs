@@ -40,6 +40,7 @@ public class TextRenderer : Component
     }
 
 #if DEBUG
+    private bool _switchingFont = false;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Text Renderer"))
@@ -50,10 +51,34 @@ public class TextRenderer : Component
             {
                 Color = new Color(temp);
             }
+            ImGui.InputText("Contents", ref Content, 200);
+            if (ImGui.Button("Switch font"))
+            {
+                _switchingFont = true;
+            }
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
                 AssetManager.FreeFont(Font);
+            }
+
+            if (_switchingFont)
+            {
+                ImGui.Begin("Switching fonts");
+                foreach (string n in AssetManager.FontNames)
+                {
+                    if (ImGui.Button(n))
+                    {
+                        AssetManager.FreeFont(Font);
+                        Font = AssetManager.GetFont(n);
+                        _switchingFont = false;
+                    }
+                }
+                if (ImGui.Button("Cancel selection"))
+                {
+                    _switchingFont = false;
+                }
+                ImGui.End();
             }
         }   
     }
