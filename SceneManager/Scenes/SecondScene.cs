@@ -12,9 +12,21 @@ public class SecondScene : IScene
         GameObjects = new List<GameObject>();
         GameObject gameObject = new GameObject();
 
-        gameObject.AddComponent<MeshRenderer>();
+        gameObject.AddComponent<SpiteRenderer>();
+        gameObject.Transform.SetLocalScale(new Vector3(0.25f, 0.25f, 0.25f));
         gameObject.Transform.SetLocalRotation(new Vector3(-90, 0, 0));
+        gameObject.Transform.SetLocalPosition(new Vector3(1050, 0, 0));
+        gameObject.Name = "Sprite";
         GameObjects.Add(gameObject);
+
+        GameObject textObject = new GameObject();
+
+        textObject.AddComponent<TextRenderer>();
+        textObject.Transform.SetLocalPosition(new Vector3(620, 450, 0));
+        textObject.Transform.SetLocalScale(new Vector3(1f, 1f, 1f));
+        textObject.Name = "Text";
+
+        GameObjects.Add(textObject);
     }
 
     public void Update(GameTime gameTime)
