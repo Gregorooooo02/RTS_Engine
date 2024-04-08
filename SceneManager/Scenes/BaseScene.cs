@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
@@ -7,29 +8,43 @@ public class BaseScene : IScene
 {
     public string Name = "BaseScene";
     private List<GameObject> GameObjects;
+    public int number = 1;
+
+    GameObject background;
+    GameObject coin;
+    GameObject smiley;
+    GameObject text;
 
     public void Initialize() {
         GameObjects = new List<GameObject>();
-        GameObject background = new GameObject();
+        
+        background = new GameObject();
 
-        GameObject coin = new GameObject();
+        coin = new GameObject();
         coin.AddComponent<AnimatedSpriteRenderer>();
         coin.Transform.SetLocalPosition(new Vector3(680, 450, 0));
         coin.Transform.SetLocalScale(new Vector3(0.45f, 3.0f, 1.0f));
         GameObjects.Add(coin);
 
-        GameObject smiley = new GameObject();
+        smiley = new GameObject();
         smiley.AddComponent<SpiteRenderer>();
         smiley.Transform.SetLocalScale(new Vector3(0.25f, 0.25f, 0.25f));
         GameObjects.Add(smiley);
+
+        text = new GameObject();
+        text.AddComponent<TextRenderer>();
+        text.Transform.SetLocalPosition(new Vector3(15, 800, 0));
+        GameObjects.Add(text);
     }
 
     public void Update(GameTime gameTime)
     {
+        text.GetComponent<TextRenderer>().NewContent = "Number count: " + number;
         foreach (GameObject gameObject in GameObjects)
         {
             gameObject.Update();
         }
+        number++;
     }
 
     public void Draw(Matrix _view, Matrix _projection)

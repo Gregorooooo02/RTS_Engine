@@ -8,10 +8,18 @@ namespace RTS_Engine;
 public class TextRenderer : Component
 {
     public string Content = "Sample text";
+    public string NewContent;
     public SpriteFont Font;
     public Color Color = Color.White;
     
-    public override void Update(){}
+    public override void Update() 
+    {
+        if (NewContent != null) 
+        {
+            Content = NewContent;
+            NewContent = null;
+        }
+    }
 
     public TextRenderer()
     {
@@ -31,7 +39,6 @@ public class TextRenderer : Component
             new Vector2(ParentObject.Transform._scl.X,ParentObject.Transform._scl.Y),
             SpriteEffects.None,
             0);
-        
     }
 
     public override void Initialize()
