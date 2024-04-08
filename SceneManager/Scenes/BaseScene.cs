@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.IO;
+using System.Text;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
@@ -7,85 +8,80 @@ namespace RTS_Engine;
 public class BaseScene : IScene
 {
     public string Name = "BaseScene";
-    private List<GameObject> GameObjects;
     public int number = 1;
+    
+    private GameObject SceneRoot;
 
-    GameObject background;
-    GameObject coin;
-    GameObject smiley;
-    GameObject text;
-
-    public void Initialize() {
-        GameObjects = new List<GameObject>();
+    public void Initialize()
+    {
+        SceneRoot = new GameObject();
         
-        background = new GameObject();
+        GameObject background = new GameObject();
+        SceneRoot.AddChildObject(background);
 
-        coin = new GameObject();
+        GameObject coin = new GameObject();
         coin.AddComponent<AnimatedSpriteRenderer>();
         coin.Transform.SetLocalPosition(new Vector3(680, 450, 0));
         coin.Transform.SetLocalScale(new Vector3(0.45f, 3.0f, 1.0f));
-        GameObjects.Add(coin);
+        SceneRoot.AddChildObject(coin);
 
-        smiley = new GameObject();
+        GameObject smiley = new GameObject();
         smiley.AddComponent<SpiteRenderer>();
         smiley.Transform.SetLocalScale(new Vector3(0.25f, 0.25f, 0.25f));
-        GameObjects.Add(smiley);
+        SceneRoot.AddChildObject(smiley);
 
-        text = new GameObject();
+        GameObject text = new GameObject();
         text.AddComponent<TextRenderer>();
         text.Transform.SetLocalPosition(new Vector3(15, 800, 0));
-        GameObjects.Add(text);
+        SceneRoot.AddChildObject(text);
     }
 
     public void Update(GameTime gameTime)
     {
-        text.GetComponent<TextRenderer>().NewContent = "Number count: " + number;
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Update();
-        }
+        SceneRoot.Children[3].GetComponent<TextRenderer>().NewContent = "Number count: " + number;
+        SceneRoot.Update();
         number++;
     }
 
     public void Draw(Matrix _view, Matrix _projection)
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Draw(_view, _projection);
-        }
+        SceneRoot.Draw(_view,_projection);
     }
 
     public void Activate()
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Active = true;
-        }
+        SceneRoot.Active = true;
     }
 
     public void Deactivate()
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Active = false;
-        }
+        SceneRoot.Active = false;
     }
 
     public void AddGameObject(GameObject gameObject)
     {
-        GameObjects.Add(gameObject);
+        SceneRoot.AddChildObject(gameObject);
     }
 
     public void RemoveGameObject(GameObject gameObject)
     {
-        GameObjects.Remove(gameObject);
+        SceneRoot.RemoveChildObject(gameObject);
     }
 
     public void DrawHierarchy()
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.DrawTree();
-        }
+        SceneRoot.DrawTree();
+    }
+
+    public void SaveToFile()
+    {
+        StringBuilder builder = new StringBuilder();
+        //Append scene metadata here if necessary
+        
+        builder.Append(SceneRoot.SaveSceneToXml());
+        XDocument scene = XDocument.Parse(builder.ToString());
+        StreamWriter streamWriter = new StreamWriter("../../../SceneManager/Scenes/" + Name + ".xml");
+        scene.Save(streamWriter);
+        streamWriter.Close();
     }
 }

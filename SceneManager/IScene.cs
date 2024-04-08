@@ -12,4 +12,6 @@ public interface IScene
     public void AddGameObject(GameObject gameObject);
     public void RemoveGameObject(GameObject gameObject);
     public void DrawHierarchy();
+
+    public void SaveToFile();
 }

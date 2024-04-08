@@ -71,6 +71,66 @@ public class KeyBindsData
     
 
     #endregion
+
+    #region SceneDeserialization
+
+    public static GameObject DeserializeScene(string filePath)
+    {
+        XDocument scene;
+        try
+        {
+             scene = XDocument.Load(filePath);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        return DeserializeObject(scene.Element("rootObject"));
+    }
+
+    private static GameObject DeserializeObject(XElement objectNode)
+    {
+        GameObject currentObject = new GameObject();
+        currentObject.Name = objectNode.Element("name").Value;
+        currentObject.Active = objectNode.Element("active").Value == "True";
+        foreach (XElement component in objectNode.Element("components").Elements())
+        {
+            Component newComponent = null;
+            switch (component.Element("type").Value)
+            {
+                case "Transform":
+                    newComponent = currentObject.Transform;
+                    break;
+                case "MeshRenderer":
+                    newComponent = new MeshRenderer();
+                    break;
+                case "SpriteRenderer":
+                    newComponent = new SpiteRenderer();
+                    break;
+                case "TextRenderer":
+                    newComponent = new TextRenderer();
+                    break;
+                case "AnimatedSpriteRenderer":
+                    newComponent = new AnimatedSpriteRenderer();
+                    break;
+            }
+            if (newComponent != null)
+            {
+                newComponent.Deserialize(component);
+                currentObject.AddComponent(newComponent);
+            }
+            
+        }
+        foreach (XElement childObject in objectNode.Element("childObjects").Elements())
+        {
+            currentObject.AddChildObject(DeserializeObject(childObject));
+        }
+        return currentObject;
+    }
+    
+
+    #endregion
     
     public static FileManager Instance;
     public static void Initialize()

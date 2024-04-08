@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
@@ -52,6 +53,12 @@ public class Transform : Component
     public void SetLocalPosition(Vector3 newPosition)
     {
         _pos = newPosition;
+        _isDirty = true;
+    }
+
+    public void Move(Vector3 offset)
+    {
+        _pos += offset;
         _isDirty = true;
     }
     
@@ -116,7 +123,18 @@ public class Transform : Component
         builder.Append("</component>");
         return builder.ToString();
     }
-    
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        XElement position = element.Element("position");
+        SetLocalPosition(new Vector3(float.Parse(position.Element("x").Value),float.Parse(position.Element("y").Value),float.Parse(position.Element("z").Value)));
+        XElement rotation = element.Element("rotation");
+        SetLocalRotation(new Vector3(float.Parse(rotation.Element("x").Value),float.Parse(rotation.Element("y").Value),float.Parse(rotation.Element("z").Value)));
+        XElement scale = element.Element("scale");
+        SetLocalScale(new Vector3(float.Parse(scale.Element("x").Value),float.Parse(scale.Element("y").Value),float.Parse(scale.Element("z").Value)));
+    }
+
 
 #if DEBUG
     public override void Inspect()

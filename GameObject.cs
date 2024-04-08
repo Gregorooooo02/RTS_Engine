@@ -86,6 +86,7 @@ public class GameObject
     public void AddComponent(Component component)
     {
         if(component.GetType() == typeof(Transform))return;
+        component.ParentObject = this;
         _components.Add(component);
     }
 
@@ -108,15 +109,12 @@ public class GameObject
 
     public string SaveSceneToXml()
     {
-        //XDocument scene = XDocument.Parse("<KEK>/n</KEK>");
-        //StreamWriter streamWriter = new StreamWriter("../../../SceneManager/Scenes/Scene1.xml");
-        //scene.Save(streamWriter);
         StringBuilder builder = new StringBuilder();
         builder.Append("<rootObject>");
         builder.Append("<name>" + Name + "</name>");
         builder.Append("<active>" + Active +"</active>");
-        builder.Append(Transform.ComponentToXmlString());
         builder.Append("<components>");
+        builder.Append(Transform.ComponentToXmlString());
         foreach (Component c in _components)
         {
             builder.Append(c.ComponentToXmlString());
@@ -135,10 +133,11 @@ public class GameObject
     private string ObjectToXmlString()
     {
         StringBuilder builder = new StringBuilder();
+        builder.Append("<object>");
         builder.Append("<name>" + Name + "</name>");
         builder.Append("<active>" + Active +"</active>");
-        builder.Append(Transform.ComponentToXmlString());
         builder.Append("<components>");
+        builder.Append(Transform.ComponentToXmlString());
         foreach (Component c in _components)
         {
             builder.Append(c.ComponentToXmlString());
@@ -150,7 +149,7 @@ public class GameObject
             builder.Append(gameObject.ObjectToXmlString());
         }
         builder.Append("</childObjects>");
-
+        builder.Append("</object>");
         return builder.ToString();
     }
     

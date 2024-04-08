@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ImGuiNET;
@@ -78,10 +79,23 @@ public class MeshRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
-        builder.Append("<modelName>" + name +"</modelName>");
+        builder.Append("<model>" + name +"</model>");
         
         builder.Append("</component>");
         return builder.ToString();
+    }
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        LoadModel(element.Element("model").Value);
+    }
+
+
+    public void LoadModel(string name)
+    {
+        _model = AssetManager.GetModel(name);
+        this.name = name;
     }
     
 #if DEBUG
@@ -111,9 +125,8 @@ public class MeshRenderer : Component
                     if (ImGui.Button(n))
                     {
                         AssetManager.FreeModel(_model);
-                        _model = AssetManager.GetModel(n);
+                        LoadModel(n);
                         _switchingModel = false;
-                        name = n;
                     }
                 }
                 

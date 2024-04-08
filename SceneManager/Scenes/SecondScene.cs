@@ -78,4 +78,9 @@ public class SecondScene : IScene
             gameObject.DrawTree();
         }
     }
+
+    public void SaveToFile()
+    {
+        throw new System.NotImplementedException();
+    }
 }

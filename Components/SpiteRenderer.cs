@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
@@ -57,8 +58,28 @@ public class SpiteRenderer : Component
         
         builder.Append("<sprite>" + Sprite.Name + "</sprite>");
         
+        builder.Append("<color>");
+        builder.Append("<r>" + Color.R + "</r>");
+        builder.Append("<g>" + Color.G + "</g>");
+        builder.Append("<b>" + Color.B + "</b>");
+        builder.Append("<a>" + Color.A + "</a>");
+        builder.Append("</color>");
+        
         builder.Append("</component>");
         return builder.ToString();
+    }
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        LoadSprite(element.Element("sprite").Value);
+        XElement color = element.Element("color");
+        Color = new Color(float.Parse(color.Element("r").Value),float.Parse(color.Element("g").Value),float.Parse(color.Element("b").Value),float.Parse(color.Element("a").Value));
+    }
+
+    public void LoadSprite(string name)
+    {
+        Sprite = AssetManager.GetSprite(name);
     }
 
 #if DEBUG

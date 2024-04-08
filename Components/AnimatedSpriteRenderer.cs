@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -87,6 +88,13 @@ public class AnimatedSpriteRenderer : Component
         
         builder.Append("</component>");
         return builder.ToString();
+    }
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        
+        //TODO: Deserialize relevant data here
     }
 
     public void StartAnimation() 

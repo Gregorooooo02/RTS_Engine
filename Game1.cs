@@ -63,7 +63,7 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
-        Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
+        //Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
         
         // TODO: Add your update logic here
         base.Update(gameTime);

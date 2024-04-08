@@ -46,6 +46,7 @@ public class SceneManager
             RemoveScene();
         }
 
+        
         ImGui.Text($"Current Scene: {currentScene.GetType().Name}");
         ImGui.Separator();
         for (int i = scenesCopy.Count; i > 0; i--)
@@ -56,6 +57,10 @@ public class SceneManager
                 _scenes.Remove(scene);
                 _scenes.Add(scene);
             }
+        }
+        if (ImGui.Button("Save to file"))
+        {
+            currentScene.SaveToFile();
         }
         ImGui.End();
     }

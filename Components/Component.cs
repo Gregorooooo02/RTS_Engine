@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
@@ -18,6 +19,7 @@ public abstract class Component
     public abstract void Initialize();
 
     public abstract string ComponentToXmlString();
+    public abstract void Deserialize(XElement element);
 
 #if DEBUG
      public abstract void Inspect();
