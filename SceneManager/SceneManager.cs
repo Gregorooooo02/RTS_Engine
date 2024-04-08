@@ -6,15 +6,15 @@ namespace RTS_Engine;
 public class SceneManager
 {
     public static SceneManager Instance;
-    private List<IScene> _scenes;
+    private List<Scene> _scenes;
 
     public SceneManager()
     {
         Instance = this;
-        _scenes = new List<IScene>();
+        _scenes = new List<Scene>();
     }
 
-    public void AddScene(IScene scene)
+    public void AddScene(Scene scene)
     {
         scene.Initialize();
         _scenes.Add(scene);
@@ -25,7 +25,7 @@ public class SceneManager
         _scenes.RemoveAt(_scenes.Count - 1);
     }
 
-    public IScene GetCurrentScene() 
+    public Scene GetCurrentScene() 
     {
         return _scenes[_scenes.Count - 1];
     }
@@ -34,7 +34,7 @@ public class SceneManager
         ImGui.Begin("Scene Selection");
 
         var currentScene = GetCurrentScene();
-        var scenesCopy = new List<IScene>(_scenes);
+        var scenesCopy = new List<Scene>(_scenes);
 
         if (ImGui.Button("Add Scene"))
         {

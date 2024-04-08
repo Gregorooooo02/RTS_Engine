@@ -1,86 +1,72 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
+using System.Text;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
-public class SecondScene : IScene
-{
-    private List<GameObject> GameObjects;
-
-    public void Initialize()
+public class SecondScene : Scene
+{   
+    public override void Initialize()
     {
-        GameObjects = new List<GameObject>();
+        Name = "SecondScene";
+        SceneRoot = new GameObject();
+
         GameObject gameObject = new GameObject();
-
-        gameObject.AddComponent<SpiteRenderer>();
-        gameObject.Transform.SetLocalScale(new Vector3(0.25f, 0.25f, 0.25f));
-        gameObject.Transform.SetLocalRotation(new Vector3(-90, 0, 0));
-        gameObject.Transform.SetLocalPosition(new Vector3(1050, 0, 0));
-        gameObject.Name = "Sprite";
-        GameObjects.Add(gameObject);
-
-        GameObject textObject = new GameObject();
-
-        textObject.AddComponent<TextRenderer>();
-        textObject.Transform.SetLocalPosition(new Vector3(620, 450, 0));
-        textObject.Transform.SetLocalScale(new Vector3(1f, 1f, 1f));
-        textObject.Name = "Text";
-
-        GameObjects.Add(textObject);
+        gameObject.AddComponent<MeshRenderer>();
+        gameObject.Transform.SetLocalPosition(new Vector3(0, 0, 0));
+        gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
+        SceneRoot.AddChildObject(gameObject);
     }
 
-    public void Update(GameTime gameTime)
+    public override void Update(GameTime gameTime)
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Update();
-        }
+        SceneRoot.Update();
     }
 
-    public void Draw(Matrix _view, Matrix _projection)
+    public override void Draw(Matrix _view, Matrix _projection)
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Draw(_view, _projection);
-        }
+        SceneRoot.Draw(_view, _projection);
     }
 
-    public void Activate()
+    public override void Activate()
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Active = true;
-        }
+        SceneRoot.Active = true;
     }
 
-    public void Deactivate()
+    public override void Deactivate()
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.Active = false;
-        }
+        SceneRoot.Active = false;
     }
 
-    public void AddGameObject(GameObject gameObject)
+    public override void AddGameObject(GameObject gameObject)
     {
-        GameObjects.Add(gameObject);
+        SceneRoot.AddChildObject(gameObject);
     }
 
-    public void RemoveGameObject(GameObject gameObject)
+    public override void RemoveGameObject(GameObject gameObject)
     {
-        GameObjects.Remove(gameObject);
+        SceneRoot.RemoveChildObject(gameObject);
     }
 
-    public void DrawHierarchy()
+    public override void DrawHierarchy()
     {
-        foreach (GameObject gameObject in GameObjects)
-        {
-            gameObject.DrawTree();
-        }
+        SceneRoot.DrawTree();
     }
 
-    public void SaveToFile()
+    public override void SaveToFile()
     {
-        throw new System.NotImplementedException();
+        StringBuilder builder = new StringBuilder();
+        // Append scene metadata here if necessary
+
+        builder.Append(SceneRoot.SaveSceneToXml());
+        XDocument scene = XDocument.Parse(builder.ToString());
+#if _WINDOWS
+        StreamWriter streamWriter = new StreamWriter("../../../SceneManager/Scenes/" + Name + ".xml");
+#else
+        StreamWriter streamWriter = new StreamWriter("SceneManager/Scenes/" + Name + ".xml");
+#endif
+        scene.Save(streamWriter);
+        streamWriter.Close();
     }
 }
