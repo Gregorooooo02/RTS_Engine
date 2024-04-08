@@ -90,7 +90,11 @@ public class BaseScene : IScene
         
         builder.Append(SceneRoot.SaveSceneToXml());
         XDocument scene = XDocument.Parse(builder.ToString());
+#if _WINDOWS
         StreamWriter streamWriter = new StreamWriter("../../../SceneManager/Scenes/" + Name + ".xml");
+#else
+        StreamWriter streamWriter = new StreamWriter("SceneManager/Scenes/" + Name + ".xml");
+#endif
         scene.Save(streamWriter);
         streamWriter.Close();
     }

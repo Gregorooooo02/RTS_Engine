@@ -9,7 +9,7 @@ namespace RTS_Engine;
 public class FileManager
 {
 
-    #region KeyBinds
+#region KeyBinds
 public class KeyBindsData
     {
         public List<Keys> KeyboardKeys;
@@ -67,13 +67,9 @@ public class KeyBindsData
         }
         return output;
     }
-    
-    
+#endregion
 
-    #endregion
-
-    #region SceneDeserialization
-
+#region SceneDeserialization
     public static GameObject DeserializeScene(string filePath)
     {
         XDocument scene;
@@ -128,9 +124,7 @@ public class KeyBindsData
         }
         return currentObject;
     }
-    
-
-    #endregion
+#endregion
     
     public static FileManager Instance;
     public static void Initialize()

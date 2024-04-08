@@ -11,10 +11,8 @@ namespace RTS_Engine;
 
 public class AssetManager
 {
-    #if DEBUG
-
-    #region Loading asset names
-
+#if DEBUG
+#region Loading asset names
     public static List<string> ModelNames;
     public static List<string> SpriteNames;
     public static List<string> FontNames;
@@ -46,7 +44,6 @@ public class AssetManager
         }
         sr.Close();
     }
-
 #endregion
 #endif
     
@@ -114,13 +111,13 @@ public class AssetManager
         _sprites = new List<SpriteData>();
         _fonts = new List<FontData>();
         
-        #if DEBUG
+#if DEBUG
         ModelNames = new List<string>();
         SpriteNames = new List<string>();
         FontNames = new List<string>();
         
         LoadNames();
-        #endif
+#endif
 
         DefaultModel = this._content.Load<Model>("defaultCube");
         DefaultSprite = this._content.Load<Texture2D>("smile");

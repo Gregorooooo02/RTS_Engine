@@ -43,9 +43,23 @@
           </rotation>
           <scale>
             <x>1</x>
-            <y>1</y>
+            <y>10</y>
             <z>1</z>
           </scale>
+        </component>
+        <component>
+          <type>AnimatedSpriteRenderer</type>
+          <active>True</active>
+          <spriteSheet>background</spriteSheet>
+          <frames>12</frames>
+          <frameTime>0,05</frameTime>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <isAnimationActive>True</isAnimationActive>
         </component>
       </components>
       <childObjects></childObjects>
@@ -76,6 +90,16 @@
         <component>
           <type>AnimatedSpriteRenderer</type>
           <active>True</active>
+          <spriteSheet>coin</spriteSheet>
+          <frames>6</frames>
+          <frameTime>0,1</frameTime>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <isAnimationActive>True</isAnimationActive>
         </component>
       </components>
       <childObjects></childObjects>
@@ -98,15 +122,15 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,85</x>
-            <y>10,1</y>
+            <x>0,25</x>
+            <y>0,25</y>
             <z>0,25</z>
           </scale>
         </component>
         <component>
           <type>SpriteRenderer</type>
           <active>True</active>
-          <sprite>background</sprite>
+          <sprite>smile</sprite>
           <color>
             <r>255</r>
             <g>255</g>
@@ -143,7 +167,7 @@
         <component>
           <type>TextRenderer</type>
           <active>True</active>
-          <contents>Number count: 5372</contents>
+          <contents>Number count: 213</contents>
           <font>defaultFont</font>
         </component>
       </components>
