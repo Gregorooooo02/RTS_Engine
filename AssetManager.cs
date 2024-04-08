@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+#if DEBUG
+using System;
+using System.IO;
+#endif
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,6 +11,45 @@ namespace RTS_Engine;
 
 public class AssetManager
 {
+    #if DEBUG
+
+    #region Loading asset names
+
+    public static List<string> ModelNames;
+    public static List<string> SpriteNames;
+    public static List<string> FontNames;
+
+
+    private static readonly string[] ModelFormats = { "fbx", "obj" };
+    private static readonly string[] SpriteFormats = { "jpg", "png", "bmp" };
+    private static void LoadNames()
+    {
+        StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
+        string line = sr.ReadLine();
+        while (line != null)
+        {
+            if (line.Contains("/build:"))
+            {
+                line = line.Substring(7);
+                int separatorIndex = line.IndexOf(";");
+                if (separatorIndex != -1) line = line.Substring(separatorIndex + 1);
+                string[] result = line.Split('.');
+                if(result[1].Equals("spritefont")) FontNames.Add(result[0]);
+                else if(ModelFormats.Contains(result[1])) ModelNames.Add(result[0]);
+                else if (SpriteFormats.Contains(result[1])) SpriteNames.Add(result[0]);
+            }
+            line = sr.ReadLine();
+        }
+        sr.Close();
+    }
+
+    #endregion
+    
+    
+    #endif
+    
+    
+    
     private static AssetManager _instance;
     private readonly ContentManager _content;
 
@@ -70,6 +113,14 @@ public class AssetManager
         _models = new List<ModelData>();
         _sprites = new List<SpriteData>();
         _fonts = new List<FontData>();
+        
+        #if DEBUG
+        ModelNames = new List<string>();
+        SpriteNames = new List<string>();
+        FontNames = new List<string>();
+        
+        LoadNames();
+        #endif
 
         DefaultModel = this._content.Load<Model>("defaultCube");
         DefaultSprite = this._content.Load<Texture2D>("smile");

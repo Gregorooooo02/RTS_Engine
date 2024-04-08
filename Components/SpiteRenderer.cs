@@ -45,20 +45,46 @@ public class SpiteRenderer : Component
     }
 
 #if DEBUG
+    private bool _switchingSprites = false;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Sprite Renderer"))
         {
             ImGui.Checkbox("Sprite active", ref Active);
+            ImGui.Text(Sprite.Name);
             System.Numerics.Vector4 temp = Color.ToVector4().ToNumerics();
             if (ImGui.ColorEdit4("Sprite Color", ref temp))
             {
                 Color = new Color(temp);
             }
+
+            if (ImGui.Button("Switch sprite"))
+            {
+                _switchingSprites = true;
+            }
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
                 AssetManager.FreeSprite(Sprite);
+            }
+
+            if (_switchingSprites)
+            {
+                ImGui.Begin("Switching sprites");
+                foreach (string n in AssetManager.SpriteNames)
+                {
+                    if (ImGui.Button(n))
+                    {
+                        AssetManager.FreeSprite(Sprite);
+                        Sprite = AssetManager.GetSprite(n);
+                        _switchingSprites = false;
+                    }
+                }
+                if (ImGui.Button("Cancel selection"))
+                {
+                    _switchingSprites = false;
+                }
+                ImGui.End();
             }
         }   
     }
