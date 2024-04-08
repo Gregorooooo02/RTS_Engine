@@ -24,7 +24,11 @@ public class AssetManager
     private static readonly string[] SpriteFormats = { "jpg", "png", "bmp" };
     private static void LoadNames()
     {
+#if _WINDOWS
+        StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
+#else
         StreamReader sr = new StreamReader("Content/Content.mgcb");
+#endif
         string line = sr.ReadLine();
         while (line != null)
         {
@@ -43,12 +47,8 @@ public class AssetManager
         sr.Close();
     }
 
-    #endregion
-    
-    
-    #endif
-    
-    
+#endregion
+#endif
     
     private static AssetManager _instance;
     private readonly ContentManager _content;
