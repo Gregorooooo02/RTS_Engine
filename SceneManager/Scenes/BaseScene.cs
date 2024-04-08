@@ -18,6 +18,13 @@ public class BaseScene : IScene
         
         GameObject background = new GameObject();
         SceneRoot.AddChildObject(background);
+        background.AddComponent<AnimatedSpriteRenderer>();
+        background.GetComponent<AnimatedSpriteRenderer>().SetSpriteSheet(AssetManager.Background);
+        background.GetComponent<AnimatedSpriteRenderer>().SetFrames(12);
+        background.GetComponent<AnimatedSpriteRenderer>().SetFrameTime(0.05f);
+        background.Transform.SetLocalScale(new Vector3(1.0f, 10.0f, 1.0f));
+        background.Transform.SetLocalPosition(new Vector3(0, 0, 0));
+
 
         GameObject coin = new GameObject();
         coin.AddComponent<AnimatedSpriteRenderer>();

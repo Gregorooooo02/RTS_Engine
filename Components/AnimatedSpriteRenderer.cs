@@ -111,6 +111,14 @@ public class AnimatedSpriteRenderer : Component
         Active = element.Element("active")?.Value == "True";
         
         //TODO: Deserialize relevant data here
+        LoadSpriteSheet(element.Element("spriteSheet").Value);
+        SetFrames(int.Parse(element.Element("frames").Value));
+        SetFrameTime(float.Parse(element.Element("frameTime").Value));
+
+        XElement color = element.Element("color");
+        Color = new Color(float.Parse(color.Element("r").Value),float.Parse(color.Element("g").Value),float.Parse(color.Element("b").Value),float.Parse(color.Element("a").Value));
+
+        _isAnimationActive = element.Element("isAnimationActive")?.Value == "True";
     }
 
     public void StartAnimation() 
@@ -146,6 +154,13 @@ public class AnimatedSpriteRenderer : Component
     public void SetFrames(int frames) 
     {
         Frames = frames;
+        _sourceRectangles.Clear();
+        Initialize();
+    }
+
+    public void LoadSpriteSheet(string name) 
+    {
+        SpriteSheet = AssetManager.GetSprite(name);
         _sourceRectangles.Clear();
         Initialize();
     }
