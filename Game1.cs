@@ -66,6 +66,7 @@ public class Game1 : Game
         
         // TODO: Add your update logic here
         base.Update(gameTime);
+        Globals.Update(gameTime);
         _sceneCamera.Update(gameTime);
         _sceneManager.GetCurrentScene().Update(gameTime);
     }

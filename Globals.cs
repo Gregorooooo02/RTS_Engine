@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace RTS_Engine
@@ -15,7 +16,13 @@ namespace RTS_Engine
 
         }
         
+        public static float TotalSeconds { get; set; }
         public SpriteBatch SpriteBatch;
+
+        public static void Update(GameTime gameTime)
+        {
+            TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
 
         private Globals()
         {
