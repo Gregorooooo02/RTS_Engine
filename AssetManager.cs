@@ -17,6 +17,7 @@ public class AssetManager
     public static Model DefaultModel {get; private set;}
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
+    public static Texture2D Background{get; private set;}
     public static SpriteFont DefaultFont{get; private set;}
 
     private class ModelData
@@ -73,6 +74,7 @@ public class AssetManager
         DefaultModel = this._content.Load<Model>("defaultCube");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
+        Background = this._content.Load<Texture2D>("background");
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
     }
 
