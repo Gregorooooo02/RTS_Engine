@@ -10,10 +10,18 @@ public class BaseScene : IScene
 
     public void Initialize() {
         GameObjects = new List<GameObject>();
-        GameObject gameObject = new GameObject();
+        GameObject background = new GameObject();
 
-        gameObject.AddComponent<MeshRenderer>();
-        GameObjects.Add(gameObject);
+        GameObject coin = new GameObject();
+        coin.AddComponent<AnimatedSpriteRenderer>();
+        coin.Transform.SetLocalPosition(new Vector3(680, 450, 0));
+        coin.Transform.SetLocalScale(new Vector3(0.45f, 3.0f, 1.0f));
+        GameObjects.Add(coin);
+
+        GameObject smiley = new GameObject();
+        smiley.AddComponent<SpiteRenderer>();
+        smiley.Transform.SetLocalScale(new Vector3(0.25f, 0.25f, 0.25f));
+        GameObjects.Add(smiley);
     }
 
     public void Update(GameTime gameTime)
