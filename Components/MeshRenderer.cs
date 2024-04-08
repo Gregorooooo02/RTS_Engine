@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ImGuiNET;
 
@@ -67,6 +68,22 @@ public class MeshRenderer : Component
         DrawModel(_model, ParentObject.Transform.ModelMatrix, _view, _projection);
     }
 
+    public override string ComponentToXmlString()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>MeshRenderer</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("<modelName>" + name +"</modelName>");
+        
+        builder.Append("</component>");
+        return builder.ToString();
+    }
+    
 #if DEBUG
 
     private bool _switchingModel = false;

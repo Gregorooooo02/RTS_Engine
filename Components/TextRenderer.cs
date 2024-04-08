@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ImGuiNET;
-using System;
+using System.Text;
 
 namespace RTS_Engine;
 
@@ -10,6 +10,7 @@ public class TextRenderer : Component
     public string Content = "Sample text";
     public string NewContent;
     public SpriteFont Font;
+    private string name;
     public Color Color = Color.White;
     
     public override void Update() 
@@ -44,6 +45,24 @@ public class TextRenderer : Component
     public override void Initialize()
     {
         Font = AssetManager.DefaultFont;
+    }
+
+    public override string ComponentToXmlString()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>TextRenderer</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("<contents>" + Content +"</contents>");
+
+        builder.Append("<font>" + name + "</font>");
+        
+        builder.Append("</component>");
+        return builder.ToString();
     }
 
 #if DEBUG

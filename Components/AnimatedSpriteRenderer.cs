@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -70,6 +71,22 @@ public class AnimatedSpriteRenderer : Component
         {
             _sourceRectangles.Add(new(i * frameWdith, 0, frameWdith, frameHeight));
         }
+    }
+
+    public override string ComponentToXmlString()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>AnimatedSpriteRenderer</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        //TODO: Append relevant data here
+        
+        builder.Append("</component>");
+        return builder.ToString();
     }
 
     public void StartAnimation() 

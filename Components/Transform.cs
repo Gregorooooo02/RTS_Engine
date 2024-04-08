@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
@@ -9,6 +10,7 @@ namespace RTS_Engine;
 public class Transform : Component
 {
     public override void Initialize(){}
+    
     public Transform(GameObject parent)
     {
         ParentObject = parent;
@@ -83,6 +85,38 @@ public class Transform : Component
         
     }
 
+    public override string ComponentToXmlString()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>Transform</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("<position>");
+        builder.Append("<x>" + _pos.X + "</x>");
+        builder.Append("<y>" + _pos.Y + "</y>");
+        builder.Append("<z>" + _pos.Z + "</z>");
+        builder.Append("</position>");
+        
+        builder.Append("<rotation>");
+        builder.Append("<x>" + _rot.X + "</x>");
+        builder.Append("<y>" + _rot.Y + "</y>");
+        builder.Append("<z>" + _rot.Z + "</z>");
+        builder.Append("</rotation>");
+        
+        builder.Append("<scale>");
+        builder.Append("<x>" + _scl.X + "</x>");
+        builder.Append("<y>" + _scl.Y + "</y>");
+        builder.Append("<z>" + _scl.Z + "</z>");
+        builder.Append("</scale>");
+        
+        builder.Append("</component>");
+        return builder.ToString();
+    }
+    
 
 #if DEBUG
     public override void Inspect()

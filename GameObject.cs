@@ -113,10 +113,13 @@ public class GameObject
         //scene.Save(streamWriter);
         StringBuilder builder = new StringBuilder();
         builder.Append("<rootObject>");
+        builder.Append("<name>" + Name + "</name>");
+        builder.Append("<active>" + Active +"</active>");
+        builder.Append(Transform.ComponentToXmlString());
         builder.Append("<components>");
         foreach (Component c in _components)
         {
-            
+            builder.Append(c.ComponentToXmlString());
         }
         builder.Append("</components>");
         builder.Append("<childObjects>");
@@ -134,10 +137,11 @@ public class GameObject
         StringBuilder builder = new StringBuilder();
         builder.Append("<name>" + Name + "</name>");
         builder.Append("<active>" + Active +"</active>");
+        builder.Append(Transform.ComponentToXmlString());
         builder.Append("<components>");
         foreach (Component c in _components)
         {
-            
+            builder.Append(c.ComponentToXmlString());
         }
         builder.Append("</components>");
         builder.Append("<childObjects>");

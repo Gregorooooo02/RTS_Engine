@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 
@@ -42,6 +43,22 @@ public class SpiteRenderer : Component
     public override void Initialize()
     {
         Sprite = AssetManager.DefaultSprite;
+    }
+
+    public override string ComponentToXmlString()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>SpriteRenderer</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("<sprite>" + Sprite.Name + "</sprite>");
+        
+        builder.Append("</component>");
+        return builder.ToString();
     }
 
 #if DEBUG
