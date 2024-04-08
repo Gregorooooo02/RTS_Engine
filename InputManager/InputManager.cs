@@ -44,18 +44,18 @@ public class InputManager
 
     public void PopulateDict()
     {
-        FileManager.Initialize();
+        FileManager.KeyBindsData data = FileManager.LoadKeyBindings();
         
         _rawKeyboardToAction.Clear();
-        for(int i = 0;i < FileManager.Instance.KeyboardActions.Count;i++)
+        for(int i = 0;i < data.KeyboardActions.Count;i++)
         {
-            _rawKeyboardToAction.Add(FileManager.Instance.KeyboardKeys[i], FileManager.Instance.KeyboardActions[i]);
+            _rawKeyboardToAction.Add(data.KeyboardKeys[i], data.KeyboardActions[i]);
         }
 
         _rawMouseToAction.Clear();
-        for(int i = 0; i < FileManager.Instance.MouseActions.Count; i++)
+        for(int i = 0; i < data.MouseActions.Count; i++)
         {
-            _rawMouseToAction.Add(FileManager.Instance.MouseKeys[i], FileManager.Instance.MouseActions[i]);
+            _rawMouseToAction.Add(data.MouseKeys[i], data.MouseActions[i]);
         }
     }
 

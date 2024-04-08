@@ -38,6 +38,7 @@ public class Game1 : Game
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
 
+        FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);

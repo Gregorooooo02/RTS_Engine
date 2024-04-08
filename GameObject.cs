@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 
@@ -102,6 +105,51 @@ public class GameObject
         Children.Remove(gameObject);
         gameObject.Parent = null; 
     }
+
+    public string SaveSceneToXml()
+    {
+        //XDocument scene = XDocument.Parse("<KEK>/n</KEK>");
+        //StreamWriter streamWriter = new StreamWriter("../../../SceneManager/Scenes/Scene1.xml");
+        //scene.Save(streamWriter);
+        StringBuilder builder = new StringBuilder();
+        builder.Append("<rootObject>");
+        builder.Append("<components>");
+        foreach (Component c in _components)
+        {
+            
+        }
+        builder.Append("</components>");
+        builder.Append("<childObjects>");
+        foreach (GameObject gameObject in Children)
+        {
+            builder.Append(gameObject.ObjectToXmlString());
+        }
+        builder.Append("</childObjects>");
+        builder.Append("</rootObject>");
+        return builder.ToString();
+    }
+
+    private string ObjectToXmlString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append("<name>" + Name + "</name>");
+        builder.Append("<active>" + Active +"</active>");
+        builder.Append("<components>");
+        foreach (Component c in _components)
+        {
+            
+        }
+        builder.Append("</components>");
+        builder.Append("<childObjects>");
+        foreach (GameObject gameObject in Children)
+        {
+            builder.Append(gameObject.ObjectToXmlString());
+        }
+        builder.Append("</childObjects>");
+
+        return builder.ToString();
+    }
+    
 
 #if DEBUG
     private bool addingOpen = false;

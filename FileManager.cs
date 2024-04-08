@@ -8,33 +8,29 @@ namespace RTS_Engine;
 
 public class FileManager
 {
-    public static FileManager Instance;
-    public static void Initialize()
-    {
-        Instance = new FileManager();
-    }
-    
-    public List<Keys> KeyboardKeys;
-    public List<int> MouseKeys;
-    
-    public List<GameAction> KeyboardActions;
-    public List<GameAction> MouseActions;
-    
-    private FileManager()
-    {
-        KeyboardKeys = new List<Keys>();
-        KeyboardActions = new List<GameAction>();
-        
-        MouseKeys = new List<int>();
-        MouseActions = new List<GameAction>();
-        
-        LoadKeyBindings();
-    }
 
-    private void LoadKeyBindings()
+    #region KeyBinds
+public class KeyBindsData
+    {
+        public List<Keys> KeyboardKeys;
+        public List<int> MouseKeys;
+    
+        public List<GameAction> KeyboardActions;
+        public List<GameAction> MouseActions;
+
+        public KeyBindsData()
+        {
+            KeyboardKeys = new List<Keys>();
+            MouseKeys = new List<int>();
+            KeyboardActions = new List<GameAction>();
+            MouseActions = new List<GameAction>();
+        }
+    }
+    
+    public static KeyBindsData LoadKeyBindings()
     {
         XDocument doc = XDocument.Load("ConfigFiles/KeyBindings.xml");
-
+        KeyBindsData output = new KeyBindsData();
         if (doc != null)
         {
             List<XElement> keyBindings = (
@@ -48,8 +44,8 @@ public class FileManager
                 
                 if (Enum.TryParse(key, out Keys k) && Enum.TryParse(action, out GameAction a))
                 {
-                    KeyboardKeys.Add(k);
-                    KeyboardActions.Add(a);
+                    output.KeyboardKeys.Add(k);
+                    output.KeyboardActions.Add(a);
                 }
             }
             
@@ -64,11 +60,26 @@ public class FileManager
 
                 if (int.TryParse(key, out int k) && Enum.TryParse(action, out GameAction a))
                 {
-                    MouseKeys.Add(k);
-                    MouseActions.Add(a);
+                    output.MouseKeys.Add(k);
+                    output.MouseActions.Add(a);
                 }
             }
         }
+        return output;
     }
     
+    
+
+    #endregion
+    
+    public static FileManager Instance;
+    public static void Initialize()
+    {
+        Instance = new FileManager();
+    }
+
+    private FileManager()
+    {
+
+    }
 }
