@@ -24,7 +24,7 @@ public class AssetManager
     private static readonly string[] SpriteFormats = { "jpg", "png", "bmp" };
     private static void LoadNames()
     {
-        StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
+        StreamReader sr = new StreamReader("Content/Content.mgcb");
         string line = sr.ReadLine();
         while (line != null)
         {

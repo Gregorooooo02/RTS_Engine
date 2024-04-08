@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -9,19 +10,22 @@ namespace RTS_Engine;
 
 public class AnimatedSpriteRenderer : Component
 {
-    public Texture2D spriteSheet;
+    public Texture2D SpriteSheet { get; private set;} = AssetManager.DefaultAnimatedSprite;
     public Color Color = Color.White;
     private List<Rectangle> _sourceRectangles = new();
     private int _frames;
-    private int _frame;
     private float _frameTime;
+    private int _frame;
     private float _frameTimeLeft;
     private bool _isAnimationActive = true;
+
+    public int Frames { get; private set; } = 6;
+    public float FrameTime { get; private set;} = 0.1f;
 
     public AnimatedSpriteRenderer(GameObject parentObject, Texture2D spriteSheet) 
     {
         ParentObject = parentObject;
-        this.spriteSheet = spriteSheet;
+        this.SpriteSheet = spriteSheet;
     }
 
     public AnimatedSpriteRenderer() {}
@@ -37,19 +41,19 @@ public class AnimatedSpriteRenderer : Component
 
         if (_frameTimeLeft <= 0) 
         {
-            _frameTimeLeft += _frameTime;
-            _frame = (_frame + 1) % _frames;
+            _frameTimeLeft += FrameTime;
+            _frame = (_frame + 1) % Frames;
         }
     }
 
     public override void Draw(Matrix _view, Matrix _projection)
     {
-        Globals.Instance.SpriteBatch?.Draw(spriteSheet,
+        Globals.Instance.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(
                 (int)ParentObject.Transform._pos.X,
                 (int)ParentObject.Transform._pos.Y,
-                (int)(spriteSheet.Width * ParentObject.Transform._scl.X),
-                (int)(spriteSheet.Height * ParentObject.Transform._scl.Y)),
+                (int)(SpriteSheet.Width * ParentObject.Transform._scl.X),
+                (int)(SpriteSheet.Height * ParentObject.Transform._scl.Y)),
                 _sourceRectangles[_frame],
                 Color,
                 MathHelper.ToRadians(ParentObject.Transform._rot.Z),
@@ -60,15 +64,13 @@ public class AnimatedSpriteRenderer : Component
 
     public override void Initialize()
     {
-        spriteSheet = AssetManager.DefaultAnimatedSprite;
-        _frameTime = 0.1f;
-        _frameTimeLeft = _frameTime;
-        _frames = 6;
+        _frames = Frames;
+        _frameTime = FrameTime;
 
-        var frameWdith = spriteSheet.Width / _frames;
-        var frameHeight = spriteSheet.Height;
+        var frameWdith = SpriteSheet.Width / Frames;
+        var frameHeight = SpriteSheet.Height;
 
-        for (int i = 0; i < _frames; i++) 
+        for (int i = 0; i < Frames; i++) 
         {
             _sourceRectangles.Add(new(i * frameWdith, 0, frameWdith, frameHeight));
         }
@@ -83,8 +85,22 @@ public class AnimatedSpriteRenderer : Component
         builder.Append("<type>AnimatedSpriteRenderer</type>");
         
         builder.Append("<active>" + Active +"</active>");
+
+        builder.Append("<spriteSheet>" + SpriteSheet.Name + "</spriteSheet>");
         
         //TODO: Append relevant data here
+        builder.Append("<frames>" + Frames + "</frames>");
+
+        builder.Append("<frameTime>" + FrameTime + "</frameTime>");
+
+        builder.Append("<color>");
+        builder.Append("<r>" + Color.R + "</r>");
+        builder.Append("<g>" + Color.G + "</g>");
+        builder.Append("<b>" + Color.B + "</b>");
+        builder.Append("<a>" + Color.A + "</a>");
+        builder.Append("</color>");
+
+        builder.Append("<isAnimationActive>" + _isAnimationActive + "</isAnimationActive>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -110,7 +126,28 @@ public class AnimatedSpriteRenderer : Component
     public void ResetAnimation() 
     {
         _frame = 0;
-        _frameTimeLeft = _frameTime;
+        _frameTimeLeft = FrameTime;
+    }
+
+    public void SetSpriteSheet(Texture2D spriteSheet) 
+    {
+        SpriteSheet = spriteSheet;
+        _sourceRectangles.Clear();
+        Initialize();
+    }
+
+    public void SetFrameTime(float frameTime) 
+    {
+        FrameTime = frameTime;
+        _frameTime = frameTime;
+        _frameTimeLeft = frameTime;
+    }
+
+    public void SetFrames(int frames) 
+    {
+        Frames = frames;
+        _sourceRectangles.Clear();
+        Initialize();
     }
 
 #if DEBUG
@@ -122,9 +159,13 @@ public class AnimatedSpriteRenderer : Component
             ImGui.Checkbox("Sprite active", ref Active);
             ImGui.SameLine();
             ImGui.Checkbox("Animation active", ref _isAnimationActive);
+            if (ImGui.DragInt("Frames", ref _frames, 1, 2, 64))
+            {
+                SetFrames(_frames);
+            }
             if (ImGui.DragFloat("Frame time", ref _frameTime, 0.1f, 0.1f, 10.0f))
             {
-                _frameTimeLeft = _frameTime;
+                SetFrameTime(_frameTime);
             }
             if (ImGui.ColorEdit4("Sprite Color", ref temp))
             {
@@ -133,7 +174,7 @@ public class AnimatedSpriteRenderer : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
-                AssetManager.FreeSprite(spriteSheet);
+                AssetManager.FreeSprite(SpriteSheet);
             }
         }
     }
