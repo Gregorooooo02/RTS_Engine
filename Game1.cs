@@ -74,6 +74,11 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        var d = new DepthStencilState();
+        d.DepthBufferEnable = true;
+        d.DepthBufferWriteEnable = true;
+        GraphicsDevice.DepthStencilState = d;
+        
         GraphicsDevice.Clear(new Color(_clearColor));
         // TODO: Add your drawing code here
         _basicEffect.World = Matrix.Identity;

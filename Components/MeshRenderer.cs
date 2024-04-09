@@ -57,6 +57,8 @@ public class MeshRenderer : Component
                 effect.World = wrld;
                 effect.View = vw;
                 effect.Projection = proj;
+
+                effect.EnableDefaultLighting();
             }
             mesh.Draw();
         }
