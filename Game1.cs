@@ -14,6 +14,7 @@ public class Game1 : Game
     private SceneCamera _sceneCamera;
     private BasicEffect _basicEffect;
     
+    
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     
     private ImGuiRenderer _imGuiRenderer;
@@ -56,6 +57,7 @@ public class Game1 : Game
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new BaseScene());
+        _sceneManager.AddScene(new ThirdScene());
     }
 
     protected override void Update(GameTime gameTime)

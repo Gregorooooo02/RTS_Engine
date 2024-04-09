@@ -99,6 +99,11 @@ public class MeshRenderer : Component
         _model = AssetManager.GetModel(name);
         this.name = name;
     }
+
+    public Model GetModel()
+    {
+        return _model;
+    }
     
 #if DEBUG
 

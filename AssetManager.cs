@@ -119,6 +119,8 @@ public class AssetManager
         LoadNames();
 #endif
 
+        //wczytywanie malpki mi nie dziala ;c
+        DefaultModel = this._content.Load<Model>("monke");
         DefaultModel = this._content.Load<Model>("defaultCube");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
