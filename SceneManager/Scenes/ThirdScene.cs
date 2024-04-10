@@ -25,12 +25,14 @@ public class ThirdScene : Scene
         _sceneCollisionManager = collisionManager;
     
         gameObject.AddComponent<MeshRenderer>();
+        gameObject.GetComponent<MeshRenderer>().LoadModel("monke");
         gameObject.AddComponent<Collider>();
         
         gameObject2.AddComponent<MeshRenderer>();
+        gameObject2.GetComponent<MeshRenderer>().LoadModel("monke");
         gameObject2.AddComponent<Collider>();
         
-        gameObject.Transform.SetLocalPosition(new Vector3(-10.0f, 0, 0));
+        gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
         
         gameObject2.Transform.SetLocalPosition(new Vector3(0, 0, 0));
