@@ -11,12 +11,6 @@ public class SecondScene : Scene
     {
         Name = "SecondScene";
         SceneRoot = new GameObject();
-
-        GameObject gameObject = new GameObject();
-        gameObject.AddComponent<MeshRenderer>();
-        gameObject.Transform.SetLocalPosition(new Vector3(0, 0, 0));
-        gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
-        SceneRoot.AddChildObject(gameObject);
     }
 
     public override void Update(GameTime gameTime)
