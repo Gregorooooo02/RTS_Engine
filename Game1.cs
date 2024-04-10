@@ -52,6 +52,7 @@ public class Game1 : Game
         _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
         _sceneCamera.Position = _position;
         Globals.Instance.SpriteBatch = _spriteBatch;
+        Globals.Instance.GraphicsDevice = _graphics.GraphicsDevice;
 
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());

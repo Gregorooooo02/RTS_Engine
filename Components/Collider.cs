@@ -37,7 +37,7 @@ public class Collider : Component
     public override void Initialize()
     {
         Active = true;
-        name = ParentObject.Name + "_collider";
+        name = ParentObject.Name + "Collider";
     }
     
     public override void Draw(Matrix _view, Matrix _projection){}
@@ -48,7 +48,7 @@ public class Collider : Component
         
         builder.Append("<component>");
         
-        builder.Append("<type>MeshRenderer</type>");
+        builder.Append("<type>Collider</type>");
         
         builder.Append("<active>" + Active +"</active>");
         
