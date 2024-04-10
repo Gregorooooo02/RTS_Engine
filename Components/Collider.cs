@@ -11,11 +11,33 @@ public class Collider : Component
     public bool Active;
     private string name;
     public bool isColliding = false;
-    public override void Update(){}
+    public BoundingSphere sphere;
 
+    public override void Update()
+    {
+        for (int meshIndex1 = 0; meshIndex1 < ParentObject.GetComponent<MeshRenderer>().GetModel().Meshes.Count; meshIndex1++)
+        {
+            sphere = ParentObject.GetComponent<MeshRenderer>().GetModel().Meshes[meshIndex1].BoundingSphere;
+            sphere = sphere.Transform(ParentObject.Transform.ModelMatrix);
+        }
+    }
+
+    public Collider(GameObject parentObject)
+    {
+        ParentObject = parentObject;
+        Initialize();
+    }
+    
+    public Collider()
+    {
+        
+    }
     public override void Initialize()
     {
         Active = true;
+        name = ParentObject.Name + "_collider";
+        
+        
     }
     
     public override void Draw(Matrix _view, Matrix _projection){}
