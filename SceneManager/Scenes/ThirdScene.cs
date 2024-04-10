@@ -44,12 +44,12 @@ public class ThirdScene : Scene
         SceneRoot.Update();
         _sceneCollisionManager.CheckColissions();
         SceneRoot.Children[0].Transform.Move(new Vector3(0.05f, 0, 0));
-        SceneRoot.Children[1].Transform.Move(new Vector3(0.01f, 0, 0));
+        SceneRoot.Children[1].Transform.Move(new Vector3(0.0f, 0, 0));
         if (SceneRoot.Children[0].GetComponent<Collider>().isColliding == true)
         {
-            SceneRoot.Children[0].Transform.SetLocalPosition(new Vector3(-10.0f, 0f, 0));
+            SceneRoot.Children[0].Transform.Move(new Vector3(-0.05f, 0f, 0f));
+            SceneRoot.Children[1].Transform.Move(new Vector3(0.05f, 0f, 0f));
         }
-        
     }
 
     public override void Draw(Matrix _view, Matrix _projection)

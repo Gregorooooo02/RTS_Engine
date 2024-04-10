@@ -19,6 +19,7 @@ public class Collider : Component
         {
             sphere = ParentObject.GetComponent<MeshRenderer>().GetModel().Meshes[meshIndex1].BoundingSphere;
             sphere = sphere.Transform(ParentObject.Transform.ModelMatrix);
+            sphere.Radius = ParentObject.Transform._scl.X;
         }
     }
 
@@ -32,12 +33,11 @@ public class Collider : Component
     {
         
     }
+
     public override void Initialize()
     {
         Active = true;
         name = ParentObject.Name + "_collider";
-        
-        
     }
     
     public override void Draw(Matrix _view, Matrix _projection){}
