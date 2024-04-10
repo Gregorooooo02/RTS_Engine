@@ -15,6 +15,7 @@ public class Collider : Component
 
     public override void Update()
     {
+        if(Active == false) return;
         for (int meshIndex1 = 0; meshIndex1 < ParentObject.GetComponent<MeshRenderer>().GetModel().Meshes.Count; meshIndex1++)
         {
             sphere = ParentObject.GetComponent<MeshRenderer>().GetModel().Meshes[meshIndex1].BoundingSphere;
@@ -59,6 +60,17 @@ public class Collider : Component
     }
     
     public override void Deserialize(XElement element){}
-    
-    public override void Inspect(){}
+
+    public override void Inspect()
+    {
+        if(ImGui.CollapsingHeader("Collider"))
+        {
+            ImGui.Checkbox("Collider active", ref Active);
+            ImGui.Text(name);
+            if (ImGui.Button("Remove component"))
+            {
+                ParentObject.RemoveComponent(this);
+            }
+        }
+    }
 }
