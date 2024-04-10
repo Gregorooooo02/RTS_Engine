@@ -8,7 +8,6 @@ namespace RTS_Engine;
 
 public class Collider : Component
 {
-    public bool Active;
     private string name;
     public bool isColliding = false;
     public BoundingSphere sphere;
