@@ -14,7 +14,6 @@ public class Game1 : Game
     private SceneCamera _sceneCamera;
     private BasicEffect _basicEffect;
     
-    
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     
     private ImGuiRenderer _imGuiRenderer;
