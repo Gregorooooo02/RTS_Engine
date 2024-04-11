@@ -13,7 +13,6 @@ public class Game1 : Game
     private SceneManager _sceneManager;
     private SceneCamera _sceneCamera;
     private BasicEffect _basicEffect;
-    
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     
     private ImGuiRenderer _imGuiRenderer;
@@ -125,6 +124,9 @@ public class Game1 : Game
         }
         if (Globals.Instance.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
+        }
+        if (Globals.Instance.MapModifyVisible) {
+            GenerateMap.MapInspector();
         }
 #endif
     }

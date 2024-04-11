@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 
 namespace RTS_Engine;
 
@@ -6,15 +7,16 @@ public delegate float InterpolationAlgorithm(float a, float b, float t);
 
 public class PerlinNoiseGenerator
 {
-    public int Octaves { get; set; }
-    public float Persistance { get; set; }
+    public int Octaves;
+    public float Persistance;
+
     public InterpolationAlgorithm Interpolation { get; set; }
     public Random Random { get; set; }
 
     public PerlinNoiseGenerator()
     {
-        Octaves = 4;
-        Persistance = 0.5f;
+        Octaves = 8;
+        Persistance = 0.25f;
         Interpolation = Helpers.LinearInterpolation;
         Random = new Random();
     }
@@ -86,6 +88,9 @@ public class PerlinNoiseGenerator
         NoiseField<float> perlinNoise = new NoiseField<float>(baseNoise.Width, baseNoise.Height);
         float amplitude = 1.0f;
         float totalAmplitude = 0.0f;
+
+        float halfWidth = baseNoise.Width / 2.0f;
+        float halfHeight = baseNoise.Height / 2.0f;
 
         for (int octave = Octaves - 1; octave >= 0; octave--)
         {

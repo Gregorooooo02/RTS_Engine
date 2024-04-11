@@ -4,51 +4,30 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ImGuiNET;
 
 namespace RTS_Engine;
 
 public class MapScene : Scene
 {
-    NoiseField<float> perlinNoise;
-    Texture2D noiseTexture;
-
-    public void GenerateNoiseTexture()
-    {
-        PerlinNoiseGenerator perlinGen = new PerlinNoiseGenerator();
-        perlinGen.Octaves = 4;
-        perlinGen.Persistance = 0.5f;
-        perlinGen.Interpolation = Helpers.CosInterpolation;
-
-        perlinNoise = perlinGen.GeneratePerlinNoise(512, 512);
-
-        CustomGradientFilter filter = new CustomGradientFilter();
-        Texture2DTransformer transformer = new Texture2DTransformer(Globals.Instance.GraphicsDevice);
-
-        filter.AddColorPoint(0.0f, 0.4f, Color.RoyalBlue);
-        filter.AddColorPoint(0.4f, 0.5f, new Color(255, 223, 135));
-        filter.AddColorPoint(0.5f, 0.7f, new Color(117, 255, 89));
-        filter.AddColorPoint(0.7f, 0.9f, new Color(117, 105, 89));
-        filter.AddColorPoint(0.9f, 1.0f, Color.White);
-
-        noiseTexture = transformer.Transform(filter.Filter(perlinNoise));
-    }
-
+    GameObject gameObject;
     public override void Initialize()
     {
         Name = "BaseScene";
         SceneRoot = new GameObject();
 
-        GenerateNoiseTexture();
+        GenerateMap.GenerateNoiseTexture();
 
-        GameObject gameObject = new GameObject();
+        gameObject = new GameObject();
         gameObject.AddComponent<SpiteRenderer>();
-        gameObject.GetComponent<SpiteRenderer>().Sprite = noiseTexture;
+        gameObject.GetComponent<SpiteRenderer>().Sprite = GenerateMap.noiseTexture;
         gameObject.Transform.SetLocalPosition(new Vector3(500, 200, 0));
         SceneRoot.AddChildObject(gameObject);
     }
 
     public override void Update(GameTime gameTime)
     {
+        gameObject.GetComponent<SpiteRenderer>().Sprite = GenerateMap.noiseTexture;
         SceneRoot.Update();
     }
 

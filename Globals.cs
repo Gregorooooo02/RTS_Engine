@@ -47,6 +47,7 @@ namespace RTS_Engine
         public bool InspectorVisible = true;
         public bool HierarchyVisible = true;
         public bool SceneSelectionVisible = true;
+        public bool MapModifyVisible = true;
 #endif
     }
 }
