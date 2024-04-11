@@ -13,10 +13,10 @@ namespace RTS_Engine
         public static void Initialize() 
         {
             Instance = new Globals();
-
         }
         
         public static float TotalSeconds { get; set; }
+        public GraphicsDevice GraphicsDevice;
         public SpriteBatch SpriteBatch;
 
         public static void Update(GameTime gameTime)

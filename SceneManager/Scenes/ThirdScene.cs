@@ -5,7 +5,6 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
-
 namespace RTS_Engine;
 
 public class ThirdScene : Scene

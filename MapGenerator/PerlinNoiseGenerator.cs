@@ -112,4 +112,10 @@ public class PerlinNoiseGenerator
 
         return perlinNoise;
     }
+
+    public NoiseField<float> GeneratePerlinNoise(int width, int height)
+    {
+        NoiseField<float> whiteNoise = GenerateWhiteNoise(width, height);
+        return PerlinNoiseField(whiteNoise);
+    }
 }
