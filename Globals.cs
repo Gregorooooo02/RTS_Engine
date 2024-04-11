@@ -9,30 +9,21 @@ namespace RTS_Engine
 {
     internal class Globals
     {
-        public static Globals Instance;
+        
         public static void Initialize() 
         {
-            Instance = new Globals();
-
+            ComponentsTypes = GetAllComponents();
         }
         
         public static float TotalSeconds { get; set; }
-        public SpriteBatch SpriteBatch;
+        public static SpriteBatch SpriteBatch;
 
         public static void Update(GameTime gameTime)
         {
             TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
-
-        private Globals()
-        {
-#if DEBUG
-            ComponentsTypes = GetAllComponents();
-#endif
-        }
-
-#if DEBUG
-        private List<Type> GetAllComponents()
+        
+        private static List<Type> GetAllComponents()
         {
             Type baseType = typeof(Component);
             Type transform = typeof(Transform);
@@ -40,13 +31,14 @@ namespace RTS_Engine
             return assembly.GetTypes().Where(x => baseType.IsAssignableFrom(x) && x != baseType && x != transform).ToList();
         }
 
-        public List<Type> ComponentsTypes;
-        public GameObject CurrentlySelectedObject;
+        public static List<Type> ComponentsTypes;
+#if DEBUG
+        public static GameObject CurrentlySelectedObject;
 
         //Switches for debug windows UWU
-        public bool InspectorVisible = true;
-        public bool HierarchyVisible = true;
-        public bool SceneSelectionVisible = true;
+        public static bool InspectorVisible = true;
+        public static bool HierarchyVisible = true;
+        public static bool SceneSelectionVisible = true;
 #endif
     }
 }

@@ -48,7 +48,7 @@ public class AnimatedSpriteRenderer : Component
 
     public override void Draw(Matrix _view, Matrix _projection)
     {
-        Globals.Instance.SpriteBatch?.Draw(SpriteSheet,
+        Globals.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(
                 (int)ParentObject.Transform._pos.X,
                 (int)ParentObject.Transform._pos.Y,

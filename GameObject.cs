@@ -163,7 +163,7 @@ public class GameObject
         {
             flags |= ImGuiTreeNodeFlags.Leaf;
         }
-        if(this == Globals.Instance.CurrentlySelectedObject)
+        if(this == Globals.CurrentlySelectedObject)
         {
             flags |= ImGuiTreeNodeFlags.Selected;
         }
@@ -173,7 +173,7 @@ public class GameObject
             _name = this.Name; 
         }
         bool node_open = ImGui.TreeNodeEx(_name, flags);
-        if(ImGui.IsItemClicked() && !ImGui.IsItemToggledOpen()) Globals.Instance.CurrentlySelectedObject = this;
+        if(ImGui.IsItemClicked() && !ImGui.IsItemToggledOpen()) Globals.CurrentlySelectedObject = this;
         if(node_open)
         {
             foreach(GameObject g in Children)
@@ -194,9 +194,9 @@ public class GameObject
             if(Parent != null)
             {
                 Parent.RemoveChildObject(this);
-                if(Globals.Instance.CurrentlySelectedObject == this)
+                if(Globals.CurrentlySelectedObject == this)
                 {
-                    Globals.Instance.CurrentlySelectedObject = null;
+                    Globals.CurrentlySelectedObject = null;
                 }
             }
         }
@@ -220,7 +220,7 @@ public class GameObject
         {
             ImGui.Begin("Add component");
             var method = typeof(GameObject).GetMethod("AddComponent",Type.EmptyTypes);
-            foreach(Type t in Globals.Instance.ComponentsTypes)
+            foreach(Type t in Globals.ComponentsTypes)
             {
                 if (ImGui.Button(t.Name))
                 {

@@ -51,7 +51,7 @@ public class Game1 : Game
 
         _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
         _sceneCamera.Position = _position;
-        Globals.Instance.SpriteBatch = _spriteBatch;
+        Globals.SpriteBatch = _spriteBatch;
 
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
@@ -101,27 +101,27 @@ public class Game1 : Game
     protected virtual void ImGuiLayout()
     {
 #if DEBUG
-        ImGui.Checkbox("Hierarchy", ref Globals.Instance.HierarchyVisible);
-        ImGui.Checkbox("Inspector",ref Globals.Instance.InspectorVisible);
-        ImGui.Checkbox("Scene Selection", ref Globals.Instance.SceneSelectionVisible);
+        ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
+        ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
+        ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
 #endif
         ImGui.ColorEdit3("Background Color", ref _clearColor);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
 
 #if DEBUG
-        if (Globals.Instance.HierarchyVisible)
+        if (Globals.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
             _sceneManager.GetCurrentScene().DrawHierarchy();
             ImGui.AlignTextToFramePadding();
             ImGui.End();
         }
-        if(Globals.Instance.InspectorVisible) {
+        if(Globals.InspectorVisible) {
             ImGui.Begin("Inspector");
-            Globals.Instance.CurrentlySelectedObject?.DrawInspector();
+            Globals.CurrentlySelectedObject?.DrawInspector();
             ImGui.End();
         }
-        if (Globals.Instance.SceneSelectionVisible) {
+        if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
         }
 #endif
