@@ -52,7 +52,7 @@ public class SpiteRenderer : Component
         
         builder.Append("<component>");
         
-        builder.Append("<type>SpriteRenderer</type>");
+        builder.Append("<type>SpiteRenderer</type>");
         
         builder.Append("<active>" + Active +"</active>");
         
@@ -74,7 +74,7 @@ public class SpiteRenderer : Component
         Active = element.Element("active")?.Value == "True";
         LoadSprite(element.Element("sprite").Value);
         XElement color = element.Element("color");
-        Color = new Color(float.Parse(color.Element("r").Value),float.Parse(color.Element("g").Value),float.Parse(color.Element("b").Value),float.Parse(color.Element("a").Value));
+        Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
     }
 
     public void LoadSprite(string name)

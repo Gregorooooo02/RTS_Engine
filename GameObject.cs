@@ -210,6 +210,7 @@ public class GameObject
         {
             _components[i].Inspect();
         }
+        ImGui.Separator();
         if(ImGui.Button("Add component"))
         {
             addingOpen = true;

@@ -92,9 +92,9 @@ public class ThirdScene : Scene
         builder.Append(SceneRoot.SaveSceneToXml());
         XDocument scene = XDocument.Parse(builder.ToString());
 #if _WINDOWS
-        StreamWriter streamWriter = new StreamWriter("../../../SceneManager/Scenes/" + Name + ".xml");
+        StreamWriter streamWriter = new StreamWriter("../../../Scenes/" + Name + ".xml");
 #else
-        StreamWriter streamWriter = new StreamWriter("SceneManager/Scenes/" + Name + ".xml");
+        StreamWriter streamWriter = new StreamWriter("Scenes/" + Name + ".xml");
 #endif
         scene.Save(streamWriter);
         streamWriter.Close();

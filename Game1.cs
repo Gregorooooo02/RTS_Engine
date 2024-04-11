@@ -43,6 +43,7 @@ public class Game1 : Game
         Globals.Initialize();
         AssetManager.Initialize(Content);
         base.Initialize();
+        
     }
 
     protected override void LoadContent()
@@ -70,7 +71,7 @@ public class Game1 : Game
         base.Update(gameTime);
         Globals.Update(gameTime);
         _sceneCamera.Update(gameTime);
-        _sceneManager.GetCurrentScene().Update(gameTime);
+        _sceneManager.CurrentScene.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -87,7 +88,7 @@ public class Game1 : Game
         _basicEffect.Projection = _sceneCamera.Projection;
         
         _spriteBatch.Begin();
-        _sceneManager.GetCurrentScene().Draw(_basicEffect.View, _basicEffect.Projection);
+        _sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
         _spriteBatch.End();
 
 #if DEBUG
@@ -112,7 +113,7 @@ public class Game1 : Game
         if (Globals.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
-            _sceneManager.GetCurrentScene().DrawHierarchy();
+            _sceneManager.CurrentScene.DrawHierarchy();
             ImGui.AlignTextToFramePadding();
             ImGui.End();
         }

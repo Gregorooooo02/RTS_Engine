@@ -92,17 +92,24 @@ public class KeyBindsData
         currentObject.Active = objectNode.Element("active").Value == "True";
         foreach (XElement component in objectNode.Element("components").Elements())
         {
-            Component newComponent = null;
-            Type t = Globals.ComponentsTypes.Find(x => x.Name.Equals(component.Element("type")?.Value));
-            if (t != null)
+            if (component.Element("type")?.Value == "Transform")
             {
-                newComponent = (Component)Activator.CreateInstance(t);
+                currentObject.Transform.Deserialize(component);
             }
-            
-            if (newComponent != null)
+            else
             {
-                newComponent.Deserialize(component);
-                currentObject.AddComponent(newComponent);
+                Component newComponent = null;
+                Type t = Globals.ComponentsTypes.Find(x => x.Name.Equals(component.Element("type")?.Value));
+                if (t != null)
+                {
+                    newComponent = (Component)Activator.CreateInstance(t);
+                }
+            
+                if (newComponent != null)
+                {
+                    newComponent.Deserialize(component);
+                    currentObject.AddComponent(newComponent);
+                }
             }
         }
         foreach (XElement childObject in objectNode.Element("childObjects").Elements())

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
@@ -34,6 +35,16 @@ namespace RTS_Engine
         public static List<Type> ComponentsTypes;
 #if DEBUG
         public static GameObject CurrentlySelectedObject;
+        public static List<string> AvailableScenes = new List<string>();
+
+        public static void UpdateScenesList()
+        {
+#if _WINDOWS
+            AvailableScenes = Directory.GetFiles("../../../Scenes").ToList();
+#else
+            AvailableScenes = Directory.GetFiles("Scenes");
+#endif
+        }
 
         //Switches for debug windows UWU
         public static bool InspectorVisible = true;

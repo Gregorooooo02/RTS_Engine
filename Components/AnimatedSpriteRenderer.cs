@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Text;
 using System.Xml.Linq;
@@ -116,8 +117,8 @@ public class AnimatedSpriteRenderer : Component
         SetFrameTime(float.Parse(element.Element("frameTime").Value));
 
         XElement color = element.Element("color");
-        Color = new Color(float.Parse(color.Element("r").Value),float.Parse(color.Element("g").Value),float.Parse(color.Element("b").Value),float.Parse(color.Element("a").Value));
-
+        Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
+        
         _isAnimationActive = element.Element("isAnimationActive")?.Value == "True";
     }
 
