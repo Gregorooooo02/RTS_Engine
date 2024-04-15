@@ -38,8 +38,6 @@ public class Camera : Component
     public const int CAM_FIXED = 0;
     public const int CAM_FREE = 1;
     
-    public override void Update() {}
-    
     public override void Initialize()
     {
         Active = true;
@@ -212,12 +210,12 @@ public class Camera : Component
     /// <summary>
     /// Update the camera
     /// </summary>
-    public void Update(GameTime gameTime) {
+    public override void Update() {
         if (fpsKeyboardLayout == CAM_UI_OPTION_FPS) {
-            UpdateFPSKeyboardLayout(gameTime);
+            UpdateFPSKeyboardLayout(Globals.Instance.GameTime);
         }
         if (fpsKeyboardLayout == CAM_UI_OPTION_EDITOR) {
-            UpdateEditorKeyboardLayout(gameTime);
+            UpdateEditorKeyboardLayout(Globals.Instance.GameTime);
         }
     }
     
