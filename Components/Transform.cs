@@ -128,7 +128,7 @@ public class Transform : Component
     {
         Active = element.Element("active")?.Value == "True";
         XElement position = element.Element("position");
-        SetLocalPosition(new Vector3(float.Parse(position.Element("x").Value),float.Parse(position.Element("y").Value),float.Parse(position.Element("z").Value)));
+        SetLocalPosition(new Vector3(float.Parse(position.Element("x").Value), float.Parse(position.Element("y").Value), float.Parse(position.Element("z").Value)));
         XElement rotation = element.Element("rotation");
         SetLocalRotation(new Vector3(float.Parse(rotation.Element("x").Value),float.Parse(rotation.Element("y").Value),float.Parse(rotation.Element("z").Value)));
         XElement scale = element.Element("scale");

@@ -31,7 +31,7 @@ public class TextRenderer : Component
     public override void Draw(Matrix _view, Matrix _projection)
     {
         if(!Active) return;
-        Globals.Instance.SpriteBatch.DrawString(
+        Globals.SpriteBatch.DrawString(
             Font,
             Content,
             new Vector2(ParentObject.Transform._pos.X,ParentObject.Transform._pos.Y),

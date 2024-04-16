@@ -92,31 +92,25 @@ public class KeyBindsData
         currentObject.Active = objectNode.Element("active").Value == "True";
         foreach (XElement component in objectNode.Element("components").Elements())
         {
-            Component newComponent = null;
-            switch (component.Element("type").Value)
+            if (component.Element("type")?.Value == "Transform")
             {
-                case "Transform":
-                    newComponent = currentObject.Transform;
-                    break;
-                case "MeshRenderer":
-                    newComponent = new MeshRenderer();
-                    break;
-                case "SpriteRenderer":
-                    newComponent = new SpiteRenderer();
-                    break;
-                case "TextRenderer":
-                    newComponent = new TextRenderer();
-                    break;
-                case "AnimatedSpriteRenderer":
-                    newComponent = new AnimatedSpriteRenderer();
-                    break;
+                currentObject.Transform.Deserialize(component);
             }
-            if (newComponent != null)
+            else
             {
-                newComponent.Deserialize(component);
-                currentObject.AddComponent(newComponent);
-            }
+                Component newComponent = null;
+                Type t = Globals.ComponentsTypes.Find(x => x.Name.Equals(component.Element("type")?.Value));
+                if (t != null)
+                {
+                    newComponent = (Component)Activator.CreateInstance(t);
+                }
             
+                if (newComponent != null)
+                {
+                    newComponent.Deserialize(component);
+                    currentObject.AddComponent(newComponent);
+                }
+            }
         }
         foreach (XElement childObject in objectNode.Element("childObjects").Elements())
         {

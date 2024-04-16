@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Text;
 using System.Xml.Linq;
@@ -48,7 +49,7 @@ public class AnimatedSpriteRenderer : Component
 
     public override void Draw(Matrix _view, Matrix _projection)
     {
-        Globals.Instance.SpriteBatch?.Draw(SpriteSheet,
+        Globals.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(
                 (int)ParentObject.Transform._pos.X,
                 (int)ParentObject.Transform._pos.Y,
@@ -116,8 +117,8 @@ public class AnimatedSpriteRenderer : Component
         SetFrameTime(float.Parse(element.Element("frameTime").Value));
 
         XElement color = element.Element("color");
-        Color = new Color(float.Parse(color.Element("r").Value),float.Parse(color.Element("g").Value),float.Parse(color.Element("b").Value),float.Parse(color.Element("a").Value));
-
+        Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
+        
         _isAnimationActive = element.Element("isAnimationActive")?.Value == "True";
     }
 
