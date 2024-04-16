@@ -128,7 +128,7 @@
           </scale>
         </component>
         <component>
-          <type>SpriteRenderer</type>
+          <type>SpiteRenderer</type>
           <active>True</active>
           <sprite>smile</sprite>
           <color>
@@ -167,7 +167,7 @@
         <component>
           <type>TextRenderer</type>
           <active>True</active>
-          <contents>Number count: 213</contents>
+          <contents>Number count: 1035</contents>
           <font>defaultFont</font>
         </component>
       </components>

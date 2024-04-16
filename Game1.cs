@@ -55,8 +55,8 @@ public class Game1 : Game
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
 
         // TODO: use this.Content to load your game content here
-        _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new BaseScene());
+        _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new ThirdScene());
         _sceneManager.AddScene(new MapScene());
     }
@@ -126,7 +126,7 @@ public class Game1 : Game
         if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
         }
-        if (Globals.Instance.MapModifyVisible) {
+        if (Globals.MapModifyVisible) {
             GenerateMap.MapInspector();
         }
 #endif

@@ -13,7 +13,7 @@ public class MapScene : Scene
     GameObject gameObject;
     public override void Initialize()
     {
-        Name = "BaseScene";
+        Name = "MapScene";
         SceneRoot = new GameObject();
 
         GenerateMap.GenerateNoiseTexture();

@@ -13,8 +13,8 @@ public class Camera : Component
     
     private GraphicsDevice _graphicsDevice = null;
 
-    private MouseState _mouseState = default(MouseState);
-    private KeyboardState _keyboardState = default(KeyboardState);
+    //private MouseState _mouseState = default(MouseState);
+    //private KeyboardState _keyboardState = default(KeyboardState);
     
     private Vector3 up = Vector3.Up;
     private Matrix camerasWorld = Matrix.Identity;
@@ -26,8 +26,6 @@ public class Camera : Component
     public float fovDegrees = 45.0f;
     public float nearPlane = 0.05f;
     public float farPlane = 2000.0f;
-    
-    private bool isMouseLookUsed = true;
 
     private int fpsKeyboardLayout = 1;
     private int cameraType = 1;
@@ -80,7 +78,7 @@ public class Camera : Component
     public Camera()
     {
         UpdateWorldAndView();
-        UpdateProjectionMatrix(Globals.Instance.GraphicsDevice, fovDegrees);
+        UpdateProjectionMatrix(Globals.GraphicsDevice, fovDegrees);
     }
     
     public void CameraUI(int UIOption) {
@@ -210,126 +208,7 @@ public class Camera : Component
     /// <summary>
     /// Update the camera
     /// </summary>
-    public override void Update() {
-        if (fpsKeyboardLayout == CAM_UI_OPTION_FPS) {
-            UpdateFPSKeyboardLayout(Globals.Instance.GameTime);
-        }
-        if (fpsKeyboardLayout == CAM_UI_OPTION_EDITOR) {
-            UpdateEditorKeyboardLayout(Globals.Instance.GameTime);
-        }
-    }
-    
-     /// <summary>
-    /// Update the camera with the FPS keyboard layout.
-    /// </summary>
-    private void UpdateFPSKeyboardLayout(GameTime gameTime) {
-        MouseState mState = Mouse.GetState();
-        KeyboardState kState = Keyboard.GetState();
-
-        // Moving the camera with WASD
-        if (kState.IsKeyDown(Keys.W)) 
-        {
-            MoveForward(gameTime);
-        }
-        else if (kState.IsKeyDown(Keys.S)) 
-        {
-            MoveBackward(gameTime);
-        }
-
-        if (kState.IsKeyDown(Keys.A)) 
-        {
-            MoveLeft(gameTime);
-        }
-        else if (kState.IsKeyDown(Keys.D)) 
-        {
-            MoveRight(gameTime);
-        }
-
-        // Move the camera up and down with Q and E
-        if (kState.IsKeyDown(Keys.Q)) 
-        {
-            if (cameraType == CAM_FIXED)
-            {
-                MoveUpWorld(gameTime);
-            }
-
-            if (cameraType == CAM_FREE)
-            {
-                MoveUp(gameTime);
-            }
-        }
-        else if (kState.IsKeyDown(Keys.E)) 
-        {
-            if (cameraType == CAM_FIXED)
-            {
-                MoveDownWorld(gameTime);
-            }
-
-            if (cameraType == CAM_FREE)
-            {
-                MoveDown(gameTime);
-            }
-        }
-
-        if (mState.RightButton == ButtonState.Pressed)
-        {
-            isMouseLookUsed = true;
-        }
-        else
-        {
-            isMouseLookUsed = false;
-        }
-        
-        _mouseState = mState;
-        _keyboardState = kState;
-    }
-
-    /// <summary>
-    /// Update the camera with the Editor keyboard layout.
-    /// </summary>
-    private void UpdateEditorKeyboardLayout(GameTime gameTime) {
-        MouseState mState = Mouse.GetState();
-        KeyboardState kState = Keyboard.GetState();
-
-        if (kState.IsKeyDown(Keys.E))
-        {
-            MoveForward(gameTime);
-        }
-        else if (kState.IsKeyDown(Keys.Q))
-        {
-            MoveBackward(gameTime);
-        }
-
-        if (kState.IsKeyDown(Keys.Left))
-        {
-            MoveLeft(gameTime);
-        }
-        else if (kState.IsKeyDown(Keys.Right))
-        {
-            MoveRight(gameTime);
-        }
-
-        if (kState.IsKeyDown(Keys.Up))
-        {
-            MoveUp(gameTime);
-        }
-        else if (kState.IsKeyDown(Keys.Down))
-        {
-            MoveDown(gameTime);
-        }
-
-        if (mState.RightButton == ButtonState.Pressed)
-        {
-            isMouseLookUsed = true;
-        }
-        else
-        {
-            isMouseLookUsed = false;
-        }
-        
-        _mouseState = mState;
-        _keyboardState = kState;
-    }
+    public override void Update() {}
 
 #region Moving the camera
     public void MoveForward(GameTime gameTime)

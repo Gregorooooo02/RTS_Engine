@@ -43,7 +43,7 @@ namespace RTS_Engine
 #if _WINDOWS
             AvailableScenes = Directory.GetFiles("../../../Scenes").ToList();
 #else
-            AvailableScenes = Directory.GetFiles("Scenes");
+            AvailableScenes = Directory.GetFiles("Scenes").ToList();
 #endif
         }
 

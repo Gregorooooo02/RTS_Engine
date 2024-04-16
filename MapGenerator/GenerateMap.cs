@@ -18,7 +18,7 @@ public class GenerateMap
         perlinNoise = perlinGen.GeneratePerlinNoise(512, 512);
 
         CustomGradientFilter filter = new CustomGradientFilter();
-        Texture2DTransformer transformer = new Texture2DTransformer(Globals.Instance.GraphicsDevice);
+        Texture2DTransformer transformer = new Texture2DTransformer(Globals.GraphicsDevice);
 
         filter.AddColorPoint(0.0f, 0.4f, Color.RoyalBlue);
         filter.AddColorPoint(0.4f, 0.5f, new Color(255, 223, 135));
