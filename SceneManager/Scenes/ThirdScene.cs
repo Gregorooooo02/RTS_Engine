@@ -18,6 +18,7 @@ public class ThirdScene : Scene
 
         GameObject gameObject = new GameObject();
         GameObject gameObject2 = new GameObject();
+        GameObject gameObject3 = new GameObject();
         GameObject[] gameObjects = {gameObject, gameObject2};
         List<GameObject> gameObjectsList = new List<GameObject>(gameObjects);
         CollisionManager collisionManager = new CollisionManager(gameObjectsList);
@@ -31,6 +32,9 @@ public class ThirdScene : Scene
         gameObject2.GetComponent<MeshRenderer>().LoadModel("monke");
         gameObject2.AddComponent<Collider>();
         
+        gameObject3.AddComponent<Camera>();
+        gameObject3.GetComponent<Camera>().Position = new Vector3(0, 0, 10);
+        
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
         
@@ -38,6 +42,7 @@ public class ThirdScene : Scene
         gameObject2.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
         SceneRoot.AddChildObject(gameObject);
         SceneRoot.AddChildObject(gameObject2);
+        SceneRoot.AddChildObject(gameObject3);
     }
     
     public override void Update(GameTime gameTime)
