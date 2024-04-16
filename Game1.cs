@@ -33,7 +33,7 @@ public class Game1 : Game
         _basicEffect = new BasicEffect(_graphics.GraphicsDevice);
         // TODO: Add your initialization logic here
         _sceneManager = new SceneManager();
-    
+
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
 
