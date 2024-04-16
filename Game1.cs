@@ -106,6 +106,7 @@ public class Game1 : Game
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
+        ImGui.Checkbox("Map Modifier", ref Globals.MapModifyVisible);
 #endif
         ImGui.ColorEdit3("Background Color", ref _clearColor);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
