@@ -35,6 +35,9 @@ public class Game1 : Game
         _sceneManager = new SceneManager();
 
         _imGuiRenderer = new ImGuiRenderer(this);
+
+        ImGuizmoNET.ImGuizmo.Enable(true);
+
         _imGuiRenderer.RebuildFontAtlas();
 
         FileManager.Initialize();
