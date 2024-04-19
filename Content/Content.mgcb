@@ -318,7 +318,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Tartak/domall.fbx
 
-#begin Tartak/ratuszek2.fbx
+#begin Tartak/RATUSZEKFIXEDIHPE.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -335,7 +335,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Tartak/ratuszek2.fbx
+/build:Tartak/RATUSZEKFIXEDIHPE.fbx
 
 #begin Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
 /importer:TextureImporter
