@@ -17,12 +17,23 @@ public class Game1 : Game
     
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
+
+    private bool isFullscreen = false;
     
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = 1440;
-        _graphics.PreferredBackBufferHeight = 900;
+
+        if (isFullscreen)
+        {
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        }
+        else
+        {
+            _graphics.PreferredBackBufferWidth = 1440;
+            _graphics.PreferredBackBufferHeight = 900;
+        }
         
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -35,8 +46,6 @@ public class Game1 : Game
         _sceneManager = new SceneManager();
 
         _imGuiRenderer = new ImGuiRenderer(this);
-
-        ImGuizmoNET.ImGuizmo.Enable(true);
 
         _imGuiRenderer.RebuildFontAtlas();
 
@@ -66,6 +75,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
@@ -106,6 +116,8 @@ public class Game1 : Game
     protected virtual void ImGuiLayout()
     {
 #if DEBUG
+        ImGui.Checkbox("Fullscreen", ref isFullscreen);
+        ImGui.Separator();
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
