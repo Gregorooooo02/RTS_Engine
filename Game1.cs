@@ -65,7 +65,12 @@ public class Game1 : Game
         _sceneCamera.Position = _position;
         Globals.SpriteBatch = _spriteBatch;
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
+        Globals.BasicEffect = _basicEffect;
 
+        Globals.TestEffect = Content.Load<Effect>("TestEffect");
+        //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
+        //Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
+        
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new BaseScene());
         _sceneManager.AddScene(new SecondScene());

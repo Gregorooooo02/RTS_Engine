@@ -19,6 +19,8 @@ namespace RTS_Engine
         public static float TotalSeconds { get; set; }
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
+        public static BasicEffect BasicEffect;
+        public static Effect TestEffect;
 
         public static void Update(GameTime gameTime)
         {

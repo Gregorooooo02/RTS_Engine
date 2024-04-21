@@ -47,8 +47,8 @@ public class AssetManager
 #endregion
 #endif
     
-    private static AssetManager _instance;
-    private readonly ContentManager _content;
+    public static AssetManager _instance;
+    public readonly ContentManager _content;
 
     private readonly List<ModelData> _models;
     private readonly List<SpriteData> _sprites;
