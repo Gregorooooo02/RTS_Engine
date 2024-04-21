@@ -130,6 +130,10 @@ public class MeshRenderer : Component
     {
         _model = AssetManager.GetModel(name);
         this.name = name;
+        //foreach (VertexElement element in _model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
+        //{
+        //    Console.WriteLine(element.VertexElementUsage);
+        //}
     }
 
     public Model GetModel()
