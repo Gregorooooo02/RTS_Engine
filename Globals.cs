@@ -19,7 +19,9 @@ namespace RTS_Engine
         public static float TotalSeconds { get; set; }
         public SpriteBatch SpriteBatch;
         public GraphicsDevice GraphicsDevice;
-        public GameTime GameTime = new GameTime();
+        public Matrix camerasWorld;
+        public Matrix viewMatrix;
+        public Matrix projectionMatrix;
 
         public static void Update(GameTime gameTime)
         {
