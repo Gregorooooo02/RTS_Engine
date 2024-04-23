@@ -33,10 +33,10 @@ public class ThirdScene : Scene
         gameObject2.AddComponent<Collider>();
         
         gameObject3.AddComponent<Camera>();
-        gameObject3.GetComponent<Camera>().Position = new Vector3(0, 0, 10);
         
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
+        gameObject3.Transform.SetLocalPosition(new Vector3(0.0f, 0.0f, 4.0f));
         
         gameObject2.Transform.SetLocalPosition(new Vector3(0, 0, 0));
         gameObject2.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));

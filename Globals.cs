@@ -21,6 +21,9 @@ namespace RTS_Engine
         public static SpriteBatch SpriteBatch;
         public static BasicEffect BasicEffect;
         public static Effect TestEffect;
+        public static Matrix View;
+        public static Matrix Projection;
+        public static Matrix World;
 
         public static void Update(GameTime gameTime)
         {
