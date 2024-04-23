@@ -16,6 +16,8 @@ public class Camera : Component
     
     private Vector3 up = Vector3.Up;
     
+    private float angle = -45.0f;
+    
     public float fovDegrees = 45.0f;
     public float nearPlane = 0.05f;
     public float farPlane = 2000.0f;
@@ -36,6 +38,9 @@ public class Camera : Component
         Globals.World = Matrix.Identity;
         Globals.Projection = Matrix.Identity;
         Globals.View = Matrix.Identity;
+        UpdateWorldAndView();
+        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
+        RotateUpDown(angle);
     }
     
     public override void Draw(Matrix _view, Matrix _projection){}
@@ -48,9 +53,17 @@ public class Camera : Component
         
         builder.Append("<type>Camera</type>");
         
-        builder.Append("<active>" + Active +"</active>");
+        builder.Append("<active>" + Active + "</active>");
         
-        builder.Append("<model>" + name +"</model>");
+        builder.Append("<model>" + name + "</model>");
+        
+        builder.Append("<angle>" + angle + "</angle>");
+        
+        builder.Append("<fovDegrees>" + fovDegrees + "</fovDegrees>");
+        
+        builder.Append("<nearPlane>" + nearPlane + "</nearPlane>");
+        
+        builder.Append("<farPlane>" + farPlane +"</farPlane>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -69,6 +82,13 @@ public class Camera : Component
                 ParentObject.RemoveComponent(this);
             }
         }
+    }
+    
+    private void RotateUpDown(float angle)
+    {
+        Matrix rotation = Matrix.CreateFromAxisAngle(Globals.World.Right, MathHelper.ToRadians(angle));
+        Globals.World = rotation * Globals.World;
+        UpdateWorldAndView();
     }
     
     public Camera()
@@ -156,7 +176,7 @@ public class Camera : Component
     
     public Matrix View
     {
-        get { return Globals.World; }
+        get { return Globals.View; }
     }
 
     public Matrix Projection
@@ -208,6 +228,9 @@ public class Camera : Component
     {
         Position = ParentObject.Transform._pos;
         UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
-        Console.WriteLine(Globals.Projection);
+        
+        // For safety reasons
+        if (fovDegrees < 1.0f) fovDegrees = 1.0f;
+        if (fovDegrees > 89.0f) fovDegrees = 89.0f;
     }
 }

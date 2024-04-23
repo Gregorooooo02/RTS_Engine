@@ -18,6 +18,14 @@
             <Action>RIGHT</Action>
         </KeyBinding>
         <KeyBinding>
+            <Key>Q</Key>
+            <Action>UP</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>E</Key>
+            <Action>DOWN</Action>
+        </KeyBinding>
+        <KeyBinding>
             <Key>Escape</Key>
             <Action>EXIT</Action>
         </KeyBinding>

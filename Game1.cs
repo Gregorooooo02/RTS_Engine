@@ -87,7 +87,10 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
-        //Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
+        // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
+        Console.WriteLine(InputManager.Instance.MousePosition);
+        
+        
         
         // TODO: Add your update logic here
         base.Update(gameTime);
@@ -109,11 +112,11 @@ public class Game1 : Game
         
         GraphicsDevice.Clear(new Color(_clearColor));
         // TODO: Add your drawing code here
-#if RELEASE
+#if DEBUG
         _basicEffect.World = Matrix.Identity;
         _basicEffect.View = Globals.View;
         _basicEffect.Projection = Globals.Projection;
-#elif DEBUG
+#elif RELEASE
         _basicEffect.World = _sceneCamera.World;
         _basicEffect.View = _sceneCamera.View;
         _basicEffect.Projection = _sceneCamera.Projection;
