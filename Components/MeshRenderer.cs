@@ -51,49 +51,48 @@ public class MeshRenderer : Component
     private void DrawModel(Model model, Matrix wrld, Matrix vw, Matrix proj)
     {
           
-          foreach (ModelMesh mesh in model.Meshes)
-          {
-              foreach (BasicEffect effect in mesh.Effects)
-              {
-                  effect.World = wrld;
-                  effect.View = vw;
-                  effect.Projection = proj;
+        foreach (ModelMesh mesh in model.Meshes)
+        {
+            foreach (BasicEffect effect in mesh.Effects)
+            {
+                effect.World = wrld;
+                effect.View = vw;
+                effect.Projection = proj;
 
-                  effect.EnableDefaultLighting();
-              }
-              mesh.Draw();
-          }
+                effect.EnableDefaultLighting();
+            }
+            mesh.Draw();
+        }
           
-
-       // foreach (ModelMesh mesh in _model.Meshes)
-       //       {
-       //           foreach (ModelMeshPart part in mesh.MeshParts)
-       //           {
-       //               if (part.PrimitiveCount > 0)
-       //               {
-       //                   Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-       //                   Globals.GraphicsDevice.Indices = part.IndexBuffer;
-       //                   
-       //                   Matrix.Multiply(ref wrld, ref vw, out var worldView);
-       //                   Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
-       //                   
-       //                   //Here pass parameters that are used in all techniques
-       //                   Globals.TestEffect.Parameters["WorldViewProjection"].SetValue(worldViewProj);
-       //
-       //                   //If some actions are dependent on technique use if like the one below
-       //                   if (Globals.TestEffect.CurrentTechnique.Name == "BasicColorDrawing")
-       //                   {
-       //                       
-       //                   }
-       //                   
-       //                   for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
-       //                   {
-       //                       Globals.TestEffect.CurrentTechnique.Passes[i].Apply();
-       //                       Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-       //                   }
-       //               }
-       //           }
-       //       } 
+       foreach (ModelMesh mesh in _model.Meshes)
+             {
+                 foreach (ModelMeshPart part in mesh.MeshParts)
+                 {
+                     if (part.PrimitiveCount > 0)
+                     {
+                         Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                         Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                         
+                         Matrix.Multiply(ref wrld, ref vw, out var worldView);
+                         Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
+                         
+                         //Here pass parameters that are used in all techniques
+                         Globals.TestEffect.Parameters["WorldViewProjection"].SetValue(worldViewProj);
+       
+                         //If some actions are dependent on technique use if like the one below
+                         if (Globals.TestEffect.CurrentTechnique.Name == "BasicColorDrawing")
+                         {
+                             
+                         }
+                         
+                         for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
+                         {
+                             Globals.TestEffect.CurrentTechnique.Passes[i].Apply();
+                             Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                         }
+                     }
+                 }
+             } 
     }
 
     public override void Draw(Matrix _view, Matrix _projection)

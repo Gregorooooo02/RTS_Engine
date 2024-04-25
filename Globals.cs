@@ -25,10 +25,6 @@ namespace RTS_Engine
         public static Matrix Projection;
         public static Matrix World;
 
-        public static Matrix camerasWorld;
-        public static Matrix viewMatrix;
-        public static Matrix projectionMatrix;
-
         public static void Update(GameTime gameTime)
         {
             TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using System.IO;
 
 namespace RTS_Engine;
 
@@ -61,21 +62,25 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        #if DEBUG
+#if DEBUG
         _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
         _sceneCamera.Position = _position;
-        #endif
+#endif
         
         Globals.SpriteBatch = _spriteBatch;
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         Globals.BasicEffect = _basicEffect;
 
+#if WINDOWS
         Globals.TestEffect = Content.Load<Effect>("TestEffect");
+#else
+        byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
+        Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
+#endif
         //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
         //Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
         
         // TODO: use this.Content to load your game content here
-        _sceneManager.AddScene(new BaseScene());
         _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new ThirdScene());
         _sceneManager.AddScene(new MapScene());
@@ -90,16 +95,13 @@ public class Game1 : Game
         // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
         Console.WriteLine(InputManager.Instance.MousePosition);
         
-        
-        
         // TODO: Add your update logic here
         base.Update(gameTime);
         Globals.Update(gameTime);
         
-        #if DEBUG
+#if DEBUG
         _sceneCamera.Update(gameTime);
-        #endif
-        
+#endif
         _sceneManager.CurrentScene.Update(gameTime);
     }
 
@@ -112,11 +114,11 @@ public class Game1 : Game
         
         GraphicsDevice.Clear(new Color(_clearColor));
         // TODO: Add your drawing code here
-#if DEBUG
+#if RELEASE
         _basicEffect.World = Matrix.Identity;
         _basicEffect.View = Globals.View;
         _basicEffect.Projection = Globals.Projection;
-#elif RELEASE
+#elif DEBUG
         _basicEffect.World = _sceneCamera.World;
         _basicEffect.View = _sceneCamera.View;
         _basicEffect.Projection = _sceneCamera.Projection;
