@@ -61,8 +61,11 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        #if DEBUG
         _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
         _sceneCamera.Position = _position;
+        #endif
+        
         Globals.SpriteBatch = _spriteBatch;
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         Globals.BasicEffect = _basicEffect;
@@ -84,12 +87,19 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
-        //Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
+        // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
+        Console.WriteLine(InputManager.Instance.MousePosition);
+        
+        
         
         // TODO: Add your update logic here
         base.Update(gameTime);
         Globals.Update(gameTime);
+        
+        #if DEBUG
         _sceneCamera.Update(gameTime);
+        #endif
+        
         _sceneManager.CurrentScene.Update(gameTime);
     }
 
@@ -102,10 +112,15 @@ public class Game1 : Game
         
         GraphicsDevice.Clear(new Color(_clearColor));
         // TODO: Add your drawing code here
+#if DEBUG
         _basicEffect.World = Matrix.Identity;
+        _basicEffect.View = Globals.View;
+        _basicEffect.Projection = Globals.Projection;
+#elif RELEASE
+        _basicEffect.World = _sceneCamera.World;
         _basicEffect.View = _sceneCamera.View;
         _basicEffect.Projection = _sceneCamera.Projection;
-        
+#endif
         _spriteBatch.Begin();
         _sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
         _spriteBatch.End();

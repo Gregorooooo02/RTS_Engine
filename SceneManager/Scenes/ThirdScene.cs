@@ -33,10 +33,10 @@ public class ThirdScene : Scene
         gameObject2.AddComponent<Collider>();
         
         gameObject3.AddComponent<Camera>();
-        gameObject3.GetComponent<Camera>().Position = new Vector3(0, 0, 10);
         
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
+        gameObject3.Transform.SetLocalPosition(new Vector3(0.0f, 25.0f, 25.0f));
         
         gameObject2.Transform.SetLocalPosition(new Vector3(0, 0, 0));
         gameObject2.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
@@ -49,13 +49,52 @@ public class ThirdScene : Scene
     {
         SceneRoot.Update();
         _sceneCollisionManager.CheckColissions();
+        
         SceneRoot.Children[0].Transform.Move(new Vector3(0.05f, 0, 0));
         SceneRoot.Children[1].Transform.Move(new Vector3(0.0f, 0, 0));
+        
+        // Collision detection
         if (SceneRoot.Children[0].GetComponent<Collider>().isColliding == true)
         {
             SceneRoot.Children[0].Transform.Move(new Vector3(-0.05f, 0f, 0f));
             SceneRoot.Children[1].Transform.Move(new Vector3(0.05f, 0f, 0f));
         }
+        
+        // Inputs for moving the camera
+        if (InputManager.Instance.GetAction(GameAction.FORWARD)?.state == ActionState.PRESSED ||
+            InputManager.Instance.MousePosition.Y < 20.0f)
+        {
+            SceneRoot.Children[2].Transform.Move(new Vector3(0.0f, 0.0f, -0.15f));
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.BACKWARD)?.state == ActionState.PRESSED ||
+            InputManager.Instance.MousePosition.Y > 880.0f )
+        {
+            SceneRoot.Children[2].Transform.Move(new Vector3(0.0f, 0.0f, 0.15f));
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.LEFT)?.state == ActionState.PRESSED ||
+            InputManager.Instance.MousePosition.X < 20.0f)
+        {
+            SceneRoot.Children[2].Transform.Move(new Vector3(-0.15f, 0.0f, 0.0f));
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.RIGHT)?.state == ActionState.PRESSED ||
+            InputManager.Instance.MousePosition.X > 1420.0f)
+        {
+            SceneRoot.Children[2].Transform.Move(new Vector3(0.15f, 0.0f, 0.0f));
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.UP)?.state == ActionState.PRESSED)
+        {
+            SceneRoot.Children[2].GetComponent<Camera>().fovDegrees += -0.5f;
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.DOWN)?.state == ActionState.PRESSED)
+        {
+            SceneRoot.Children[2].GetComponent<Camera>().fovDegrees += 0.5f;
+        }
+        
     }
 
     public override void Draw(Matrix _view, Matrix _projection)

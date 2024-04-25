@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -12,16 +13,10 @@ public class Camera : Component
     private string name;
     
     private GraphicsDevice _graphicsDevice = null;
-
-    // private MouseState _mouseState = default(MouseState);
-    // private KeyboardState _keyboardState = default(KeyboardState);
     
     private Vector3 up = Vector3.Up;
-    private Matrix camerasWorld = Globals.Instance.camerasWorld = Matrix.Identity;
-    private Matrix viewMatrix = Globals.Instance.viewMatrix = Matrix.Identity;
-    private Matrix projectionMatrix = Globals.Instance.projectionMatrix = Matrix.Identity;
     
-    // public float MovementSpeed { get; set; } = 0.01f;
+    private float angle = -45.0f;
     
     public float fovDegrees = 45.0f;
     public float nearPlane = 0.05f;
@@ -40,6 +35,12 @@ public class Camera : Component
     {
         Active = true;
         name = ParentObject.Name + "Camera";
+        Globals.World = Matrix.Identity;
+        Globals.Projection = Matrix.Identity;
+        Globals.View = Matrix.Identity;
+        UpdateWorldAndView();
+        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
+        RotateUpDown(angle);
     }
     
     public override void Draw(Matrix _view, Matrix _projection){}
@@ -52,9 +53,17 @@ public class Camera : Component
         
         builder.Append("<type>Camera</type>");
         
-        builder.Append("<active>" + Active +"</active>");
+        builder.Append("<active>" + Active + "</active>");
         
-        builder.Append("<model>" + name +"</model>");
+        builder.Append("<model>" + name + "</model>");
+        
+        builder.Append("<angle>" + angle + "</angle>");
+        
+        builder.Append("<fovDegrees>" + fovDegrees + "</fovDegrees>");
+        
+        builder.Append("<nearPlane>" + nearPlane + "</nearPlane>");
+        
+        builder.Append("<farPlane>" + farPlane +"</farPlane>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -75,10 +84,17 @@ public class Camera : Component
         }
     }
     
+    private void RotateUpDown(float angle)
+    {
+        Matrix rotation = Matrix.CreateFromAxisAngle(Globals.World.Right, MathHelper.ToRadians(angle));
+        Globals.World = rotation * Globals.World;
+        UpdateWorldAndView();
+    }
+    
     public Camera()
     {
         UpdateWorldAndView();
-        UpdateProjectionMatrix(Globals.GraphicsDevice, fovDegrees);
+        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
     }
     
     // public void CameraUI(int UIOption) {
@@ -91,20 +107,20 @@ public class Camera : Component
     
     public Vector3 Position 
     {
-        get { return camerasWorld.Translation; }
+        get { return Globals.World.Translation; }
         set
         {
-            camerasWorld.Translation = value;
+            Globals.World.Translation = value;
             UpdateWorldAndView();
         }
     }
     
     public Vector3 Forward
     {
-        get { return camerasWorld.Forward; }
+        get { return Globals.World.Forward; }
         set
         {
-            camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, value, up);
+            Globals.World = Matrix.CreateWorld(Globals.World.Translation, value, up);
             UpdateWorldAndView();
         }
     }
@@ -115,17 +131,17 @@ public class Camera : Component
         set
         {
             up = value;
-            camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, camerasWorld.Forward, up);
+            Globals.World = Matrix.CreateWorld(Globals.World.Translation, Globals.World.Forward, up);
             UpdateWorldAndView();
         }
     }
     
     public Vector3 LookAtDirection
     {
-        get { return camerasWorld.Forward; }
+        get { return Globals.World.Forward; }
         set
         {
-            camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, value, up); 
+            Globals.World = Matrix.CreateWorld(Globals.World.Translation, value, up); 
             UpdateWorldAndView();
         }
     }
@@ -134,7 +150,7 @@ public class Camera : Component
     {
         set
         {
-            camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, Vector3.Normalize(value - camerasWorld.Translation), up);
+            Globals.World = Matrix.CreateWorld(Globals.World.Translation, Vector3.Normalize(value - Globals.World.Translation), up);
             UpdateWorldAndView();
         }
     }
@@ -143,29 +159,29 @@ public class Camera : Component
     {
         set
         {
-            camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, Vector3.Normalize(value.Translation - camerasWorld.Translation), up);
+            Globals.World = Matrix.CreateWorld(Globals.World.Translation, Vector3.Normalize(value.Translation - Globals.World.Translation), up);
             UpdateWorldAndView();
         }
     }
     
     public Matrix World
     {
-        get { return camerasWorld; }
+        get { return Globals.World; }
         set
         {
-            camerasWorld = value;
-            viewMatrix = Matrix.CreateLookAt(camerasWorld.Translation, camerasWorld.Forward + camerasWorld.Translation, camerasWorld.Up);
+            Globals.World = value;
+            Globals.View = Matrix.CreateLookAt(Globals.World.Translation, Globals.World.Forward + Globals.World.Translation, Globals.World.Up);
         }
     }
     
     public Matrix View
     {
-        get { return viewMatrix; }
+        get { return Globals.View; }
     }
 
     public Matrix Projection
     {
-        get { return projectionMatrix; }
+        get { return Globals.Projection; }
     }
     
     /// <summary>
@@ -177,19 +193,19 @@ public class Camera : Component
             up = Vector3.Up;
         }
         if (cameraType == CAM_UI_OPTION_EDITOR) {
-            up = camerasWorld.Up;
+            up = Globals.World.Up;
         }
 
-        camerasWorld = Matrix.CreateWorld(camerasWorld.Translation, camerasWorld.Forward, up);
-        viewMatrix = Matrix.CreateLookAt(camerasWorld.Translation, camerasWorld.Forward + camerasWorld.Translation, camerasWorld.Up);
+        Globals.World = Matrix.CreateWorld(Globals.World.Translation, Globals.World.Forward, up);
+        Globals.View = Matrix.CreateLookAt(Globals.World.Translation, Globals.World.Forward + Globals.World.Translation, Globals.World.Up);
     }
     
     /// <summary>
     /// Changes the perspective matrix to a new near, far and field of view.
     /// </summary>
-    public void UpdateProjectionMatrix(GraphicsDevice graphicsDevice, float fovDegrees) 
+    public void UpdateProjectionMatrix(float fov) 
     {
-        projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), graphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
+        Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), Globals.GraphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
     }
 
     /// <summary>
@@ -202,193 +218,19 @@ public class Camera : Component
         this.nearPlane = near;
         this.farPlane = far;
 
-        projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), _graphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
+        Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), Globals.GraphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
     }
-    
+
     /// <summary>
     /// Update the camera
     /// </summary>
-    public override void Update() {
-        // if (fpsKeyboardLayout == CAM_UI_OPTION_FPS) {
-        //     UpdateFPSKeyboardLayout(Globals.Instance.GameTime);
-        // }
-        // if (fpsKeyboardLayout == CAM_UI_OPTION_EDITOR) {
-        //     UpdateEditorKeyboardLayout(Globals.Instance.GameTime);
-        // }
+    public override void Update()
+    {
+        Position = ParentObject.Transform._pos;
+        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
+        
+        // For safety reasons
+        if (fovDegrees < 1.0f) fovDegrees = 1.0f;
+        if (fovDegrees > 89.0f) fovDegrees = 89.0f;
     }
-    
-     /// <summary>
-    /// Update the camera with the FPS keyboard layout.
-    /// </summary>
-//     private void UpdateFPSKeyboardLayout(GameTime gameTime) {
-//         MouseState mState = Mouse.GetState();
-//         KeyboardState kState = Keyboard.GetState();
-//
-//         // Moving the camera with WASD
-//         if (kState.IsKeyDown(Keys.W)) 
-//         {
-//             MoveForward(gameTime);
-//         }
-//         else if (kState.IsKeyDown(Keys.S)) 
-//         {
-//             MoveBackward(gameTime);
-//         }
-//
-//         if (kState.IsKeyDown(Keys.A)) 
-//         {
-//             MoveLeft(gameTime);
-//         }
-//         else if (kState.IsKeyDown(Keys.D)) 
-//         {
-//             MoveRight(gameTime);
-//         }
-//
-//         // Move the camera up and down with Q and E
-//         if (kState.IsKeyDown(Keys.Q)) 
-//         {
-//             if (cameraType == CAM_FIXED)
-//             {
-//                 MoveUpWorld(gameTime);
-//             }
-//
-//             if (cameraType == CAM_FREE)
-//             {
-//                 MoveUp(gameTime);
-//             }
-//         }
-//         else if (kState.IsKeyDown(Keys.E)) 
-//         {
-//             if (cameraType == CAM_FIXED)
-//             {
-//                 MoveDownWorld(gameTime);
-//             }
-//
-//             if (cameraType == CAM_FREE)
-//             {
-//                 MoveDown(gameTime);
-//             }
-//         }
-//
-//         if (mState.RightButton == ButtonState.Pressed)
-//         {
-//             isMouseLookUsed = true;
-//         }
-//         else
-//         {
-//             isMouseLookUsed = false;
-//         }
-//         
-//         _mouseState = mState;
-//         _keyboardState = kState;
-//     }
-//
-//     /// <summary>
-//     /// Update the camera with the Editor keyboard layout.
-//     /// </summary>
-//     private void UpdateEditorKeyboardLayout(GameTime gameTime) {
-//         MouseState mState = Mouse.GetState();
-//         KeyboardState kState = Keyboard.GetState();
-//
-//         if (kState.IsKeyDown(Keys.E))
-//         {
-//             MoveForward(gameTime);
-//         }
-//         else if (kState.IsKeyDown(Keys.Q))
-//         {
-//             MoveBackward(gameTime);
-//         }
-//
-//         if (kState.IsKeyDown(Keys.Left))
-//         {
-//             MoveLeft(gameTime);
-//         }
-//         else if (kState.IsKeyDown(Keys.Right))
-//         {
-//             MoveRight(gameTime);
-//         }
-//
-//         if (kState.IsKeyDown(Keys.Up))
-//         {
-//             MoveUp(gameTime);
-//         }
-//         else if (kState.IsKeyDown(Keys.Down))
-//         {
-//             MoveDown(gameTime);
-//         }
-//
-//         if (mState.RightButton == ButtonState.Pressed)
-//         {
-//             isMouseLookUsed = true;
-//         }
-//         else
-//         {
-//             isMouseLookUsed = false;
-//         }
-//         
-//         _mouseState = mState;
-//         _keyboardState = kState;
-//     }
-//
-// #region Moving the camera
-//     public void MoveForward(GameTime gameTime)
-//     {
-//         Position += (camerasWorld.Forward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveBackward(GameTime gameTime)
-//     {
-//         Position += (camerasWorld.Backward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveLeft(GameTime gameTime)
-//     {
-//         Position += (camerasWorld.Left * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveRight(GameTime gameTime)
-//     {
-//         Position += (camerasWorld.Right * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveUp(GameTime gameTime)
-//     {
-//         Position += (camerasWorld.Up * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveDown(GameTime gameTime)
-//     {
-//         Position += (camerasWorld.Down * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveForwardWorld(GameTime gameTime)
-//     {
-//         Position += (Vector3.Forward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveBackwardWorld(GameTime gameTime)
-//     {
-//         Position += (Vector3.Backward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveLeftWorld(GameTime gameTime)F
-//     {
-//         Position += (Vector3.Left * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveRightWorld(GameTime gameTime)
-//     {
-//         Position += (Vector3.Right * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveUpWorld(GameTime gameTime)
-//     {
-//         Position += (Vector3.Up * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-//
-//     public void MoveDownWorld(GameTime gameTime)
-//     {
-//         Position += (Vector3.Down * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-//     }
-// #endregion
-
 }

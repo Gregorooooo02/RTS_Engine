@@ -11,6 +11,8 @@ public enum GameAction
     BACKWARD,
     LEFT,
     RIGHT,
+    UP,
+    DOWN,
     EXIT,
     LMB,
     MMB,
