@@ -22,6 +22,10 @@ namespace RTS_Engine
         public static BasicEffect BasicEffect;
         public static Effect TestEffect;
 
+        public static Matrix camerasWorld;
+        public static Matrix viewMatrix;
+        public static Matrix projectionMatrix;
+
         public static void Update(GameTime gameTime)
         {
             TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;

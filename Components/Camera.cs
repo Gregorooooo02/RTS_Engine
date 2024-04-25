@@ -13,21 +13,21 @@ public class Camera : Component
     
     private GraphicsDevice _graphicsDevice = null;
 
-    //private MouseState _mouseState = default(MouseState);
-    //private KeyboardState _keyboardState = default(KeyboardState);
+    // private MouseState _mouseState = default(MouseState);
+    // private KeyboardState _keyboardState = default(KeyboardState);
     
     private Vector3 up = Vector3.Up;
-    private Matrix camerasWorld = Matrix.Identity;
-    private Matrix viewMatrix = Matrix.Identity;
-    private Matrix projectionMatrix = Matrix.Identity;
+    private Matrix camerasWorld = Globals.Instance.camerasWorld = Matrix.Identity;
+    private Matrix viewMatrix = Globals.Instance.viewMatrix = Matrix.Identity;
+    private Matrix projectionMatrix = Globals.Instance.projectionMatrix = Matrix.Identity;
     
-    public float MovementSpeed { get; set; } = 0.01f;
+    // public float MovementSpeed { get; set; } = 0.01f;
     
     public float fovDegrees = 45.0f;
     public float nearPlane = 0.05f;
     public float farPlane = 2000.0f;
 
-    private int fpsKeyboardLayout = 1;
+    // private int fpsKeyboardLayout = 1;
     private int cameraType = 1;
 
     public const int CAM_UI_OPTION_FPS = 1;
@@ -81,9 +81,9 @@ public class Camera : Component
         UpdateProjectionMatrix(Globals.GraphicsDevice, fovDegrees);
     }
     
-    public void CameraUI(int UIOption) {
-        this.fpsKeyboardLayout = UIOption;
-    }
+    // public void CameraUI(int UIOption) {
+    //     this.fpsKeyboardLayout = UIOption;
+    // }
     
     public void CameraType(int cameraType) {
         this.cameraType = cameraType;
@@ -193,7 +193,7 @@ public class Camera : Component
     }
 
     /// <summary>
-    /// Changes the perspective matrxi to a new near, far and field of view.
+    /// Changes the perspective matrix to a new near, far and field of view.
     /// The projection matrix is only set up once at the start of the game.
     /// </summary>
     public void UpdateProjectionMatrix(float fov, float near, float far) 
@@ -208,68 +208,187 @@ public class Camera : Component
     /// <summary>
     /// Update the camera
     /// </summary>
-    public override void Update() {}
-
-#region Moving the camera
-    public void MoveForward(GameTime gameTime)
-    {
-        Position += (camerasWorld.Forward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+    public override void Update() {
+        // if (fpsKeyboardLayout == CAM_UI_OPTION_FPS) {
+        //     UpdateFPSKeyboardLayout(Globals.Instance.GameTime);
+        // }
+        // if (fpsKeyboardLayout == CAM_UI_OPTION_EDITOR) {
+        //     UpdateEditorKeyboardLayout(Globals.Instance.GameTime);
+        // }
     }
-
-    public void MoveBackward(GameTime gameTime)
-    {
-        Position += (camerasWorld.Backward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveLeft(GameTime gameTime)
-    {
-        Position += (camerasWorld.Left * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveRight(GameTime gameTime)
-    {
-        Position += (camerasWorld.Right * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveUp(GameTime gameTime)
-    {
-        Position += (camerasWorld.Up * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveDown(GameTime gameTime)
-    {
-        Position += (camerasWorld.Down * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveForwardWorld(GameTime gameTime)
-    {
-        Position += (Vector3.Forward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveBackwardWorld(GameTime gameTime)
-    {
-        Position += (Vector3.Backward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveLeftWorld(GameTime gameTime)
-    {
-        Position += (Vector3.Left * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveRightWorld(GameTime gameTime)
-    {
-        Position += (Vector3.Right * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveUpWorld(GameTime gameTime)
-    {
-        Position += (Vector3.Up * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-
-    public void MoveDownWorld(GameTime gameTime)
-    {
-        Position += (Vector3.Down * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-    }
-#endregion
+    
+     /// <summary>
+    /// Update the camera with the FPS keyboard layout.
+    /// </summary>
+//     private void UpdateFPSKeyboardLayout(GameTime gameTime) {
+//         MouseState mState = Mouse.GetState();
+//         KeyboardState kState = Keyboard.GetState();
+//
+//         // Moving the camera with WASD
+//         if (kState.IsKeyDown(Keys.W)) 
+//         {
+//             MoveForward(gameTime);
+//         }
+//         else if (kState.IsKeyDown(Keys.S)) 
+//         {
+//             MoveBackward(gameTime);
+//         }
+//
+//         if (kState.IsKeyDown(Keys.A)) 
+//         {
+//             MoveLeft(gameTime);
+//         }
+//         else if (kState.IsKeyDown(Keys.D)) 
+//         {
+//             MoveRight(gameTime);
+//         }
+//
+//         // Move the camera up and down with Q and E
+//         if (kState.IsKeyDown(Keys.Q)) 
+//         {
+//             if (cameraType == CAM_FIXED)
+//             {
+//                 MoveUpWorld(gameTime);
+//             }
+//
+//             if (cameraType == CAM_FREE)
+//             {
+//                 MoveUp(gameTime);
+//             }
+//         }
+//         else if (kState.IsKeyDown(Keys.E)) 
+//         {
+//             if (cameraType == CAM_FIXED)
+//             {
+//                 MoveDownWorld(gameTime);
+//             }
+//
+//             if (cameraType == CAM_FREE)
+//             {
+//                 MoveDown(gameTime);
+//             }
+//         }
+//
+//         if (mState.RightButton == ButtonState.Pressed)
+//         {
+//             isMouseLookUsed = true;
+//         }
+//         else
+//         {
+//             isMouseLookUsed = false;
+//         }
+//         
+//         _mouseState = mState;
+//         _keyboardState = kState;
+//     }
+//
+//     /// <summary>
+//     /// Update the camera with the Editor keyboard layout.
+//     /// </summary>
+//     private void UpdateEditorKeyboardLayout(GameTime gameTime) {
+//         MouseState mState = Mouse.GetState();
+//         KeyboardState kState = Keyboard.GetState();
+//
+//         if (kState.IsKeyDown(Keys.E))
+//         {
+//             MoveForward(gameTime);
+//         }
+//         else if (kState.IsKeyDown(Keys.Q))
+//         {
+//             MoveBackward(gameTime);
+//         }
+//
+//         if (kState.IsKeyDown(Keys.Left))
+//         {
+//             MoveLeft(gameTime);
+//         }
+//         else if (kState.IsKeyDown(Keys.Right))
+//         {
+//             MoveRight(gameTime);
+//         }
+//
+//         if (kState.IsKeyDown(Keys.Up))
+//         {
+//             MoveUp(gameTime);
+//         }
+//         else if (kState.IsKeyDown(Keys.Down))
+//         {
+//             MoveDown(gameTime);
+//         }
+//
+//         if (mState.RightButton == ButtonState.Pressed)
+//         {
+//             isMouseLookUsed = true;
+//         }
+//         else
+//         {
+//             isMouseLookUsed = false;
+//         }
+//         
+//         _mouseState = mState;
+//         _keyboardState = kState;
+//     }
+//
+// #region Moving the camera
+//     public void MoveForward(GameTime gameTime)
+//     {
+//         Position += (camerasWorld.Forward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveBackward(GameTime gameTime)
+//     {
+//         Position += (camerasWorld.Backward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveLeft(GameTime gameTime)
+//     {
+//         Position += (camerasWorld.Left * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveRight(GameTime gameTime)
+//     {
+//         Position += (camerasWorld.Right * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveUp(GameTime gameTime)
+//     {
+//         Position += (camerasWorld.Up * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveDown(GameTime gameTime)
+//     {
+//         Position += (camerasWorld.Down * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveForwardWorld(GameTime gameTime)
+//     {
+//         Position += (Vector3.Forward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveBackwardWorld(GameTime gameTime)
+//     {
+//         Position += (Vector3.Backward * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveLeftWorld(GameTime gameTime)F
+//     {
+//         Position += (Vector3.Left * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveRightWorld(GameTime gameTime)
+//     {
+//         Position += (Vector3.Right * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveUpWorld(GameTime gameTime)
+//     {
+//         Position += (Vector3.Up * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+//
+//     public void MoveDownWorld(GameTime gameTime)
+//     {
+//         Position += (Vector3.Down * MovementSpeed) * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+//     }
+// #endregion
 
 }
