@@ -25,6 +25,16 @@ namespace RTS_Engine
         public static Matrix Projection;
         public static Matrix World;
 
+        public enum LayerType 
+        {
+            DEFAULT,
+            PLAYER,
+            ENEMY,
+            UI,
+            PROP,
+            BUILDING
+        }
+
         public static void Update(GameTime gameTime)
         {
             TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
