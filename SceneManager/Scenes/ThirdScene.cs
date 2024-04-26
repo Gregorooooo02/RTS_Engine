@@ -33,6 +33,7 @@ public class ThirdScene : Scene
         gameObject2.AddComponent<Collider>();
         
         gameObject3.AddComponent<Camera>();
+        gam
         
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));

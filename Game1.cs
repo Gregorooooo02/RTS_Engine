@@ -71,7 +71,7 @@ public class Game1 : Game
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         Globals.BasicEffect = _basicEffect;
 
-#if WINDOWS
+#if _WINDOWS
         Globals.TestEffect = Content.Load<Effect>("TestEffect");
 #else
         byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
