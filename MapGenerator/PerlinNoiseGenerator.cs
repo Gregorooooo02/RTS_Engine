@@ -15,8 +15,8 @@ public class PerlinNoiseGenerator
 
     public PerlinNoiseGenerator()
     {
-        Octaves = 8;
-        Persistance = 0.25f;
+        Octaves = 6;
+        Persistance = 0.5f;
         Interpolation = Helpers.LinearInterpolation;
         Random = new Random();
     }

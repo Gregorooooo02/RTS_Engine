@@ -20,6 +20,7 @@ public class Game1 : Game
     private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
 
     private bool isFullscreen = false;
+    private bool isWireframe = false;
     
     public Game1()
     {
@@ -66,7 +67,7 @@ public class Game1 : Game
         _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
         _sceneCamera.Position = _position;
 #endif
-        
+
         Globals.SpriteBatch = _spriteBatch;
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         Globals.BasicEffect = _basicEffect;
@@ -77,13 +78,13 @@ public class Game1 : Game
         byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
         Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
-        //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
-        //Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
+        Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
+        Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
         
         // TODO: use this.Content to load your game content here
+        _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(new SecondScene());
         _sceneManager.AddScene(new ThirdScene());
-        _sceneManager.AddScene(new MapScene());
     }
 
     protected override void Update(GameTime gameTime)
@@ -93,7 +94,7 @@ public class Game1 : Game
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
         // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-        Console.WriteLine(InputManager.Instance.MousePosition);
+        // Console.WriteLine(InputManager.Instance.MousePosition);
         
         // TODO: Add your update logic here
         base.Update(gameTime);
@@ -123,6 +124,18 @@ public class Game1 : Game
         _basicEffect.View = _sceneCamera.View;
         _basicEffect.Projection = _sceneCamera.Projection;
 #endif
+        RasterizerState rasterizerState = new RasterizerState();
+        if (isWireframe)
+        {
+			rasterizerState.FillMode = FillMode.WireFrame;
+        }
+		else
+		{
+			rasterizerState.FillMode = FillMode.Solid;
+		}
+
+		GraphicsDevice.RasterizerState = rasterizerState;
+        
         _spriteBatch.Begin();
         _sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
         _spriteBatch.End();
@@ -140,6 +153,8 @@ public class Game1 : Game
 #if DEBUG
         ImGui.Checkbox("Fullscreen", ref isFullscreen);
         ImGui.Separator();
+		ImGui.Checkbox("Wireframe", ref isWireframe);
+		ImGui.Separator();
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);

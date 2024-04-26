@@ -11,18 +11,31 @@ namespace RTS_Engine;
 public class MapScene : Scene
 {
     GameObject gameObject;
+    GameObject mesh;
+
     public override void Initialize()
     {
         Name = "MapScene";
         SceneRoot = new GameObject();
+        SceneRoot.Name = "Root";
 
         GenerateMap.GenerateNoiseTexture();
 
         gameObject = new GameObject();
+        gameObject.Name = "MapTexture";
+        gameObject.Transform.SetLocalScale(new Vector3(2, 2, 1));
         gameObject.AddComponent<SpiteRenderer>();
         gameObject.GetComponent<SpiteRenderer>().Sprite = GenerateMap.noiseTexture;
-        gameObject.Transform.SetLocalPosition(new Vector3(500, 200, 0));
+        gameObject.Transform.SetLocalPosition(new Vector3(0, 0, 0));
         SceneRoot.AddChildObject(gameObject);
+
+        mesh = new GameObject();
+        mesh.Name = "Mesh";
+        mesh.AddComponent<MeshRenderer>();
+        mesh.GetComponent<MeshRenderer>().LoadModel("basicPlane");
+        mesh.Transform.SetLocalScale(new Vector3(0.5f, 0.5f, 0.5f));
+        mesh.Transform.SetLocalPosition(new Vector3(0, -5, 0));
+        SceneRoot.AddChildObject(mesh);
     }
 
     public override void Update(GameTime gameTime)
