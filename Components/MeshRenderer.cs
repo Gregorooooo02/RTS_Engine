@@ -8,32 +8,14 @@ namespace RTS_Engine;
 
 public class MeshRenderer : Component
 {
-    private Model _model;
-    private string name;
-
-    //---------------------------Temporary---------------------------
-    // Matrix _view = Matrix.CreateLookAt(
-    //     new Vector3(0, 4, 20),
-    //     new Vector3(0.0f),
-    //     Vector3.UnitY);
-
-    // private Matrix _projection =
-    //     Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 500.0f);
-    //-------------------------------------------------------------------
-
-
+    private ModelData _model;
+    
     public MeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
         Initialize();
     }
-
-    public MeshRenderer(GameObject parentObject, Model model)
-    {
-        ParentObject = parentObject;
-        _model = model;
-    }
-
+    
     public MeshRenderer()
     {
         
@@ -44,28 +26,13 @@ public class MeshRenderer : Component
     public override void Initialize()
     {
         _model = AssetManager.DefaultModel;
-        name = "defaultCube";
     }
 
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
     private void DrawModel(Model model, Matrix wrld, Matrix vw, Matrix proj)
     {
-          
-        foreach (ModelMesh mesh in model.Meshes)
+        foreach (ModelMesh mesh in _model.Model.Meshes)
         {
-            foreach (BasicEffect effect in mesh.Effects)
-            {
-                effect.World = wrld;
-                effect.View = vw;
-                effect.Projection = proj;
-
-                effect.EnableDefaultLighting();
-            }
-            mesh.Draw();
-        }
-          
-       foreach (ModelMesh mesh in _model.Meshes)
-             {
                  foreach (ModelMeshPart part in mesh.MeshParts)
                  {
                      if (part.PrimitiveCount > 0)
@@ -73,17 +40,22 @@ public class MeshRenderer : Component
                          Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
                          Globals.GraphicsDevice.Indices = part.IndexBuffer;
                          
-                         Matrix.Multiply(ref wrld, ref vw, out var worldView);
-                         Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
-                         
                          //Here pass parameters that are used in all techniques
-                         Globals.TestEffect.Parameters["WorldViewProjection"].SetValue(worldViewProj);
-       
-                         //If some actions are dependent on technique use if like the one below
-                         if (Globals.TestEffect.CurrentTechnique.Name == "BasicColorDrawing")
-                         {
-                             
-                         }
+                         Globals.TestEffect.Parameters["World"].SetValue(wrld);
+                         Matrix temp = Matrix.Transpose(Matrix.Invert(wrld));
+                         temp.M41 = 0;
+                         temp.M42 = 0;
+                         temp.M43 = 0;
+                         temp.M44 = 1;
+                         temp.M14 = 0;
+                         temp.M24 = 0;
+                         temp.M34 = 0;
+                         Globals.TestEffect.Parameters["normalMatrix"].SetValue(temp);
+                         Globals.TestEffect.Parameters["albedo"].SetValue(_model.Textures[0]);
+                         Globals.TestEffect.Parameters["normal"]?.SetValue(_model.Textures[1]);
+                         Globals.TestEffect.Parameters["roughness"]?.SetValue(_model.Textures[2]);
+                         Globals.TestEffect.Parameters["metalness"]?.SetValue(_model.Textures[3]);
+                         Globals.TestEffect.Parameters["ao"].SetValue(_model.Textures[4]);
                          
                          for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
                          {
@@ -92,14 +64,14 @@ public class MeshRenderer : Component
                          }
                      }
                  }
-             } 
+        } 
     }
 
     public override void Draw(Matrix _view, Matrix _projection)
     {
         if(!Active) return;
         //TODO: Implement globally accessible View and Projection matrices. Then use them here
-        DrawModel(_model, ParentObject.Transform.ModelMatrix, _view, _projection);
+        DrawModel(_model.Model, ParentObject.Transform.ModelMatrix, _view, _projection);
     }
 
     public override string ComponentToXmlString()
@@ -112,7 +84,7 @@ public class MeshRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
-        builder.Append("<model>" + name +"</model>");
+        builder.Append("<model>" + _model.ModelPath +"</model>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -125,10 +97,10 @@ public class MeshRenderer : Component
     }
 
 
-    public void LoadModel(string name)
+    public void LoadModel(string modelPath)
     {
-        _model = AssetManager.GetModel(name);
-        this.name = name;
+        _model = AssetManager.GetModel(modelPath);
+        
         //foreach (VertexElement element in _model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
         //{
         //    Console.WriteLine(element.VertexElementUsage);
@@ -137,7 +109,7 @@ public class MeshRenderer : Component
 
     public Model GetModel()
     {
-        return _model;
+        return _model.Model;
     }
     
 #if DEBUG
@@ -148,7 +120,7 @@ public class MeshRenderer : Component
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
-            ImGui.Text(name);
+            ImGui.Text(_model.ModelPath);
             if (ImGui.Button("Switch mesh"))
             {
                 _switchingModel = true;
@@ -162,7 +134,7 @@ public class MeshRenderer : Component
             if (_switchingModel)
             {
                 ImGui.Begin("Switching models");
-                foreach (string n in AssetManager.ModelNames)
+                foreach (string n in AssetManager.ModelPaths)
                 {
                     if (ImGui.Button(n))
                     {

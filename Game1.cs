@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
 using System.IO;
+using System.Linq;
 
 namespace RTS_Engine;
 
@@ -42,6 +43,13 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        string test = "owo/uwu";
+        int index = test.LastIndexOf('/');
+        if(index != -1)test = test.Substring(0,index);
+        Console.WriteLine(test);
+        
+        
+        
         _basicEffect = new BasicEffect(_graphics.GraphicsDevice);
         // TODO: Add your initialization logic here
         _sceneManager = new SceneManager();
@@ -56,6 +64,11 @@ public class Game1 : Game
         AssetManager.Initialize(Content);
         base.Initialize();
         
+        
+        foreach (VertexElement element in AssetManager.DefaultModel.Model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
+        {
+            Console.WriteLine(element.VertexElementUsage);
+        }
     }
 
     protected override void LoadContent()
@@ -72,17 +85,19 @@ public class Game1 : Game
         Globals.BasicEffect = _basicEffect;
 
 #if _WINDOWS
-        Globals.TestEffect = Content.Load<Effect>("TestEffect");
+        Globals.TestEffect = Content.Load<Effect>("PBR_Shader");
 #else
         byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
         Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
+        Vector3[] lightPositions = { new(0,-5,0), new(10,10,100)};
         //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
-        //Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
+        Globals.TestEffect.Parameters["lightPositions"].SetValue(lightPositions);
+        
         
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
-        _sceneManager.AddScene(new ThirdScene());
+        //_sceneManager.AddScene(new ThirdScene());
         _sceneManager.AddScene(new MapScene());
     }
 
@@ -93,7 +108,7 @@ public class Game1 : Game
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
         // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-        Console.WriteLine(InputManager.Instance.MousePosition);
+        //Console.WriteLine(InputManager.Instance.MousePosition);
         
         // TODO: Add your update logic here
         base.Update(gameTime);
@@ -103,6 +118,10 @@ public class Game1 : Game
         _sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
+        
+        Globals.TestEffect.Parameters["View"].SetValue(_sceneCamera.View);
+        Globals.TestEffect.Parameters["Projection"].SetValue(_sceneCamera.Projection);
+        Globals.TestEffect.Parameters["viewPos"]?.SetValue(_sceneCamera.Position);
     }
 
     protected override void Draw(GameTime gameTime)
