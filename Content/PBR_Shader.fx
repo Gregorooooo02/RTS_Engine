@@ -9,14 +9,23 @@
 static const float PI = 3.14159265359;
 
 
-matrix Projection;
-matrix View;
-matrix World;
-float3x3 normalMatrix;
+cbuffer ModelParameters : register(b0)
+{
+    matrix World;
+    float3x3 normalMatrix;
+};
 
-float3 lightPositions[2];
 
+cbuffer Globals : register(b1)
+{
+    matrix Projection;
+    matrix View;
+    float3 viewPos;
 
+    float3 lightPositions[2];
+};
+
+float gamma;
 
 //--------------------------------------------------------------
 //Textures and samplers
@@ -67,11 +76,6 @@ struct VertexShaderOutput
     float3 Normal : TEXCOORD1;
     float3 WorldPosition : TEXCOORD2;
 };
-
-cbuffer Parameters : register(b0)
-{
-    float3 viewPos;
-}
 
 float3 getNormalFromMap(float2 TexCoords, float3 worldPos, float3 Normal)
 {
@@ -146,7 +150,7 @@ VertexShaderOutput PBR_VS(in VertexShaderInput input)
 
 float4 PBR_PS(VertexShaderOutput input) : COLOR
 {
-    float3 albedo = pow(tex2D(albedoSampler, input.TexCoords).rgb, float3(2.2,2.2,2.2));
+    float3 albedo = pow(tex2D(albedoSampler, input.TexCoords).rgb, gamma);
     float metallic = tex2D(metalnessSampler, input.TexCoords).r;
     float roughness = tex2D(roughnessSampler, input.TexCoords).r;
     float ao = tex2D(aoSampler, input.TexCoords).r;
@@ -171,7 +175,7 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
         float G = GeometrySpitch(N, V, L, roughness);
         float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
         
-        float numerator = NDF * G * F;
+        float3 numerator = NDF * G * F;
         float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
         float3 specular = numerator / denominator;
         
@@ -192,8 +196,7 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
     
     color = color / (color + float3(1.0, 1.0, 1.0));
     
-    float gamma = 1.0 / 2.2;
-    color = pow(color, float3(gamma,gamma,gamma));
+    color = pow(color, 1.0 / gamma);
 
     return float4(color, 1.0);
 }

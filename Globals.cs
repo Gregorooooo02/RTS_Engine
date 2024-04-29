@@ -19,11 +19,14 @@ namespace RTS_Engine
         public static float TotalSeconds { get; set; }
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
-        public static BasicEffect BasicEffect;
-        public static Effect TestEffect;
+        public static Effect MainEffect;
         public static Matrix View;
         public static Matrix Projection;
         public static Matrix World;
+
+        public static BoundingFrustum BoundingFrustum;
+
+        public static float Gamma = 2.2f;
 
         public static void Update(GameTime gameTime)
         {

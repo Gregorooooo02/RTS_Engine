@@ -43,7 +43,7 @@ public class Camera : Component
         RotateUpDown(angle);
     }
     
-    public override void Draw(Matrix _view, Matrix _projection){}
+    public override void Draw(){}
     
     public override string ComponentToXmlString()
     {

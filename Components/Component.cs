@@ -15,7 +15,7 @@ public abstract class Component
     }
     public abstract void Update();
 
-    public abstract void Draw(Matrix _view, Matrix _projection);
+    public abstract void Draw();
     public abstract void Initialize();
 
     public abstract string ComponentToXmlString();

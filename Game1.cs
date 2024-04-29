@@ -82,18 +82,16 @@ public class Game1 : Game
         
         Globals.SpriteBatch = _spriteBatch;
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
-        Globals.BasicEffect = _basicEffect;
 
 #if _WINDOWS
-        Globals.TestEffect = Content.Load<Effect>("PBR_Shader");
+        Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
 #else
         byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
         Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         Vector3[] lightPositions = { new(0,-5,0), new(10,10,100)};
         //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
-        Globals.TestEffect.Parameters["lightPositions"].SetValue(lightPositions);
-        
+        Globals.MainEffect.Parameters["lightPositions"]?.SetValue(lightPositions);
         
         // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
@@ -118,10 +116,13 @@ public class Game1 : Game
         _sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
+
         
-        Globals.TestEffect.Parameters["View"].SetValue(_sceneCamera.View);
-        Globals.TestEffect.Parameters["Projection"].SetValue(_sceneCamera.Projection);
-        Globals.TestEffect.Parameters["viewPos"]?.SetValue(_sceneCamera.Position);
+        Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
+        Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
+        Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
+        Globals.MainEffect.Parameters["viewPos"]?.SetValue(_sceneCamera.Position);
+        Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -153,21 +154,23 @@ public class Game1 : Game
 #endif
         base.Draw(gameTime);
     }
-
+#if DEBUG
     protected virtual void ImGuiLayout()
     {
-#if DEBUG
+
         ImGui.Checkbox("Fullscreen", ref isFullscreen);
         ImGui.Separator();
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
         ImGui.Checkbox("Map Modifier", ref Globals.MapModifyVisible);
-#endif
-        ImGui.ColorEdit3("Background Color", ref _clearColor);
-        ImGui.Text(ImGui.GetIO().Framerate + " FPS");
 
-#if DEBUG
+        ImGui.ColorEdit3("Background Color", ref _clearColor);
+        ImGui.SliderFloat("Gamma value", ref Globals.Gamma,1,5);
+        ImGui.Text(ImGui.GetIO().Framerate + " FPS");
+        
+
+
         if (Globals.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
@@ -186,6 +189,7 @@ public class Game1 : Game
         if (Globals.MapModifyVisible) {
             GenerateMap.MapInspector();
         }
-#endif
+
     }
+#endif
 }

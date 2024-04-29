@@ -47,7 +47,7 @@ public class AnimatedSpriteRenderer : Component
         }
     }
 
-    public override void Draw(Matrix _view, Matrix _projection)
+    public override void Draw()
     {
         Globals.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(

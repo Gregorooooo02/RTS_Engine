@@ -45,11 +45,11 @@ public class GameObject
     public void Draw(Matrix _view, Matrix _projection)
     {
         if(!Active) return;
-        Transform.Draw(_view, _projection);
+        Transform.Draw();
         //'Draw' all components
         foreach(Component c in _components)
         {
-            c.Draw(_view, _projection);
+            c.Draw();
         }
         //Propegate throuth all children
         foreach (GameObject gameObject in Children)

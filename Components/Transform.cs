@@ -87,7 +87,7 @@ public class Transform : Component
         return Matrix.CreateScale(_scl) * rotationMatrix *  Matrix.CreateTranslation(_pos);
     }
 
-    public override void Draw(Matrix _view, Matrix _projection)
+    public override void Draw()
     {
         
     }

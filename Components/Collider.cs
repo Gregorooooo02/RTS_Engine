@@ -40,7 +40,7 @@ public class Collider : Component
         name = ParentObject.Name + "Collider";
     }
     
-    public override void Draw(Matrix _view, Matrix _projection){}
+    public override void Draw(){}
     
     public override string ComponentToXmlString()
     {

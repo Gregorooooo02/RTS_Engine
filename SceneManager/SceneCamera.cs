@@ -178,6 +178,9 @@ public class SceneCamera
         if (fpsKeyboardLayout == CAM_UI_OPTION_EDITOR) {
             UpdateEditorKeyboardLayout(gameTime);
         }
+
+        Globals.View = View;
+        Globals.Projection = Projection;
     }
 
     /// <summary>

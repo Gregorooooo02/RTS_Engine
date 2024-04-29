@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,7 +12,8 @@ public class ModelData
     
     public Model Model;
     public string ModelPath;
-    public BoundingSphere BoundingSphere;
+    private BoundingSphere _boundingSphere;
+    public string ShaderTechniqueName;
     
     /*
      *--------------------------------------------------------------------------------------------------------------------------
@@ -25,12 +27,55 @@ public class ModelData
      */
     public List<Texture2D> Textures = new List<Texture2D>();
     
-    
+    public void Draw(Matrix world)
+    {
+        if(Globals.BoundingFrustum.Contains(_boundingSphere.Transform(world)) == ContainmentType.Disjoint)return;
+        if (Globals.MainEffect.CurrentTechnique.Name != ShaderTechniqueName)
+            Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques[ShaderTechniqueName];
+        foreach (ModelMesh mesh in Model.Meshes)
+        {
+            foreach (ModelMeshPart part in mesh.MeshParts)
+            {
+                if (part.PrimitiveCount > 0)
+                {
+                    Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                    Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                    
+                    //Pass textures to the shader
+                    Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[0]);
+                    Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[1]);
+                    Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[2]);
+                    Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[3]);
+                    Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[4]);
+                    
+                    //Pass world and normal matrices to the shader
+                    Globals.MainEffect.Parameters["World"]?.SetValue(world);
+                    //ModelEffect.Parameters["View"].SetValue(Globals.View);
+                    //ModelEffect.Parameters["Projection"].SetValue(Globals.Projection);
+                    Matrix temp = Matrix.Transpose(Matrix.Invert(world));
+                    temp.M41 = 0;
+                    temp.M42 = 0;
+                    temp.M43 = 0;
+                    temp.M44 = 1;
+                    temp.M14 = 0;
+                    temp.M24 = 0;
+                    temp.M34 = 0;
+                    Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
+                    
+                    for (int i = 0; i < Globals.MainEffect.CurrentTechnique.Passes.Count; i++)
+                    {
+                        Globals.MainEffect.CurrentTechnique.Passes[i].Apply();
+                        Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                    }
+                }
+            }
+        } 
+    }
     
     public ModelData(ContentManager manager, string modelPath)
     {
         LoadModel(manager,modelPath);
-        BoundingSphere = CalculateBoundingSphere();
+        _boundingSphere = CalculateBoundingSphere();
     }
 
     private BoundingSphere CalculateBoundingSphere()
@@ -77,18 +122,29 @@ public class ModelData
             }
             Textures.Add(temp);
         }
-
+        
         //Loading model itself, saving model name
         string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
         ModelPath = modelPath;
+        ShaderTechniqueName = "PBR";
         Model = manager.Load<Model>(modelPath + "/" + modelName);
     }
 
     public ModelData(ContentManager manager, string modelPath, Vector3 boundingPosition, float boundingRadius)
     {
         LoadModel(manager,modelPath);
-        BoundingSphere.Center = boundingPosition;
-        BoundingSphere.Radius = boundingRadius;
+        _boundingSphere.Center = boundingPosition;
+        _boundingSphere.Radius = boundingRadius;
+    }
+
+    public string Serialize()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<path>"+ ModelPath +"</path>");
+        builder.Append("<technique>"+ ShaderTechniqueName +"</technique>");
+        
+        return builder.ToString();
     }
 
 }

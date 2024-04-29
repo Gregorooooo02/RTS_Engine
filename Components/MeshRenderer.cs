@@ -27,51 +27,11 @@ public class MeshRenderer : Component
     {
         _model = AssetManager.DefaultModel;
     }
-
-    //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
-    private void DrawModel(Model model, Matrix wrld, Matrix vw, Matrix proj)
-    {
-        foreach (ModelMesh mesh in _model.Model.Meshes)
-        {
-                 foreach (ModelMeshPart part in mesh.MeshParts)
-                 {
-                     if (part.PrimitiveCount > 0)
-                     {
-                         Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-                         Globals.GraphicsDevice.Indices = part.IndexBuffer;
-                         
-                         //Here pass parameters that are used in all techniques
-                         Globals.TestEffect.Parameters["World"].SetValue(wrld);
-                         Matrix temp = Matrix.Transpose(Matrix.Invert(wrld));
-                         temp.M41 = 0;
-                         temp.M42 = 0;
-                         temp.M43 = 0;
-                         temp.M44 = 1;
-                         temp.M14 = 0;
-                         temp.M24 = 0;
-                         temp.M34 = 0;
-                         Globals.TestEffect.Parameters["normalMatrix"].SetValue(temp);
-                         Globals.TestEffect.Parameters["albedo"].SetValue(_model.Textures[0]);
-                         Globals.TestEffect.Parameters["normal"]?.SetValue(_model.Textures[1]);
-                         Globals.TestEffect.Parameters["roughness"]?.SetValue(_model.Textures[2]);
-                         Globals.TestEffect.Parameters["metalness"]?.SetValue(_model.Textures[3]);
-                         Globals.TestEffect.Parameters["ao"].SetValue(_model.Textures[4]);
-                         
-                         for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
-                         {
-                             Globals.TestEffect.CurrentTechnique.Passes[i].Apply();
-                             Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-                         }
-                     }
-                 }
-        } 
-    }
-
-    public override void Draw(Matrix _view, Matrix _projection)
+    
+    public override void Draw()
     {
         if(!Active) return;
-        //TODO: Implement globally accessible View and Projection matrices. Then use them here
-        DrawModel(_model.Model, ParentObject.Transform.ModelMatrix, _view, _projection);
+        _model.Draw(ParentObject.Transform.ModelMatrix);
     }
 
     public override string ComponentToXmlString()
@@ -84,7 +44,7 @@ public class MeshRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
-        builder.Append("<model>" + _model.ModelPath +"</model>");
+        builder.Append("<model>" + _model.Serialize() +"</model>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -93,14 +53,15 @@ public class MeshRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
-        LoadModel(element.Element("model").Value);
+        XElement model = element.Element("model");
+        LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
     }
 
 
-    public void LoadModel(string modelPath)
+    public void LoadModel(string modelPath, string technique = "PBR")
     {
         _model = AssetManager.GetModel(modelPath);
-        
+        _model.ShaderTechniqueName = technique;
         //foreach (VertexElement element in _model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
         //{
         //    Console.WriteLine(element.VertexElementUsage);
@@ -120,7 +81,8 @@ public class MeshRenderer : Component
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
-            ImGui.Text(_model.ModelPath);
+            ImGui.Text("Current mesh: " + _model.ModelPath);
+            ImGui.Text("Current technique: " + _model.ShaderTechniqueName);
             if (ImGui.Button("Switch mesh"))
             {
                 _switchingModel = true;
