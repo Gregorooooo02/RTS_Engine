@@ -54,7 +54,16 @@ public class MeshRenderer : Component
     {
         Active = element.Element("active")?.Value == "True";
         XElement model = element.Element("model");
-        LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
+        string path;
+        if (model?.Element("path") == null) 
+        {
+            LoadModel(model?.Value);
+        }
+        else
+        {
+            LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
+        }
+        
     }
 
 

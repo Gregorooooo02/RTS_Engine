@@ -63,12 +63,6 @@ public class Game1 : Game
         Globals.Initialize();
         AssetManager.Initialize(Content);
         base.Initialize();
-        
-        
-        foreach (VertexElement element in AssetManager.DefaultModel.Model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
-        {
-            Console.WriteLine(element.VertexElementUsage);
-        }
     }
 
     protected override void LoadContent()

@@ -122,7 +122,7 @@ public class AssetManager
         
         LoadNames();
 #endif
-        DefaultModel = new ModelData(this._content,"TestPBR");
+        DefaultModel = new ModelData(this._content,"defaultModel");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");

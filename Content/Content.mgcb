@@ -25,7 +25,7 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
-#begin basicPlane.fbx
+#begin basicPlane/basicPlane.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -42,7 +42,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:basicPlane.fbx
+/build:basicPlane/basicPlane.fbx
 
 #begin coin.png
 /importer:TextureImporter
@@ -55,25 +55,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:coin.png
-
-#begin cube.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=0.2
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:cube.fbx;defaultCube.fbx
 
 #begin defaultFont.spritefont
 /importer:FontDescriptionImporter
@@ -161,7 +142,7 @@
 /processorParam:TextureFormat=Color
 /build:defaultModel/roughness.png
 
-#begin Env/Props/namiot (2).fbx
+#begin Env/Props/namiot (2)/namiot (2).fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -178,9 +159,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Env/Props/namiot (2).fbx
+/build:Env/Props/namiot (2)/namiot (2).fbx
 
-#begin Env/Props/ogniskonaked.fbx
+#begin Env/Props/ogniskonaked/ogniskonaked.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -197,7 +178,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Env/Props/ogniskonaked.fbx
+/build:Env/Props/ogniskonaked/ogniskonaked.fbx
 
 #begin Env/Tex/kamien_DefaultMaterial_BaseColor.png
 /importer:TextureImporter
@@ -259,7 +240,7 @@
 /processorParam:TextureFormat=Color
 /build:Env/Tex/kamien_DefaultMaterial_Roughness.png
 
-#begin Env/Trees/drzewoiglaste.fbx
+#begin Env/Trees/drzewoiglaste/drzewoiglaste.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -276,7 +257,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Env/Trees/drzewoiglaste.fbx
+/build:Env/Trees/drzewoiglaste/drzewoiglaste.fbx
 
 #begin Env/Trees/drzewolisciaste4 (1).fbx
 /importer:FbxImporter
@@ -289,7 +270,7 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=-90
+/processorParam:RotationX=0
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
 /processorParam:Scale=1
@@ -308,7 +289,7 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=-90
+/processorParam:RotationX=0
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
 /processorParam:Scale=1
@@ -335,7 +316,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Krzesło/krzeslo.fbx
 
-#begin monke.fbx
+#begin monke/monke.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -346,13 +327,13 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=-90
+/processorParam:RotationX=0
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:monke.fbx
+/build:monke/monke.fbx
 
 #begin PBR_Shader.fx
 /importer:EffectImporter
@@ -371,6 +352,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:smile.png
+
+#begin sprite.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprite.jpg
 
 #begin sprite.jpg
 /importer:TextureImporter
@@ -414,7 +407,7 @@
 /processorParam:PremultiplyTextureAlpha=True
 /processorParam:PremultiplyVertexColors=True
 /processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=-90
+/processorParam:RotationX=0
 /processorParam:RotationY=0
 /processorParam:RotationZ=0
 /processorParam:Scale=1
@@ -422,7 +415,19 @@
 /processorParam:TextureFormat=Compressed
 /build:Tartak/domall.fbx
 
-#begin Tartak/TARTACZEK.fbx
+#begin Tartak/TARTACZEK/albedo.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tartak/TARTACZEK/albedo.jpg
+
+#begin Tartak/TARTACZEK/TARTACZEK.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -439,7 +444,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Tartak/TARTACZEK.fbx
+/build:Tartak/TARTACZEK/TARTACZEK.fbx
 
 #begin Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
 /importer:TextureImporter

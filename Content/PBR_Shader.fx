@@ -7,6 +7,8 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 static const float PI = 3.14159265359;
+static const float3 dirLightDirection = float3(0,-1,0);
+static const float3 dirLightColor = float3(1, 1, 1);
 
 
 cbuffer ModelParameters : register(b0)
@@ -163,6 +165,30 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
     
     float3 Lo = float3(0.0, 0.0, 0.0);
     
+    //Dir light calculation
+    /*
+    float3 L = normalize(-dirLightDirection);
+    float3 H = normalize(V + L);
+
+    float NDF = DistributionGGX(N, H, roughness);
+    float G = GeometrySpitch(N, V, L, roughness);
+    float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+        
+    float3 numerator = NDF * G * F;
+    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
+    float3 specular = numerator / denominator;
+           
+    float3 kS = F;
+    float3 kD = float3(1, 1, 1) - kS;
+    kD *= 1.0 - metallic;
+        
+    float NdotL = max(dot(N, L), 0.0);
+        
+    Lo += (kD * albedo / PI + specular) * dirLightColor * NdotL;
+    */
+    //Dir light calculation end
+    
+    //Point light calculations
     for (int i = 0; i < 1; i++)
     {
         float3 L = normalize(lightPositions[i] - input.WorldPosition);
@@ -189,12 +215,11 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
         Lo += (kD * albedo / PI + specular) * radiance * NdotL;
     }
     
-    
-    float3 ambient = float3(0.03, 0.03, 0.03) * albedo * ao;
+    float3 ambient = 0.03 * albedo * ao;
     
     float3 color = ambient + Lo;
     
-    color = color / (color + float3(1.0, 1.0, 1.0));
+    color = color / (color + 1);
     
     color = pow(color, 1.0 / gamma);
 
