@@ -32,7 +32,7 @@ public class MapScene : Scene
         meshObject = new GameObject();
         meshObject.Name = "WorldMesh";
         meshObject.AddComponent<WorldRenderer>();
-        meshObject.Transform.SetLocalPosition(new Vector3(-64, -20, -64));
+        meshObject.Transform.SetLocalPosition(new Vector3(-64, -40, -64));
         SceneRoot.AddChildObject(meshObject);
     }
 
