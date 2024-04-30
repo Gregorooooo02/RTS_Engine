@@ -1,14 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using Num = System.Numerics;
 
 namespace RTS_Engine;
 
 public class WorldRenderer : Component
 {
     private Texture2D _heightMap;
+    private Effect _effect;
 
     // Mesh parameters for the terrain
     private VertexPositionColor[] _vertices;
@@ -16,6 +19,15 @@ public class WorldRenderer : Component
     private int _width = 4;
     private int _height = 4;
     private float[,] _heightData;
+
+    private Num.Vector3[] _colors = new Num.Vector3[]
+    {
+        new Num.Vector3(0, 0, 0.8f), // Blue
+        new Num.Vector3(1.0f, 1.0f, 0.7f), // Yellow
+        new Num.Vector3(0.25f, 0.75f, 0.25f), // Green
+        new Num.Vector3(0.5f, 0.5f, 0.5f), // Grey
+        new Num.Vector3(1, 1, 1) // White
+    };
 
     public WorldRenderer(GameObject parentObject)
     {
@@ -43,15 +55,15 @@ public class WorldRenderer : Component
 
         RasterizerState rs = new RasterizerState();
         rs.CullMode = CullMode.None;
-        rs.FillMode = FillMode.WireFrame;
+        rs.FillMode = FillMode.Solid;
         Globals.GraphicsDevice.RasterizerState = rs;
 
-        Globals.BasicEffect.EnableDefaultLighting();
-        Globals.BasicEffect.View = _view;
-        Globals.BasicEffect.Projection = _projection;
-        Globals.BasicEffect.World = ParentObject.Transform.ModelMatrix;
+        _effect.CurrentTechnique = _effect.Techniques["ColoredNoShading"];
+        _effect.Parameters["xView"].SetValue(_view);
+        _effect.Parameters["xProjection"].SetValue(_projection);
+        _effect.Parameters["xWorld"].SetValue(ParentObject.Transform.ModelMatrix);
 
-        foreach (EffectPass pass in Globals.BasicEffect.CurrentTechnique.Passes)
+        foreach (EffectPass pass in _effect.CurrentTechnique.Passes)
         {
             pass.Apply();
             Globals.GraphicsDevice.DrawUserIndexedPrimitives(
@@ -69,6 +81,12 @@ public class WorldRenderer : Component
 
     public override void Initialize()
     {
+#if _WINDOWS
+        _effect = this._content.Load<Effect>("effect");
+#else
+        byte[] bytecode = File.ReadAllBytes("Content/effects");
+        _effect = new Effect(Globals.GraphicsDevice, bytecode);
+#endif
         //_heightMap = AssetManager.HeightMap;
         _heightMap = GenerateMap.noiseTexture;
 
@@ -79,6 +97,25 @@ public class WorldRenderer : Component
 
     private void SetUpVertices()
     {
+        float minHeight = float.MaxValue;
+        float maxHeight = float.MinValue;
+
+        for (int x = 0; x < _width; x++)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                if (_heightData[x, y] < minHeight)
+                {
+                    minHeight = _heightData[x, y];
+                }
+                if (_heightData[x, y] > maxHeight)
+                {
+                    maxHeight = _heightData[x, y];
+                    
+                }
+            }
+        }
+
         _vertices = new VertexPositionColor[_width * _height];
 
         for (int x = 0; x < _width; x++)
@@ -86,7 +123,27 @@ public class WorldRenderer : Component
             for (int y = 0; y < _height; y++)
             {
                 _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y], -y);
-                _vertices[x + y * _width].Color = Color.White;
+                
+                if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.3f)
+                {
+                    _vertices[x + y * _width].Color = new Color(_colors[0]);
+                }
+                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.35f)
+                {
+                    _vertices[x + y * _width].Color = new Color(_colors[1]);
+                }
+                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.6f)
+                {
+                    _vertices[x + y * _width].Color = new Color(_colors[2]);
+                }
+                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.7f)
+                {
+                    _vertices[x + y * _width].Color = new Color(_colors[3]);
+                }
+                else
+                {
+                    _vertices[x + y * _width].Color = new Color(_colors[4]);
+                }
             }
         }
     }
@@ -154,6 +211,30 @@ public class WorldRenderer : Component
             ImGui.Text("Height map loaded: " + (_heightMap != null ? "Yes" : "No"));
             ImGui.Text("Width: " + _width);
             ImGui.Text("Height: " + _height);
+
+            ImGui.Separator();
+
+            ImGui.Text("Color settings:");
+            if (ImGui.ColorEdit3("First color", ref _colors[0]))
+            {
+                SetUpVertices();
+            }
+            if (ImGui.ColorEdit3("Second color", ref _colors[1]))
+            {
+                SetUpVertices();
+            }
+            if (ImGui.ColorEdit3("Third color", ref _colors[2]))
+            {
+                SetUpVertices();
+            }
+            if (ImGui.ColorEdit3("Fourth color", ref _colors[3]))
+            {
+                SetUpVertices();
+            }
+            if (ImGui.ColorEdit3("Fifth color", ref _colors[4]))
+            {
+                SetUpVertices();
+            }
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
