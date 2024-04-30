@@ -11,7 +11,7 @@ namespace RTS_Engine;
 public class MapScene : Scene
 {
     GameObject gameObject;
-    GameObject mesh;
+    GameObject meshObject;
 
     public override void Initialize()
     {
@@ -29,13 +29,11 @@ public class MapScene : Scene
         gameObject.Transform.SetLocalPosition(new Vector3(0, 0, 0));
         SceneRoot.AddChildObject(gameObject);
 
-        mesh = new GameObject();
-        mesh.Name = "Mesh";
-        mesh.AddComponent<MeshRenderer>();
-        mesh.GetComponent<MeshRenderer>().LoadModel("basicPlane");
-        mesh.Transform.SetLocalScale(new Vector3(0.5f, 0.5f, 0.5f));
-        mesh.Transform.SetLocalPosition(new Vector3(0, -5, 0));
-        SceneRoot.AddChildObject(mesh);
+        meshObject = new GameObject();
+        meshObject.Name = "WorldMesh";
+        meshObject.AddComponent<WorldRenderer>();
+        meshObject.Transform.SetLocalPosition(new Vector3(-64, -20, -64));
+        SceneRoot.AddChildObject(meshObject);
     }
 
     public override void Update(GameTime gameTime)

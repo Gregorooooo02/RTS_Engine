@@ -39,28 +39,16 @@ public class GenerateMap
 
             noiseTexture = transformer.Transform(filter.Filter(perlinNoise));
         }
+
+        SaveTextureData(noiseTexture, "Content/heightmap.bmp");
     }
 
-    public static void MapInspector()
+    private static void SaveTextureData(Texture2D texture, string filename)
     {
-        int octaves = perlinGen.Octaves; // Store the value in a variable
-        float persistance = perlinGen.Persistance; // Store the value in a variable
-
-        ImGui.Begin("Map Inspector");
-
-        if (ImGui.Checkbox("Color Gradient", ref isColored))
-        {
-            GenerateNoiseTexture();
-        }
-        if (ImGui.SliderInt("Octaves", ref perlinGen.Octaves, 1, 10))
-        {
-            GenerateNoiseTexture();
-        }
-        if (ImGui.SliderFloat("Persistance", ref perlinGen.Persistance, 0.01f, 1.0f))
-        {
-            GenerateNoiseTexture();
-        }
-
-        ImGui.End();
+        Color[] data = new Color[texture.Width * texture.Height];
+        texture.GetData(data);
+        Texture2D newTexture = new Texture2D(Globals.GraphicsDevice, texture.Width, texture.Height);
+        newTexture.SetData(data);
+        newTexture.SaveAsPng(new System.IO.FileStream(filename, System.IO.FileMode.Create), texture.Width, texture.Height);
     }
 }

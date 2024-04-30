@@ -58,6 +58,7 @@ public class AssetManager
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
     public static Texture2D Background{get; private set;}
+    public static Texture2D HeightMap{get; private set;}
     public static SpriteFont DefaultFont{get; private set;}
 
     private class ModelData
@@ -125,6 +126,7 @@ public class AssetManager
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         Background = this._content.Load<Texture2D>("background");
+        HeightMap = this._content.Load<Texture2D>("heightmap");
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
     }
 

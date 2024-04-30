@@ -237,6 +237,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Env/Trees/drzewolisciastejesienne.fbx
 
+#begin heightmap.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:heightmap.bmp
+
 #begin Krzesło/krzeslo.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -415,5 +427,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
-
 
