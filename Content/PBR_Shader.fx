@@ -7,8 +7,9 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 static const float PI = 3.14159265359;
-static const float3 dirLightDirection = float3(0,-1,0);
-static const float3 dirLightColor = float3(1, 1, 1);
+static const float3 dirLightDirection = float3(0.3,-1,0.3);
+static const float3 dirLightColor = float3(1, 1, 0.6);
+static const float dirLightIntesity = 1.3;
 
 
 cbuffer ModelParameters : register(b0)
@@ -124,7 +125,7 @@ float GeometrySchlickGGX(float NdotV, float roughness)
 float GeometrySpitch(float3 N, float3 V, float3 L, float roughness)
 {
     float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
+    float NdotL = clamp(dot(N, L), 0.0,1.0);
     float ggx2 = GeometrySchlickGGX(NdotV, roughness);
     float ggx1 = GeometrySchlickGGX(NdotL, roughness);
     
@@ -166,7 +167,7 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
     float3 Lo = float3(0.0, 0.0, 0.0);
     
     //Dir light calculation
-    /*
+    
     float3 L = normalize(-dirLightDirection);
     float3 H = normalize(V + L);
 
@@ -184,12 +185,13 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
         
     float NdotL = max(dot(N, L), 0.0);
         
-    Lo += (kD * albedo / PI + specular) * dirLightColor * NdotL;
-    */
+    Lo += ((kD * albedo) / PI + specular) * dirLightColor * dirLightIntesity * NdotL;
+    
     //Dir light calculation end
     
     //Point light calculations
-    for (int i = 0; i < 1; i++)
+    /*
+    for (int i = 0; i < 0; i++)
     {
         float3 L = normalize(lightPositions[i] - input.WorldPosition);
         float3 H = normalize(V + L);
@@ -214,6 +216,7 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
         
         Lo += (kD * albedo / PI + specular) * radiance * NdotL;
     }
+    */
     
     float3 ambient = 0.03 * albedo * ao;
     

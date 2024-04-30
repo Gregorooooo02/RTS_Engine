@@ -100,7 +100,7 @@ public class Game1 : Game
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         
         // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-        //Console.WriteLine(InputManager.Instance.MousePosition);
+        //Console.WriteLine(InputManager.Instance.ScrollWheel);
         
         // TODO: Add your update logic here
         base.Update(gameTime);

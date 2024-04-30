@@ -240,6 +240,18 @@
 /processorParam:TextureFormat=Color
 /build:Env/Tex/kamien_DefaultMaterial_Roughness.png
 
+#begin Env/Trees/drzewoiglaste/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Env/Trees/drzewoiglaste/albedo.png
+
 #begin Env/Trees/drzewoiglaste/drzewoiglaste.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -365,18 +377,6 @@
 /processorParam:TextureFormat=Color
 /build:sprite.jpg
 
-#begin sprite.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:sprite.jpg
-
 #begin Szafa/monsterMid.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -415,7 +415,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Tartak/domall.fbx
 
-#begin Tartak/TARTACZEK/albedo.jpg
+#begin Tartak/TARTACZEK/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -425,7 +425,43 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/albedo.jpg
+/build:Tartak/TARTACZEK/albedo.png
+
+#begin Tartak/TARTACZEK/metalness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tartak/TARTACZEK/metalness.png
+
+#begin Tartak/TARTACZEK/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tartak/TARTACZEK/normal.png
+
+#begin Tartak/TARTACZEK/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tartak/TARTACZEK/roughness.png
 
 #begin Tartak/TARTACZEK/TARTACZEK.fbx
 /importer:FbxImporter

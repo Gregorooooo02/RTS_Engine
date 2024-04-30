@@ -38,6 +38,7 @@ public class InputManager
     
     //Other
     public Point MousePosition;
+    public int ScrollWheel;
     
     private List<ActionData> _actions;
     private List<MouseAction> _mouseActions;
@@ -88,6 +89,7 @@ public class InputManager
 
         //Poll current frame mouse inputs
         MouseState mouse = Mouse.GetState();
+        ScrollWheel = mouse.ScrollWheelValue;
         if (mouse.LeftButton == ButtonState.Pressed)
         {
             if (_rawMouseToAction.TryGetValue(0, out GameAction action))

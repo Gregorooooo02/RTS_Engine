@@ -122,6 +122,11 @@ public class SceneManager
                     AddScene(scene);
                 }
             }
+
+            if (ImGui.Button("Cancel"))
+            {
+                loadingScene = false;
+            }
             ImGui.End();
         }
         ImGui.End();
