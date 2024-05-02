@@ -49,7 +49,7 @@ public class Game1 : Game
         Console.WriteLine(test);
         
         
-        
+        Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _basicEffect = new BasicEffect(_graphics.GraphicsDevice);
         // TODO: Add your initialization logic here
         _sceneManager = new SceneManager();
@@ -62,6 +62,7 @@ public class Game1 : Game
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
+        Globals.Renderer = new Renderer(Content);
         base.Initialize();
     }
 
@@ -75,7 +76,7 @@ public class Game1 : Game
 #endif
         
         Globals.SpriteBatch = _spriteBatch;
-        Globals.GraphicsDevice = _graphics.GraphicsDevice;
+        
 
 #if _WINDOWS
         Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
@@ -137,8 +138,10 @@ public class Game1 : Game
         _basicEffect.View = _sceneCamera.View;
         _basicEffect.Projection = _sceneCamera.Projection;
 #endif
+        Globals.Renderer.Render();
+        
         _spriteBatch.Begin();
-        _sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
+        //_sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
         _spriteBatch.End();
 
 #if DEBUG
@@ -147,6 +150,7 @@ public class Game1 : Game
         _imGuiRenderer.AfterLayout();
 #endif
         base.Draw(gameTime);
+        Globals.Renderer.PrepareForNextFrame();
     }
 #if DEBUG
     protected virtual void ImGuiLayout()
@@ -158,6 +162,7 @@ public class Game1 : Game
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
         ImGui.Checkbox("Map Modifier", ref Globals.MapModifyVisible);
+        ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
 
         ImGui.ColorEdit3("Background Color", ref _clearColor);
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,1,5);

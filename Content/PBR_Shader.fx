@@ -7,9 +7,9 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 static const float PI = 3.14159265359;
-static const float3 dirLightDirection = float3(0.3,-1,0.3);
+static const float3 dirLightDirection = float3(0.5,-1,0.5);
 static const float3 dirLightColor = float3(1, 1, 0.6);
-static const float dirLightIntesity = 1.3;
+static const float dirLightIntesity = 20;
 
 
 cbuffer ModelParameters : register(b0)
@@ -23,12 +23,17 @@ cbuffer Globals : register(b1)
 {
     matrix Projection;
     matrix View;
+    
+    matrix dirLightSpace;
+    
     float3 viewPos;
 
     float3 lightPositions[2];
 };
 
 float gamma;
+float DepthBias;
+float ShadowMapSize;
 
 //--------------------------------------------------------------
 //Textures and samplers
@@ -37,6 +42,7 @@ Texture2D normal : register(t1);
 Texture2D roughness : register(t2);
 Texture2D metalness : register(t3);
 Texture2D ao : register(t4);
+Texture2D ShadowMap : register(t5);
 
 sampler2D albedoSampler = sampler_state
 {
@@ -62,8 +68,12 @@ sampler2D aoSampler = sampler_state
 {
     Texture = <ao>;
 };
-//--------------------------------------------------------------
 
+sampler2D shadowMapSampler = sampler_state
+{
+    Texture = <ShadowMap>;
+};
+//--------------------------------------------------------------
 
 struct VertexShaderInput
 {
@@ -137,6 +147,107 @@ float3 fresnelSchlick(float cosTheta, float3 F0)
     return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
+float CalcdirectionalShadowsPCF(float light_space_depth, float NdotL, float2 shadowCoords)
+{
+    float shadowTerm = 0;
+    
+    float variableBias = clamp(0.0005 * tan(acos(NdotL)), 0.00001, DepthBias);
+    
+    float size = 1.0 / ShadowMapSize;
+   
+    float samples[4];
+    
+    samples[0] = (light_space_depth - variableBias < tex2D(shadowMapSampler, shadowCoords).r);
+    samples[1] = (light_space_depth - variableBias < tex2D(shadowMapSampler, shadowCoords + float2(size, 0)).r);
+    samples[2] = (light_space_depth - variableBias < tex2D(shadowMapSampler, shadowCoords + float2(0, size)).r);
+    samples[3] = (light_space_depth - variableBias < tex2D(shadowMapSampler, shadowCoords + float2(size, size)).r);
+    
+    shadowTerm = (samples[0] + samples[1] + samples[2] + samples[3]) / 4.0;
+    
+    return shadowTerm;
+
+}
+
+float CalcDirectionalShadowsSoftPCF(float lightDepth, float NdotL, float2 shadowCoords, int iSqrtSamples)
+{
+    float shadowTerm = 0;
+    
+    float variableBias = clamp(0.001 * tan(acos(NdotL)), 0, DepthBias);
+    
+    float size = 1.0 / ShadowMapSize;
+    
+    float radius = iSqrtSamples - 1;
+    
+    for (float y = -radius; y <= radius; y++)
+    {
+        for (float x = -radius; x < radius; x++)
+        {
+            float2 offset = float2(x, y);
+            offset / ShadowMapSize;
+            float2 SamplePoint = shadowCoords + offset;
+            float Depth = tex2D(shadowMapSampler, SamplePoint).r;
+            float sample = (lightDepth <= Depth + variableBias);
+
+            float xWeight = 1;
+            float yWeight = 1;
+            
+            if (x == -radius)
+                xWeight = 1 - frac(shadowCoords.x * ShadowMapSize);
+            else if (x == radius)
+                xWeight = frac(shadowCoords.x * ShadowMapSize);
+            
+            if (y == -radius)
+                xWeight = 1 - frac(shadowCoords.y * ShadowMapSize);
+            else if (y == radius)
+                xWeight = frac(shadowCoords.y * ShadowMapSize);
+            
+            shadowTerm += sample * xWeight * yWeight;
+        }
+
+    }
+    
+    shadowTerm /= (radius * radius * 4);
+    return shadowTerm;
+}
+
+float3 CalculateDirectionalLight(float3 worldPosition, float3 N, float3 albedo, float metallic, float roughness)
+{
+    float3 V = normalize(viewPos - worldPosition);
+    
+    float3 F0 = float3(0.04, 0.04, 0.04);
+    F0 = lerp(F0, albedo, metallic);
+    
+    float3 L = normalize(-dirLightDirection);
+    float3 H = normalize(V + L);
+    float3 radiance = dirLightColor * dirLightIntesity;
+    
+    float NDF = DistributionGGX(N, H, roughness);
+    float G = GeometrySpitch(N, V, L, roughness);
+    float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+    
+    float3 kS = F;
+    float3 kD = float3(1, 1, 1) - kS;
+    kD *= 1.0 - metallic;
+    
+    float3 numerator = NDF * G * F;
+    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0);
+    float3 specular = numerator / max(denominator,0.001);
+    
+    float NdotL = max(dot(N, L), 0.0);
+    
+    float shadowContribution = 1.0;
+    
+    float4 lightPosition = mul(float4(worldPosition, 1), dirLightSpace);
+    float2 shadowTexCoord = mad(0.5, lightPosition.xy / lightPosition.w, float2(0.5, 0.5));
+    shadowTexCoord.y = 1.0 - shadowTexCoord.y;
+    float ourDepth = (lightPosition.z / lightPosition.w);
+    shadowContribution = CalcdirectionalShadowsPCF(ourDepth, NdotL, shadowTexCoord);
+    //shadowContribution = CalcDirectionalShadowsSoftPCF(ourDepth, NdotL, shadowTexCoord, 7);
+    
+    return (kD * albedo / PI + specular) * radiance * NdotL * shadowContribution;
+    
+    
+}
 
 VertexShaderOutput PBR_VS(in VertexShaderInput input)
 {
@@ -164,8 +275,11 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
     float3 F0 = float3(0.04,0.04,0.04);
     F0 = lerp(F0, albedo, metallic);
     
-    float3 Lo = float3(0.0, 0.0, 0.0);
+    //float3 Lo = float3(0.0, 0.0, 0.0);
     
+    float3 Lo = CalculateDirectionalLight(input.WorldPosition, N, albedo, metallic, roughness);
+    
+    /*
     //Dir light calculation
     
     float3 L = normalize(-dirLightDirection);
@@ -186,6 +300,7 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
     float NdotL = max(dot(N, L), 0.0);
         
     Lo += ((kD * albedo) / PI + specular) * dirLightColor * dirLightIntesity * NdotL;
+    */
     
     //Dir light calculation end
     

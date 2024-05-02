@@ -353,6 +353,12 @@
 /processorParam:DebugMode=Auto
 /build:PBR_Shader.fx
 
+#begin ShadowMaps.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:ShadowMaps.fx
+
 #begin smile.png
 /importer:TextureImporter
 /processor:TextureProcessor

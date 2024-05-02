@@ -8,8 +8,8 @@ namespace RTS_Engine;
 
 public class MeshRenderer : Component
 {
-    private ModelData _model;
-    
+    public ModelData _model {get; private set;}
+
     public MeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
@@ -20,8 +20,20 @@ public class MeshRenderer : Component
     {
         
     }
-    
-    public override void Update(){}
+
+    public override void Update()
+    {
+        //Check if MeshRenderer is active
+        if (Active)
+        {
+            //Check if model is in view, if yes add to render list, if not skip
+            if (_model.IsInView(ParentObject.Transform.ModelMatrix))
+            {
+                Globals.Renderer.Meshes.Add(this);
+            }
+        }
+        
+    }
 
     public override void Initialize()
     {
@@ -31,7 +43,7 @@ public class MeshRenderer : Component
     public override void Draw()
     {
         if(!Active) return;
-        _model.Draw(ParentObject.Transform.ModelMatrix);
+        //_model.Draw(ParentObject.Transform.ModelMatrix);
     }
 
     public override string ComponentToXmlString()

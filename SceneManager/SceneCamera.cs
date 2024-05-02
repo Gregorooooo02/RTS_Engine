@@ -181,6 +181,7 @@ public class SceneCamera
 
         Globals.View = View;
         Globals.Projection = Projection;
+        Globals.viewPos = Position;
     }
 
     /// <summary>

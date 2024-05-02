@@ -27,12 +27,35 @@ public class ModelData
      *--------------------------------------------------------------------------------------------------------------------------
      */
     public List<Texture2D> Textures = new List<Texture2D>();
+
+    public bool IsInView(Matrix world)
+    {
+        return Globals.BoundingFrustum.Contains(_boundingSphere.Transform(world)) != ContainmentType.Disjoint;
+    }
     
     public void Draw(Matrix world)
     {
-        if(Globals.BoundingFrustum.Contains(_boundingSphere.Transform(world)) == ContainmentType.Disjoint)return;
         if (Globals.MainEffect.CurrentTechnique.Name != ShaderTechniqueName)
             Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques[ShaderTechniqueName];
+        
+        
+        //Pass textures to the shader
+        Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[0]);
+        Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[1]);
+        Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[2]);
+        Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[3]);
+        Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[4]);
+                    
+        Globals.MainEffect.Parameters["World"]?.SetValue(world);
+        Matrix temp = Matrix.Transpose(Matrix.Invert(world));
+        temp.M41 = 0;
+        temp.M42 = 0;
+        temp.M43 = 0;
+        temp.M44 = 1;
+        temp.M14 = 0;
+        temp.M24 = 0;
+        temp.M34 = 0;
+        Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
         foreach (ModelMesh mesh in Model.Meshes)
         {
             foreach (ModelMeshPart part in mesh.MeshParts)
@@ -41,28 +64,6 @@ public class ModelData
                 {
                     Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
                     Globals.GraphicsDevice.Indices = part.IndexBuffer;
-                    
-                    //Pass textures to the shader
-                    Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[0]);
-                    Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[1]);
-                    Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[2]);
-                    Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[3]);
-                    Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[4]);
-                    
-                    //Pass world and normal matrices to the shader
-                    Globals.MainEffect.Parameters["World"]?.SetValue(world);
-                    //ModelEffect.Parameters["View"].SetValue(Globals.View);
-                    //ModelEffect.Parameters["Projection"].SetValue(Globals.Projection);
-                    Matrix temp = Matrix.Transpose(Matrix.Invert(world));
-                    temp.M41 = 0;
-                    temp.M42 = 0;
-                    temp.M43 = 0;
-                    temp.M44 = 1;
-                    temp.M14 = 0;
-                    temp.M24 = 0;
-                    temp.M34 = 0;
-                    Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
-                    
                     for (int i = 0; i < Globals.MainEffect.CurrentTechnique.Passes.Count; i++)
                     {
                         Globals.MainEffect.CurrentTechnique.Passes[i].Apply();
