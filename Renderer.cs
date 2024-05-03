@@ -13,7 +13,8 @@ public class Renderer
     #endif
     
     //TODO: Clean up this class
-    public static int ShadowMapSize = 2048;
+    public static int ShadowMapSize = 256;
+    private int currentMultiplier;
     
     private Effect _shadowMapGenerator;
     private Matrix _lightViewProjection;
@@ -35,15 +36,21 @@ public class Renderer
             DepthFormat.Depth24);
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
         Meshes = new List<MeshRenderer>();
-        
-        #if DEBUG
+#if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
     }
 
     public void Render()
     {
-        
+        //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
+        //TODO: In that case Renderer scene would be, visually, one frame behind game's logic but, if not changed, there might be
+        //TODO: some visual inaccuracies with frustum culling if camera moves too fast.
+        Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
+        Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
+        Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
+        Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
+        Globals.MainEffect.Parameters["dirLightIntesity"]?.SetValue(Globals.LightIntensity);
         
 #if DEBUG
         if(Globals.DrawShadows) DrawShadows();
@@ -62,7 +69,20 @@ public class Renderer
 
     public void PrepareForNextFrame()
     {
+        //Clear list of meshes to draw
         Meshes.Clear();
+        //Prepare camera frustum for next frame culling
+        Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
+        
+#if DEBUG
+        if (currentMultiplier != Globals.ShadowMapResolutionMultiplier)
+        {
+            currentMultiplier = Globals.ShadowMapResolutionMultiplier;
+            ShadowMapSize = 256 * (int)Math.Pow(2, currentMultiplier);
+            _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
+                DepthFormat.Depth24);
+        }
+#endif
     }
     
     private void DrawMeshes()
@@ -79,7 +99,7 @@ public class Renderer
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
+        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
         Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         foreach (MeshRenderer renderer in Meshes)
         {
@@ -91,7 +111,7 @@ public class Renderer
     
     private void DrawShadows()
     {
-        Vector3 lightPos = Globals.viewPos + new Vector3(-60, 15, -60);
+        Vector3 lightPos = Globals.ViewPos + new Vector3(-60, 15, -60);
         _lightViewProjection = Matrix.CreateLookAt(lightPos, lightPos + new Vector3(0.5f,-1.0f,0.5f), Vector3.Up) *
                                Matrix.CreateOrthographic(200, 200, 0.1f, 700);
         
@@ -120,5 +140,4 @@ public class Renderer
             }
         } 
     }
-
 }

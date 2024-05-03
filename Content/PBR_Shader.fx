@@ -71,6 +71,11 @@ sampler2D aoSampler = sampler_state
 sampler2D shadowMapSampler = sampler_state
 {
     Texture = <ShadowMap>;
+    MinFilter = point;
+    MagFilter = point;
+    MipFilter = point;
+    AddressU = Wrap;
+    AddressV = Wrap;
 };
 //--------------------------------------------------------------
 
@@ -171,18 +176,16 @@ float CalcDirectionalShadowsSoftPCF(float lightDepth, float NdotL, float2 shadow
 {
     float shadowTerm = 0;
     
-    float variableBias = clamp(0.001 * tan(acos(NdotL)), 0, DepthBias);
-    
-    float size = 1.0 / ShadowMapSize;
+    float variableBias = clamp(0.0005 * tan(acos(NdotL)), 0.00001, DepthBias);
     
     float radius = iSqrtSamples - 1;
     
     for (float y = -radius; y <= radius; y++)
     {
-        for (float x = -radius; x < radius; x++)
+        for (float x = -radius; x <= radius; x++)
         {
             float2 offset = float2(x, y);
-            offset / ShadowMapSize;
+            offset /= ShadowMapSize;
             float2 SamplePoint = shadowCoords + offset;
             float Depth = tex2D(shadowMapSampler, SamplePoint).r;
             float sample = (lightDepth <= Depth + variableBias);
@@ -240,12 +243,12 @@ float3 CalculateDirectionalLight(float3 worldPosition, float3 N, float3 albedo, 
     float2 shadowTexCoord = mad(0.5, lightPosition.xy / lightPosition.w, float2(0.5, 0.5));
     shadowTexCoord.y = 1.0 - shadowTexCoord.y;
     float ourDepth = (lightPosition.z / lightPosition.w);
-    shadowContribution = CalcdirectionalShadowsPCF(ourDepth, NdotL, shadowTexCoord);
-    //shadowContribution = CalcDirectionalShadowsSoftPCF(ourDepth, NdotL, shadowTexCoord, 7);
-    
-    return (kD * albedo / PI + specular) * radiance * NdotL * shadowContribution;
-    
-    
+    if (shadowTexCoord.x <= 1 && shadowTexCoord.y <= 1 && shadowTexCoord.x >= 0 && shadowTexCoord.y >= 0)
+    {
+        //shadowContribution = CalcdirectionalShadowsPCF(ourDepth, NdotL, shadowTexCoord);
+        shadowContribution = CalcDirectionalShadowsSoftPCF(ourDepth, NdotL, shadowTexCoord,3);
+    }
+    return (kD * albedo / PI + specular) * radiance * NdotL * shadowContribution;   
 }
 
 VertexShaderOutput PBR_VS(in VertexShaderInput input)

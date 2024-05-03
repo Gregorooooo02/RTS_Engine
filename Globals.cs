@@ -23,7 +23,7 @@ namespace RTS_Engine
         public static Matrix View;
         public static Matrix Projection;
         public static Matrix World;
-        public static Vector3 viewPos;
+        public static Vector3 ViewPos;
 
         public static Renderer Renderer;
         
@@ -31,6 +31,7 @@ namespace RTS_Engine
 
         public static float Gamma = 2.2f;
         public static float LightIntensity = 20;
+
 
         public static void Update(GameTime gameTime)
         {
@@ -58,7 +59,9 @@ namespace RTS_Engine
             AvailableScenes = Directory.GetFiles("Scenes").ToList();
 #endif
         }
-
+        
+        public static int ShadowMapResolutionMultiplier = 3;
+        
         //Switches for debug windows UWU
         public static bool InspectorVisible = true;
         public static bool HierarchyVisible = true;

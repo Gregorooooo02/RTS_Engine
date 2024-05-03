@@ -14,7 +14,6 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
     private SceneCamera _sceneCamera;
-    //private BasicEffect _basicEffect;
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     
     private ImGuiRenderer _imGuiRenderer;
@@ -43,19 +42,10 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        string test = "owo/uwu";
-        int index = test.LastIndexOf('/');
-        if(index != -1)test = test.Substring(0,index);
-        Console.WriteLine(test);
-        
-        
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
-        //_basicEffect = new BasicEffect(_graphics.GraphicsDevice);
-        // TODO: Add your initialization logic here
         _sceneManager = new SceneManager();
 
         _imGuiRenderer = new ImGuiRenderer(this);
-
         _imGuiRenderer.RebuildFontAtlas();
 
         FileManager.Initialize();
@@ -63,6 +53,7 @@ public class Game1 : Game
         Globals.Initialize();
         AssetManager.Initialize(Content);
         Globals.Renderer = new Renderer(Content);
+        
         base.Initialize();
     }
 
@@ -100,14 +91,6 @@ public class Game1 : Game
         _sceneManager.CurrentScene.Update(gameTime);
 
         base.Update(gameTime);
-        
-        //TODO: Move this Shader parameters updates into Renderer
-        Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
-        Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
-        Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
-        Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.viewPos);
-        Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
-        Globals.MainEffect.Parameters["dirLightIntesity"]?.SetValue(Globals.LightIntensity);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -123,6 +106,9 @@ public class Game1 : Game
         base.Draw(gameTime);
         Globals.Renderer.PrepareForNextFrame();
     }
+    
+    
+    
 #if DEBUG
     protected virtual void ImGuiLayout()
     {
@@ -141,6 +127,7 @@ public class Game1 : Game
         ImGui.ColorEdit3("Background Color", ref _clearColor);
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
         ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
+        ImGui.SliderInt("Shadow Map Size", ref Globals.ShadowMapResolutionMultiplier, 0, 5);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         
         
