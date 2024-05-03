@@ -9,7 +9,7 @@
 static const float PI = 3.14159265359;
 static const float3 dirLightDirection = float3(0.5,-1,0.5);
 static const float3 dirLightColor = float3(1, 1, 0.6);
-static const float dirLightIntesity = 20;
+//static const float dirLightIntesity = 20;
 
 
 cbuffer ModelParameters : register(b0)
@@ -27,13 +27,12 @@ cbuffer Globals : register(b1)
     matrix dirLightSpace;
     
     float3 viewPos;
-
-    float3 lightPositions[2];
 };
 
 float gamma;
 float DepthBias;
 float ShadowMapSize;
+float dirLightIntesity;
 
 //--------------------------------------------------------------
 //Textures and samplers
@@ -275,63 +274,7 @@ float4 PBR_PS(VertexShaderOutput input) : COLOR
     float3 F0 = float3(0.04,0.04,0.04);
     F0 = lerp(F0, albedo, metallic);
     
-    //float3 Lo = float3(0.0, 0.0, 0.0);
-    
     float3 Lo = CalculateDirectionalLight(input.WorldPosition, N, albedo, metallic, roughness);
-    
-    /*
-    //Dir light calculation
-    
-    float3 L = normalize(-dirLightDirection);
-    float3 H = normalize(V + L);
-
-    float NDF = DistributionGGX(N, H, roughness);
-    float G = GeometrySpitch(N, V, L, roughness);
-    float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
-        
-    float3 numerator = NDF * G * F;
-    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-    float3 specular = numerator / denominator;
-           
-    float3 kS = F;
-    float3 kD = float3(1, 1, 1) - kS;
-    kD *= 1.0 - metallic;
-        
-    float NdotL = max(dot(N, L), 0.0);
-        
-    Lo += ((kD * albedo) / PI + specular) * dirLightColor * dirLightIntesity * NdotL;
-    */
-    
-    //Dir light calculation end
-    
-    //Point light calculations
-    /*
-    for (int i = 0; i < 0; i++)
-    {
-        float3 L = normalize(lightPositions[i] - input.WorldPosition);
-        float3 H = normalize(V + L);
-        float distance = length(lightPositions[i] - input.WorldPosition);
-        float attenuation = 1.0 / (distance * distance);
-        float3 radiance = float3(1, 1, 1) * attenuation;
-
-        float NDF = DistributionGGX(N, H, roughness);
-        float G = GeometrySpitch(N, V, L, roughness);
-        float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
-        
-        float3 numerator = NDF * G * F;
-        float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;
-        float3 specular = numerator / denominator;
-        
-        
-        float3 kS = F;
-        float3 kD = float3(1, 1, 1) - kS;
-        kD *= 1.0 - metallic;
-        
-        float NdotL = max(dot(N, L), 0.0);
-        
-        Lo += (kD * albedo / PI + specular) * radiance * NdotL;
-    }
-    */
     
     float3 ambient = 0.03 * albedo * ao;
     

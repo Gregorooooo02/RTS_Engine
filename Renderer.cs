@@ -8,6 +8,10 @@ namespace RTS_Engine;
 
 public class Renderer
 {
+    #if DEBUG
+    private Texture2D _blank;
+    #endif
+    
     //TODO: Clean up this class
     public static int ShadowMapSize = 2048;
     
@@ -31,18 +35,28 @@ public class Renderer
             DepthFormat.Depth24);
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
         Meshes = new List<MeshRenderer>();
+        
+        #if DEBUG
+        _blank = content.Load<Texture2D>("blank");
+#endif
     }
 
     public void Render()
     {
-        DrawShadows();
-        DrawMeshes();
+        
         
 #if DEBUG
+        if(Globals.DrawShadows) DrawShadows();
+        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
+        if(Globals.DrawMeshes) DrawMeshes();
+        
         if(!Globals.ShowShadowMap) return;
         Globals.SpriteBatch.Begin();
         Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
         Globals.SpriteBatch.End();
+#elif RELEASE
+        DrawShadows();
+        DrawMeshes();
 #endif
     }
 
@@ -53,7 +67,7 @@ public class Renderer
     
     private void DrawMeshes()
     {
-        
+#if RELEASE
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
         Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
@@ -62,6 +76,17 @@ public class Renderer
         {
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
+#elif DEBUG
+        Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+        Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
+        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
+        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        foreach (MeshRenderer renderer in Meshes)
+        {
+            renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
+        }
+
+#endif
     }
     
     private void DrawShadows()

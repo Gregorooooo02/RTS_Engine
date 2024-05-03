@@ -30,6 +30,7 @@ namespace RTS_Engine
         public static BoundingFrustum BoundingFrustum;
 
         public static float Gamma = 2.2f;
+        public static float LightIntensity = 20;
 
         public static void Update(GameTime gameTime)
         {
@@ -64,6 +65,8 @@ namespace RTS_Engine
         public static bool SceneSelectionVisible = true;
         public static bool MapModifyVisible = true;
         public static bool ShowShadowMap = false;
+        public static bool DrawShadows = true;
+        public static bool DrawMeshes = true;
 #endif
     }
 }

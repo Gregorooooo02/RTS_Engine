@@ -14,7 +14,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
     private SceneCamera _sceneCamera;
-    private BasicEffect _basicEffect;
+    //private BasicEffect _basicEffect;
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     
     private ImGuiRenderer _imGuiRenderer;
@@ -50,7 +50,7 @@ public class Game1 : Game
         
         
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
-        _basicEffect = new BasicEffect(_graphics.GraphicsDevice);
+        //_basicEffect = new BasicEffect(_graphics.GraphicsDevice);
         // TODO: Add your initialization logic here
         _sceneManager = new SceneManager();
 
@@ -84,27 +84,14 @@ public class Game1 : Game
         byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
         Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
-        Vector3[] lightPositions = { new(0,-5,0), new(10,10,100)};
-        //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
-        Globals.MainEffect.Parameters["lightPositions"]?.SetValue(lightPositions);
-        
-        // TODO: use this.Content to load your game content here
         _sceneManager.AddScene(new SecondScene());
-        //_sceneManager.AddScene(new ThirdScene());
         _sceneManager.AddScene(new MapScene());
     }
 
     protected override void Update(GameTime gameTime)
     {
-
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
-        
-        // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-        //Console.WriteLine(InputManager.Instance.ScrollWheel);
-        
-        // TODO: Add your update logic here
-        base.Update(gameTime);
         Globals.Update(gameTime);
         
 #if DEBUG
@@ -112,38 +99,22 @@ public class Game1 : Game
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
 
+        base.Update(gameTime);
         
+        //TODO: Move this Shader parameters updates into Renderer
         Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
-        Globals.MainEffect.Parameters["viewPos"]?.SetValue(_sceneCamera.Position);
+        Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.viewPos);
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
+        Globals.MainEffect.Parameters["dirLightIntesity"]?.SetValue(Globals.LightIntensity);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        var d = new DepthStencilState();
-        d.DepthBufferEnable = true;
-        d.DepthBufferWriteEnable = true;
-        GraphicsDevice.DepthStencilState = d;
-        
-        GraphicsDevice.Clear(new Color(_clearColor));
-        // TODO: Add your drawing code here
-#if RELEASE
-        _basicEffect.World = Matrix.Identity;
-        _basicEffect.View = Globals.View;
-        _basicEffect.Projection = Globals.Projection;
-#elif DEBUG
-        _basicEffect.World = _sceneCamera.World;
-        _basicEffect.View = _sceneCamera.View;
-        _basicEffect.Projection = _sceneCamera.Projection;
-#endif
+        GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.Renderer.Render();
         
-        _spriteBatch.Begin();
-        //_sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
-        _spriteBatch.End();
-
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
@@ -163,13 +134,16 @@ public class Game1 : Game
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
         ImGui.Checkbox("Map Modifier", ref Globals.MapModifyVisible);
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
+        ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
+        ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
+
 
         ImGui.ColorEdit3("Background Color", ref _clearColor);
-        ImGui.SliderFloat("Gamma value", ref Globals.Gamma,1,5);
+        ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
+        ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         
-
-
+        
         if (Globals.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
