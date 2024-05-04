@@ -28,6 +28,7 @@ public class SceneManager
 
     public void ChangeScene(int i)
     {
+        Globals.Renderer.Clear();
         CurrentScene = _scenes[i];
     }
 

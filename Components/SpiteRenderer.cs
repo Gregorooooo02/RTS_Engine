@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -43,6 +44,7 @@ public class SpiteRenderer : Component
 
     public override void Initialize()
     {
+        Globals.Renderer.Sprites.Add(this);
         Sprite = AssetManager.DefaultSprite;
     }
 
@@ -75,6 +77,7 @@ public class SpiteRenderer : Component
         LoadSprite(element.Element("sprite").Value);
         XElement color = element.Element("color");
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
+        Globals.Renderer.Sprites.Add(this);
     }
 
     public void LoadSprite(string name)
@@ -102,6 +105,7 @@ public class SpiteRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
+                Globals.Renderer.Sprites.Remove(this);
                 ParentObject.RemoveComponent(this);
                 AssetManager.FreeSprite(Sprite);
             }

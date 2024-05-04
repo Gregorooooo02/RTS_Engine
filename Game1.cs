@@ -47,12 +47,13 @@ public class Game1 : Game
 
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
-
+        
+        Globals.Renderer = new Renderer(Content);
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-        Globals.Renderer = new Renderer(Content);
+        
         
         base.Initialize();
     }
@@ -76,7 +77,6 @@ public class Game1 : Game
         Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         _sceneManager.AddScene(new SecondScene());
-        _sceneManager.AddScene(new MapScene());
     }
 
     protected override void Update(GameTime gameTime)

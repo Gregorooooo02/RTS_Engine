@@ -75,6 +75,7 @@ public class AnimatedSpriteRenderer : Component
         {
             _sourceRectangles.Add(new(i * frameWdith, 0, frameWdith, frameHeight));
         }
+        Globals.Renderer.AnimatedSprites.Add(this);
     }
 
     public override string ComponentToXmlString()
@@ -120,6 +121,7 @@ public class AnimatedSpriteRenderer : Component
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
         
         _isAnimationActive = element.Element("isAnimationActive")?.Value == "True";
+        Globals.Renderer.AnimatedSprites.Add(this);
     }
 
     public void StartAnimation() 
@@ -189,6 +191,7 @@ public class AnimatedSpriteRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
+                Globals.Renderer.AnimatedSprites.Remove(this);
                 ParentObject.RemoveComponent(this);
                 AssetManager.FreeSprite(SpriteSheet);
             }

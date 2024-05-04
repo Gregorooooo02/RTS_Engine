@@ -27,7 +27,9 @@ public class Renderer
     
     //Things to render in current frame
     public List<MeshRenderer> Meshes;
-
+    public List<SpiteRenderer> Sprites;
+    public List<TextRenderer> Texts;
+    public List<AnimatedSpriteRenderer> AnimatedSprites;
     //
 
     public Renderer(ContentManager content)
@@ -36,6 +38,9 @@ public class Renderer
             DepthFormat.Depth24);
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
         Meshes = new List<MeshRenderer>();
+        Sprites = new List<SpiteRenderer>();
+        Texts = new List<TextRenderer>();
+        AnimatedSprites = new List<AnimatedSpriteRenderer>();
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -57,16 +62,57 @@ public class Renderer
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if(Globals.DrawMeshes) DrawMeshes();
         
-        if(!Globals.ShowShadowMap) return;
+        
         Globals.SpriteBatch.Begin();
-        Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
+        if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
+        DrawSprites();
+        DrawAnimatedSprites();
+        DrawText();
         Globals.SpriteBatch.End();
 #elif RELEASE
         DrawShadows();
         DrawMeshes();
+
+        Globals.SpriteBatch.Begin();
+        DrawSprites();
+        DrawAnimatedSprites();
+        DrawText();
+        Globals.SpriteBatch.End();
 #endif
     }
 
+    private void DrawAnimatedSprites()
+    {
+        foreach (AnimatedSpriteRenderer gif in AnimatedSprites)
+        {
+            gif.Draw();
+        }
+    }
+    
+    private void DrawSprites()
+    {
+        foreach (SpiteRenderer spite in Sprites)
+        {
+            spite.Draw();
+        }
+    }
+
+    private void DrawText()
+    {
+        foreach (TextRenderer text in Texts)
+        {
+            text.Draw();
+        }
+    }
+
+    public void Clear()
+    {
+        Meshes.Clear();
+        Sprites.Clear();
+        AnimatedSprites.Clear();
+        Texts.Clear();
+    }
+    
     public void PrepareForNextFrame()
     {
         //Clear list of meshes to draw
