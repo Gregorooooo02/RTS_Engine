@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
@@ -10,21 +11,30 @@ namespace RTS_Engine;
 
 public class Game1 : Game
 {
+#if DEBUG
+    private int _size = 60;
+    private readonly Stopwatch _performanceTimer = new Stopwatch();
+    private double[] _measurements;
+    private int _shiftHead = 0;
+    private double currentAvg;
+    
+    private ImGuiRenderer _imGuiRenderer;
+    private Num.Vector3 _position = new Num.Vector3(0,0,10);
+    private SceneCamera _sceneCamera;
+#endif
+    
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
-    private SceneCamera _sceneCamera;
-    private Num.Vector3 _position = new Num.Vector3(0,0,10);
-    
-    private ImGuiRenderer _imGuiRenderer;
-    private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
-
     private bool isFullscreen = false;
     
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-
+#if DEBUG
+        _measurements = new double[_size];
+#endif
+        
         if (isFullscreen)
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -81,6 +91,10 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+#if DEBUG
+        _performanceTimer.Start();
+#endif
+        
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
@@ -95,21 +109,38 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.Renderer.Render();
-        
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
 #endif
-        base.Draw(gameTime);
+        //Idk if line below is necessary. Shit seems to work even if it's commented out so whatever
+        //base.Draw(gameTime);
         Globals.Renderer.PrepareForNextFrame();
+        
+#if DEBUG
+        _measurements[_shiftHead] = (_performanceTimer.ElapsedTicks / (double)Stopwatch.Frequency) * 1000.0;
+        if (_shiftHead == _size - 1) currentAvg = AvgFromLastSec();
+        _shiftHead++;
+        if (_shiftHead == _size) _shiftHead = 0;
+        _performanceTimer.Reset();
+#endif
     }
     
     
     
 #if DEBUG
+    private double AvgFromLastSec()
+    {
+        double sum = 0;
+        for (int i = 0; i < _size; i++)
+        {
+            sum += _measurements[i];
+        }
+        return sum / _size;
+    }
+    
     protected virtual void ImGuiLayout()
     {
 
@@ -122,13 +153,12 @@ public class Game1 : Game
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
-
-
-        ImGui.ColorEdit3("Background Color", ref _clearColor);
+        
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
         ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
         ImGui.SliderInt("Shadow Map Size", ref Globals.ShadowMapResolutionMultiplier, 0, 5);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
+        ImGui.Text("Average from " + _size +"x: " + Math.Round(currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
         
         
         if (Globals.HierarchyVisible)

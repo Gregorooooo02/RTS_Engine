@@ -30,7 +30,7 @@ namespace RTS_Engine
         public static BoundingFrustum BoundingFrustum;
 
         public static float Gamma = 2.2f;
-        public static float LightIntensity = 20;
+        public static float LightIntensity = 10;
 
 
         public static void Update(GameTime gameTime)

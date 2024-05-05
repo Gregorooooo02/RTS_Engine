@@ -58,10 +58,11 @@ public class Renderer
         Globals.MainEffect.Parameters["dirLightIntesity"]?.SetValue(Globals.LightIntensity);
         
 #if DEBUG
+        Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
+        
         if(Globals.DrawShadows) DrawShadows();
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if(Globals.DrawMeshes) DrawMeshes();
-        
         
         Globals.SpriteBatch.Begin();
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
@@ -69,7 +70,10 @@ public class Renderer
         DrawAnimatedSprites();
         DrawText();
         Globals.SpriteBatch.End();
+
 #elif RELEASE
+        Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
+
         DrawShadows();
         DrawMeshes();
 
