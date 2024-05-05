@@ -28,7 +28,7 @@ public class TextRenderer : Component
         
     }
 
-    public override void Draw(Matrix _view, Matrix _projection)
+    public void Draw()
     {
         if(!Active) return;
         Globals.SpriteBatch.DrawString(
@@ -47,6 +47,7 @@ public class TextRenderer : Component
     {
         Font = AssetManager.DefaultFont;
         _name = "defaultFont";
+        Globals.Renderer.Texts.Add(this);
     }
 
     public override string ComponentToXmlString()
@@ -72,6 +73,14 @@ public class TextRenderer : Component
         Active = element.Element("active")?.Value == "True";
         Content = element.Element("contents").Value;
         LoadFont(element.Element("font").Value);
+        Globals.Renderer.Texts.Add(this);
+    }
+
+    public override void RemoveComponent()
+    {
+        Globals.Renderer.Texts.Remove(this);
+        ParentObject.RemoveComponent(this);
+        AssetManager.FreeFont(Font);
     }
 
     public void LoadFont(string name)
@@ -99,8 +108,7 @@ public class TextRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
-                ParentObject.RemoveComponent(this);
-                AssetManager.FreeFont(Font);
+                RemoveComponent();
             }
 
             if (_switchingFont)

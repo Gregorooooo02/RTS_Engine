@@ -9,7 +9,6 @@ public abstract class Scene
 
     public abstract void Initialize();
     public abstract void Update(GameTime gameTime);
-    public abstract void Draw(Matrix _view, Matrix _projection);
     public abstract void Activate();
     public abstract void Deactivate();
     public abstract void AddGameObject(GameObject gameObject);

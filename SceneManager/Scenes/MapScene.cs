@@ -42,11 +42,6 @@ public class MapScene : Scene
         SceneRoot.Update();
     }
 
-    public override void Draw(Matrix _view, Matrix _projection)
-    {
-        SceneRoot.Draw(_view, _projection);
-    }
-
     public override void Activate()
     {
         SceneRoot.Active = true;

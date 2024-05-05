@@ -19,11 +19,20 @@ namespace RTS_Engine
         public static float TotalSeconds { get; set; }
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
-        public static BasicEffect BasicEffect;
-        public static Effect TestEffect;
+        public static Effect MainEffect;
         public static Matrix View;
         public static Matrix Projection;
         public static Matrix World;
+        public static Vector3 ViewPos;
+
+        public static Renderer Renderer;
+        public static PickingManager PickingManager;
+        
+        public static BoundingFrustum BoundingFrustum;
+
+        public static float Gamma = 2.2f;
+        public static float LightIntensity = 10;
+
 
         public enum LayerType 
         {
@@ -61,11 +70,17 @@ namespace RTS_Engine
             AvailableScenes = Directory.GetFiles("Scenes").ToList();
 #endif
         }
-
+        
+        public static int ShadowMapResolutionMultiplier = 3;
+        
         //Switches for debug windows UWU
         public static bool InspectorVisible = true;
         public static bool HierarchyVisible = true;
         public static bool SceneSelectionVisible = true;
+        public static bool MapModifyVisible = true;
+        public static bool ShowShadowMap = false;
+        public static bool DrawShadows = true;
+        public static bool DrawMeshes = true;
 #endif
     }
 }

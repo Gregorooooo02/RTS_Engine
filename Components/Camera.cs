@@ -43,8 +43,6 @@ public class Camera : Component
         RotateUpDown(angle);
     }
     
-    public override void Draw(Matrix _view, Matrix _projection){}
-    
     public override string ComponentToXmlString()
     {
         StringBuilder builder = new StringBuilder();
@@ -70,7 +68,11 @@ public class Camera : Component
     }
     
     public override void Deserialize(XElement element){}
-    
+    public override void RemoveComponent()
+    {
+        ParentObject.RemoveComponent(this);
+    }
+
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Camera"))
@@ -79,7 +81,7 @@ public class Camera : Component
             ImGui.Text(name);
             if (ImGui.Button("Remove component"))
             {
-                ParentObject.RemoveComponent(this);
+                RemoveComponent();
             }
         }
     }

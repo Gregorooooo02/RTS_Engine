@@ -28,6 +28,7 @@ public class SceneManager
 
     public void ChangeScene(int i)
     {
+        Globals.Renderer.Clear();
         CurrentScene = _scenes[i];
     }
 
@@ -121,6 +122,11 @@ public class SceneManager
                     scene.SceneRoot = FileManager.DeserializeScene(path);
                     AddScene(scene);
                 }
+            }
+
+            if (ImGui.Button("Cancel"))
+            {
+                loadingScene = false;
             }
             ImGui.End();
         }

@@ -8,103 +8,47 @@ namespace RTS_Engine;
 
 public class MeshRenderer : Component
 {
-    private Model _model;
-    private string name;
-    private bool CustomEffect = false;
-
-    //---------------------------Temporary---------------------------
-    // Matrix _view = Matrix.CreateLookAt(
-    //     new Vector3(0, 4, 20),
-    //     new Vector3(0.0f),
-    //     Vector3.UnitY);
-
-    // private Matrix _projection =
-    //     Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45), 1440.0f / 900.0f, 0.1f, 500.0f);
-    //-------------------------------------------------------------------
-
+    public ModelData _model {get; private set;}
+    public bool IsVisible { get; private set; } = false;
 
     public MeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
         Initialize();
     }
-
-    public MeshRenderer(GameObject parentObject, Model model)
-    {
-        ParentObject = parentObject;
-        _model = model;
-    }
-
+    
     public MeshRenderer()
     {
         
     }
-    
-    public override void Update(){}
+
+    public override void Update()
+    {
+        //Check if MeshRenderer is active
+        if (Active)
+        {
+            //Check if model is in view, if yes add to render list, if not skip
+            if (_model.IsInView(ParentObject.Transform.ModelMatrix))
+            {
+                IsVisible = true;
+                Globals.Renderer.Meshes.Add(this);
+            }
+            else
+            {
+                IsVisible = false;
+            }
+        }
+    }
 
     public override void Initialize()
     {
         _model = AssetManager.DefaultModel;
-        name = "defaultCube";
     }
-
-    //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
-    private void DrawModel(Model model, Matrix wrld, Matrix vw, Matrix proj)
-    {
-        if (!CustomEffect)
-        {
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.World = wrld;
-                    effect.View = vw;
-                    effect.Projection = proj;
-
-                    effect.EnableDefaultLighting();
-                }
-                mesh.Draw();
-            }
-        }
-        else
-        {
-            foreach (ModelMesh mesh in _model.Meshes)
-            {
-                foreach (ModelMeshPart part in mesh.MeshParts)
-                {
-                    if (part.PrimitiveCount > 0)
-                    {
-                        Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-                        Globals.GraphicsDevice.Indices = part.IndexBuffer;
-                        
-                        Matrix.Multiply(ref wrld, ref vw, out var worldView);
-                        Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
-                        
-                        //Here pass parameters that are used in all techniques
-                        Globals.TestEffect.Parameters["WorldViewProjection"].SetValue(worldViewProj);
     
-                        //If some actions are dependent on technique use if like the one below
-                        if (Globals.TestEffect.CurrentTechnique.Name == "BasicColorDrawing")
-                        {
-                            
-                        }
-                        
-                        for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
-                        {
-                            Globals.TestEffect.CurrentTechnique.Passes[i].Apply();
-                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public override void Draw(Matrix _view, Matrix _projection)
+    public void Draw()
     {
         if(!Active) return;
-        //TODO: Implement globally accessible View and Projection matrices. Then use them here
-        DrawModel(_model, ParentObject.Transform.ModelMatrix, _view, _projection);
+        //_model.Draw(ParentObject.Transform.ModelMatrix);
     }
 
     public override string ComponentToXmlString()
@@ -117,7 +61,7 @@ public class MeshRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
-        builder.Append("<model>" + name +"</model>");
+        builder.Append("<model>" + _model.Serialize() +"</model>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -126,14 +70,37 @@ public class MeshRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
-        LoadModel(element.Element("model").Value);
+        XElement model = element.Element("model");
+        string path;
+        if (model?.Element("path") == null) 
+        {
+            LoadModel(model?.Value);
+        }
+        else
+        {
+            LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
+        }
+        
+    }
+
+    public override void RemoveComponent()
+    {
+        //Remove linked components that can't/shouldn't exist without this one
+        Pickable pickable = ParentObject.GetComponent<Pickable>();
+        if (pickable != null && pickable.Renderer == this)
+        {
+            ParentObject.RemoveComponent(pickable);
+        }
+        
+        AssetManager.FreeModel(_model);
+        ParentObject.RemoveComponent(this);
     }
 
 
-    public void LoadModel(string name)
+    public void LoadModel(string modelPath, string technique = "PBR")
     {
-        _model = AssetManager.GetModel(name);
-        this.name = name;
+        _model = AssetManager.GetModel(modelPath);
+        _model.ShaderTechniqueName = technique;
         //foreach (VertexElement element in _model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
         //{
         //    Console.WriteLine(element.VertexElementUsage);
@@ -142,7 +109,7 @@ public class MeshRenderer : Component
 
     public Model GetModel()
     {
-        return _model;
+        return _model.Model;
     }
     
 #if DEBUG
@@ -152,22 +119,21 @@ public class MeshRenderer : Component
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
-            ImGui.Checkbox("Custom effect", ref CustomEffect);
-            ImGui.Text(name);
+            ImGui.Text("Current mesh: " + _model.ModelPath);
+            ImGui.Text("Current technique: " + _model.ShaderTechniqueName);
             if (ImGui.Button("Switch mesh"))
             {
                 _switchingModel = true;
             }
             if (ImGui.Button("Remove component"))
             {
-                ParentObject.RemoveComponent(this);
-                AssetManager.FreeModel(_model);
+                RemoveComponent();
             }
 
             if (_switchingModel)
             {
                 ImGui.Begin("Switching models");
-                foreach (string n in AssetManager.ModelNames)
+                foreach (string n in AssetManager.ModelPaths)
                 {
                     if (ImGui.Button(n))
                     {

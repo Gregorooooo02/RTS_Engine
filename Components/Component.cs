@@ -14,12 +14,11 @@ public abstract class Component
         return GetType() == type;
     }
     public abstract void Update();
-
-    public abstract void Draw(Matrix _view, Matrix _projection);
     public abstract void Initialize();
 
     public abstract string ComponentToXmlString();
     public abstract void Deserialize(XElement element);
+    public abstract void RemoveComponent();
 
 #if DEBUG
      public abstract void Inspect();

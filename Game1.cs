@@ -1,31 +1,39 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using System.IO;
 
 namespace RTS_Engine;
 
 public class Game1 : Game
 {
+#if DEBUG
+    private int _size = 60;
+    private readonly Stopwatch _performanceTimer = new Stopwatch();
+    private double[] _measurements;
+    private int _shiftHead = 0;
+    private double currentAvg;
+    
+    private ImGuiRenderer _imGuiRenderer;
+    private Num.Vector3 _position = new Num.Vector3(0,0,10);
+    private SceneCamera _sceneCamera;
+#endif
+    
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
-    private SceneCamera _sceneCamera;
-    private BasicEffect _basicEffect;
-    private Num.Vector3 _position = new Num.Vector3(0,0,10);
-    
-    private ImGuiRenderer _imGuiRenderer;
-    private Num.Vector3 _clearColor = new Num.Vector3(0.0f, 0.0f, 0.0f);
-
     private bool isFullscreen = false;
     private bool isWireframe = false;
     
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-
+#if DEBUG
+        _measurements = new double[_size];
+#endif
+        
         if (isFullscreen)
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -43,20 +51,21 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        _basicEffect = new BasicEffect(_graphics.GraphicsDevice);
-        // TODO: Add your initialization logic here
+        Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _sceneManager = new SceneManager();
 
         _imGuiRenderer = new ImGuiRenderer(this);
-
         _imGuiRenderer.RebuildFontAtlas();
-
+        
+        Globals.Renderer = new Renderer(Content);
+        Globals.PickingManager = new PickingManager();
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-        base.Initialize();
         
+        
+        base.Initialize();
     }
 
     protected override void LoadContent()
@@ -69,88 +78,76 @@ public class Game1 : Game
 #endif
 
         Globals.SpriteBatch = _spriteBatch;
-        Globals.GraphicsDevice = _graphics.GraphicsDevice;
-        Globals.BasicEffect = _basicEffect;
+        
 
 #if _WINDOWS
-        Globals.TestEffect = Content.Load<Effect>("TestEffect");
+        Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
 #else
         // byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
         // Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
-        Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
-        Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
-        
-        // TODO: use this.Content to load your game content here
-        _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(new SecondScene());
-        _sceneManager.AddScene(new ThirdScene());
     }
 
     protected override void Update(GameTime gameTime)
     {
-
+#if DEBUG
+        _performanceTimer.Start();
+#endif
+        
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
-        
-        // Console.WriteLine(InputManager.Instance.GetAction(GameAction.FORWARD)?.duration);
-        // Console.WriteLine(InputManager.Instance.MousePosition);
-        
-        // TODO: Add your update logic here
-        base.Update(gameTime);
         Globals.Update(gameTime);
         
 #if DEBUG
         _sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
+        Globals.PickingManager.CheckForRay();
+        if (Globals.PickingManager.Picked != null)
+        {
+            Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
+        }
+        base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        var d = new DepthStencilState();
-        d.DepthBufferEnable = true;
-        d.DepthBufferWriteEnable = true;
-        GraphicsDevice.DepthStencilState = d;
-        
-        GraphicsDevice.Clear(new Color(_clearColor));
-        // TODO: Add your drawing code here
-#if RELEASE
-        _basicEffect.World = Matrix.Identity;
-        _basicEffect.View = Globals.View;
-        _basicEffect.Projection = Globals.Projection;
-#elif DEBUG
-        _basicEffect.World = _sceneCamera.World;
-        _basicEffect.View = _sceneCamera.View;
-        _basicEffect.Projection = _sceneCamera.Projection;
-#endif
-        RasterizerState rasterizerState = new RasterizerState();
-        if (isWireframe)
-        {
-			rasterizerState.FillMode = FillMode.WireFrame;
-        }
-		else
-		{
-			rasterizerState.FillMode = FillMode.Solid;
-		}
-
-		GraphicsDevice.RasterizerState = rasterizerState;
-        
-        _spriteBatch.Begin();
-        _sceneManager.CurrentScene.Draw(_basicEffect.View, _basicEffect.Projection);
-        _spriteBatch.End();
-
+        Globals.Renderer.Render();
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
 #endif
-        base.Draw(gameTime);
+        //Idk if line below is necessary. Shit seems to work even if it's commented out so whatever
+        //base.Draw(gameTime);
+        Globals.Renderer.PrepareForNextFrame();
+        
+#if DEBUG
+        _measurements[_shiftHead] = (_performanceTimer.ElapsedTicks / (double)Stopwatch.Frequency) * 1000.0;
+        if (_shiftHead == _size - 1) currentAvg = AvgFromLastSec();
+        _shiftHead++;
+        if (_shiftHead == _size) _shiftHead = 0;
+        _performanceTimer.Reset();
+#endif
     }
-
+    
+    
+    
+#if DEBUG
+    private double AvgFromLastSec()
+    {
+        double sum = 0;
+        for (int i = 0; i < _size; i++)
+        {
+            sum += _measurements[i];
+        }
+        return sum / _size;
+    }
+    
     protected virtual void ImGuiLayout()
     {
-#if DEBUG
+
         ImGui.Checkbox("Fullscreen", ref isFullscreen);
         ImGui.Separator();
 		ImGui.Checkbox("Wireframe", ref isWireframe);
@@ -158,11 +155,18 @@ public class Game1 : Game
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
-#endif
-        ImGui.ColorEdit3("Background Color", ref _clearColor);
+        ImGui.Checkbox("Map Modifier", ref Globals.MapModifyVisible);
+        ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
+        ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
+        ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
+        
+        ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
+        ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
+        ImGui.SliderInt("Shadow Map Size", ref Globals.ShadowMapResolutionMultiplier, 0, 5);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
-
-#if DEBUG
+        ImGui.Text("Average from " + _size +"x: " + Math.Round(currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
+        
+        
         if (Globals.HierarchyVisible)
         {
             ImGui.Begin("Hierarchy");
@@ -178,6 +182,10 @@ public class Game1 : Game
         if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
         }
-#endif
+        if (Globals.MapModifyVisible) {
+            GenerateMap.MapInspector();
+        }
+
     }
+#endif
 }

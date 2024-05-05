@@ -13,7 +13,7 @@ public class AssetManager
 {
 #if DEBUG
 #region Loading asset names
-    public static List<string> ModelNames;
+    public static List<string> ModelPaths;
     public static List<string> SpriteNames;
     public static List<string> FontNames;
 
@@ -37,7 +37,12 @@ public class AssetManager
                 if (separatorIndex != -1) line = line.Substring(separatorIndex + 1);
                 string[] result = line.Split('.');
                 if(result[1].Equals("spritefont")) FontNames.Add(result[0]);
-                else if(ModelFormats.Contains(result[1])) ModelNames.Add(result[0]);
+                else if (ModelFormats.Contains(result[1]))
+                {
+                    int index = result[0].LastIndexOf('/');
+                    if(index != -1)result[0] = result[0].Substring(0,index);
+                    ModelPaths.Add(result[0]);
+                }
                 else if (SpriteFormats.Contains(result[1])) SpriteNames.Add(result[0]);
             }
             line = sr.ReadLine();
@@ -47,30 +52,30 @@ public class AssetManager
 #endregion
 #endif
     
-    public static AssetManager _instance;
-    public readonly ContentManager _content;
+    private static AssetManager _instance;
+    private ContentManager _content;
 
-    private readonly List<ModelData> _models;
+    private readonly List<ModelPointer> _models;
     private readonly List<SpriteData> _sprites;
     private readonly List<FontData> _fonts;
 
-    public static Model DefaultModel {get; private set;}
+    public static ModelData DefaultModel {get; private set;}
+
+    public static List<Texture2D> DefaultTextureMaps { get; private set; }
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
     public static Texture2D Background{get; private set;}
     public static Texture2D HeightMap{get; private set;}
     public static SpriteFont DefaultFont{get; private set;}
 
-    private class ModelData
+    private class ModelPointer
     {
-        public readonly Model Model;
+        public readonly ModelData ModelData;
         public int Uses;
-        public readonly string Name;
 
-        public ModelData(Model model,string name)
+        public ModelPointer(ContentManager manager, string modelPath)
         {
-            Model = model;
-            Name = name;
+            ModelData = new ModelData(manager, modelPath);
         }
     }
     
@@ -108,39 +113,38 @@ public class AssetManager
     private AssetManager(ContentManager content)
     {
         this._content = content;
-        _models = new List<ModelData>();
+        _models = new List<ModelPointer>();
         _sprites = new List<SpriteData>();
         _fonts = new List<FontData>();
         
 #if DEBUG
-        ModelNames = new List<string>();
+        ModelPaths = new List<string>();
         SpriteNames = new List<string>();
         FontNames = new List<string>();
         
         LoadNames();
 #endif
-
-        //wczytywanie malpki mi nie dziala ;c
-        DefaultModel = this._content.Load<Model>("monke");
-        DefaultModel = this._content.Load<Model>("defaultCube");
+        DefaultModel = new ModelData(this._content,"defaultModel");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         Background = this._content.Load<Texture2D>("background");
         HeightMap = this._content.Load<Texture2D>("heightmap");
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
+
+        DefaultTextureMaps = DefaultModel.Textures;
     }
 
-    public static Model GetModel(string name)
+    public static ModelData GetModel(string modelPath)
     {
-        ModelData temp = _instance._models.Find(x => x.Name == name);
+        ModelPointer temp = _instance._models.Find(x => x.ModelData.ModelPath == modelPath);
         if (temp == null)
         {
-            _instance._models.Add(new ModelData(_instance._content.Load<Model>(name),name));
+            _instance._models.Add(new ModelPointer(_instance._content,modelPath));
             _instance._models.Last().Uses++;
-            return _instance._models.Last().Model;
+            return _instance._models.Last().ModelData;
         }
         temp.Uses++;
-        return temp.Model;
+        return temp.ModelData;
     }
 
     public static Texture2D GetSprite(string name)
@@ -171,15 +175,15 @@ public class AssetManager
         return temp.Font;
     }
 
-    public static void FreeModel(Model model)
+    public static void FreeModel(ModelData model)
     {
-        ModelData data = _instance._models.Find(x => x.Model == model);
-        if(data == null) return;
+        ModelPointer pointer = _instance._models.Find(x => x.ModelData == model);
+        if(pointer == null) return;
         
-        data.Uses--;
-        if (data.Uses == 0)
+        pointer.Uses--;
+        if (pointer.Uses == 0)
         {
-            _instance._models.Remove(data);
+            _instance._models.Remove(pointer);
         }
     }
 
