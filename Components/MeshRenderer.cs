@@ -10,6 +10,7 @@ public class MeshRenderer : Component
 {
     private Model _model;
     private string name;
+    private bool CustomEffect = false;
 
     //---------------------------Temporary---------------------------
     // Matrix _view = Matrix.CreateLookAt(
@@ -50,49 +51,53 @@ public class MeshRenderer : Component
     //TODO: This method is just copy-pasted from somewhere else. May require some tweaking.
     private void DrawModel(Model model, Matrix wrld, Matrix vw, Matrix proj)
     {
-          
-        foreach (ModelMesh mesh in model.Meshes)
+        if (!CustomEffect)
         {
-            foreach (BasicEffect effect in mesh.Effects)
+            foreach (ModelMesh mesh in model.Meshes)
             {
-                effect.World = wrld;
-                effect.View = vw;
-                effect.Projection = proj;
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.World = wrld;
+                    effect.View = vw;
+                    effect.Projection = proj;
 
-                effect.EnableDefaultLighting();
+                    effect.EnableDefaultLighting();
+                }
+                mesh.Draw();
             }
-            mesh.Draw();
         }
-          
-       foreach (ModelMesh mesh in _model.Meshes)
-             {
-                 foreach (ModelMeshPart part in mesh.MeshParts)
-                 {
-                     if (part.PrimitiveCount > 0)
-                     {
-                         Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-                         Globals.GraphicsDevice.Indices = part.IndexBuffer;
-                         
-                         Matrix.Multiply(ref wrld, ref vw, out var worldView);
-                         Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
-                         
-                         //Here pass parameters that are used in all techniques
-                         Globals.TestEffect.Parameters["WorldViewProjection"].SetValue(worldViewProj);
-       
-                         //If some actions are dependent on technique use if like the one below
-                         if (Globals.TestEffect.CurrentTechnique.Name == "BasicColorDrawing")
-                         {
-                             
-                         }
-                         
-                         for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
-                         {
-                             Globals.TestEffect.CurrentTechnique.Passes[i].Apply();
-                             Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-                         }
-                     }
-                 }
-             } 
+        else
+        {
+            foreach (ModelMesh mesh in _model.Meshes)
+            {
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    if (part.PrimitiveCount > 0)
+                    {
+                        Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                        Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                        
+                        Matrix.Multiply(ref wrld, ref vw, out var worldView);
+                        Matrix.Multiply(ref worldView, ref proj, out var worldViewProj);
+                        
+                        //Here pass parameters that are used in all techniques
+                        Globals.TestEffect.Parameters["WorldViewProjection"].SetValue(worldViewProj);
+    
+                        //If some actions are dependent on technique use if like the one below
+                        if (Globals.TestEffect.CurrentTechnique.Name == "BasicColorDrawing")
+                        {
+                            
+                        }
+                        
+                        for (int i = 0; i < Globals.TestEffect.CurrentTechnique.Passes.Count; i++)
+                        {
+                            Globals.TestEffect.CurrentTechnique.Passes[i].Apply();
+                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public override void Draw(Matrix _view, Matrix _projection)
@@ -141,13 +146,13 @@ public class MeshRenderer : Component
     }
     
 #if DEBUG
-
     private bool _switchingModel = false;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
+            ImGui.Checkbox("Custom effect", ref CustomEffect);
             ImGui.Text(name);
             if (ImGui.Button("Switch mesh"))
             {

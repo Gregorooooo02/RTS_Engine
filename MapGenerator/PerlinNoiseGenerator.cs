@@ -15,8 +15,8 @@ public class PerlinNoiseGenerator
 
     public PerlinNoiseGenerator()
     {
-        Octaves = 8;
-        Persistance = 0.25f;
+        Octaves = 7;
+        Persistance = 0.5f;
         Interpolation = Helpers.LinearInterpolation;
         Random = new Random();
     }
@@ -86,7 +86,7 @@ public class PerlinNoiseGenerator
         }
 
         NoiseField<float> perlinNoise = new NoiseField<float>(baseNoise.Width, baseNoise.Height);
-        float amplitude = 1.0f;
+        float amplitude = 0.25f;
         float totalAmplitude = 0.0f;
 
         float halfWidth = baseNoise.Width / 2.0f;
