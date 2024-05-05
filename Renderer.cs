@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -36,7 +37,13 @@ public class Renderer
     {
         _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
             DepthFormat.Depth24);
+
+#if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
+#else
+        byte[] bytecode = File.ReadAllBytes("Content/ShadowMapsCompiled");
+        _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
+#endif
         Meshes = new List<MeshRenderer>();
         Sprites = new List<SpiteRenderer>();
         Texts = new List<TextRenderer>();

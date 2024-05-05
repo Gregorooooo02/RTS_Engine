@@ -49,7 +49,7 @@ public class WorldRenderer : Component
 
     public override void Update() {}
 
-    public override void Draw(Matrix _view, Matrix _projection)
+    public void Draw()
     {
         if (!Active) return;
 
@@ -59,8 +59,8 @@ public class WorldRenderer : Component
         Globals.GraphicsDevice.RasterizerState = rs;
 
         _effect.CurrentTechnique = _effect.Techniques["ColoredNoShading"];
-        _effect.Parameters["xView"].SetValue(_view);
-        _effect.Parameters["xProjection"].SetValue(_projection);
+        _effect.Parameters["xView"].SetValue(Globals.View);
+        _effect.Parameters["xProjection"].SetValue(Globals.Projection);
         _effect.Parameters["xWorld"].SetValue(ParentObject.Transform.ModelMatrix);
 
         foreach (EffectPass pass in _effect.CurrentTechnique.Passes)
@@ -200,6 +200,11 @@ public class WorldRenderer : Component
     public override void Deserialize(XElement element)
     {
         throw new NotImplementedException();
+    }
+
+    public override void RemoveComponent()
+    {
+        ParentObject.RemoveComponent(this);
     }
 
 #if DEBUG

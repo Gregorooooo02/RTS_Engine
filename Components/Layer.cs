@@ -11,7 +11,6 @@ namespace RTS_Engine;
 public class Layer : Component
 {
     private string name;
-    private bool Active;
     private string layerType = Globals.LayerType.DEFAULT.ToString();
     
     
@@ -20,8 +19,6 @@ public class Layer : Component
         Active = true;
         name = ParentObject.Name + "Layer";
     }
-    
-    public override void Draw(Matrix _view, Matrix _projection){}
     
     public override string ComponentToXmlString()
     {
@@ -56,6 +53,11 @@ public class Layer : Component
     }
     
     public override void Deserialize(XElement element){}
+
+    public override void RemoveComponent()
+    {
+        ParentObject.RemoveComponent(this);
+    }
     
     public Layer(){}
     

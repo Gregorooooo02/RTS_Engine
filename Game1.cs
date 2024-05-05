@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -83,8 +84,8 @@ public class Game1 : Game
 #if _WINDOWS
         Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
 #else
-        // byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
-        // Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
+        byte[] bytecode = File.ReadAllBytes("Content/PBR_ShaderCompiled");
+        Globals.MainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         _sceneManager.AddScene(new SecondScene());
     }
@@ -155,7 +156,6 @@ public class Game1 : Game
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
-        ImGui.Checkbox("Map Modifier", ref Globals.MapModifyVisible);
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
@@ -182,10 +182,6 @@ public class Game1 : Game
         if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
         }
-        if (Globals.MapModifyVisible) {
-            GenerateMap.MapInspector();
-        }
-
     }
 #endif
 }
