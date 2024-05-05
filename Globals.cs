@@ -26,6 +26,7 @@ namespace RTS_Engine
         public static Vector3 ViewPos;
 
         public static Renderer Renderer;
+        public static PickingManager PickingManager;
         
         public static BoundingFrustum BoundingFrustum;
 

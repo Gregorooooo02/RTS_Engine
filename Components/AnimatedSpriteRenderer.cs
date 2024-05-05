@@ -47,7 +47,7 @@ public class AnimatedSpriteRenderer : Component
         }
     }
 
-    public override void Draw()
+    public void Draw()
     {
         Globals.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(
@@ -124,6 +124,13 @@ public class AnimatedSpriteRenderer : Component
         Globals.Renderer.AnimatedSprites.Add(this);
     }
 
+    public override void RemoveComponent()
+    {
+        Globals.Renderer.AnimatedSprites.Remove(this);
+        ParentObject.RemoveComponent(this);
+        AssetManager.FreeSprite(SpriteSheet);
+    }
+
     public void StartAnimation() 
     {
         _isAnimationActive = true;
@@ -191,9 +198,7 @@ public class AnimatedSpriteRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
-                Globals.Renderer.AnimatedSprites.Remove(this);
-                ParentObject.RemoveComponent(this);
-                AssetManager.FreeSprite(SpriteSheet);
+                RemoveComponent();
             }
         }
     }

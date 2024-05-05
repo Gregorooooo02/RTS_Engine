@@ -28,7 +28,7 @@ public class TextRenderer : Component
         
     }
 
-    public override void Draw()
+    public void Draw()
     {
         if(!Active) return;
         Globals.SpriteBatch.DrawString(
@@ -76,6 +76,13 @@ public class TextRenderer : Component
         Globals.Renderer.Texts.Add(this);
     }
 
+    public override void RemoveComponent()
+    {
+        Globals.Renderer.Texts.Remove(this);
+        ParentObject.RemoveComponent(this);
+        AssetManager.FreeFont(Font);
+    }
+
     public void LoadFont(string name)
     {
         Font = AssetManager.GetFont(name);
@@ -101,9 +108,7 @@ public class TextRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
-                Globals.Renderer.Texts.Remove(this);
-                ParentObject.RemoveComponent(this);
-                AssetManager.FreeFont(Font);
+                RemoveComponent();
             }
 
             if (_switchingFont)

@@ -41,23 +41,7 @@ public class GameObject
             gameObject.Update();
         }
     }
-
-    public void Draw(Matrix _view, Matrix _projection)
-    {
-        if(!Active) return;
-        Transform.Draw();
-        //'Draw' all components
-        foreach(Component c in _components)
-        {
-            c.Draw();
-        }
-        //Propegate throuth all children
-        foreach (GameObject gameObject in Children)
-        {
-            gameObject.Draw(_view, _projection);
-        }
-    }
-
+    
     public T GetComponent<T>() where T : Component
     {
         return (T)_components.Find(x => x.GetType() == typeof(T));

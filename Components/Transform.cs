@@ -3,6 +3,7 @@ using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
+using RTS_Engine.Exceptions;
 using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace RTS_Engine;
@@ -86,12 +87,7 @@ public class Transform : Component
                                 Matrix.CreateRotationZ((float)(Math.PI / 180) * _rot.Z);
         return Matrix.CreateScale(_scl) * rotationMatrix *  Matrix.CreateTranslation(_pos);
     }
-
-    public override void Draw()
-    {
-        
-    }
-
+    
     public override string ComponentToXmlString()
     {
         StringBuilder builder = new StringBuilder();
@@ -133,6 +129,11 @@ public class Transform : Component
         SetLocalRotation(new Vector3(float.Parse(rotation.Element("x").Value),float.Parse(rotation.Element("y").Value),float.Parse(rotation.Element("z").Value)));
         XElement scale = element.Element("scale");
         SetLocalScale(new Vector3(float.Parse(scale.Element("x").Value),float.Parse(scale.Element("y").Value),float.Parse(scale.Element("z").Value)));
+    }
+
+    public override void RemoveComponent()
+    {
+        throw new HowDidWeGetHereException("Seriously?!. Like this method should never be called in this class. How the f did you even manage to reach this point?");
     }
 
 

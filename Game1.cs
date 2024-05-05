@@ -4,8 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using System.IO;
-using System.Linq;
 
 namespace RTS_Engine;
 
@@ -59,6 +57,7 @@ public class Game1 : Game
         _imGuiRenderer.RebuildFontAtlas();
         
         Globals.Renderer = new Renderer(Content);
+        Globals.PickingManager = new PickingManager();
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
@@ -103,7 +102,11 @@ public class Game1 : Game
         _sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
-
+        Globals.PickingManager.CheckForRay();
+        if (Globals.PickingManager.Picked != null)
+        {
+            Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
+        }
         base.Update(gameTime);
     }
 

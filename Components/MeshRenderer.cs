@@ -9,6 +9,7 @@ namespace RTS_Engine;
 public class MeshRenderer : Component
 {
     public ModelData _model {get; private set;}
+    public bool IsVisible { get; private set; } = false;
 
     public MeshRenderer(GameObject parentObject)
     {
@@ -29,10 +30,14 @@ public class MeshRenderer : Component
             //Check if model is in view, if yes add to render list, if not skip
             if (_model.IsInView(ParentObject.Transform.ModelMatrix))
             {
+                IsVisible = true;
                 Globals.Renderer.Meshes.Add(this);
             }
+            else
+            {
+                IsVisible = false;
+            }
         }
-        
     }
 
     public override void Initialize()
@@ -40,7 +45,7 @@ public class MeshRenderer : Component
         _model = AssetManager.DefaultModel;
     }
     
-    public override void Draw()
+    public void Draw()
     {
         if(!Active) return;
         //_model.Draw(ParentObject.Transform.ModelMatrix);
@@ -78,6 +83,19 @@ public class MeshRenderer : Component
         
     }
 
+    public override void RemoveComponent()
+    {
+        //Remove linked components that can't/shouldn't exist without this one
+        Pickable pickable = ParentObject.GetComponent<Pickable>();
+        if (pickable != null && pickable.Renderer == this)
+        {
+            ParentObject.RemoveComponent(pickable);
+        }
+        
+        AssetManager.FreeModel(_model);
+        ParentObject.RemoveComponent(this);
+    }
+
 
     public void LoadModel(string modelPath, string technique = "PBR")
     {
@@ -110,8 +128,7 @@ public class MeshRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
-                ParentObject.RemoveComponent(this);
-                AssetManager.FreeModel(_model);
+                RemoveComponent();
             }
 
             if (_switchingModel)

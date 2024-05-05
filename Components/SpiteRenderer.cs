@@ -26,7 +26,7 @@ public class SpiteRenderer : Component
     
     public override void Update(){}
 
-    public override void Draw()
+    public void Draw()
     {
         Globals.SpriteBatch?.Draw(Sprite,
             new Rectangle(
@@ -80,6 +80,13 @@ public class SpiteRenderer : Component
         Globals.Renderer.Sprites.Add(this);
     }
 
+    public override void RemoveComponent()
+    {
+        Globals.Renderer.Sprites.Remove(this);
+        ParentObject.RemoveComponent(this);
+        AssetManager.FreeSprite(Sprite);
+    }
+
     public void LoadSprite(string name)
     {
         Sprite = AssetManager.GetSprite(name);
@@ -105,9 +112,7 @@ public class SpiteRenderer : Component
             }
             if (ImGui.Button("Remove component"))
             {
-                Globals.Renderer.Sprites.Remove(this);
-                ParentObject.RemoveComponent(this);
-                AssetManager.FreeSprite(Sprite);
+                RemoveComponent();
             }
 
             if (_switchingSprites)

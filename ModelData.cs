@@ -13,7 +13,7 @@ public class ModelData
     
     public Model Model;
     public string ModelPath;
-    private BoundingSphere _boundingSphere;
+    public BoundingSphere BoundingSphere;
     public string ShaderTechniqueName;
     
     /*
@@ -30,7 +30,7 @@ public class ModelData
 
     public bool IsInView(Matrix world)
     {
-        return Globals.BoundingFrustum.Contains(_boundingSphere.Transform(world)) != ContainmentType.Disjoint;
+        return Globals.BoundingFrustum.Contains(BoundingSphere.Transform(world)) != ContainmentType.Disjoint;
     }
     
     public void Draw(Matrix world)
@@ -77,7 +77,7 @@ public class ModelData
     public ModelData(ContentManager manager, string modelPath)
     {
         LoadModel(manager,modelPath);
-        _boundingSphere = CalculateBoundingSphere();
+        BoundingSphere = CalculateBoundingSphere();
     }
 
     private BoundingSphere CalculateBoundingSphere()
@@ -135,8 +135,8 @@ public class ModelData
     public ModelData(ContentManager manager, string modelPath, Vector3 boundingPosition, float boundingRadius)
     {
         LoadModel(manager,modelPath);
-        _boundingSphere.Center = boundingPosition;
-        _boundingSphere.Radius = boundingRadius;
+        BoundingSphere.Center = boundingPosition;
+        BoundingSphere.Radius = boundingRadius;
     }
 
     public string Serialize()
