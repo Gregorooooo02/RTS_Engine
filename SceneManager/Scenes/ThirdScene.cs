@@ -29,10 +29,12 @@ public class ThirdScene : Scene
         gameObject.AddComponent<Collider>();
         
         gameObject2.AddComponent<MeshRenderer>();
-        gameObject2.GetComponent<MeshRenderer>().LoadModel("monke");
+        gameObject2.GetComponent<MeshRenderer>().LoadModel("monke"); 
         gameObject2.AddComponent<Collider>();
         
         gameObject3.AddComponent<Camera>();
+        gameObject3.AddComponent<Layer>();
+        gameObject3.GetComponent<Layer>().SetLayerType("UI");
         
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));

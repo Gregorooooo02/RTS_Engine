@@ -74,8 +74,8 @@ public class Game1 : Game
 #if _WINDOWS
         Globals.TestEffect = Content.Load<Effect>("TestEffect");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
-        Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
+        // byte[] bytecode = File.ReadAllBytes("Content/TesEffectComp");
+        // Globals.TestEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         //Globals.TestEffect.CurrentTechnique = Globals.TestEffect.Techniques["Test"];
         //Globals.TestEffect.Parameters["Tx"].SetValue(Content.Load<Texture2D>("sprite"));
