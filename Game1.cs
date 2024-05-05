@@ -79,15 +79,18 @@ public class Game1 : Game
 #endif
 
         Globals.SpriteBatch = _spriteBatch;
-        
 
 #if _WINDOWS
         Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
+        Globals.TerrainEffect = Content.Load<Effect>("Terrain_Shader");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/PBR_ShaderCompiled");
+        byte[] bytecode = File.ReadAllBytes("Content/PBR_Shader");
         Globals.MainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
+
+        bytecode = File.ReadAllBytes("Content/Terrain_Shader");
+        Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
-        _sceneManager.AddScene(new SecondScene());
+        _sceneManager.AddScene(new MapScene());
     }
 
     protected override void Update(GameTime gameTime)

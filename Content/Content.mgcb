@@ -371,18 +371,6 @@
 /processorParam:TextureFormat=Compressed
 /build:monke/monke.fbx
 
-#begin PBR_Shader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:PBR_Shader.fx
-
-#begin ShadowMaps.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:ShadowMaps.fx
-
 #begin smile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -571,12 +559,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
-
-#begin TestEffect.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:TestEffect.fx
 
 #begin TestPBR/albedo.png
 /importer:TextureImporter

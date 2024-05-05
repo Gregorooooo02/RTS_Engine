@@ -12,8 +12,6 @@ public class Camera : Component
 {
     private string name;
     
-    private GraphicsDevice _graphicsDevice = null;
-    
     private Vector3 up = Vector3.Up;
     
     private float angle = -45.0f;

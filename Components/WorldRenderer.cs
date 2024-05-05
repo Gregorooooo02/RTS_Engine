@@ -11,11 +11,10 @@ namespace RTS_Engine;
 public class WorldRenderer : Component
 {
     private Texture2D _heightMap;
-    private Effect _effect;
 
     // Mesh parameters for the terrain
-    private VertexPositionColor[] _vertices;
-    private short[] _indices;
+    public VertexPositionColor[] vertices;
+    public short[] indices;
     private int _width = 4;
     private int _height = 4;
     private float[,] _heightData;
@@ -58,22 +57,22 @@ public class WorldRenderer : Component
         rs.FillMode = FillMode.Solid;
         Globals.GraphicsDevice.RasterizerState = rs;
 
-        _effect.CurrentTechnique = _effect.Techniques["ColoredNoShading"];
-        _effect.Parameters["xView"].SetValue(Globals.View);
-        _effect.Parameters["xProjection"].SetValue(Globals.Projection);
-        _effect.Parameters["xWorld"].SetValue(ParentObject.Transform.ModelMatrix);
+        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["ColoredNoShading"];
+        Globals.TerrainEffect.Parameters["xView"].SetValue(Globals.View);
+        Globals.TerrainEffect.Parameters["xProjection"].SetValue(Globals.Projection);
+        Globals.TerrainEffect.Parameters["xWorld"].SetValue(ParentObject.Transform.ModelMatrix);
 
-        foreach (EffectPass pass in _effect.CurrentTechnique.Passes)
+        foreach (EffectPass pass in Globals.TerrainEffect.CurrentTechnique.Passes)
         {
             pass.Apply();
             Globals.GraphicsDevice.DrawUserIndexedPrimitives(
                 PrimitiveType.TriangleList,
-                _vertices,
+                vertices,
                 0,
-                _vertices.Length,
-                _indices,
+                vertices.Length,
+                indices,
                 0,
-                _indices.Length / 3,
+                indices.Length / 3,
                 VertexPositionColor.VertexDeclaration
             );
         }
@@ -81,12 +80,6 @@ public class WorldRenderer : Component
 
     public override void Initialize()
     {
-#if _WINDOWS
-        _effect = this._content.Load<Effect>("effect");
-#else
-        byte[] bytecode = File.ReadAllBytes("Content/effects");
-        _effect = new Effect(Globals.GraphicsDevice, bytecode);
-#endif
         //_heightMap = AssetManager.HeightMap;
         _heightMap = GenerateMap.noiseTexture;
 
@@ -116,33 +109,33 @@ public class WorldRenderer : Component
             }
         }
 
-        _vertices = new VertexPositionColor[_width * _height];
+        vertices = new VertexPositionColor[_width * _height];
 
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
             {
-                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y], -y);
+                vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y], -y);
                 
                 if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.3f)
                 {
-                    _vertices[x + y * _width].Color = new Color(_colors[0]);
+                    vertices[x + y * _width].Color = new Color(_colors[0]);
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.35f)
                 {
-                    _vertices[x + y * _width].Color = new Color(_colors[1]);
+                    vertices[x + y * _width].Color = new Color(_colors[1]);
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.6f)
                 {
-                    _vertices[x + y * _width].Color = new Color(_colors[2]);
+                    vertices[x + y * _width].Color = new Color(_colors[2]);
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.7f)
                 {
-                    _vertices[x + y * _width].Color = new Color(_colors[3]);
+                    vertices[x + y * _width].Color = new Color(_colors[3]);
                 }
                 else
                 {
-                    _vertices[x + y * _width].Color = new Color(_colors[4]);
+                    vertices[x + y * _width].Color = new Color(_colors[4]);
                 }
             }
         }
@@ -150,7 +143,7 @@ public class WorldRenderer : Component
 
     private void SetUpIndices()
     {
-        _indices = new short[(_width - 1) * (_height - 1) * 6];
+        indices = new short[(_width - 1) * (_height - 1) * 6];
         int counter = 0;
 
         for (int y = 0; y < _height - 1; y++)
@@ -162,13 +155,13 @@ public class WorldRenderer : Component
                 short topLeft = (short)(x + (y + 1) * _width);
                 short topRight = (short)((x + 1) + (y + 1) * _width);
 
-                _indices[counter++] = topLeft;
-                _indices[counter++] = lowerRight;
-                _indices[counter++] = lowerLeft;
+                indices[counter++] = topLeft;
+                indices[counter++] = lowerRight;
+                indices[counter++] = lowerLeft;
 
-                _indices[counter++] = topLeft;
-                _indices[counter++] = topRight;
-                _indices[counter++] = lowerRight;
+                indices[counter++] = topLeft;
+                indices[counter++] = topRight;
+                indices[counter++] = lowerRight;
             }
         }
     }

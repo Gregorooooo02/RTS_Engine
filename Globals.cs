@@ -20,6 +20,7 @@ namespace RTS_Engine
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
+        public static Effect TerrainEffect;
         public static Matrix View;
         public static Matrix Projection;
         public static Matrix World;

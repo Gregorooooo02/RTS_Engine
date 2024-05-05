@@ -23,7 +23,6 @@ public class Renderer
     //Render targets-----------------------------------
     private RenderTarget2D _shadowMapRenderTarget;
     
-    
     //-------------------------------------------------
     
     //Things to render in current frame
@@ -31,6 +30,7 @@ public class Renderer
     public List<SpiteRenderer> Sprites;
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
+    public WorldRenderer WorldMesh;
     //
 
     public Renderer(ContentManager content)
@@ -41,13 +41,14 @@ public class Renderer
 #if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/ShadowMapsCompiled");
+        byte[] bytecode = File.ReadAllBytes("Content/ShadowMaps");
         _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
 #endif
         Meshes = new List<MeshRenderer>();
         Sprites = new List<SpiteRenderer>();
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
+        WorldMesh = new WorldRenderer();
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -70,6 +71,7 @@ public class Renderer
         if(Globals.DrawShadows) DrawShadows();
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if(Globals.DrawMeshes) DrawMeshes();
+        DrawWorld();
         
         Globals.SpriteBatch.Begin();
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
@@ -83,6 +85,7 @@ public class Renderer
 
         DrawShadows();
         DrawMeshes();
+        DrawWorld();
 
         Globals.SpriteBatch.Begin();
         DrawSprites();
@@ -164,6 +167,11 @@ public class Renderer
         }
 
 #endif
+    }
+
+    private void DrawWorld()
+    {
+        WorldMesh.Draw();
     }
     
     private void DrawShadows()
