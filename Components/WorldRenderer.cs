@@ -33,15 +33,15 @@ public class WorldRenderer : Component
     // Mesh parameters for the terrain
     private VertexPositionColorNormal[] _vertices;
     private short[] _indices;
-    private int _width = 4;
-    private int _height = 4;
+    private int _width = 8;
+    private int _height = 8;
     private float[,] _heightData;
 
     private Num.Vector3[] _colors = new Num.Vector3[]
     {
-        new Num.Vector3(0, 0, 0.8f), // Blue
-        new Num.Vector3(1.0f, 1.0f, 0.7f), // Yellow
-        new Num.Vector3(0.25f, 0.75f, 0.25f), // Green
+        new Num.Vector3(0.25f, 0.75f, 0.25f), // Blue (Green for now)
+        new Num.Vector3(0.25f, 0.75f, 0.25f), // Yellow (Green for now)
+        new Num.Vector3(0.5f, 0.5f, 0.5f), // Green (Gray for now)
         new Num.Vector3(0.5f, 0.5f, 0.5f), // Grey
         new Num.Vector3(1, 1, 1) // White
     };
@@ -75,7 +75,7 @@ public class WorldRenderer : Component
         rs.FillMode = FillMode.Solid;
         Globals.GraphicsDevice.RasterizerState = rs;
 
-        Matrix worldMatrix = Matrix.CreateTranslation(-_width / 2, -40, _height / 2);
+        Matrix worldMatrix = Matrix.CreateTranslation(-_width / 2, -40, -100);
         Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["Colored"];
         Globals.TerrainEffect.Parameters["xView"]?.SetValue(Globals.View);
         Globals.TerrainEffect.Parameters["xProjection"]?.SetValue(Globals.Projection);
