@@ -171,7 +171,7 @@ public class Renderer
 
     private void DrawWorld()
     {
-        WorldMesh.Draw();
+        WorldMesh.Draw();   
     }
     
     private void DrawShadows()

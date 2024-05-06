@@ -18,9 +18,7 @@ public class MapScene : Scene
         Name = "MapScene";
         SceneRoot = new GameObject();
         SceneRoot.Name = "Root";
-
-        GenerateMap.GenerateNoiseTexture();
-
+        
         gameObject = new GameObject();
         gameObject.Name = "MapTexture";
         gameObject.Transform.SetLocalScale(new Vector3(2, 2, 1));
@@ -38,7 +36,6 @@ public class MapScene : Scene
 
     public override void Update(GameTime gameTime)
     {
-        gameObject.GetComponent<SpiteRenderer>().Sprite = GenerateMap.noiseTexture;
         SceneRoot.Update();
     }
 

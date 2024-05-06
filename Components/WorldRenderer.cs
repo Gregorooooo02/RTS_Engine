@@ -5,16 +5,34 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using System.Security.Cryptography;
 
 namespace RTS_Engine;
 
 public class WorldRenderer : Component
 {
+    public struct VertexPositionColorNormal
+    {
+        public Vector3 Position;
+        public Color Color;
+        public Vector3 Normal;
+
+        public readonly static VertexDeclaration VertexDeclaration = new VertexDeclaration
+        (
+            new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+            new VertexElement(sizeof(float) * 3, VertexElementFormat.Color, VertexElementUsage.Color, 0),
+            new VertexElement(sizeof(float) * 3 + 4, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0)
+        );
+    };
+
+    private VertexBuffer _vertexBuffer;
+    private IndexBuffer _indexBuffer;
+
     private Texture2D _heightMap;
 
     // Mesh parameters for the terrain
-    public VertexPositionColor[] vertices;
-    public short[] indices;
+    private VertexPositionColorNormal[] _vertices;
+    private short[] _indices;
     private int _width = 4;
     private int _height = 4;
     private float[,] _heightData;
@@ -57,35 +75,42 @@ public class WorldRenderer : Component
         rs.FillMode = FillMode.Solid;
         Globals.GraphicsDevice.RasterizerState = rs;
 
-        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["ColoredNoShading"];
-        Globals.TerrainEffect.Parameters["xView"].SetValue(Globals.View);
-        Globals.TerrainEffect.Parameters["xProjection"].SetValue(Globals.Projection);
-        Globals.TerrainEffect.Parameters["xWorld"].SetValue(ParentObject.Transform.ModelMatrix);
+        Matrix worldMatrix = Matrix.CreateTranslation(-_width / 2, -40, _height / 2);
+        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["Colored"];
+        Globals.TerrainEffect.Parameters["xView"]?.SetValue(Globals.View);
+        Globals.TerrainEffect.Parameters["xProjection"]?.SetValue(Globals.Projection);
+        Globals.TerrainEffect.Parameters["xWorld"]?.SetValue(worldMatrix);
+
+        Vector3 lightDirection = new Vector3(1.0f, -1.0f, -1.0f);
+        lightDirection.Normalize();
+        Globals.TerrainEffect.Parameters["xLightDirection"]?.SetValue(lightDirection);
+        Globals.TerrainEffect.Parameters["xAmbient"]?.SetValue(0.2f);
+        Globals.TerrainEffect.Parameters["xEnableLighting"]?.SetValue(true);
 
         foreach (EffectPass pass in Globals.TerrainEffect.CurrentTechnique.Passes)
         {
             pass.Apply();
-            Globals.GraphicsDevice.DrawUserIndexedPrimitives(
-                PrimitiveType.TriangleList,
-                vertices,
-                0,
-                vertices.Length,
-                indices,
-                0,
-                indices.Length / 3,
-                VertexPositionColor.VertexDeclaration
-            );
+
+            Globals.GraphicsDevice.Indices = _indexBuffer;
+            Globals.GraphicsDevice.SetVertexBuffer(_vertexBuffer);
+            Globals.GraphicsDevice.DrawIndexedPrimitives(
+                PrimitiveType.TriangleList, 
+                0, 
+                0, 
+                _indices.Length / 3);
         }
     }
 
     public override void Initialize()
     {
-        //_heightMap = AssetManager.HeightMap;
+        // _heightMap = AssetManager.DefaultHeightMap;
         _heightMap = GenerateMap.noiseTexture;
 
         LoadHeightData(_heightMap);
         SetUpVertices();
         SetUpIndices();
+        CalculateNormals();
+        CopyToBuffers();
     }
 
     private void SetUpVertices()
@@ -109,33 +134,33 @@ public class WorldRenderer : Component
             }
         }
 
-        vertices = new VertexPositionColor[_width * _height];
+        _vertices = new VertexPositionColorNormal[_width * _height];
 
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
             {
-                vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y], -y);
+                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y], -y);
                 
                 if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.3f)
                 {
-                    vertices[x + y * _width].Color = new Color(_colors[0]);
+                    _vertices[x + y * _width].Color = new Color(_colors[0]);
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.35f)
                 {
-                    vertices[x + y * _width].Color = new Color(_colors[1]);
+                    _vertices[x + y * _width].Color = new Color(_colors[1]);
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.6f)
                 {
-                    vertices[x + y * _width].Color = new Color(_colors[2]);
+                    _vertices[x + y * _width].Color = new Color(_colors[2]);
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.7f)
                 {
-                    vertices[x + y * _width].Color = new Color(_colors[3]);
+                    _vertices[x + y * _width].Color = new Color(_colors[3]);
                 }
                 else
                 {
-                    vertices[x + y * _width].Color = new Color(_colors[4]);
+                    _vertices[x + y * _width].Color = new Color(_colors[4]);
                 }
             }
         }
@@ -143,7 +168,7 @@ public class WorldRenderer : Component
 
     private void SetUpIndices()
     {
-        indices = new short[(_width - 1) * (_height - 1) * 6];
+        _indices = new short[(_width - 1) * (_height - 1) * 6];
         int counter = 0;
 
         for (int y = 0; y < _height - 1; y++)
@@ -155,15 +180,52 @@ public class WorldRenderer : Component
                 short topLeft = (short)(x + (y + 1) * _width);
                 short topRight = (short)((x + 1) + (y + 1) * _width);
 
-                indices[counter++] = topLeft;
-                indices[counter++] = lowerRight;
-                indices[counter++] = lowerLeft;
+                _indices[counter++] = topLeft;
+                _indices[counter++] = lowerRight;
+                _indices[counter++] = lowerLeft;
 
-                indices[counter++] = topLeft;
-                indices[counter++] = topRight;
-                indices[counter++] = lowerRight;
+                _indices[counter++] = topLeft;
+                _indices[counter++] = topRight;
+                _indices[counter++] = lowerRight;
             }
         }
+    }
+
+    private void CalculateNormals()
+    {
+        for (int i = 0; i < _vertices.Length; i++)
+        {
+            _vertices[i].Normal = new Vector3(0, 0, 0);
+        }
+
+        for (int i = 0; i < _indices.Length / 3; i++)
+        {
+            int index1 = _indices[i * 3];
+            int index2 = _indices[i * 3 + 1];
+            int index3 = _indices[i * 3 + 2];
+
+            Vector3 side1 = _vertices[index1].Position - _vertices[index3].Position;
+            Vector3 side2 = _vertices[index1].Position - _vertices[index2].Position;
+            Vector3 normal = Vector3.Cross(side1, side2);
+
+            _vertices[index1].Normal += normal;
+            _vertices[index2].Normal += normal;
+            _vertices[index3].Normal += normal;
+        }
+
+        for (int i = 0; i < _vertices.Length; i++)
+        {
+            _vertices[i].Normal.Normalize();
+        }
+    }
+
+    private void CopyToBuffers()
+    {
+        _vertexBuffer = new VertexBuffer(Globals.GraphicsDevice, VertexPositionColorNormal.VertexDeclaration, _vertices.Length, BufferUsage.WriteOnly);
+        _vertexBuffer.SetData(_vertices);
+
+        _indexBuffer = new IndexBuffer(Globals.GraphicsDevice, typeof(short), _indices.Length, BufferUsage.WriteOnly);
+        _indexBuffer.SetData(_indices);
     }
 
     private void LoadHeightData(Texture2D heightMap)

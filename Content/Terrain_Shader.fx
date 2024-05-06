@@ -20,11 +20,21 @@ struct PixelToFrame
 };
 
 //------- Constants --------
-float4x4 xView;
-float4x4 xProjection;
-float4x4 xWorld;
-float3 xLightDirection;
-float xAmbient;
+
+cbuffer ModelParameters : register(b0)
+{
+	float4x4 xWorld;
+};
+
+cbuffer Constants : register(b1)
+{
+	float4x4 xView;
+	float4x4 xProjection;
+
+	float3 xLightDirection;
+	float xAmbient;
+};
+
 bool xEnableLighting;
 bool xShowNormals;
 float3 xCamPos;

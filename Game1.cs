@@ -58,13 +58,14 @@ public class Game1 : Game
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
         
+        GenerateMap.GenerateNoiseTexture();
+
         Globals.Renderer = new Renderer(Content);
         Globals.PickingManager = new PickingManager();
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-        
         
         base.Initialize();
     }
