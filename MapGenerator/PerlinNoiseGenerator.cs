@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Reflection;
 
 namespace RTS_Engine;
 
@@ -9,18 +10,14 @@ public class PerlinNoiseGenerator
 {
     public int Octaves;
     public float Persistance;
-    public float FallOffFactor;
-    public float FallOffFactorReverse;
 
     public InterpolationAlgorithm Interpolation { get; set; }
     public Random Random { get; set; }
 
     public PerlinNoiseGenerator()
     {
-        Octaves = 6;
-        Persistance = 0.33f;
-        FallOffFactor = 5.0f;
-        FallOffFactorReverse = 2.0f;
+        Octaves = 7;
+        Persistance = 0.4f;
         Interpolation = Helpers.LinearInterpolation;
         Random = new Random();
     }
@@ -90,7 +87,7 @@ public class PerlinNoiseGenerator
         }
 
         NoiseField<float> perlinNoise = new NoiseField<float>(baseNoise.Width, baseNoise.Height);
-        float amplitude = 0.25f;
+        float amplitude = 1.0f;
         float totalAmplitude = 0.0f;
 
         float halfWidth = baseNoise.Width / 2.0f;
@@ -119,61 +116,60 @@ public class PerlinNoiseGenerator
             }
         }
 
+        // Make the noise smoother by normalizing the values
+        for (int x = 0; x < baseNoise.Width; x++)
+        {
+            for (int y = 0; y < baseNoise.Height; y++)
+            {
+                perlinNoise.Field[x, y] = Math.Max(0, perlinNoise.Field[x, y]);
+                perlinNoise.Field[x, y] = Math.Min(1, perlinNoise.Field[x, y]);
+
+                perlinNoise.Field[x, y] = MathF.Pow(perlinNoise.Field[x, y], 2.5f);
+            }
+        }
+
         return perlinNoise;
+    }
+
+    public NoiseField<float> FallOffNoise(int size)
+    {
+        NoiseField<float> noiseField = new NoiseField<float>(size, size);
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                float x = i / (float)size * 2 - 1;
+                float y = j / (float)size * 2 - 1;
+
+                float value = Math.Max(Math.Abs(x), Math.Abs(y));
+
+                noiseField.Field[i, j] = Evaluate(value, 1.0f, 20.0f);
+            }
+        }
+
+        return noiseField;
+    }
+
+    public static float Evaluate(float value, float a, float b)
+    {
+        return MathF.Pow(value, a) / (MathF.Pow(value, a) + MathF.Pow(b - b * value, a));
     }
 
     public NoiseField<float> GeneratePerlinNoise(int width, int height)
     {
         NoiseField<float> whiteNoise = GenerateWhiteNoise(width, height);
         NoiseField<float> perlinNoise = PerlinNoiseField(whiteNoise);
-
-        // ApplyFallOff(perlinNoise);
-        ApplyFallOffReversed(perlinNoise);
+        NoiseField<float> fallOffNoise = FallOffNoise(width);
+    
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                perlinNoise.Field[x, y] = perlinNoise.Field[x,y] - fallOffNoise.Field[x, y];
+            }
+        }
 
         return perlinNoise;
-    }
-
-    private void ApplyFallOff(NoiseField<float> noiseField)
-    {
-        int width = noiseField.Width;
-        int height = noiseField.Height;
-
-        float centerX = width / 2.0f;
-        float centerY = height / 2.0f;
-
-        float maxDistance = MathF.Sqrt(centerX * centerX + centerY * centerY);
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                float distance = MathF.Sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
-                float fallOff = 1.0f - MathF.Pow(distance / maxDistance, FallOffFactor);
-
-                noiseField.Field[x, y] *= fallOff;
-            }
-        }
-    }
-
-    private void ApplyFallOffReversed(NoiseField<float> noiseField)
-    {
-        int width = noiseField.Width;
-        int height = noiseField.Height;
-
-        float centerX = width / 2.0f;
-        float centerY = height / 2.0f;
-
-        float maxDistance = MathF.Sqrt(centerX * centerX + centerY * centerY);
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                float distance = MathF.Sqrt((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY));
-                float fallOff = MathF.Pow(distance / maxDistance, FallOffFactorReverse);
-
-                noiseField.Field[x, y] *= fallOff;
-            }
-        }
     }
 }

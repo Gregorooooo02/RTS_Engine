@@ -39,9 +39,9 @@ public class WorldRenderer : Component
 
     private Num.Vector3[] _colors = new Num.Vector3[]
     {
-        new Num.Vector3(0.25f, 0.75f, 0.25f), // Blue (Green for now)
-        new Num.Vector3(0.25f, 0.75f, 0.25f), // Yellow (Green for now)
-        new Num.Vector3(0.5f, 0.5f, 0.5f), // Green (Gray for now)
+        new Num.Vector3(0.2f, 0.2f, 0.8f), // Blue
+        new Num.Vector3(0.75f, 0.75f, 0.5f), // Yellow 
+        new Num.Vector3(0.25f, 0.75f, 0.25f), // Green (Gray for now)
         new Num.Vector3(0.5f, 0.5f, 0.5f), // Grey
         new Num.Vector3(1, 1, 1) // White
     };
@@ -139,14 +139,14 @@ public class WorldRenderer : Component
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
-            {
-                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y], -y);
+            {   
+                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.75f, -y);
                 
-                if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.3f)
+                if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.1f)
                 {
                     _vertices[x + y * _width].Color = new Color(_colors[0]);
                 }
-                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.35f)
+                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.2f)
                 {
                     _vertices[x + y * _width].Color = new Color(_colors[1]);
                 }
@@ -156,10 +156,14 @@ public class WorldRenderer : Component
                 }
                 else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.7f)
                 {
+                    // If the heightData is multiplied by 0.75f, the terrain will be more flat, so mountains will be less steep
+                    // If the heightData is multiplied by 1.0f, the terrain will be more steep, so mountains will be more steep
+                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.85f, -y);
                     _vertices[x + y * _width].Color = new Color(_colors[3]);
                 }
                 else
                 {
+                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.85f, -y);
                     _vertices[x + y * _width].Color = new Color(_colors[4]);
                 }
             }
