@@ -92,6 +92,7 @@ public class Game1 : Game
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         _sceneManager.AddScene(new MapScene());
+        _sceneManager.AddScene(new ThirdScene());
     }
 
     protected override void Update(GameTime gameTime)

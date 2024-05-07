@@ -72,7 +72,7 @@ public class WorldRenderer : Component
 
         RasterizerState rs = new RasterizerState();
         rs.CullMode = CullMode.None;
-        rs.FillMode = FillMode.Solid;
+        rs.FillMode = FillMode.WireFrame;
         Globals.GraphicsDevice.RasterizerState = rs;
 
         Matrix worldMatrix = Matrix.CreateTranslation(-_width / 2, -40, -100);

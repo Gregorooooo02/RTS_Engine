@@ -29,7 +29,7 @@ namespace RTS_Engine
         public static Renderer Renderer;
         public static PickingManager PickingManager;
         
-        public static BoundingFrustum BoundingFrustum;
+        public static BoundingFrustum BoundingFrustum = new BoundingFrustum(Matrix.Identity);
 
         public static float Gamma = 2.2f;
         public static float LightIntensity = 10;

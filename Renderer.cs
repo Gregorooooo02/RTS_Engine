@@ -124,6 +124,7 @@ public class Renderer
         Sprites.Clear();
         AnimatedSprites.Clear();
         Texts.Clear();
+        // WorldRenderer = null;
     }
     
     public void PrepareForNextFrame()
@@ -170,7 +171,7 @@ public class Renderer
 
     private void DrawWorld()
     {
-        WorldRenderer.Draw();
+        WorldRenderer?.Draw();
     }
     
     private void DrawShadows()
