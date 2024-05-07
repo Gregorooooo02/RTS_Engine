@@ -38,7 +38,7 @@ public class AnimatedSpriteRenderer : Component
             return;
         }
 
-        _frameTimeLeft -= Globals.TotalSeconds;
+        _frameTimeLeft -= Globals.DeltaTime;
 
         if (_frameTimeLeft <= 0) 
         {

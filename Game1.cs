@@ -105,13 +105,14 @@ public class Game1 : Game
         Globals.Update(gameTime);
         
 #if DEBUG
-        _sceneCamera.Update(gameTime);
+        if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
         Globals.PickingManager.CheckForRay();
-        if (Globals.PickingManager.Picked != null)
+        if (Globals.PickingManager.Picked.Count > 0)
         {
-            Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
+            //Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
+            Debug.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
         }
         base.Update(gameTime);
     }
@@ -163,7 +164,9 @@ public class Game1 : Game
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
-        
+        ImGui.Separator();
+        ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
+
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
         ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
         ImGui.SliderInt("Shadow Map Size", ref Globals.ShadowMapResolutionMultiplier, 0, 5);

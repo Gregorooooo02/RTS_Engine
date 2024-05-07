@@ -50,7 +50,10 @@
         <component>
           <type>MeshRenderer</type>
           <active>True</active>
-          <model>basicPlane</model>
+          <model>
+            <path>basicPlane</path>
+            <technique>PBR</technique>
+          </model>
         </component>
       </components>
       <childObjects>
@@ -105,7 +108,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -136,7 +142,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -167,7 +176,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -198,7 +210,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -229,7 +244,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -260,7 +278,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -291,7 +312,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -322,7 +346,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -353,7 +380,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -384,7 +414,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -415,7 +448,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -446,7 +482,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -477,7 +516,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -508,7 +550,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -539,7 +584,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -570,7 +618,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -601,7 +652,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -632,7 +686,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -663,7 +720,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -694,7 +754,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -725,7 +788,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -756,7 +822,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -787,7 +856,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -818,7 +890,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Trees/drzewoiglaste</model>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -876,7 +951,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Tartak/TARTACZEK</model>
+                  <model>
+                    <path>Tartak/TARTACZEK</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -907,7 +985,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Props/namiot (2)</model>
+                  <model>
+                    <path>Env/Props/namiot (2)</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -965,7 +1046,10 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
-                  <model>Env/Props/ogniskonaked</model>
+                  <model>
+                    <path>Env/Props/ogniskonaked</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -973,6 +1057,47 @@
           </childObjects>
         </object>
       </childObjects>
+    </object>
+    <object>
+      <name>MainCamera</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>97,305145</x>
+            <y>50</y>
+            <z>76,35284</z>
+          </position>
+          <rotation>
+            <x>-45</x>
+            <y>45</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>Camera</type>
+          <active>True</active>
+          <fovDegrees>45</fovDegrees>
+          <nearPlane>0,05</nearPlane>
+          <farPlane>2000</farPlane>
+        </component>
+        <component>
+          <type>MeshRenderer</type>
+          <active>False</active>
+          <model>
+            <path>defaultModel</path>
+            <technique>PBR</technique>
+          </model>
+        </component>
+      </components>
+      <childObjects></childObjects>
     </object>
   </childObjects>
 </rootObject>

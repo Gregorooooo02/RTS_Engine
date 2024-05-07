@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -10,35 +11,15 @@ namespace RTS_Engine;
 
 public class Camera : Component
 {
-    private string name;
-    
-    private Vector3 up = Vector3.Up;
-    
-    private float angle = -45.0f;
-    
+    public float cameraSpeed = 20.0f;
     public float fovDegrees = 45.0f;
     public float nearPlane = 0.05f;
     public float farPlane = 2000.0f;
-
-    // private int fpsKeyboardLayout = 1;
-    private int cameraType = 1;
-
-    public const int CAM_UI_OPTION_FPS = 1;
-    public const int CAM_UI_OPTION_EDITOR = 0;
-
-    public const int CAM_FIXED = 0;
-    public const int CAM_FREE = 1;
     
     public override void Initialize()
     {
-        Active = true;
-        name = ParentObject.Name + "Camera";
-        Globals.World = Matrix.Identity;
-        Globals.Projection = Matrix.Identity;
-        Globals.View = Matrix.Identity;
-        UpdateWorldAndView();
-        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
-        RotateUpDown(angle);
+        UpdateCameraMatrices();
+        ParentObject.Transform.SetLocalRotation(new(-45, 45, 0));
     }
     
     public override string ComponentToXmlString()
@@ -50,11 +31,7 @@ public class Camera : Component
         builder.Append("<type>Camera</type>");
         
         builder.Append("<active>" + Active + "</active>");
-        
-        builder.Append("<model>" + name + "</model>");
-        
-        builder.Append("<angle>" + angle + "</angle>");
-        
+              
         builder.Append("<fovDegrees>" + fovDegrees + "</fovDegrees>");
         
         builder.Append("<nearPlane>" + nearPlane + "</nearPlane>");
@@ -76,149 +53,60 @@ public class Camera : Component
         if(ImGui.CollapsingHeader("Camera"))
         {
             ImGui.Checkbox("Camera active", ref Active);
-            ImGui.Text(name);
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
             }
         }
     }
-    
-    private void RotateUpDown(float angle)
+   
+    public Camera(GameObject parentObject)
     {
-        Matrix rotation = Matrix.CreateFromAxisAngle(Globals.World.Right, MathHelper.ToRadians(angle));
-        Globals.World = rotation * Globals.World;
-        UpdateWorldAndView();
-    }
-    
-    public Camera()
-    {
-        UpdateWorldAndView();
-        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
-    }
-    
-    // public void CameraUI(int UIOption) {
-    //     this.fpsKeyboardLayout = UIOption;
-    // }
-    
-    public void CameraType(int cameraType) {
-        this.cameraType = cameraType;
-    }
-    
-    public Vector3 Position 
-    {
-        get { return Globals.World.Translation; }
-        set
-        {
-            Globals.World.Translation = value;
-            UpdateWorldAndView();
-        }
-    }
-    
-    public Vector3 Forward
-    {
-        get { return Globals.World.Forward; }
-        set
-        {
-            Globals.World = Matrix.CreateWorld(Globals.World.Translation, value, up);
-            UpdateWorldAndView();
-        }
-    }
-    
-    public Vector3 Up
-    {
-        get { return up; }
-        set
-        {
-            up = value;
-            Globals.World = Matrix.CreateWorld(Globals.World.Translation, Globals.World.Forward, up);
-            UpdateWorldAndView();
-        }
-    }
-    
-    public Vector3 LookAtDirection
-    {
-        get { return Globals.World.Forward; }
-        set
-        {
-            Globals.World = Matrix.CreateWorld(Globals.World.Translation, value, up); 
-            UpdateWorldAndView();
-        }
-    }
-    
-    public Vector3 TargetPostionToLookAt
-    {
-        set
-        {
-            Globals.World = Matrix.CreateWorld(Globals.World.Translation, Vector3.Normalize(value - Globals.World.Translation), up);
-            UpdateWorldAndView();
-        }
-    }
-    
-    public Matrix LookAtTheTargetMatrix
-    {
-        set
-        {
-            Globals.World = Matrix.CreateWorld(Globals.World.Translation, Vector3.Normalize(value.Translation - Globals.World.Translation), up);
-            UpdateWorldAndView();
-        }
-    }
-    
-    public Matrix World
-    {
-        get { return Globals.World; }
-        set
-        {
-            Globals.World = value;
-            Globals.View = Matrix.CreateLookAt(Globals.World.Translation, Globals.World.Forward + Globals.World.Translation, Globals.World.Up);
-        }
-    }
-    
-    public Matrix View
-    {
-        get { return Globals.View; }
+        ParentObject = parentObject;
+        Initialize();
     }
 
-    public Matrix Projection
-    {
-        get { return Globals.Projection; }
-    }
+    public Camera(){}
     
-    /// <summary>
-    /// Update the matrices of the camera when the camera is moved or rotated.
-    /// </summary>
-    private void UpdateWorldAndView()
-    {
-        if (cameraType == CAM_FIXED) {
-            up = Vector3.Up;
-        }
-        if (cameraType == CAM_UI_OPTION_EDITOR) {
-            up = Globals.World.Up;
-        }
-
-        Globals.World = Matrix.CreateWorld(Globals.World.Translation, Globals.World.Forward, up);
-        Globals.View = Matrix.CreateLookAt(Globals.World.Translation, Globals.World.Forward + Globals.World.Translation, Globals.World.Up);
-    }
-    
-    /// <summary>
-    /// Changes the perspective matrix to a new near, far and field of view.
-    /// </summary>
-    public void UpdateProjectionMatrix(float fov) 
-    {
-        Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), Globals.GraphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
-    }
-
     /// <summary>
     /// Changes the perspective matrix to a new near, far and field of view.
     /// The projection matrix is only set up once at the start of the game.
     /// </summary>
-    public void UpdateProjectionMatrix(float fov, float near, float far) 
+    public void UpdateCameraMatrices() 
     {
-        this.fovDegrees = fov;
-        this.nearPlane = near;
-        this.farPlane = far;
-
+        Globals.View = Matrix.CreateLookAt(ParentObject.Transform._pos, ParentObject.Transform.ModelMatrix.Forward + ParentObject.Transform._pos, Vector3.Up);
         Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), Globals.GraphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
+    }
+
+    private void MoveCamera()
+    {
+        int x = 0, y = 0;
+        if(InputManager.Instance.IsActive(GameAction.FORWARD)){
+            x += 1;
+        }
+        if (InputManager.Instance.IsActive(GameAction.BACKWARD))
+        {
+            x -= 1;
+        }
+        if (InputManager.Instance.IsActive(GameAction.RIGHT))
+        {
+            y += 1; 
+        }
+        if (InputManager.Instance.IsActive(GameAction.LEFT))
+        {
+            y -= 1;
+        }
+        Vector3 right = Vector3.Cross(ParentObject.Transform.ModelMatrix.Forward, ParentObject.Transform.ModelMatrix.Up) ;
+        right.Y = 0;
+        right.Normalize();
+        Vector3 forward = ParentObject.Transform.ModelMatrix.Forward;
+        forward.Y = 0;
+        forward.Normalize();
+        Vector3 combined = Vector3.Add(forward * x, right * y);
+        if(x + y != 0 || x * y != 0)combined.Normalize();
+        ParentObject.Transform.Move(combined * Globals.DeltaTime * cameraSpeed);
+
+        
     }
 
     /// <summary>
@@ -226,8 +114,9 @@ public class Camera : Component
     /// </summary>
     public override void Update()
     {
-        Position = ParentObject.Transform._pos;
-        UpdateProjectionMatrix(fovDegrees, nearPlane, farPlane);
+        if(!Active) return;
+        MoveCamera();
+        UpdateCameraMatrices();
         
         // For safety reasons
         if (fovDegrees < 1.0f) fovDegrees = 1.0f;

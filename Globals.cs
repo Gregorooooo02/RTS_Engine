@@ -16,14 +16,13 @@ namespace RTS_Engine
             ComponentsTypes = GetAllComponents();
         }
         
-        public static float TotalSeconds { get; set; }
+        public static float DeltaTime { get; set; }
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
         public static Effect TerrainEffect;
-        public static Matrix View;
-        public static Matrix Projection;
-        public static Matrix World;
+        public static Matrix View = Matrix.Identity;
+        public static Matrix Projection = Matrix.Identity;
         public static Vector3 ViewPos;
 
         public static Renderer Renderer;
@@ -47,7 +46,7 @@ namespace RTS_Engine
 
         public static void Update(GameTime gameTime)
         {
-            TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
         
         private static List<Type> GetAllComponents()
@@ -81,6 +80,7 @@ namespace RTS_Engine
         public static bool ShowShadowMap = false;
         public static bool DrawShadows = true;
         public static bool DrawMeshes = true;
+        public static bool DebugCamera = true;
 #endif
     }
 }

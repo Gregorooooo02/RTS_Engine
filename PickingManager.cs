@@ -8,11 +8,11 @@ public class PickingManager
 {
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
-    public Pickable Picked = null;
+    public List<Pickable> Picked = new() ;
     
     public void CheckForRay()
     {
-        Picked = null;
+        Picked.Clear();
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED })
         {
@@ -38,7 +38,7 @@ public class PickingManager
                      }
                  }
                  Pickables.Clear();
-                 Picked = candidate;
+                 if(candidate != null)Picked.Add(candidate);
              }
         }
         Pickables.Clear();
