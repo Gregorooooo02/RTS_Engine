@@ -133,7 +133,7 @@ public class Transform : Component
 
     public override void RemoveComponent()
     {
-        throw new HowDidWeGetHereException("Seriously?!. Like this method should never be called in this class. How the f did you even manage to reach this point?");
+        throw new HowDidWeGetHereException("Seriously?!. Like, this method should never be called in this class. How the f did you even manage to reach this point?");
     }
 
 

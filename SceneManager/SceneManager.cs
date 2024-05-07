@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
@@ -30,8 +31,33 @@ public class SceneManager
     {
         Globals.Renderer.Clear();
         CurrentScene = _scenes[i];
+        OnLoad(CurrentScene.SceneRoot);
     }
 
+    private void OnLoad(GameObject gameObject)
+    {
+        //World Renderer
+        WorldRenderer worldRenderer = gameObject.GetComponent<WorldRenderer>();
+        if (worldRenderer != null) Globals.Renderer.WorldMesh = worldRenderer;
+        
+        //Spite Renderer
+        SpiteRenderer spiteRenderer = gameObject.GetComponent<SpiteRenderer>();
+        if(spiteRenderer != null) Globals.Renderer.Sprites.Add(spiteRenderer);
+        
+        //Text Renderer
+        TextRenderer textRenderer = gameObject.GetComponent<TextRenderer>();
+        if(textRenderer != null) Globals.Renderer.Texts.Add(textRenderer);
+        
+        //AnimatedSpriteRenderer
+        AnimatedSpriteRenderer animatedSpriteRenderer = gameObject.GetComponent<AnimatedSpriteRenderer>();
+        if(animatedSpriteRenderer != null) Globals.Renderer.AnimatedSprites.Add(animatedSpriteRenderer);
+
+        foreach (GameObject objectChild in gameObject.Children)
+        {
+            OnLoad(objectChild);
+        }
+    }
+    
 #if DEBUG
     private bool confirmationWindowOpen = false;
     private int sceneToClose;
