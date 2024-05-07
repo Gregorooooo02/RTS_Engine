@@ -79,7 +79,7 @@ public class WorldRenderer : Component
         Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["Colored"];
         Globals.TerrainEffect.Parameters["xView"]?.SetValue(Globals.View);
         Globals.TerrainEffect.Parameters["xProjection"]?.SetValue(Globals.Projection);
-        Globals.TerrainEffect.Parameters["xWorld"]?.SetValue(worldMatrix);
+        Globals.TerrainEffect.Parameters["xWorld"]?.SetValue(ParentObject.Transform.ModelMatrix);
 
         Vector3 lightDirection = new Vector3(1.0f, -1.0f, -1.0f);
         lightDirection.Normalize();
@@ -104,6 +104,7 @@ public class WorldRenderer : Component
     public override void Initialize()
     {
         // _heightMap = AssetManager.DefaultHeightMap;
+        Globals.Renderer.WorldRenderer = this;
         _heightMap = GenerateMap.noiseTexture;
 
         LoadHeightData(_heightMap);
@@ -129,7 +130,6 @@ public class WorldRenderer : Component
                 if (_heightData[x, y] > maxHeight)
                 {
                     maxHeight = _heightData[x, y];
-                    
                 }
             }
         }
@@ -140,7 +140,7 @@ public class WorldRenderer : Component
         {
             for (int y = 0; y < _height; y++)
             {   
-                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.75f, -y);
+                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.5f, -y);
                 
                 if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.1f)
                 {
@@ -158,12 +158,12 @@ public class WorldRenderer : Component
                 {
                     // If the heightData is multiplied by 0.75f, the terrain will be more flat, so mountains will be less steep
                     // If the heightData is multiplied by 1.0f, the terrain will be more steep, so mountains will be more steep
-                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.85f, -y);
+                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.6f, -y);
                     _vertices[x + y * _width].Color = new Color(_colors[3]);
                 }
                 else
                 {
-                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.85f, -y);
+                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.6f, -y);
                     _vertices[x + y * _width].Color = new Color(_colors[4]);
                 }
             }

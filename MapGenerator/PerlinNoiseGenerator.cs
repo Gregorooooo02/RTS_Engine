@@ -144,7 +144,7 @@ public class PerlinNoiseGenerator
 
                 float value = Math.Max(Math.Abs(x), Math.Abs(y));
 
-                noiseField.Field[i, j] = Evaluate(value, 1.0f, 20.0f);
+                noiseField.Field[i, j] = Evaluate(value, 1.5f, 5.0f);
             }
         }
 

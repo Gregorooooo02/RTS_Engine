@@ -30,7 +30,7 @@ public class Renderer
     public List<SpiteRenderer> Sprites;
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
-    public WorldRenderer WorldMesh;
+    public WorldRenderer WorldRenderer;
     //
 
     public Renderer(ContentManager content)
@@ -48,7 +48,6 @@ public class Renderer
         Sprites = new List<SpiteRenderer>();
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
-        WorldMesh = new WorldRenderer();
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -171,7 +170,7 @@ public class Renderer
 
     private void DrawWorld()
     {
-        WorldMesh.Draw();   
+        WorldRenderer.Draw();
     }
     
     private void DrawShadows()
