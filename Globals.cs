@@ -24,6 +24,7 @@ namespace RTS_Engine
         public static Matrix View = Matrix.Identity;
         public static Matrix Projection = Matrix.Identity;
         public static Vector3 ViewPos;
+        public static float ZoomDegrees = 45.0f;
 
         public static Renderer Renderer;
         public static PickingManager PickingManager;
