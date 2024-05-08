@@ -99,6 +99,7 @@ public class Game1 : Game
     {
 #if DEBUG
         _performanceTimer.Start();
+        Globals.CameraPosition = _sceneCamera.Position;
 #endif
         
         InputManager.Instance.PollInput();

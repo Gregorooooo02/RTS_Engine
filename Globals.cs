@@ -25,6 +25,7 @@ namespace RTS_Engine
         public static Matrix Projection;
         public static Matrix World;
         public static Vector3 ViewPos;
+        public static Vector3 CameraPosition;
 
         public static Renderer Renderer;
         public static PickingManager PickingManager;

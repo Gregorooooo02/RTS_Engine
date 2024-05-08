@@ -4,58 +4,52 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
-using Num = System.Numerics;
-using System.Security.Cryptography;
 
 namespace RTS_Engine;
 
 public class WorldRenderer : Component
 {
-    public struct VertexPositionColorNormal
+    public struct VertexMultitextured
     {
         public Vector3 Position;
-        public Color Color;
         public Vector3 Normal;
+
+        // Texture variables
+        public Vector4 TextureCoordinate;
+        public Vector4 TextureWeights;
 
         public readonly static VertexDeclaration VertexDeclaration = new VertexDeclaration
         (
             new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-            new VertexElement(sizeof(float) * 3, VertexElementFormat.Color, VertexElementUsage.Color, 0),
-            new VertexElement(sizeof(float) * 3 + 4, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0)
+            new VertexElement(sizeof(float) * 3, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
+            new VertexElement(sizeof(float) * 6, VertexElementFormat.Vector4, VertexElementUsage.TextureCoordinate, 0),
+            new VertexElement(sizeof(float) * 10, VertexElementFormat.Vector4, VertexElementUsage.TextureCoordinate, 1)
         );
     };
 
-    private VertexBuffer _vertexBuffer;
-    private IndexBuffer _indexBuffer;
-
-    private Texture2D _heightMap;
-
-    // Mesh parameters for the terrain
-    private VertexPositionColorNormal[] _vertices;
-    private short[] _indices;
-    private int _width = 8;
-    private int _height = 8;
+    private int _width;
+    private int _height;
     private float[,] _heightData;
 
-    private Num.Vector3[] _colors = new Num.Vector3[]
-    {
-        new Num.Vector3(0.2f, 0.2f, 0.8f), // Blue
-        new Num.Vector3(0.75f, 0.75f, 0.5f), // Yellow 
-        new Num.Vector3(0.25f, 0.75f, 0.25f), // Green (Gray for now)
-        new Num.Vector3(0.5f, 0.5f, 0.5f), // Grey
-        new Num.Vector3(1, 1, 1) // White
-    };
+    private VertexBuffer _vertexBuffer;
+    private IndexBuffer _indexBuffer;
+    
+    // Textures
+    private Texture2D _sandTexture;
+    private Texture2D _grassTexture;
+    private Texture2D _rockTexture;
+    private Texture2D _snowTexture;
+
+    // Water parameters
+    private const float waterHeight = 0.5f;
+
+    private VertexBuffer _waterVertexBuffer;
+    private IndexBuffer _waterIndexBuffer;
+    private Texture2D _waterTexture;
 
     public WorldRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
-        Initialize();
-    }
-
-    public WorldRenderer(GameObject parentObject, Texture2D heightMap)
-    {
-        ParentObject = parentObject;
-        _heightMap = heightMap;
         Initialize();
     }
 
@@ -69,19 +63,32 @@ public class WorldRenderer : Component
     public void Draw()
     {
         if (!Active) return;
+        DrawWater();
+        DrawTerrain();
+    }
 
+    public void DrawTerrain()
+    {
         RasterizerState rs = new RasterizerState();
         rs.CullMode = CullMode.None;
-        rs.FillMode = FillMode.WireFrame;
+        rs.FillMode = FillMode.Solid;
         Globals.GraphicsDevice.RasterizerState = rs;
 
-        Matrix worldMatrix = Matrix.CreateTranslation(-_width / 2, -40, -100);
-        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["Colored"];
+        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["MultiTextured"];
+
         Globals.TerrainEffect.Parameters["xView"]?.SetValue(Globals.View);
         Globals.TerrainEffect.Parameters["xProjection"]?.SetValue(Globals.Projection);
         Globals.TerrainEffect.Parameters["xWorld"]?.SetValue(ParentObject.Transform.ModelMatrix);
 
-        Vector3 lightDirection = new Vector3(1.0f, -1.0f, -1.0f);
+        // For debug purpose
+        Globals.TerrainEffect.Parameters["xTexture"]?.SetValue(_grassTexture);
+
+        Globals.TerrainEffect.Parameters["xTexture0"]?.SetValue(_sandTexture);
+        Globals.TerrainEffect.Parameters["xTexture1"]?.SetValue(_grassTexture);
+        Globals.TerrainEffect.Parameters["xTexture2"]?.SetValue(_rockTexture);
+        Globals.TerrainEffect.Parameters["xTexture3"]?.SetValue(_snowTexture);
+
+        Vector3 lightDirection = new Vector3(0.0f, -1.0f, -1.0f);
         lightDirection.Normalize();
         Globals.TerrainEffect.Parameters["xLightDirection"]?.SetValue(lightDirection);
         Globals.TerrainEffect.Parameters["xAmbient"]?.SetValue(0.2f);
@@ -93,11 +100,44 @@ public class WorldRenderer : Component
 
             Globals.GraphicsDevice.Indices = _indexBuffer;
             Globals.GraphicsDevice.SetVertexBuffer(_vertexBuffer);
+
             Globals.GraphicsDevice.DrawIndexedPrimitives(
-                PrimitiveType.TriangleList, 
-                0, 
-                0, 
-                _indices.Length / 3);
+                PrimitiveType.TriangleList,
+                0,
+                0,
+                _indexBuffer.IndexCount / 3
+            );
+        }
+    }
+
+    public void DrawWater()
+    {
+        RasterizerState rs = new RasterizerState();
+        rs.CullMode = CullMode.None;
+        rs.FillMode = FillMode.Solid;
+        Globals.GraphicsDevice.RasterizerState = rs;
+
+        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["Textured"];
+
+        Globals.TerrainEffect.Parameters["xView"]?.SetValue(Globals.View);
+        Globals.TerrainEffect.Parameters["xProjection"]?.SetValue(Globals.Projection);
+        Globals.TerrainEffect.Parameters["xWorld"]?.SetValue(ParentObject.Transform.ModelMatrix);
+        
+        Globals.TerrainEffect.Parameters["xTexture"]?.SetValue(_waterTexture);
+
+        foreach (EffectPass pass in Globals.TerrainEffect.CurrentTechnique.Passes)
+        {
+            pass.Apply();
+
+            Globals.GraphicsDevice.Indices = _waterIndexBuffer;
+            Globals.GraphicsDevice.SetVertexBuffer(_waterVertexBuffer);
+
+            Globals.GraphicsDevice.DrawIndexedPrimitives(
+                PrimitiveType.TriangleList,
+                0,
+                0,
+                _waterIndexBuffer.IndexCount / 3
+            );
         }
     }
 
@@ -105,74 +145,95 @@ public class WorldRenderer : Component
     {
         // _heightMap = AssetManager.DefaultHeightMap;
         Globals.Renderer.WorldRenderer = this;
-        _heightMap = GenerateMap.noiseTexture;
 
-        LoadHeightData(_heightMap);
-        SetUpVertices();
-        SetUpIndices();
-        CalculateNormals();
-        CopyToBuffers();
+        LoadVertices();
+        LoadPlaneVertices();
+        LoadTextures();
     }
 
-    private void SetUpVertices()
+    private void LoadTextures()
     {
-        float minHeight = float.MaxValue;
-        float maxHeight = float.MinValue;
+        _sandTexture = AssetManager.DefaultTerrainTextrues[1];
+        _grassTexture = AssetManager.DefaultTerrainTextrues[2];
+        _rockTexture = AssetManager.DefaultTerrainTextrues[3];
+        _snowTexture = AssetManager.DefaultTerrainTextrues[4];
+
+        _waterTexture = AssetManager.DefaultTerrainTextrues[0];
+    }
+
+    private void LoadVertices()
+    {
+        Texture2D heightMap = GenerateMap.noiseTexture;
+        LoadHeightData(heightMap);
+
+        VertexMultitextured[] terrainVertices = SetUpVertices();
+        short[] terrainIndices = SetUpIndices();
+
+        terrainVertices = CalculateNormals(terrainVertices, terrainIndices);
+        CopyToBuffers(terrainVertices, terrainIndices);
+    }
+
+    private void LoadPlaneVertices()
+    {
+        VertexMultitextured[] planeVertices = SetUpPlaneVertices();
+        short[] planeIndices = SetUpIndices();
+
+        planeVertices = CalculateNormals(planeVertices, planeIndices);
+        CopyToPlaneBuffers(planeVertices, planeIndices);
+    }
+
+    private VertexMultitextured[] SetUpVertices()
+    {
+        VertexMultitextured[] terrainVertices = new VertexMultitextured[_width * _height];
 
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
             {
-                if (_heightData[x, y] < minHeight)
-                {
-                    minHeight = _heightData[x, y];
-                }
-                if (_heightData[x, y] > maxHeight)
-                {
-                    maxHeight = _heightData[x, y];
-                }
+                terrainVertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.75f, -y);
+                terrainVertices[x + y * _width].TextureCoordinate.X = (float)x / 30.0f;
+                terrainVertices[x + y * _width].TextureCoordinate.Y = (float)y / 30.0f;
+                
+                terrainVertices[x + y * _width].TextureWeights.X = MathHelper.Clamp(1.0f - Math.Abs(_heightData[x, y] - 0) / 8.0f, 0, 10);
+                terrainVertices[x + y * _width].TextureWeights.Y = MathHelper.Clamp(1.0f - Math.Abs(_heightData[x, y] - 8) / 4.0f, 0, 10);
+                terrainVertices[x + y * _width].TextureWeights.Z = MathHelper.Clamp(1.0f - Math.Abs(_heightData[x, y] - 14) / 4.0f, 0, 10);
+                terrainVertices[x + y * _width].TextureWeights.W = MathHelper.Clamp(1.0f - Math.Abs(_heightData[x, y] - 20) / 4.0f, 0, 10);
+
+                float total = terrainVertices[x + y * _width].TextureWeights.X;
+                total += terrainVertices[x + y * _width].TextureWeights.Y;
+                total += terrainVertices[x + y * _width].TextureWeights.Z;
+                total += terrainVertices[x + y * _width].TextureWeights.W;
+
+                terrainVertices[x + y * _width].TextureWeights.X /= total;
+                terrainVertices[x + y * _width].TextureWeights.Y /= total;
+                terrainVertices[x + y * _width].TextureWeights.Z /= total;
+                terrainVertices[x + y * _width].TextureWeights.W /= total;
             }
         }
 
-        _vertices = new VertexPositionColorNormal[_width * _height];
+        return terrainVertices;
+    }
+
+    private VertexMultitextured[] SetUpPlaneVertices()
+    {
+        VertexMultitextured[] planeVertices = new VertexMultitextured[_width * _height];
 
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
-            {   
-                _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.5f, -y);
-                
-                if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.1f)
-                {
-                    _vertices[x + y * _width].Color = new Color(_colors[0]);
-                }
-                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.2f)
-                {
-                    _vertices[x + y * _width].Color = new Color(_colors[1]);
-                }
-                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.6f)
-                {
-                    _vertices[x + y * _width].Color = new Color(_colors[2]);
-                }
-                else if (_heightData[x, y] < minHeight + (maxHeight - minHeight) * 0.7f)
-                {
-                    // If the heightData is multiplied by 0.75f, the terrain will be more flat, so mountains will be less steep
-                    // If the heightData is multiplied by 1.0f, the terrain will be more steep, so mountains will be more steep
-                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.6f, -y);
-                    _vertices[x + y * _width].Color = new Color(_colors[3]);
-                }
-                else
-                {
-                    _vertices[x + y * _width].Position = new Vector3(x, _heightData[x, y] * 0.6f, -y);
-                    _vertices[x + y * _width].Color = new Color(_colors[4]);
-                }
+            {
+                planeVertices[x + y * _width].Position = new Vector3(x, waterHeight, -y);
+                planeVertices[x + y * _width].TextureCoordinate.X = (float)x / 30.0f;
+                planeVertices[x + y * _width].TextureCoordinate.Y = (float)y / 30.0f;
             }
         }
+
+        return planeVertices;
     }
 
-    private void SetUpIndices()
+    private short[] SetUpIndices()
     {
-        _indices = new short[(_width - 1) * (_height - 1) * 6];
+        short[] indices = new short[(_width - 1) * (_height - 1) * 6];
         int counter = 0;
 
         for (int y = 0; y < _height - 1; y++)
@@ -184,56 +245,72 @@ public class WorldRenderer : Component
                 short topLeft = (short)(x + (y + 1) * _width);
                 short topRight = (short)((x + 1) + (y + 1) * _width);
 
-                _indices[counter++] = topLeft;
-                _indices[counter++] = lowerRight;
-                _indices[counter++] = lowerLeft;
+                indices[counter++] = topLeft;
+                indices[counter++] = lowerRight;
+                indices[counter++] = lowerLeft;
 
-                _indices[counter++] = topLeft;
-                _indices[counter++] = topRight;
-                _indices[counter++] = lowerRight;
+                indices[counter++] = topLeft;
+                indices[counter++] = topRight;
+                indices[counter++] = lowerRight;
             }
         }
+
+        return indices;
     }
 
-    private void CalculateNormals()
+    private VertexMultitextured[] CalculateNormals(VertexMultitextured[] vertices, short[] indices)
     {
-        for (int i = 0; i < _vertices.Length; i++)
+        for (int i = 0; i < vertices.Length; i++)
         {
-            _vertices[i].Normal = new Vector3(0, 0, 0);
+            vertices[i].Normal = new Vector3(0, 0, 0);
         }
 
-        for (int i = 0; i < _indices.Length / 3; i++)
+        for (int i = 0; i < indices.Length / 3; i++)
         {
-            int index1 = _indices[i * 3];
-            int index2 = _indices[i * 3 + 1];
-            int index3 = _indices[i * 3 + 2];
+            int index1 = indices[i * 3];
+            int index2 = indices[i * 3 + 1];
+            int index3 = indices[i * 3 + 2];
 
-            Vector3 side1 = _vertices[index1].Position - _vertices[index3].Position;
-            Vector3 side2 = _vertices[index1].Position - _vertices[index2].Position;
+            Vector3 side1 = vertices[index1].Position - vertices[index3].Position;
+            Vector3 side2 = vertices[index1].Position - vertices[index2].Position;
             Vector3 normal = Vector3.Cross(side1, side2);
 
-            _vertices[index1].Normal += normal;
-            _vertices[index2].Normal += normal;
-            _vertices[index3].Normal += normal;
+            vertices[index1].Normal += normal;
+            vertices[index2].Normal += normal;
+            vertices[index3].Normal += normal;
         }
 
-        for (int i = 0; i < _vertices.Length; i++)
+        for (int i = 0; i < vertices.Length; i++)
         {
-            _vertices[i].Normal.Normalize();
+            vertices[i].Normal.Normalize();
         }
+
+        return vertices;
     }
 
-    private void CopyToBuffers()
+    private void CopyToBuffers(VertexMultitextured[] vertices, short[] indices)
     {
-        _vertexBuffer = new VertexBuffer(Globals.GraphicsDevice, VertexPositionColorNormal.VertexDeclaration, _vertices.Length, BufferUsage.WriteOnly);
-        _vertexBuffer.SetData(_vertices);
+        _vertexBuffer = new VertexBuffer(Globals.GraphicsDevice, VertexMultitextured.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+        _vertexBuffer.SetData(vertices);
 
-        _indexBuffer = new IndexBuffer(Globals.GraphicsDevice, typeof(short), _indices.Length, BufferUsage.WriteOnly);
-        _indexBuffer.SetData(_indices);
+        _indexBuffer = new IndexBuffer(Globals.GraphicsDevice, typeof(short), indices.Length, BufferUsage.WriteOnly);
+        _indexBuffer.SetData(indices);
+    }
+
+    private void CopyToPlaneBuffers(VertexMultitextured[] vertices, short[] indices)
+    {
+        _waterVertexBuffer = new VertexBuffer(Globals.GraphicsDevice, VertexMultitextured.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+        _waterVertexBuffer.SetData(vertices);
+
+        _waterIndexBuffer = new IndexBuffer(Globals.GraphicsDevice, typeof(short), indices.Length, BufferUsage.WriteOnly);
+        _waterIndexBuffer.SetData(indices);
     }
 
     private void LoadHeightData(Texture2D heightMap)
     {
+        float minHeight = float.MaxValue;
+        float maxHeight = float.MinValue;
+
         _width = heightMap.Width;
         _height = heightMap.Height;
 
@@ -247,6 +324,24 @@ public class WorldRenderer : Component
             for (int y = 0; y < _height; y++)
             {
                 _heightData[x, y] = heightMapColors[x + y * _width].R / 5.0f;
+
+                if (_heightData[x, y] < minHeight)
+                {
+                    minHeight = _heightData[x, y];
+                }
+
+                if (_heightData[x, y] > maxHeight)
+                {
+                    maxHeight = _heightData[x, y];
+                }
+            }
+        }
+
+        for (int x = 0; x < _width; x++)
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                _heightData[x, y] = (_heightData[x, y] - minHeight) / (maxHeight - minHeight) * 20.0f;
             }
         }
     }
@@ -272,33 +367,11 @@ public class WorldRenderer : Component
         if (ImGui.CollapsingHeader("World Renderer"))
         {   
             ImGui.Checkbox("World active", ref Active);
-            ImGui.Text("Height map loaded: " + (_heightMap != null ? "Yes" : "No"));
             ImGui.Text("Width: " + _width);
             ImGui.Text("Height: " + _height);
 
             ImGui.Separator();
 
-            ImGui.Text("Color settings:");
-            if (ImGui.ColorEdit3("First color", ref _colors[0]))
-            {
-                SetUpVertices();
-            }
-            if (ImGui.ColorEdit3("Second color", ref _colors[1]))
-            {
-                SetUpVertices();
-            }
-            if (ImGui.ColorEdit3("Third color", ref _colors[2]))
-            {
-                SetUpVertices();
-            }
-            if (ImGui.ColorEdit3("Fourth color", ref _colors[3]))
-            {
-                SetUpVertices();
-            }
-            if (ImGui.ColorEdit3("Fifth color", ref _colors[4]))
-            {
-                SetUpVertices();
-            }
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
