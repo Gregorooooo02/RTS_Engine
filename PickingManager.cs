@@ -24,7 +24,7 @@ public class PickingManager
                  foreach (Pickable entity in Pickables)
                  {
                      BoundingSphere sphere =
-                         entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                         entity.Renderer._model.BoundingSpheres[entity.Renderer._model.CurrentModelIndex].Transform(entity.ParentObject.Transform.ModelMatrix);
                      float? dist = sphere.Intersects(ray.Value);
                      
                      if (dist.HasValue)

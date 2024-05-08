@@ -17,7 +17,7 @@ public class Camera : Component
     public float fovDegrees = 45.0f;
     private float TargetFov = 45.0f;
     public float ZoomMin = 25.0f;
-    public float ZoomMax = 70.0f;
+    public float ZoomMax = 75.0f;
 
     public float cameraSpeed = 20.0f;
     

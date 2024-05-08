@@ -63,13 +63,15 @@ namespace RTS_Engine
         public static GameObject CurrentlySelectedObject;
         public static List<string> AvailableScenes = new List<string>();
 
+        #if _WINDOWS
+        public static readonly string MainPath = "../../../";
+        #else
+        public static string MainPath = "";
+        #endif
+
         public static void UpdateScenesList()
         {
-#if _WINDOWS
-            AvailableScenes = Directory.GetFiles("../../../Scenes").ToList();
-#else
-            AvailableScenes = Directory.GetFiles("Scenes").ToList();
-#endif
+            AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
         }
         
         public static int ShadowMapResolutionMultiplier = 3;

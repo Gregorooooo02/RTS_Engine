@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,12 +12,15 @@ namespace RTS_Engine;
 public class ModelData
 {
     private readonly string[] _modelMaps = {"albedo","normal","roughness","metalness","ao" };
-    
-    public Model Model;
+
+    public int CurrentModelIndex = 0;
+    public List<Model> Models = new();
     public string ModelPath;
-    public BoundingSphere BoundingSphere;
+    public List<BoundingSphere> BoundingSpheres;
     public string ShaderTechniqueName;
     
+    private bool _isMultimesh = false;
+    private bool _lodUsed = false;
     /*
      *--------------------------------------------------------------------------------------------------------------------------
      *Textures as stored like:
@@ -26,26 +31,43 @@ public class ModelData
      * [4] - ambient occlusion
      *--------------------------------------------------------------------------------------------------------------------------
      */
-    public List<Texture2D> Textures = new List<Texture2D>();
+    //public List<Texture2D> Textures = new();
+
+    public List<List<List<Texture2D>>> Textures = new();
 
     public bool IsInView(Matrix world)
     {
-        return Globals.BoundingFrustum.Contains(BoundingSphere.Transform(world)) != ContainmentType.Disjoint;
+        return Globals.BoundingFrustum.Contains(BoundingSpheres[CurrentModelIndex].Transform(world)) != ContainmentType.Disjoint;
     }
     
     public void Draw(Matrix world)
     {
         if (Globals.MainEffect.CurrentTechnique.Name != ShaderTechniqueName)
             Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques[ShaderTechniqueName];
+
+        if (_lodUsed)
+        {
+            int levels = Textures.Count;
+            float step = 60.0f / levels;
+            for (int i = 0; i < levels; i++)
+            {
+                if (Globals.ZoomDegrees > 25.0f + (i * step) && Globals.ZoomDegrees < 25.0f + ((i + 1) * step))
+                {
+                    CurrentModelIndex = levels - i - 1;
+                }
+            }
+        }
         
-        
-        //Pass textures to the shader
-        Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[0]);
-        Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[1]);
-        Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[2]);
-        Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[3]);
-        Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[4]);
-                    
+
+        if (!_isMultimesh)
+        {
+            //Pass textures to the shader
+            Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[CurrentModelIndex][0][0]);
+            Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[CurrentModelIndex][0][1]);
+            Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[CurrentModelIndex][0][2]);
+            Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[CurrentModelIndex][0][3]);
+            Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[CurrentModelIndex][0][4]);
+        }
         Globals.MainEffect.Parameters["World"]?.SetValue(world);
         Matrix temp = Matrix.Transpose(Matrix.Invert(world));
         temp.M41 = 0;
@@ -56,9 +78,17 @@ public class ModelData
         temp.M24 = 0;
         temp.M34 = 0;
         Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
-        foreach (ModelMesh mesh in Model.Meshes)
+        for (int j = 0; j < Models[CurrentModelIndex].Meshes.Count;j++)
         {
-            foreach (ModelMeshPart part in mesh.MeshParts)
+            if (_isMultimesh)
+            {
+                Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[CurrentModelIndex][j][0]);
+                Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[CurrentModelIndex][j][1]);
+                Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[CurrentModelIndex][j][2]);
+                Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[CurrentModelIndex][j][3]);
+                Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[CurrentModelIndex][j][4]);
+            }
+            foreach (ModelMeshPart part in Models[CurrentModelIndex].Meshes[j].MeshParts)
             {
                 if (part.PrimitiveCount > 0)
                 {
@@ -77,68 +107,156 @@ public class ModelData
     public ModelData(ContentManager manager, string modelPath)
     {
         LoadModel(manager,modelPath);
-        BoundingSphere = CalculateBoundingSphere();
+        BoundingSpheres = CalculateBoundingSpheres();
     }
 
-    private BoundingSphere CalculateBoundingSphere()
+    private List<BoundingSphere> CalculateBoundingSpheres()
     {
-        List<Vector3> modelVertices = new List<Vector3>();
-        foreach (var mesh in Model.Meshes)
+        List<BoundingSphere> output = new List<BoundingSphere>();
+        foreach (Model Model in Models)
         {
-            foreach (ModelMeshPart meshPart in mesh.MeshParts)
+            List<Vector3> modelVertices = new List<Vector3>();
+            foreach (var mesh in Model.Meshes)
             {
-                var indices = new short[meshPart.IndexBuffer.IndexCount];
-                meshPart.IndexBuffer.GetData<short>(indices);
-
-                var vertices = new float[meshPart.VertexBuffer.VertexCount
-                    * meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4];
-                meshPart.VertexBuffer.GetData<float>(vertices);
-
-
-                for (int i = meshPart.StartIndex; i < meshPart.StartIndex + meshPart.PrimitiveCount * 3; i++)
+                foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
-                    int index = (meshPart.VertexOffset + indices[i]) *
-                        meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4;
+                    var indices = new short[meshPart.IndexBuffer.IndexCount];
+                    meshPart.IndexBuffer.GetData<short>(indices);
 
-                    modelVertices.Add(new Vector3(vertices[index], vertices[index + 1], vertices[index + 2]));
+                    var vertices = new float[meshPart.VertexBuffer.VertexCount
+                        * meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4];
+                    meshPart.VertexBuffer.GetData<float>(vertices);
+
+
+                    for (int i = meshPart.StartIndex; i < meshPart.StartIndex + meshPart.PrimitiveCount * 3; i++)
+                    {
+                        int index = (meshPart.VertexOffset + indices[i]) *
+                            meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4;
+
+                        modelVertices.Add(new Vector3(vertices[index], vertices[index + 1], vertices[index + 2]));
+                    }
                 }
             }
+            output.Add(BoundingSphere.CreateFromPoints(modelVertices));
         }
-        return BoundingSphere.CreateFromPoints(modelVertices);
+        return output;
     }
 
     private void LoadModel(ContentManager manager, string modelPath)
     {
         //Loading model's textures. Textures must be in the same catalog as model and has to follow naming convention.
-        for (int i = 0;i < _modelMaps.Length;i++)
+        XElement ModelConfig = null;
+        try
         {
-            Texture2D temp;
-            try
+            ModelConfig = XDocument.Load(Globals.MainPath + "Content/" + modelPath + "/config.xml").Element("config");
+        }
+        catch (Exception e)
+        {
+            //Console.WriteLine(e);
+            //throw;
+            Textures.Add(new List<List<Texture2D>>());
+            Textures[0].Add(new List<Texture2D>());
+            for (int i = 0;i < _modelMaps.Length;i++)
             {
-                temp = manager.Load<Texture2D>(modelPath + "/" + _modelMaps[i]);
+                Texture2D temp;
+                try
+                {
+                    temp = manager.Load<Texture2D>(modelPath + "/" + _modelMaps[i]);
+                }
+                catch (ContentLoadException)
+                {
+                    Textures[0][0].Add(AssetManager.DefaultTextureMaps[i]);
+                    continue;
+                }
+                Textures[0][0].Add(temp);
             }
-            catch (ContentLoadException)
+        
+            //Loading model itself, saving model name
+            string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+            Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+        }
+
+        _isMultimesh = ModelConfig?.Element("multimesh")?.Value == "True";
+        _lodUsed = ModelConfig?.Element("lod")?.Element("used")?.Value == "True";
+        
+        //if LOD is used for this model
+        if (_lodUsed)
+        {
+            int lod = int.Parse(ModelConfig.Element("lod")?.Element("levels")?.Value);
+            float step = 60.0f / lod;
+            for (int i = 0; i < lod; i++)
             {
-                Textures.Add(AssetManager.DefaultTextureMaps[i]);
-                continue;
+                if (Globals.ZoomDegrees >= 25.0f + (i * step) && Globals.ZoomDegrees < 25.0f + ((i + 1) * step))
+                {
+                    CurrentModelIndex = lod - i - 1;
+                }
             }
-            Textures.Add(temp);
+            //if model has multiple meshes with separate texture maps
+            if (_isMultimesh)
+            {
+            
+            }
+            else
+            {
+                string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+                for (int i = 0; i < lod; i++)
+                {
+                    Textures.Add(new List<List<Texture2D>>());
+                    Textures[i].Add(new List<Texture2D>());
+                    for (int j = 0;j < _modelMaps.Length;j++)
+                    {
+                        Texture2D temp;
+                        try
+                        {
+                            temp = manager.Load<Texture2D>(modelPath + "/"+ (i + 1) + "/" + _modelMaps[j]);
+                        }
+                        catch (ContentLoadException)
+                        {
+                            Textures[i][0].Add(AssetManager.DefaultTextureMaps[j]);
+                            continue;
+                        }
+                        Textures[i][0].Add(temp);
+                    }
+                    Models.Add(manager.Load<Model>(modelPath + "/"+ (i + 1) + "/" + modelName));
+                }
+            }
+        }
+        else
+        {
+            //if model has multiple meshes with separate texture maps
+            if (_isMultimesh)
+            {
+            
+            }
+            else
+            {
+                Textures.Add(new List<List<Texture2D>>());
+                Textures[0].Add(new List<Texture2D>());
+                for (int i = 0;i < _modelMaps.Length;i++)
+                {
+                    Texture2D temp;
+                    try
+                    {
+                        temp = manager.Load<Texture2D>(modelPath + "/" + _modelMaps[i]);
+                    }
+                    catch (ContentLoadException)
+                    {
+                        Textures[0][0].Add(AssetManager.DefaultTextureMaps[i]);
+                        continue;
+                    }
+                    Textures[0][0].Add(temp);
+                }
+        
+                //Loading model itself, saving model name
+                string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+                Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+            }
         }
         
-        //Loading model itself, saving model name
-        string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
         ModelPath = modelPath;
         ShaderTechniqueName = "PBR";
-        Model = manager.Load<Model>(modelPath + "/" + modelName);
     }
-
-    public ModelData(ContentManager manager, string modelPath, Vector3 boundingPosition, float boundingRadius)
-    {
-        LoadModel(manager,modelPath);
-        BoundingSphere.Center = boundingPosition;
-        BoundingSphere.Radius = boundingRadius;
-    }
-
+    
     public string Serialize()
     {
         StringBuilder builder = new StringBuilder();

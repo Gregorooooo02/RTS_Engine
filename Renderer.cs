@@ -192,7 +192,7 @@ public class Renderer
     private void DrawShadowMap(MeshRenderer renderer)
     {
         _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
-        foreach (ModelMesh mesh in renderer._model.Model.Meshes)
+        foreach (ModelMesh mesh in renderer._model.Models[renderer._model.CurrentModelIndex].Meshes)
         {
             foreach (ModelMeshPart part in mesh.MeshParts)
             {

@@ -109,7 +109,7 @@ public class MeshRenderer : Component
 
     public Model GetModel()
     {
-        return _model.Model;
+        return _model.Models[_model.CurrentModelIndex];
     }
     
 #if DEBUG
@@ -121,6 +121,7 @@ public class MeshRenderer : Component
             ImGui.Checkbox("Mesh active", ref Active);
             ImGui.Text("Current mesh: " + _model.ModelPath);
             ImGui.Text("Current technique: " + _model.ShaderTechniqueName);
+            ImGui.InputInt("Current model", ref _model.CurrentModelIndex);
             if (ImGui.Button("Switch mesh"))
             {
                 _switchingModel = true;

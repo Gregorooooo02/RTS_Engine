@@ -1066,9 +1066,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>97,305145</x>
+            <x>101,11543</x>
             <y>50</y>
-            <z>76,35284</z>
+            <z>75,96793</z>
           </position>
           <rotation>
             <x>-45</x>
@@ -1091,6 +1091,40 @@
         <component>
           <type>MeshRenderer</type>
           <active>False</active>
+          <model>
+            <path>defaultModel</path>
+            <technique>PBR</technique>
+          </model>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>LODtest</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>45</x>
+            <y>2</y>
+            <z>45</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>MeshRenderer</type>
+          <active>True</active>
           <model>
             <path>defaultModel</path>
             <technique>PBR</technique>

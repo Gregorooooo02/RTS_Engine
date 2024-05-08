@@ -41,7 +41,18 @@ public class AssetManager
                 {
                     int index = result[0].LastIndexOf('/');
                     if(index != -1)result[0] = result[0].Substring(0,index);
-                    ModelPaths.Add(result[0]);
+                    int k; 
+                    string ending = result[0].Substring(result[0].LastIndexOf('/') + 1);
+                    if (int.TryParse(ending,out k))
+                    {
+                        result[0] = result[0].Substring(0,result[0].LastIndexOf('/'));
+                        if(!ModelPaths.Contains(result[0])) ModelPaths.Add(result[0]);
+                    }
+                    else
+                    {
+                        ModelPaths.Add(result[0]);
+                    }
+                    
                 }
                 else if (SpriteFormats.Contains(result[1])) SpriteNames.Add(result[0]);
             }
@@ -129,7 +140,7 @@ public class AssetManager
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
 
-        DefaultTextureMaps = DefaultModel.Textures;
+        DefaultTextureMaps = DefaultModel.Textures[0][0];
     }
 
     public static ModelData GetModel(string modelPath)

@@ -111,7 +111,7 @@ public class Game1 : Game
         Globals.PickingManager.CheckForRay();
         if (Globals.PickingManager.Picked.Count > 0)
         {
-            //Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
+            Console.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
             Debug.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
         }
         base.Update(gameTime);
