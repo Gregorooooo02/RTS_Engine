@@ -29,14 +29,14 @@ public class AnimationClip
 
     public class Bone
     {
-        private string name = "";
-        private List<Keyframe> ketyframes = new List<Keyframe>();
-        public string Name { get => name; set => name = value; }
-        public List<Keyframe> Keyframes { get => ketyframes; }
+        private string _name = "";
+        private List<Keyframe> _keyframes = new List<Keyframe>();
+        public string Name { get => _name; set => _name = value; }
+        public List<Keyframe> Keyframes { get => _keyframes; }
     }
 
-    private List<Bone> bones = new List<Bone>();
+    private List<Bone> _bones = new List<Bone>();
     public string Name;
     public double Duration;
-    public List<Bone> Bones { get => bones; }
+    public List<Bone> Bones { get => _bones; }
 }

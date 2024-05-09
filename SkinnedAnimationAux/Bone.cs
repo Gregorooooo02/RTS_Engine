@@ -6,44 +6,44 @@ namespace RTS_Engine;
 public class Bone
 {
 #region Fields
-    private Bone parent = null;
-    private List<Bone> children = new List<Bone>();
-    private Matrix bindTransform = Matrix.Identity;
-    private Vector3 bindScale = Vector3.One;
-    private Vector3 translation = Vector3.Zero;
-    private Quaternion rotation = Quaternion.Identity;
-    private Vector3 scale = Vector3.One;
+    private Bone _parent = null;
+    private List<Bone> _children = new List<Bone>();
+    private Matrix _bindTransform = Matrix.Identity;
+    private Vector3 _bindScale = Vector3.One;
+    private Vector3 _translation = Vector3.Zero;
+    private Quaternion _rotation = Quaternion.Identity;
+    private Vector3 _scale = Vector3.One;
 #endregion
     public string Name = "";
-    public Matrix BindTransform { get => bindTransform; }
+    public Matrix BindTransform { get => _bindTransform; }
     public Matrix SkinTransform { get; set; }
-    public Quaternion Rotation { get => rotation; set => rotation = value; }
-    public Vector3 Translation { get => translation; set => translation = value; }
-    public Vector3 Scale { get => scale; set => scale = value; }
-    public Bone Parent { get => parent; }
-    public List<Bone> Children { get => children; }
+    public Quaternion Rotation { get => _rotation; set => _rotation = value; }
+    public Vector3 Translation { get => _translation; set => _translation = value; }
+    public Vector3 Scale { get => _scale; set => _scale = value; }
+    public Bone Parent { get => _parent; }
+    public List<Bone> Children { get => _children; }
     public Matrix AbsoluteTransform = Matrix.Identity;
 #region Methods
     public Bone(string name, Matrix bindTransform, Bone parent)
     {
         this.Name = name;
-        this.parent = parent;
+        this._parent = parent;
 
         if (parent != null)
         {
-            parent.children.Add(this);
+            parent._children.Add(this);
         }
 
-        this.bindScale = new Vector3(
+        this._bindScale = new Vector3(
             bindTransform.Right.Length(),
             bindTransform.Up.Length(),
             bindTransform.Backward.Length()
         );
 
-        bindTransform.Right = bindTransform.Right / bindScale.X;
-        bindTransform.Up = bindTransform.Up / bindScale.Y;
-        bindTransform.Backward = bindTransform.Backward / bindScale.Z;
-        this.bindTransform = bindTransform;
+        bindTransform.Right = bindTransform.Right / _bindScale.X;
+        bindTransform.Up = bindTransform.Up / _bindScale.Y;
+        bindTransform.Backward = bindTransform.Backward / _bindScale.Z;
+        this._bindTransform = bindTransform;
         
         ComputeAbsoluteTransform();
         SkinTransform = Matrix.Invert(AbsoluteTransform);
@@ -51,14 +51,14 @@ public class Bone
 
     public void ComputeAbsoluteTransform()
     {
-        Matrix transform = Matrix.CreateScale(Scale * bindScale) *
+        Matrix transform = Matrix.CreateScale(Scale * _bindScale) *
                            Matrix.CreateFromQuaternion(Rotation) *
                            Matrix.CreateTranslation(Translation) *
-                           bindTransform;
+                           _bindTransform;
 
-        if (parent != null)
+        if (_parent != null)
         {
-            AbsoluteTransform = transform * parent.AbsoluteTransform;
+            AbsoluteTransform = transform * _parent.AbsoluteTransform;
         }
         else
         {
