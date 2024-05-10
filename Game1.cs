@@ -26,7 +26,6 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
-    private bool isWireframe = false;
     
     public Game1()
     {
@@ -156,7 +155,7 @@ public class Game1 : Game
 
         ImGui.Checkbox("Fullscreen", ref isFullscreen);
         ImGui.Separator();
-		ImGui.Checkbox("Wireframe", ref isWireframe);
+		ImGui.Checkbox("Wireframe", ref Globals.DrawWireframe);
 		ImGui.Separator();
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);

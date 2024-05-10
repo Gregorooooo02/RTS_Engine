@@ -14,6 +14,26 @@ namespace RTS_Engine
         public static void Initialize() 
         {
             ComponentsTypes = GetAllComponents();
+
+            ShadowInstanceDeclaration = new VertexDeclaration
+            (
+                new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 0),
+                new VertexElement(sizeof(float) * 4, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 1),
+                new VertexElement(sizeof(float) * 8, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 2),
+                new VertexElement(sizeof(float) * 12, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 3)
+            );
+            
+            InstanceVertexDeclaration = new VertexDeclaration
+            (
+                new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 0),
+                new VertexElement(sizeof(float) * 4, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 1),
+                new VertexElement(sizeof(float) * 8, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 2),
+                new VertexElement(sizeof(float) * 12, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 3),
+                new VertexElement(sizeof(float) * 16, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 0),
+                new VertexElement(sizeof(float) * 20, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 1),
+                new VertexElement(sizeof(float) * 24, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 2),
+                new VertexElement(sizeof(float) * 28, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 3)
+            );
         }
         
         public static float DeltaTime { get; set; }
@@ -34,6 +54,8 @@ namespace RTS_Engine
         public static float Gamma = 2.2f;
         public static float LightIntensity = 10;
 
+        public static VertexDeclaration InstanceVertexDeclaration;
+        public static VertexDeclaration ShadowInstanceDeclaration;
 
         public enum LayerType 
         {
@@ -84,6 +106,7 @@ namespace RTS_Engine
         public static bool DrawShadows = true;
         public static bool DrawMeshes = true;
         public static bool DebugCamera = true;
+        public static bool DrawWireframe = false;
 #endif
     }
 }

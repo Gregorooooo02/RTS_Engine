@@ -19,8 +19,8 @@ public class ModelData
     public List<BoundingSphere> BoundingSpheres;
     public string ShaderTechniqueName;
     
-    private bool _isMultimesh = false;
-    private bool _lodUsed = false;
+    public bool IsMultimesh = false;
+    public bool LodUsed = false;
     /*
      *--------------------------------------------------------------------------------------------------------------------------
      *Textures as stored like:
@@ -39,13 +39,10 @@ public class ModelData
     {
         return Globals.BoundingFrustum.Contains(BoundingSpheres[CurrentModelIndex].Transform(world)) != ContainmentType.Disjoint;
     }
-    
-    public void Draw(Matrix world)
-    {
-        if (Globals.MainEffect.CurrentTechnique.Name != ShaderTechniqueName)
-            Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques[ShaderTechniqueName];
 
-        if (_lodUsed)
+    public void ApplyLod()
+    {
+        if (LodUsed)
         {
             int levels = Textures.Count;
             float step = 60.0f / levels;
@@ -57,17 +54,17 @@ public class ModelData
                 }
             }
         }
+    }
+    
+    public void Draw(Matrix world)
+    {
+        if (Globals.MainEffect.CurrentTechnique.Name != ShaderTechniqueName)
+            Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques[ShaderTechniqueName];
         
-
-        if (!_isMultimesh)
-        {
-            //Pass textures to the shader
-            Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[CurrentModelIndex][0][0]);
-            Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[CurrentModelIndex][0][1]);
-            Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[CurrentModelIndex][0][2]);
-            Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[CurrentModelIndex][0][3]);
-            Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[CurrentModelIndex][0][4]);
-        }
+        ApplyLod();
+        
+        if (!IsMultimesh) PassTextures(0);
+        
         Globals.MainEffect.Parameters["World"]?.SetValue(world);
         Matrix temp = Matrix.Transpose(Matrix.Invert(world));
         temp.M41 = 0;
@@ -80,14 +77,7 @@ public class ModelData
         Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
         for (int j = 0; j < Models[CurrentModelIndex].Meshes.Count;j++)
         {
-            if (_isMultimesh)
-            {
-                Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[CurrentModelIndex][j][0]);
-                Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[CurrentModelIndex][j][1]);
-                Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[CurrentModelIndex][j][2]);
-                Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[CurrentModelIndex][j][3]);
-                Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[CurrentModelIndex][j][4]);
-            }
+            if (IsMultimesh)PassTextures(j);
             foreach (ModelMeshPart part in Models[CurrentModelIndex].Meshes[j].MeshParts)
             {
                 if (part.PrimitiveCount > 0)
@@ -102,6 +92,15 @@ public class ModelData
                 }
             }
         } 
+    }
+
+    public void PassTextures(int mesh)
+    {
+        Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[CurrentModelIndex][mesh][0]);
+        Globals.MainEffect.Parameters["normal"]?.SetValue(Textures[CurrentModelIndex][mesh][1]);
+        Globals.MainEffect.Parameters["roughness"]?.SetValue(Textures[CurrentModelIndex][mesh][2]);
+        Globals.MainEffect.Parameters["metalness"]?.SetValue(Textures[CurrentModelIndex][mesh][3]);
+        Globals.MainEffect.Parameters["ao"]?.SetValue(Textures[CurrentModelIndex][mesh][4]);
     }
     
     public ModelData(ContentManager manager, string modelPath)
@@ -176,11 +175,11 @@ public class ModelData
             Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
         }
 
-        _isMultimesh = ModelConfig?.Element("multimesh")?.Value == "True";
-        _lodUsed = ModelConfig?.Element("lod")?.Element("used")?.Value == "True";
+        IsMultimesh = ModelConfig?.Element("multimesh")?.Value == "True";
+        LodUsed = ModelConfig?.Element("lod")?.Element("used")?.Value == "True";
         
         //if LOD is used for this model
-        if (_lodUsed)
+        if (LodUsed)
         {
             int lod = int.Parse(ModelConfig.Element("lod")?.Element("levels")?.Value);
             float step = 60.0f / lod;
@@ -192,7 +191,7 @@ public class ModelData
                 }
             }
             //if model has multiple meshes with separate texture maps
-            if (_isMultimesh)
+            if (IsMultimesh)
             {
             
             }
@@ -224,7 +223,7 @@ public class ModelData
         else
         {
             //if model has multiple meshes with separate texture maps
-            if (_isMultimesh)
+            if (IsMultimesh)
             {
             
             }

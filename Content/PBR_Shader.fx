@@ -86,6 +86,12 @@ struct VertexShaderInput
     float2 TexCoords : TEXCOORD0;
 };
 
+struct InstanceData
+{
+    float4x4 World : BLENDWEIGHT;
+    float4x4 NormalMatrix : BLENDINDICES;
+};
+
 struct VertexShaderOutput
 {
 	float4 Position : SV_POSITION;
@@ -264,6 +270,21 @@ VertexShaderOutput PBR_VS(in VertexShaderInput input)
     return output;
 }
 
+VertexShaderOutput PBR_Instanced_VS(VertexShaderInput input, InstanceData data)
+{
+    VertexShaderOutput output = (VertexShaderOutput) 0;
+    
+    output.TexCoords = input.TexCoords;
+    
+    output.WorldPosition = mul(input.Position, transpose(data.World)).xyz;
+    //output.WorldPosition = input.Position.xyz;
+    output.Normal = mul(input.Normal, (float3x3)transpose(data.NormalMatrix));
+    
+    output.Position = mul(mul(float4(output.WorldPosition, 1), View), Projection);
+    
+    return output;
+}
+
 float4 PBR_PS(VertexShaderOutput input) : COLOR
 {
     float3 albedo = pow(tex2D(albedoSampler, input.TexCoords).rgb, gamma);
@@ -298,3 +319,13 @@ technique PBR
         PixelShader = compile PS_SHADERMODEL PBR_PS();
     }
 };
+
+
+technique Instancing
+{
+    pass P0
+    {
+        VertexShader = compile VS_SHADERMODEL PBR_Instanced_VS();
+        PixelShader = compile PS_SHADERMODEL PBR_PS();
+    }
+}

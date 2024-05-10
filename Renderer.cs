@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,6 +31,7 @@ public class Renderer
     public List<SpiteRenderer> Sprites;
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
+    public List<InstancedRendererController> InstancedRendererControllers = new();
     public WorldRenderer WorldMesh;
     //
 
@@ -67,6 +69,11 @@ public class Renderer
         
 #if DEBUG
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
+        var state = new RasterizerState();
+        state.FillMode = Globals.DrawWireframe ? FillMode.WireFrame : FillMode.Solid;
+        Globals.GraphicsDevice.RasterizerState = state;
+        
+        
         
         if(Globals.DrawShadows) DrawShadows();
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
@@ -161,10 +168,19 @@ public class Renderer
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
         Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
         Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["Instancing"];
+        foreach (InstancedRendererController instanced in InstancedRendererControllers)
+        {
+            instanced.Draw();
+        }
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (MeshRenderer renderer in Meshes)
         {
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
+
+        
 
 #endif
     }
@@ -182,6 +198,12 @@ public class Renderer
         
         Globals.GraphicsDevice.SetRenderTarget(_shadowMapRenderTarget);
         _shadowMapGenerator.Parameters["LightViewProj"].SetValue(_lightViewProjection);
+        _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["ShadowInstanced"];
+        foreach (InstancedRendererController controller in InstancedRendererControllers)
+        {
+            DrawShadowMapInstanced(controller);
+        }
+        _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["CreateShadowMap"];
         foreach (MeshRenderer renderer in Meshes)
         {
             DrawShadowMap(renderer);
@@ -189,6 +211,29 @@ public class Renderer
         Globals.GraphicsDevice.SetRenderTarget(null);
     }
 
+    private void DrawShadowMapInstanced(InstancedRendererController rendererController)
+    {
+        if(rendererController.WorldMatrices.Count == 0 || !rendererController.Active) return;
+        DynamicVertexBuffer instanceVertexBuffer = new DynamicVertexBuffer(Globals.GraphicsDevice,
+            Globals.ShadowInstanceDeclaration, rendererController.WorldMatrices.Count, BufferUsage.WriteOnly);
+        instanceVertexBuffer.SetData<Matrix>(rendererController.WorldMatrices.ToArray(),0,rendererController.WorldMatrices.Count, SetDataOptions.Discard);
+        
+        foreach (ModelMesh mesh in rendererController.ModelData.Models[rendererController.ModelData.CurrentModelIndex].Meshes)
+        {
+            foreach (ModelMeshPart part in mesh.MeshParts)
+            {
+                if (part.PrimitiveCount <= 0) continue;
+                Globals.GraphicsDevice.SetVertexBuffers(
+                    new VertexBufferBinding(part.VertexBuffer, part.VertexOffset,0),
+                    new VertexBufferBinding(instanceVertexBuffer,0,1)
+                );
+                Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                _shadowMapGenerator.CurrentTechnique.Passes[0].Apply();
+                Globals.GraphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, part.StartIndex, part.PrimitiveCount, rendererController.WorldMatrices.Count);
+            }
+        } 
+    }
+    
     private void DrawShadowMap(MeshRenderer renderer)
     {
         _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);

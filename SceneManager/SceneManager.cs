@@ -52,6 +52,10 @@ public class SceneManager
         AnimatedSpriteRenderer animatedSpriteRenderer = gameObject.GetComponent<AnimatedSpriteRenderer>();
         if(animatedSpriteRenderer != null) Globals.Renderer.AnimatedSprites.Add(animatedSpriteRenderer);
 
+        InstancedRendererController instancedRendererController =
+            gameObject.GetComponent<InstancedRendererController>();
+        if (instancedRendererController != null) Globals.Renderer.InstancedRendererControllers.Add(instancedRendererController);
+
         foreach (GameObject objectChild in gameObject.Children)
         {
             OnLoad(objectChild);
