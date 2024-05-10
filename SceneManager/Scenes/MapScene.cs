@@ -16,6 +16,7 @@ public class MapScene : Scene
     public override void Initialize()
     {
         Name = "MapScene";
+        TempName = Name;
         SceneRoot = new GameObject();
         SceneRoot.Name = "Root";
         

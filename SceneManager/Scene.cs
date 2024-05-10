@@ -5,6 +5,7 @@ namespace RTS_Engine;
 public abstract class Scene
 {
     public string Name;
+    public string TempName = "";
     public GameObject SceneRoot;
 
     public abstract void Initialize();

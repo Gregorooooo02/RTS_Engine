@@ -72,6 +72,7 @@ public class SceneManager
         {
             AddScene(new LoadedScene());
             _scenes.Last().Name = "Scene#" + _scenes.Count;
+            _scenes.Last().TempName = "Scene#" + _scenes.Count;
         }
         ImGui.SameLine();
         if (ImGui.Button("Load scene"))
@@ -84,7 +85,12 @@ public class SceneManager
         {
             if (ImGui.CollapsingHeader(_scenes[i].Name))
             {
-                ImGui.InputText("Scene name",ref _scenes[i].Name, 25);
+                ImGui.InputText("Scene name",ref _scenes[i].TempName, 25);
+                ImGui.SameLine();
+                if(ImGui.Button("Apply name"))
+                {
+                    _scenes[i].Name = _scenes[i].TempName;
+                }
                 if (ImGui.Button("Select " + _scenes[i].Name + " scene"))
                 {
                     ChangeScene(i);
@@ -145,6 +151,7 @@ public class SceneManager
                     loadingScene = false;
                     Scene scene = new LoadedScene();
                     scene.Name = name;
+                    scene.TempName = name;
                     scene.SceneRoot = FileManager.DeserializeScene(path);
                     AddScene(scene);
                 }
