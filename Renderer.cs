@@ -216,7 +216,12 @@ public class Renderer
         if(rendererController.WorldMatrices.Count == 0 || !rendererController.Active) return;
         DynamicVertexBuffer instanceVertexBuffer = new DynamicVertexBuffer(Globals.GraphicsDevice,
             Globals.ShadowInstanceDeclaration, rendererController.WorldMatrices.Count, BufferUsage.WriteOnly);
-        instanceVertexBuffer.SetData<Matrix>(rendererController.WorldMatrices.ToArray(),0,rendererController.WorldMatrices.Count, SetDataOptions.Discard);
+        List<Matrix> matrices = new List<Matrix>();
+        foreach (InstancedRendererController.InstanceData data in rendererController.WorldMatrices)
+        {
+            matrices.Add(data.World);
+        }
+        instanceVertexBuffer.SetData<Matrix>(matrices.ToArray(),0,rendererController.WorldMatrices.Count, SetDataOptions.Discard);
         
         foreach (ModelMesh mesh in rendererController.ModelData.Models[rendererController.ModelData.CurrentModelIndex].Meshes)
         {

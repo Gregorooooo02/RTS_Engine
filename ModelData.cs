@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
@@ -13,14 +12,14 @@ public class ModelData
 {
     private readonly string[] _modelMaps = {"albedo","normal","roughness","metalness","ao" };
 
-    public int CurrentModelIndex = 0;
-    public List<Model> Models = new();
+    public int CurrentModelIndex;
+    public readonly List<Model> Models = new();
     public string ModelPath;
-    public List<BoundingSphere> BoundingSpheres;
+    public readonly List<BoundingSphere> BoundingSpheres;
     public string ShaderTechniqueName;
     
-    public bool IsMultimesh = false;
-    public bool LodUsed = false;
+    public bool IsMultiMesh;
+    private bool _lodUsed;
     /*
      *--------------------------------------------------------------------------------------------------------------------------
      *Textures as stored like:
@@ -33,7 +32,7 @@ public class ModelData
      */
     //public List<Texture2D> Textures = new();
 
-    public List<List<List<Texture2D>>> Textures = new();
+    public readonly List<List<List<Texture2D>>> Textures = new();
 
     public bool IsInView(Matrix world)
     {
@@ -42,7 +41,7 @@ public class ModelData
 
     public void ApplyLod()
     {
-        if (LodUsed)
+        if (_lodUsed)
         {
             int levels = Textures.Count;
             float step = 60.0f / levels;
@@ -63,7 +62,7 @@ public class ModelData
         
         ApplyLod();
         
-        if (!IsMultimesh) PassTextures(0);
+        if (!IsMultiMesh) PassTextures(0);
         
         Globals.MainEffect.Parameters["World"]?.SetValue(world);
         Matrix temp = Matrix.Transpose(Matrix.Invert(world));
@@ -77,7 +76,7 @@ public class ModelData
         Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
         for (int j = 0; j < Models[CurrentModelIndex].Meshes.Count;j++)
         {
-            if (IsMultimesh)PassTextures(j);
+            if (IsMultiMesh)PassTextures(j);
             foreach (ModelMeshPart part in Models[CurrentModelIndex].Meshes[j].MeshParts)
             {
                 if (part.PrimitiveCount > 0)
@@ -112,19 +111,19 @@ public class ModelData
     private List<BoundingSphere> CalculateBoundingSpheres()
     {
         List<BoundingSphere> output = new List<BoundingSphere>();
-        foreach (Model Model in Models)
+        foreach (Model model in Models)
         {
             List<Vector3> modelVertices = new List<Vector3>();
-            foreach (var mesh in Model.Meshes)
+            foreach (var mesh in model.Meshes)
             {
                 foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
                     var indices = new short[meshPart.IndexBuffer.IndexCount];
-                    meshPart.IndexBuffer.GetData<short>(indices);
+                    meshPart.IndexBuffer.GetData(indices);
 
                     var vertices = new float[meshPart.VertexBuffer.VertexCount
                         * meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4];
-                    meshPart.VertexBuffer.GetData<float>(vertices);
+                    meshPart.VertexBuffer.GetData(vertices);
 
 
                     for (int i = meshPart.StartIndex; i < meshPart.StartIndex + meshPart.PrimitiveCount * 3; i++)
@@ -144,12 +143,12 @@ public class ModelData
     private void LoadModel(ContentManager manager, string modelPath)
     {
         //Loading model's textures. Textures must be in the same catalog as model and has to follow naming convention.
-        XElement ModelConfig = null;
+        XElement modelConfig = null;
         try
         {
-            ModelConfig = XDocument.Load(Globals.MainPath + "Content/" + modelPath + "/config.xml").Element("config");
+            modelConfig = XDocument.Load(Globals.MainPath + "Content/" + modelPath + "/config.xml").Element("config");
         }
-        catch (Exception e)
+        catch (Exception)
         {
             //Console.WriteLine(e);
             //throw;
@@ -175,55 +174,61 @@ public class ModelData
             Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
         }
 
-        IsMultimesh = ModelConfig?.Element("multimesh")?.Value == "True";
-        LodUsed = ModelConfig?.Element("lod")?.Element("used")?.Value == "True";
+        IsMultiMesh = modelConfig?.Element("multimesh")?.Value == "True";
+        _lodUsed = modelConfig?.Element("lod")?.Element("used")?.Value == "True";
         
         //if LOD is used for this model
-        if (LodUsed)
+        if (_lodUsed)
         {
-            int lod = int.Parse(ModelConfig.Element("lod")?.Element("levels")?.Value);
-            float step = 60.0f / lod;
-            for (int i = 0; i < lod; i++)
+            var value = modelConfig?.Element("lod")?.Element("levels")?.Value;
+            if (value != null)
             {
-                if (Globals.ZoomDegrees >= 25.0f + (i * step) && Globals.ZoomDegrees < 25.0f + ((i + 1) * step))
+                int lod = int.Parse(value);
                 {
-                    CurrentModelIndex = lod - i - 1;
-                }
-            }
-            //if model has multiple meshes with separate texture maps
-            if (IsMultimesh)
-            {
-            
-            }
-            else
-            {
-                string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
-                for (int i = 0; i < lod; i++)
-                {
-                    Textures.Add(new List<List<Texture2D>>());
-                    Textures[i].Add(new List<Texture2D>());
-                    for (int j = 0;j < _modelMaps.Length;j++)
+                    float step = 60.0f / lod;
+                    for (int i = 0; i < lod; i++)
                     {
-                        Texture2D temp;
-                        try
+                        if (Globals.ZoomDegrees >= 25.0f + (i * step) && Globals.ZoomDegrees < 25.0f + ((i + 1) * step))
                         {
-                            temp = manager.Load<Texture2D>(modelPath + "/"+ (i + 1) + "/" + _modelMaps[j]);
+                            CurrentModelIndex = lod - i - 1;
                         }
-                        catch (ContentLoadException)
-                        {
-                            Textures[i][0].Add(AssetManager.DefaultTextureMaps[j]);
-                            continue;
-                        }
-                        Textures[i][0].Add(temp);
                     }
-                    Models.Add(manager.Load<Model>(modelPath + "/"+ (i + 1) + "/" + modelName));
+                    //if model has multiple meshes with separate texture maps
+                    if (IsMultiMesh)
+                    {
+            
+                    }
+                    else
+                    {
+                        string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+                        for (int i = 0; i < lod; i++)
+                        {
+                            Textures.Add(new List<List<Texture2D>>());
+                            Textures[i].Add(new List<Texture2D>());
+                            for (int j = 0;j < _modelMaps.Length;j++)
+                            {
+                                Texture2D temp;
+                                try
+                                {
+                                    temp = manager.Load<Texture2D>(modelPath + "/"+ (i + 1) + "/" + _modelMaps[j]);
+                                }
+                                catch (ContentLoadException)
+                                {
+                                    Textures[i][0].Add(AssetManager.DefaultTextureMaps[j]);
+                                    continue;
+                                }
+                                Textures[i][0].Add(temp);
+                            }
+                            Models.Add(manager.Load<Model>(modelPath + "/"+ (i + 1) + "/" + modelName));
+                        }
+                    }
                 }
             }
         }
         else
         {
             //if model has multiple meshes with separate texture maps
-            if (IsMultimesh)
+            if (IsMultiMesh)
             {
             
             }

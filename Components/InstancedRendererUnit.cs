@@ -7,7 +7,8 @@ namespace RTS_Engine;
 
 public class InstancedRendererUnit : Component
 {
-    public InstancedRendererController Controller = null;
+    public InstancedRendererController Controller;
+    private InstancedRendererController.InstanceData _data;
     public override void Update()
     {
         if (Active)
@@ -18,7 +19,8 @@ public class InstancedRendererUnit : Component
                 if (Globals.BoundingFrustum.Contains(modelData.BoundingSpheres[modelData.CurrentModelIndex]
                         .Transform(ParentObject.Transform.ModelMatrix)) != ContainmentType.Disjoint)
                 {
-                    Controller.WorldMatrices.Add(ParentObject.Transform.ModelMatrix);
+                    _data.SetWorld(ParentObject.Transform.ModelMatrix);
+                    Controller.WorldMatrices.Add(_data);
                 }
             }
             else

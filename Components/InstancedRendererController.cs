@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -11,17 +10,23 @@ namespace RTS_Engine;
 public class InstancedRendererController : Component
 {
     public ModelData ModelData;
-    public List<Matrix> WorldMatrices = new();
+    public List<InstanceData> WorldMatrices = new();
 
-    struct InstanceData
+    public struct InstanceData
     {
-        private Matrix _world;
+        public Matrix World;
         private Matrix _normal;
 
         public InstanceData(Matrix world)
         {
-            this._world = world;
-            _normal = Matrix.Transpose(Matrix.Invert(_world));
+            this.World = world;
+            _normal = Matrix.Transpose(Matrix.Invert(World));
+        }
+
+        public void SetWorld(Matrix world)
+        {
+            this.World = world;
+            _normal = Matrix.Transpose(Matrix.Invert(World));
         }
     }
     
@@ -32,26 +37,18 @@ public class InstancedRendererController : Component
             var instanceVertexBuffer = new DynamicVertexBuffer(Globals.GraphicsDevice,
                 Globals.InstanceVertexDeclaration, WorldMatrices.Count, BufferUsage.WriteOnly);
             
-            //Preparing Instance data
-            List<InstanceData> data = new();
-            foreach (Matrix world in WorldMatrices)
-            {
-                data.Add(new InstanceData(world));
-            }
-            instanceVertexBuffer.SetData(data.ToArray(),0,WorldMatrices.Count);
-            //
-            //instanceVertexBuffer.SetData<Matrix>(WorldMatrices.ToArray(),0,WorldMatrices.Count, SetDataOptions.Discard);
+            instanceVertexBuffer.SetData(WorldMatrices.ToArray(),0,WorldMatrices.Count);
             
             ModelData.ApplyLod();
             
-            if (!ModelData.IsMultimesh)
+            if (!ModelData.IsMultiMesh)
             {
                 ModelData.PassTextures(0);
             }
             
             for (int i = 0; i < ModelData.Models[ModelData.CurrentModelIndex].Meshes.Count; i++)
             {
-                if (ModelData.IsMultimesh)ModelData.PassTextures(i);
+                if (ModelData.IsMultiMesh)ModelData.PassTextures(i);
                 foreach (ModelMeshPart part in ModelData.Models[ModelData.CurrentModelIndex].Meshes[i].MeshParts)
                 {
                     Globals.GraphicsDevice.SetVertexBuffers(
