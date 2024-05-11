@@ -355,6 +355,25 @@
 /processorParam:TextureFormat=Color
 /build:defaultModel/roughness.png
 
+#begin domall/domall.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:domall/domall.fbx
+
 #begin Env/Props/namiot (2)/namiot (2).fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -484,7 +503,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Env/Trees/drzewoiglaste/drzewoiglaste.fbx
 
-#begin Env/Trees/drzewolisciaste4 (1).fbx
+#begin Env/Trees/drzewolisciaste4/drzewolisciaste4.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -501,9 +520,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Env/Trees/drzewolisciaste4 (1).fbx
+/build:Env/Trees/drzewolisciaste4/drzewolisciaste4.fbx
 
-#begin Env/Trees/drzewolisciastejesienne.fbx
+#begin Env/Trees/drzewolisciastejesienne/drzewolisciastejesienne.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -520,7 +539,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Env/Trees/drzewolisciastejesienne.fbx
+/build:Env/Trees/drzewolisciastejesienne/drzewolisciastejesienne.fbx
 
 #begin heightmap.bmp
 /importer:TextureImporter
@@ -679,25 +698,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:krzeslo/roughness.png
-
-#begin monke/monke.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:monke/monke.fbx
 
 #begin monsterMid/albedo.png
 /importer:TextureImporter
@@ -935,25 +935,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:szafa/szafa.fbx
-
-#begin Tartak/domall.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Tartak/domall.fbx
 
 #begin Tartak/TARTACZEK/albedo.png
 /importer:TextureImporter
