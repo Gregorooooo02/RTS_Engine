@@ -33,6 +33,8 @@ public class Renderer
     public List<AnimatedSpriteRenderer> AnimatedSprites;
     public List<InstancedRendererController> InstancedRendererControllers = new();
     public WorldRenderer WorldMesh;
+
+    public PickingManager.PickingFrustum? PickingFrustum = null;
     //
 
     public Renderer(ContentManager content)
@@ -79,6 +81,9 @@ public class Renderer
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if(Globals.DrawMeshes) DrawMeshes();
         DrawWorld();
+        DrawPickingFrustum();
+        
+        
         
         Globals.SpriteBatch.Begin();
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
@@ -102,6 +107,15 @@ public class Renderer
 #endif
     }
 
+    private void DrawPickingFrustum()
+    {
+        if (PickingFrustum.HasValue)
+        {
+            PickingFrustum.Value.DrawFrustum();
+        }
+    }
+    
+    
     private void DrawAnimatedSprites()
     {
         foreach (AnimatedSpriteRenderer gif in AnimatedSprites)

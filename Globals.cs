@@ -34,10 +34,14 @@ namespace RTS_Engine
                 new VertexElement(sizeof(float) * 24, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 2),
                 new VertexElement(sizeof(float) * 28, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 3)
             );
+
+            Solid = new RasterizerState() { FillMode = FillMode.Solid };
+            WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame };
         }
         
         public static float DeltaTime { get; set; }
         public static GraphicsDevice GraphicsDevice;
+        public static GraphicsDeviceManager GraphicsDeviceManager;
         public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
         public static Effect TerrainEffect;
@@ -53,7 +57,10 @@ namespace RTS_Engine
 
         public static float Gamma = 2.2f;
         public static float LightIntensity = 10;
-
+        
+        public static RasterizerState Solid;
+        public static RasterizerState WireFrame;
+        
         public static VertexDeclaration InstanceVertexDeclaration;
         public static VertexDeclaration ShadowInstanceDeclaration;
 

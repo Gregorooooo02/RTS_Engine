@@ -15,7 +15,7 @@ public class ModelData
     public int CurrentModelIndex;
     public readonly List<Model> Models = new();
     public string ModelPath;
-    public readonly List<BoundingSphere> BoundingSpheres;
+    public BoundingSphere BoundingSphere;
     public string ShaderTechniqueName;
     
     public bool IsMultiMesh;
@@ -36,7 +36,7 @@ public class ModelData
 
     public bool IsInView(Matrix world)
     {
-        return Globals.BoundingFrustum.Contains(BoundingSpheres[CurrentModelIndex].Transform(world)) != ContainmentType.Disjoint;
+        return Globals.BoundingFrustum.Contains(BoundingSphere.Transform(world)) != ContainmentType.Disjoint;
     }
 
     public void ApplyLod()
@@ -105,39 +105,32 @@ public class ModelData
     public ModelData(ContentManager manager, string modelPath)
     {
         LoadModel(manager,modelPath);
-        BoundingSpheres = CalculateBoundingSpheres();
+        CalculateBoundingSphere();
     }
 
-    private List<BoundingSphere> CalculateBoundingSpheres()
+    private void CalculateBoundingSphere()
     {
-        List<BoundingSphere> output = new List<BoundingSphere>();
-        foreach (Model model in Models)
+        List<Vector3> modelVertices = new List<Vector3>();
+        foreach (var mesh in Models[0].Meshes)
         {
-            List<Vector3> modelVertices = new List<Vector3>();
-            foreach (var mesh in model.Meshes)
+            foreach (ModelMeshPart meshPart in mesh.MeshParts)
             {
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                {
-                    var indices = new short[meshPart.IndexBuffer.IndexCount];
+                var indices = new short[meshPart.IndexBuffer.IndexCount];
                     meshPart.IndexBuffer.GetData(indices);
 
-                    var vertices = new float[meshPart.VertexBuffer.VertexCount
+                var vertices = new float[meshPart.VertexBuffer.VertexCount
                         * meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4];
-                    meshPart.VertexBuffer.GetData(vertices);
+                meshPart.VertexBuffer.GetData(vertices);
 
 
-                    for (int i = meshPart.StartIndex; i < meshPart.StartIndex + meshPart.PrimitiveCount * 3; i++)
-                    {
-                        int index = (meshPart.VertexOffset + indices[i]) *
-                            meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4;
-
-                        modelVertices.Add(new Vector3(vertices[index], vertices[index + 1], vertices[index + 2]));
-                    }
+                for (int i = meshPart.StartIndex; i < meshPart.StartIndex + meshPart.PrimitiveCount * 3; i++)
+                { 
+                    int index = (meshPart.VertexOffset + indices[i]) * meshPart.VertexBuffer.VertexDeclaration.VertexStride / 4;
+                    modelVertices.Add(new Vector3(vertices[index], vertices[index + 1], vertices[index + 2]));
                 }
             }
-            output.Add(BoundingSphere.CreateFromPoints(modelVertices));
         }
-        return output;
+        BoundingSphere = BoundingSphere.CreateFromPoints(modelVertices);
     }
 
     private void LoadModel(ContentManager manager, string modelPath)

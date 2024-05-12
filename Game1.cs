@@ -33,7 +33,7 @@ public class Game1 : Game
 #if DEBUG
         _measurements = new double[_size];
 #endif
-        
+        Globals.GraphicsDeviceManager = _graphics;
         if (isFullscreen)
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -108,10 +108,9 @@ public class Game1 : Game
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
         Globals.PickingManager.CheckForRay();
-        if (Globals.PickingManager.Picked.Count > 0)
+        foreach (Pickable yes in Globals.PickingManager.Picked)
         {
-            Console.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
-            Debug.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
+            Console.WriteLine(yes.ParentObject.Name);
         }
         base.Update(gameTime);
     }
