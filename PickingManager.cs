@@ -28,15 +28,13 @@ public class PickingManager
             short result = 0;
             for (int i = 0; i < 6; i++)
             {
-                var temp = (short)planes[i].Intersects(sphere);
-                //Console.WriteLine(temp);
-                result += temp;
-                result <<= 2;
-                
+                if ((int)planes[i].Intersects(sphere) > 0)
+                {
+                    result++;
+                }
             }
-            result >>= 2;
             //Console.WriteLine(result);
-            return (result & IntersectMask) > 0 || (result & InsideMask) == InsideMask;
+            return result == 6;
         }
         
         public PickingFrustum(Vector3 topFrontLeft, Vector3 topFrontRight, Vector3 topBackLeft, Vector3 topBackRight,
