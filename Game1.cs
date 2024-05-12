@@ -162,6 +162,7 @@ public class Game1 : Game
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
+        ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 

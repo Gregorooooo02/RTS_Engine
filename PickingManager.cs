@@ -33,16 +33,12 @@ public class PickingManager
                     result++;
                 }
             }
-            //Console.WriteLine(result);
             return result == 6;
         }
         
         public PickingFrustum(Vector3 topFrontLeft, Vector3 topFrontRight, Vector3 topBackLeft, Vector3 topBackRight,
             Vector3 bottomFrontLeft, Vector3 bottomFrontRight, Vector3 bottomBackLeft, Vector3 bottomBackRight)
         {
-            BasicEffect = new BasicEffect(Globals.GraphicsDevice);
-            BasicEffect.World = Matrix.Identity;
-            
             planes = new Plane[6];
             
             //Front
@@ -74,6 +70,8 @@ public class PickingManager
                 }
             }
 #if DEBUG
+            BasicEffect = new BasicEffect(Globals.GraphicsDevice);
+            BasicEffect.World = Matrix.Identity;
             Vertices = new VertexPositionColor[8];
             Vertices[0] = new VertexPositionColor(topFrontLeft, Color.Red);
             Vertices[1] = new VertexPositionColor(topFrontRight, Color.Red);

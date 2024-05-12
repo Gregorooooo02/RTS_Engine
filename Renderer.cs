@@ -81,7 +81,10 @@ public class Renderer
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if(Globals.DrawMeshes) DrawMeshes();
         DrawWorld();
-        DrawPickingFrustum();
+        if (PickingFrustum.HasValue && Globals.DrawSelectFrustum)
+        {
+            PickingFrustum.Value.DrawFrustum();
+        }
         
         
         
@@ -106,15 +109,6 @@ public class Renderer
         Globals.SpriteBatch.End();
 #endif
     }
-
-    private void DrawPickingFrustum()
-    {
-        if (PickingFrustum.HasValue)
-        {
-            PickingFrustum.Value.DrawFrustum();
-        }
-    }
-    
     
     private void DrawAnimatedSprites()
     {
