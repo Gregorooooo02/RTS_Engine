@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace RTS_Engine;
@@ -10,7 +11,25 @@ public class PickingManager
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
     public List<Pickable> Picked = new() ;
+    private const int HoldThreshold = 5;
 
+    #region Visual Parameters
+    private Texture2D _selectionBox;
+    private Rectangle selectionBoxArea;
+    private Color _boxColor = new(128,128,128,64);
+    private bool shouldDraw = false;
+    #endregion
+
+    public PickingManager(ContentManager content)
+    {
+        _selectionBox = content.Load<Texture2D>("blank");
+    }
+
+    public void DrawSelectionBox()
+    {
+        if(shouldDraw)Globals.SpriteBatch.Draw(_selectionBox,selectionBoxArea,_boxColor);
+    }
+    
     public struct PickingFrustum
     {
         private Plane[] planes;
@@ -120,7 +139,7 @@ public class PickingManager
     {
         Picked.Clear();
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
-        if (action is { state: ActionState.RELEASED, duration: <= 5})
+        if (action is { state: ActionState.RELEASED, duration: <= HoldThreshold})
         {
              Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
              if (ray.HasValue)
@@ -135,7 +154,6 @@ public class PickingManager
                      
                      if (dist.HasValue)
                      {
-                         
                          if ((IncludeZeroDist && dist.Value < minDist) || (!IncludeZeroDist && dist.Value < minDist && dist.Value > 0))
                          {
                              minDist = dist.Value;
@@ -146,7 +164,7 @@ public class PickingManager
                  Pickables.Clear();
                  if(candidate != null)Picked.Add(candidate);
              }
-        } else if (action is { state: ActionState.RELEASED, duration: > 5 })
+        } else if (action is { state: ActionState.RELEASED, duration: > HoldThreshold})
         {
             PickingFrustum? frustum = CalculatePickingFrustum(action);
             if (frustum.HasValue)
@@ -158,9 +176,22 @@ public class PickingManager
                         Picked.Add(entity); 
                     }
                 }
-
                 Globals.Renderer.PickingFrustum = frustum;
             }
+        }
+        shouldDraw = action is { state: ActionState.PRESSED, duration: > HoldThreshold};
+        if (shouldDraw)
+        {
+            Point currentMousePos = InputManager.Instance.MousePosition;
+            Point startMousePos = action.StartingPosition;
+            Point dimensions;
+            dimensions.X = Math.Abs(currentMousePos.X - startMousePos.X);
+            dimensions.Y = Math.Abs(currentMousePos.Y - startMousePos.Y);
+            Point origin = (startMousePos + currentMousePos);
+            origin.X = (origin.X / 2) - (dimensions.X / 2);
+            origin.Y = (origin.Y / 2) - (dimensions.Y / 2);
+            selectionBoxArea.Size = dimensions;
+            selectionBoxArea.Location = origin;
         }
         Pickables.Clear();
     }
@@ -220,24 +251,14 @@ public class PickingManager
             }
             if (topLeft.HasValue && topRight.HasValue && bottomRight.HasValue && bottomLeft.HasValue)
             {
-                Vector3 topFrontLeft, topFrontRight, topBackLeft, topBackRight, bottomFrontLeft,
-                    bottomFrontRight, bottomBackLeft, bottomBackRight;
-                topFrontLeft = topLeft.Value.Position + topLeft.Value.Direction * topLeft.Value.Intersects(Globals.BoundingFrustum.Near).Value;
-                
-                topBackLeft = topLeft.Value.Position + topLeft.Value.Direction * topLeft.Value.Intersects(Globals.BoundingFrustum.Far).Value;
-
-                topFrontRight = topRight.Value.Position + topRight.Value.Direction * topRight.Value.Intersects(Globals.BoundingFrustum.Near).Value;
-                
-                topBackRight = topRight.Value.Position + topRight.Value.Direction * topRight.Value.Intersects(Globals.BoundingFrustum.Far).Value;
-                
-                bottomFrontLeft = bottomLeft.Value.Position + bottomLeft.Value.Direction * bottomLeft.Value.Intersects(Globals.BoundingFrustum.Near).Value;
-                
-                bottomBackLeft = bottomLeft.Value.Position + bottomLeft.Value.Direction * bottomLeft.Value.Intersects(Globals.BoundingFrustum.Far).Value;
-                
-                bottomFrontRight = bottomRight.Value.Position + bottomRight.Value.Direction * bottomRight.Value.Intersects(Globals.BoundingFrustum.Near).Value;
-                
-                bottomBackRight = bottomRight.Value.Position + bottomRight.Value.Direction * bottomRight.Value.Intersects(Globals.BoundingFrustum.Far).Value;
-                
+                var topFrontLeft = topLeft.Value.Position + topLeft.Value.Direction * topLeft.Value.Intersects(Globals.BoundingFrustum.Near).Value;
+                var topBackLeft = topLeft.Value.Position + topLeft.Value.Direction * topLeft.Value.Intersects(Globals.BoundingFrustum.Far).Value;
+                var topFrontRight = topRight.Value.Position + topRight.Value.Direction * topRight.Value.Intersects(Globals.BoundingFrustum.Near).Value;
+                var topBackRight = topRight.Value.Position + topRight.Value.Direction * topRight.Value.Intersects(Globals.BoundingFrustum.Far).Value;
+                var bottomFrontLeft = bottomLeft.Value.Position + bottomLeft.Value.Direction * bottomLeft.Value.Intersects(Globals.BoundingFrustum.Near).Value;
+                var bottomBackLeft = bottomLeft.Value.Position + bottomLeft.Value.Direction * bottomLeft.Value.Intersects(Globals.BoundingFrustum.Far).Value;
+                var bottomFrontRight = bottomRight.Value.Position + bottomRight.Value.Direction * bottomRight.Value.Intersects(Globals.BoundingFrustum.Near).Value;
+                var bottomBackRight = bottomRight.Value.Position + bottomRight.Value.Direction * bottomRight.Value.Intersects(Globals.BoundingFrustum.Far).Value;
                 return new PickingFrustum(topFrontLeft, topFrontRight, topBackLeft, topBackRight,
                     bottomFrontLeft, bottomFrontRight, bottomBackLeft, bottomBackRight);
             }

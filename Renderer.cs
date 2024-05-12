@@ -90,6 +90,7 @@ public class Renderer
         
         Globals.SpriteBatch.Begin();
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
+        Globals.PickingManager.DrawSelectionBox();
         DrawSprites();
         DrawAnimatedSprites();
         DrawText();

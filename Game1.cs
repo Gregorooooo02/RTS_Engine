@@ -60,7 +60,7 @@ public class Game1 : Game
         GenerateMap.GenerateNoiseTexture();
 
         Globals.Renderer = new Renderer(Content);
-        Globals.PickingManager = new PickingManager();
+        Globals.PickingManager = new PickingManager(Content);
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
