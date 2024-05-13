@@ -6,6 +6,9 @@
 	#define VS_SHADERMODEL vs_4_0_level_9_1
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
+
+#define SKINNED_EFFECT_MAX_BONES 72
+
 static const float PI = 3.14159265359;
 static const float3 dirLightDirection = float3(0.5,-1,0.5);
 static const float3 dirLightColor = float3(1, 1, 0.6);
@@ -28,6 +31,8 @@ cbuffer Globals : register(b1)
     
     float3 viewPos;
 };
+
+float4x3 Bones[SKINNED_EFFECT_MAX_BONES];
 
 float gamma;
 float DepthBias;
@@ -84,6 +89,15 @@ struct VertexShaderInput
 	float4 Position : POSITION0;
     float3 Normal : NORMAL0;
     float2 TexCoords : TEXCOORD0;
+};
+
+struct SkinnedVertexShaderInput
+{
+    float4 Position : POSITION0;
+    float3 Normal : NORMAL0;
+    float2 TexCoords : TEXCOORD0;
+    uint4 Indices : BLENDINDICES0;
+    float4 Weights : BLENDWEIGHT0;
 };
 
 struct VertexShaderOutput
@@ -251,10 +265,37 @@ float3 CalculateDirectionalLight(float3 worldPosition, float3 N, float3 albedo, 
     return (kD * albedo / PI + specular) * radiance * NdotL * shadowContribution;   
 }
 
+void SkinNormal(inout SkinnedVertexShaderInput vinput, uniform int boneCount)
+{
+    float4x3 skinTransform = 0;
+    for (int i = 0; i < boneCount; i++)
+    {
+        skinTransform += Bones[vinput.Indices[i]] * vinput.Weights[i];
+    }
+
+    vinput.Position.xyz = mul(vinput.Position, skinTransform);    
+    vinput.Normal = mul(vinput.Normal, skinTransform);
+}
+
 VertexShaderOutput PBR_VS(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
     output.TexCoords = input.TexCoords;
+    
+    output.WorldPosition = mul(input.Position, World).xyz;
+    output.Normal = mul(input.Normal, normalMatrix);
+    
+    output.Position = mul(mul(float4(output.WorldPosition, 1), View), Projection);
+    
+    return output;
+}
+
+VertexShaderOutput PBR_SkinnedVS(in SkinnedVertexShaderInput input)
+{
+    VertexShaderOutput output = (VertexShaderOutput) 0;
+    output.TexCoords = input.TexCoords;
+    
+    SkinNormal(input, 4);
     
     output.WorldPosition = mul(input.Position, World).xyz;
     output.Normal = mul(input.Normal, normalMatrix);
@@ -295,6 +336,15 @@ technique PBR
 	pass P0
 	{
         VertexShader = compile VS_SHADERMODEL PBR_VS();
+        PixelShader = compile PS_SHADERMODEL PBR_PS();
+    }
+};
+
+technique PBR_Skinned
+{
+    pass P0
+    {
+        VertexShader = compile VS_SHADERMODEL PBR_SkinnedVS();
         PixelShader = compile PS_SHADERMODEL PBR_PS();
     }
 };

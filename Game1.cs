@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using Animation.Animation;
 
 namespace RTS_Engine;
 
@@ -27,6 +28,10 @@ public class Game1 : Game
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
     private bool isWireframe = false;
+
+    // Testing animations
+    private Model _model;
+    private Animations _animations;
     
     public Game1()
     {
@@ -66,7 +71,7 @@ public class Game1 : Game
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-        
+
         base.Initialize();
     }
 
@@ -91,6 +96,12 @@ public class Game1 : Game
         bytecode = File.ReadAllBytes("Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
+        // Testing animation
+        _model = Content.Load<Model>("Gangnam Style");
+        _animations = _model.GetAnimations();
+        var clip = _animations.Clips["Take 001"];
+        _animations.SetClip(clip);
+
         _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(new ThirdScene());
     }
@@ -115,12 +126,36 @@ public class Game1 : Game
         {
             Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
         }
+        
+        // Testing animations
+        _animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
+
         base.Update(gameTime);
     }
+
+    Stopwatch _sw = new Stopwatch();
 
     protected override void Draw(GameTime gameTime)
     {
         Globals.Renderer.Render();
+
+        Matrix[] transforms = new Matrix[_model.Bones.Count];
+        _model.CopyAbsoluteBoneTransformsTo(transforms);
+
+        _sw.Reset();
+        _sw.Start();
+        foreach (ModelMesh mesh in _model.Meshes)
+        {
+            foreach (var part in mesh.MeshParts)
+            {
+                ((SkinnedEffect)part.Effect).SpecularColor = Vector3.Zero;
+                ConfigureEffectMatrices((IEffectMatrices)part.Effect, Matrix.Identity, Globals.View, Globals.Projection);
+                ConfigureEffectLighting((IEffectLights)part.Effect);
+
+                ((SkinnedEffect)part.Effect).SetBoneTransforms(_animations.AnimationTransforms);
+            }
+        }
+
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
@@ -139,7 +174,21 @@ public class Game1 : Game
 #endif
     }
     
-    
+    private void ConfigureEffectMatrices(IEffectMatrices effect, Matrix world, Matrix view, Matrix projection)
+    {
+        effect.World = world;
+        effect.View = view;
+        effect.Projection = projection;
+    }
+
+    private void ConfigureEffectLighting(IEffectLights effect)
+    {
+        effect.EnableDefaultLighting();
+        effect.DirectionalLight0.Direction = Vector3.Backward;
+        effect.DirectionalLight0.Enabled = true;
+        effect.DirectionalLight1.Enabled = false;
+        effect.DirectionalLight2.Enabled = false;
+    }
     
 #if DEBUG
     private double AvgFromLastSec()
