@@ -524,25 +524,6 @@
 /processorParam:TextureFormat=Color
 /build:heightmap.bmp
 
-#begin Krzesło/krzeslo.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Krzesło/krzeslo.fbx
-
 #begin monke/monke.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -561,18 +542,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:monke/monke.fbx
-
-#begin PBR_Shader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:PBR_Shader.fx
-
-#begin ShadowMaps.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:ShadowMaps.fx
 
 #begin smile.png
 /importer:TextureImporter
@@ -762,12 +731,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
-
-#begin Terrain_Shader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Terrain_Shader.fx
 
 #begin TerrainTextures/kamienie/albedo.png
 /importer:TextureImporter
