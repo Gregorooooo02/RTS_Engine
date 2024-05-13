@@ -97,7 +97,7 @@ public class Game1 : Game
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         // Testing animation
-        _model = Content.Load<Model>("Gangnam Style");
+        _model = Content.Load<Model>("Dude/dude");
         _animations = _model.GetAnimations();
         var clip = _animations.Clips["Take 001"];
         _animations.SetClip(clip);
@@ -148,11 +148,11 @@ public class Game1 : Game
         {
             foreach (var part in mesh.MeshParts)
             {
-                ((SkinnedEffect)part.Effect).SpecularColor = Vector3.Zero;
+                ((BasicEffect)part.Effect).SpecularColor = Vector3.Zero;
                 ConfigureEffectMatrices((IEffectMatrices)part.Effect, Matrix.Identity, Globals.View, Globals.Projection);
                 ConfigureEffectLighting((IEffectLights)part.Effect);
 
-                ((SkinnedEffect)part.Effect).SetBoneTransforms(_animations.AnimationTransforms);
+                part.UpdateVertices(_animations.AnimationTransforms);
             }
         }
 
