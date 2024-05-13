@@ -91,6 +91,7 @@ namespace RTS_Engine
 #if DEBUG
         public static GameObject CurrentlySelectedObject;
         public static List<string> AvailableScenes = new List<string>();
+        public static List<string> AvailablePrefabs = new List<string>();
 
         #if _WINDOWS
         public static readonly string MainPath = "../../../";
@@ -103,6 +104,11 @@ namespace RTS_Engine
             AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
         }
         
+        public static void UpdatePrefabList()
+        {
+            AvailablePrefabs = Directory.GetFiles(MainPath + "Prefabs").ToList();
+        }
+
         public static int ShadowMapResolutionMultiplier = 3;
         
         //Switches for debug windows UWU
