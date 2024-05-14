@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Animation
+namespace RTS.Animation
 {
     public struct Keyframe
     {

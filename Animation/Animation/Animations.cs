@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Animation
+namespace RTS.Animation
 {    
     public class Animations
     {
         internal List<Matrix> _bindPose;
-        internal List<Matrix> _invBindPose;
+        internal List<Matrix> _invBindPose; // TODO: convert those from List<T> to simple T[] arrays.
         internal List<int> _skeletonHierarchy;
         internal Dictionary<string, int> _boneMap;
 
@@ -16,7 +16,8 @@ namespace Animation
         private Matrix[] _animationTransforms;
 
         private int _currentKeyframe;
-        
+
+
         public Dictionary<string, Clip> Clips { get; private set; }
         public Clip CurrentClip { get; private set; }
         public TimeSpan CurrentTime { get; private set; }
@@ -37,15 +38,14 @@ namespace Animation
         public Matrix[] AnimationTransforms { get { return _animationTransforms; } }
 
 
-        internal Animations(List<Matrix> bindPose, List<Matrix> invBindPose, List<int> skeletonHierarchy,
-            Dictionary<string, int> boneMap, Dictionary<string, Clip> clips)
+        internal Animations(List<Matrix> bindPose, List<Matrix> invBindPose, List<int> skeletonHierarchy, Dictionary<string, int> boneMap, Dictionary<string, Clip> clips)
         {
             _bindPose = bindPose;
             _invBindPose = invBindPose;
             _skeletonHierarchy = skeletonHierarchy;
             _boneMap = boneMap;
             Clips = clips;
-
+            
             // initialize
             _boneTransforms = new Matrix[_bindPose.Count];
             _worldTransforms = new Matrix[_bindPose.Count];

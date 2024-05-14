@@ -27,6 +27,10 @@
     <None Update="ConfigFiles\KeyBindings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Remove="GraphicsImporters\**" />
+    <None Remove="Graphics\**" />
+    <None Remove="AnimationImporters\**" />
+    <None Remove="Animation\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
@@ -38,8 +42,29 @@
     <Folder Include="Content/Tartak/" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AnimationPipeline">
-      <HintPath>AnimationPipeline\bin\Debug\net6.0\AnimationPipeline.dll</HintPath>
+    <Compile Remove="GraphicsImporters\**" />
+    <Compile Remove="Graphics\**" />
+    <Compile Remove="AnimationImporters\**" />
+    <Compile Remove="Animation\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="GraphicsImporters\**" />
+    <EmbeddedResource Remove="Graphics\**" />
+    <EmbeddedResource Remove="AnimationImporters\**" />
+    <EmbeddedResource Remove="Animation\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Animation">
+      <HintPath>DLLS\Animation.dll</HintPath>
+    </Reference>
+    <Reference Include="AnimationImporters">
+      <HintPath>DLLS\AnimationImporters.dll</HintPath>
+    </Reference>
+    <Reference Include="Graphics">
+      <HintPath>DLLS\Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphicsImporters">
+      <HintPath>DLLS\GraphicsImporters.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">

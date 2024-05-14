@@ -10,8 +10,10 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:../Graphics/bin/Debug/net6.0/Graphics.dll
-/reference:../AnimationPipeline/bin/Debug/net6.0/AnimationPipeline.dll
+/reference:../DLLS/Animation.dll
+/reference:../DLLS/AnimationImporters.dll
+/reference:../DLLS/Graphics.dll
+/reference:../DLLS/GraphicsImporters.dll
 
 #---------------------------------- Content ---------------------------------#
 

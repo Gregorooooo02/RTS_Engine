@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Animation
+namespace RTS.Animation
 {
     public class Clip
     {

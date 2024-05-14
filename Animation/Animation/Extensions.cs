@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Graphics;
 
-namespace Animation
+namespace RTS.Animation
 {
     public static class Extensions
     {

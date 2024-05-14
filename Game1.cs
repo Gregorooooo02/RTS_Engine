@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using Animation;
+using RTS.Animation;
 
 namespace RTS_Engine;
 
@@ -97,9 +97,9 @@ public class Game1 : Game
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         // Testing animation
-        _model = Content.Load<Model>("snowman_animated");
+        _model = Content.Load<Model>("Dude/dude");
         _animations = _model.GetAnimations();
-        var clip = _animations.Clips["Armature|ArmatureAction"];
+        var clip = _animations.Clips["Take 001"];
         _animations.SetClip(clip);
 
         _sceneManager.AddScene(new MapScene());
@@ -112,7 +112,6 @@ public class Game1 : Game
         _performanceTimer.Start();
         Globals.CameraPosition = _sceneCamera.Position;
 #endif
-        
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
@@ -138,6 +137,8 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         Globals.Renderer.Render();
+        
+        GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
 
         Matrix[] transforms = new Matrix[_model.Bones.Count];
         _model.CopyAbsoluteBoneTransformsTo(transforms);
@@ -148,9 +149,14 @@ public class Game1 : Game
         {
             foreach (var part in mesh.MeshParts)
             {
+                ((BasicEffect)part.Effect).SpecularColor = Vector3.Zero;
+                ConfigureEffectMatrices((IEffectMatrices)part.Effect, Matrix.Identity * Matrix.CreateScale(0.25f), Globals.View, Globals.Projection);
+                ConfigureEffectLighting((IEffectLights)part.Effect);
                 part.UpdateVertices(_animations.AnimationTransforms);
             }
+            mesh.Draw();
         }
+        _sw.Stop();
 
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
