@@ -163,8 +163,17 @@ public class ModelData
             }
         
             //Loading model itself, saving model name
-            string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
-            Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+            
+            try
+            {
+                string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+                Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+
+            } catch (Exception)
+            {
+                Models.Add(AssetManager.DefaultModel.Models[0]);
+            }
+            
         }
 
         IsMultiMesh = modelConfig?.Element("multimesh")?.Value == "True";
@@ -212,7 +221,15 @@ public class ModelData
                                 }
                                 Textures[i][0].Add(temp);
                             }
-                            Models.Add(manager.Load<Model>(modelPath + "/"+ (i + 1) + "/" + modelName));
+                            try
+                            {
+                                Models.Add(manager.Load<Model>(modelPath + "/" + (i + 1) + "/" + modelName));
+                            }
+                            catch (Exception)
+                            {
+                                Models.Add(AssetManager.DefaultModel.Models[0]);
+                                modelPath = AssetManager.DefaultModel.ModelPath;
+                            }
                         }
                     }
                 }
@@ -246,7 +263,16 @@ public class ModelData
         
                 //Loading model itself, saving model name
                 string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
-                Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+                try
+                {
+                    Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+                }
+                catch (Exception)
+                {
+                    Models.Add(AssetManager.DefaultModel.Models[0]);
+                    modelPath = AssetManager.DefaultModel.ModelPath;
+                }
+                
             }
         }
         
