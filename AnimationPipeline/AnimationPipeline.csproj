@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Animation\Animation.csproj" />
     <ProjectReference Include="..\Graphics\Graphics.csproj" />
   </ItemGroup>
 

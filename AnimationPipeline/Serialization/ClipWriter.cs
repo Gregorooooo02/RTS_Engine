@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Animation;
+using Animation.Content;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using Pipeline.Animation;
@@ -50,12 +52,16 @@ namespace Pipeline.Serialization
 
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "Animation.Clip, Animation";
+            var type = typeof(Clip);
+            var readerType = type.Namespace + ".Clip, " + type.Assembly.FullName;
+            return readerType;
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "Animation.Content.ClipReader, Animation";
+            var type = typeof(ClipReader);
+            var readerType = type.Namespace + ".ClipReader, " + type.Assembly.FullName;
+            return readerType;
         }
     }
     

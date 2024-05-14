@@ -41,27 +41,7 @@ namespace Animation
                 float w2 = cpuVertices[i].BlendWeights.Y;
                 float w3 = cpuVertices[i].BlendWeights.Z;
                 float w4 = cpuVertices[i].BlendWeights.W;
-
-            #if (WP7_1)
-                // Moblunatic claims ~40% faster.
-                // http://forums.create.msdn.com/forums/p/55123/335148.aspx
-                // This is true on WP7 with SIMD enabled. 
-                // On WP8/Monogame it is *TWO* times slower than the original code.                
                 
-                Matrix mm1, mm2, mm3, mm4;
-                Matrix.Multiply(ref boneTransforms[b0], w1, out mm1);
-                Matrix.Multiply(ref boneTransforms[b1], w2, out mm2);
-                Matrix.Multiply(ref boneTransforms[b2], w3, out mm3);
-                Matrix.Multiply(ref boneTransforms[b3], w4, out mm4);
-
-                Matrix.Add(ref mm1, ref mm2, out transformSum);
-                Matrix.Add(ref transformSum, ref mm3, out transformSum);
-                Matrix.Add(ref transformSum, ref mm4, out transformSum);
-                transformSum.M14 = 0.0f;
-                transformSum.M24 = 0.0f;
-                transformSum.M34 = 0.0f;
-                transformSum.M44 = 1.0f;
-            #else
                 Matrix m1 = boneTransforms[b0];
                 Matrix m2 = boneTransforms[b1];
                 Matrix m3 = boneTransforms[b2];
@@ -78,7 +58,6 @@ namespace Animation
                 transformSum.M41 = (m1.M41 * w1) + (m2.M41 * w2) + (m3.M41 * w3) + (m4.M41 * w4);
                 transformSum.M42 = (m1.M42 * w1) + (m2.M42 * w2) + (m3.M42 * w3) + (m4.M42 * w4);
                 transformSum.M43 = (m1.M43 * w1) + (m2.M43 * w2) + (m3.M43 * w3) + (m4.M43 * w4);
-            #endif
 
                 // Support the 4 Bone Influences - Position then Normal
                 Vector3.Transform(ref cpuVertices[i].Position, ref transformSum, out gpuVertices[i].Position);

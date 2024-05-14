@@ -35,9 +35,7 @@ namespace Pipeline.Processors
             set { base.IndexBufferType = value; }
         }
         
-#if !PORTABLE
         [DisplayName("MaxBones")]
-#endif
         [DefaultValue(SkinnedEffect.MaxBones)]
         public virtual int MaxBones
         {
@@ -45,19 +43,15 @@ namespace Pipeline.Processors
             set { _maxBones = value; }
         }
         
-#if !PORTABLE
         [DisplayName("Generate Keyframes Frequency")]
-#endif
         [DefaultValue(0)] // (0=no, 30=30fps, 60=60fps)
         public virtual int GenerateKeyframesFrequency
         {
             get { return _generateKeyframesFrequency; }
             set { _generateKeyframesFrequency = value; }
         }
-
-#if !PORTABLE
+        
         [DisplayName("Fix BoneRoot from MG importer")]
-#endif
         [DefaultValue(false)]
         public virtual bool FixRealBoneRoot
         {
@@ -92,9 +86,7 @@ namespace Pipeline.Processors
             animationProcessor.FixRealBoneRoot = this._fixRealBoneRoot;
             var animation = animationProcessor.Process((NodeContent)input, context);
             outputModel.Tag = animation;
-
-            //ProcessNode((NodeContent)input);
-
+            
             return outputModel;
         }
 

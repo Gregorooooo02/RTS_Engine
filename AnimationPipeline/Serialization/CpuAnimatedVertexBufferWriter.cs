@@ -1,4 +1,5 @@
 ﻿using System;
+using Animation.Content;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using Pipeline.Animation;
@@ -26,7 +27,9 @@ namespace Pipeline.Serialization
         
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "Animation.Content.CpuAnimatedVertexBufferReader, Animation";
+            var type = typeof(CpuAnimatedVertexBufferReader);
+            var readerType = type.Namespace + ".CpuAnimatedVertexBufferReader, " + type.Assembly.FullName;
+            return readerType;
         }
     }
 }

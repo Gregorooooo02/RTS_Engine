@@ -12,30 +12,24 @@ namespace Pipeline.Processors
         private int _maxBones = SkinnedEffect.MaxBones;
         private int _generateKeyframesFrequency = 0;
         private bool _fixRealBoneRoot = false;
-
-#if !PORTABLE
+        
         [DisplayName("MaxBones")]
-#endif
         [DefaultValue(SkinnedEffect.MaxBones)]
         public virtual int MaxBones 
         {
             get { return _maxBones; }
             set { _maxBones = value; }
         }
-
-#if !PORTABLE
+        
         [DisplayName("Generate Keyframes Frequency")]
-#endif
         [DefaultValue(0)] // (0=no, 30=30fps, 60=60fps)
         public virtual int GenerateKeyframesFrequency
         {
             get { return _generateKeyframesFrequency; }
             set { _generateKeyframesFrequency = value; }
         }
-
-#if !PORTABLE
+        
         [DisplayName("Fix BoneRoot from MG importer")]
-#endif
         [DefaultValue(false)]
         public virtual bool FixRealBoneRoot
         {

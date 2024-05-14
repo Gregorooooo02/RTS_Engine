@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using Pipeline.Animation;
+using Animation;
+using Animation.Content;
 
 namespace Pipeline.Serialization
 {   
@@ -81,12 +83,16 @@ namespace Pipeline.Serialization
 
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "Animation.Animations, Animation";
+            var type = typeof(Animations);
+            var readerType = type.Namespace + ".Animations, " + type.Assembly.FullName;
+            return readerType;
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "Animation.Content.AnimationsReader, Animation";
+            var type = typeof(AnimationsReader);
+            var readerType = type.Namespace + ".AnimationsReader, " + type.Assembly.FullName;
+            return readerType;
         }
     }
         

@@ -97,10 +97,10 @@ public class Game1 : Game
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         // Testing animation
-        _model = Content.Load<Model>("Dude/dude_GPU");
-        // _animations = _model.GetAnimations();
-        // var clip = _animations.Clips["Take 001"];
-        // _animations.SetClip(clip);
+        _model = Content.Load<Model>("snowman_animated");
+        _animations = _model.GetAnimations();
+        var clip = _animations.Clips["Armature|ArmatureAction"];
+        _animations.SetClip(clip);
 
         _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(new ThirdScene());
@@ -141,17 +141,14 @@ public class Game1 : Game
 
         Matrix[] transforms = new Matrix[_model.Bones.Count];
         _model.CopyAbsoluteBoneTransformsTo(transforms);
-
+        
         _sw.Reset();
         _sw.Start();
         foreach (ModelMesh mesh in _model.Meshes)
         {
             foreach (var part in mesh.MeshParts)
             {
-                ((SkinnedEffect)part.Effect).SpecularColor = Vector3.Zero;
-                ConfigureEffectMatrices((IEffectMatrices)part.Effect, transforms[mesh.ParentBone.Index], Globals.View, Globals.Projection);
-                ConfigureEffectLighting((IEffectLights)part.Effect);
-                ((SkinnedEffect)part.Effect).SetBoneTransforms(_animations.AnimationTransforms);
+                part.UpdateVertices(_animations.AnimationTransforms);
             }
         }
 
