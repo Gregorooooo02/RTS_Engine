@@ -40,7 +40,7 @@ public class TextRenderer : Component
             new Vector2(0,0),
             new Vector2(ParentObject.Transform._scl.X,ParentObject.Transform._scl.Y),
             SpriteEffects.None,
-            0);
+            ParentObject.Transform._pos.Z);
     }
 
     public override void Initialize()
@@ -64,6 +64,13 @@ public class TextRenderer : Component
 
         builder.Append("<font>" + _name + "</font>");
         
+        builder.Append("<color>");
+        builder.Append("<r>" + Color.R + "</r>");
+        builder.Append("<g>" + Color.G + "</g>");
+        builder.Append("<b>" + Color.B + "</b>");
+        builder.Append("<a>" + Color.A + "</a>");
+        builder.Append("</color>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -73,6 +80,11 @@ public class TextRenderer : Component
         Active = element.Element("active")?.Value == "True";
         Content = element.Element("contents").Value;
         LoadFont(element.Element("font").Value);
+        
+        XElement color = element.Element("color");
+        if (color == null) Color = new Color(255, 255, 255);
+        else Color = new Color(int.Parse(color.Element("r")?.Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
+
     }
 
     public override void RemoveComponent()

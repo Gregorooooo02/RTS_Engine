@@ -1202,6 +1202,12 @@
               <active>True</active>
               <contents>Button</contents>
               <font>defaultFont</font>
+              <color>
+                <r>0</r>
+                <g>0</g>
+                <b>0</b>
+                <a>255</a>
+              </color>
             </component>
           </components>
           <childObjects></childObjects>

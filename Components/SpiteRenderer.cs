@@ -27,6 +27,7 @@ public class SpiteRenderer : Component
 
     public void Draw()
     {
+        if (!Active) return;
         Globals.SpriteBatch?.Draw(Sprite,
             new Rectangle(
                 (int)ParentObject.Transform._pos.X,
@@ -38,7 +39,7 @@ public class SpiteRenderer : Component
                 MathHelper.ToRadians(ParentObject.Transform._rot.Z),
                 Vector2.Zero,
                 SpriteEffects.None,
-                1);
+                ParentObject.Transform._pos.Z);
     }
 
     public override void Initialize()
