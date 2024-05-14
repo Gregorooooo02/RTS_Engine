@@ -87,7 +87,20 @@ public class GameObject
     public void RemoveChildObject(GameObject gameObject)
     {
         Children.Remove(gameObject);
+        ClearObject(gameObject);
         gameObject.Parent = null; 
+    }
+
+    private void ClearObject(GameObject gameObject)
+    {
+        for (int i = gameObject.Children.Count - 1; i >= 0 ; i--)
+        {
+            ClearObject(gameObject.Children[i]);
+        }
+        for (int i = gameObject._components.Count - 1; i >= 0 ; i--)
+        {
+            gameObject._components[i].RemoveComponent();
+        }
     }
 
     public string SaveSceneToXml()

@@ -40,7 +40,7 @@ public class InputManager
     public Point MousePosition;
     public int ScrollWheel;
     
-    private List<ActionData> _actions;
+    public List<ActionData> _actions;
     private List<MouseAction> _mouseActions;
     private Dictionary<Keys, GameAction> _rawKeyboardToAction;
     private Dictionary<int, GameAction> _rawMouseToAction;

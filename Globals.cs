@@ -65,6 +65,8 @@ namespace RTS_Engine
         public static VertexDeclaration InstanceVertexDeclaration;
         public static VertexDeclaration ShadowInstanceDeclaration;
 
+        public static bool HitUI = false;
+
         public enum LayerType 
         {
             DEFAULT,
@@ -78,6 +80,7 @@ namespace RTS_Engine
         public static void Update(GameTime gameTime)
         {
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            HitUI = false;
         }
         
         private static List<Type> GetAllComponents()

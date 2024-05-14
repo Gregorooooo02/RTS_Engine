@@ -47,7 +47,7 @@ public class TextRenderer : Component
     {
         Font = AssetManager.DefaultFont;
         _name = "defaultFont";
-        //Globals.Renderer.Texts.Add(this);
+        Globals.Renderer.Texts.Add(this);
     }
 
     public override string ComponentToXmlString()
@@ -73,7 +73,6 @@ public class TextRenderer : Component
         Active = element.Element("active")?.Value == "True";
         Content = element.Element("contents").Value;
         LoadFont(element.Element("font").Value);
-        Globals.Renderer.Texts.Add(this);
     }
 
     public override void RemoveComponent()

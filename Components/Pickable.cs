@@ -12,9 +12,12 @@ public class Pickable : Component
     {
         if (Active)
         {
-            if (Renderer is { IsVisible: true })
+            if (Renderer != null)
             {
-                Globals.PickingManager.Pickables.Add(this);
+                if (Renderer.IsVisible && Renderer.Active)
+                {
+                    Globals.PickingManager.Pickables.Add(this);
+                }
             }
             else
             {
@@ -40,12 +43,16 @@ public class Pickable : Component
         
         builder.Append("<type>Pickable</type>");
         
+        builder.Append("<active>" + Active +"</active>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
 
     public override void Deserialize(XElement element)
-    {}
+    {
+        Active = element.Element("active")?.Value == "True";
+    }
 
     public override void RemoveComponent()
     {

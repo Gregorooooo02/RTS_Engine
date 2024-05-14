@@ -43,8 +43,8 @@ public class Game1 : Game
             _graphics.PreferredBackBufferWidth = 1440;
             _graphics.PreferredBackBufferHeight = 900;
         }
-        IsFixedTimeStep = false;
-        _graphics.SynchronizeWithVerticalRetrace = false;
+        //IsFixedTimeStep = false;
+        //_graphics.SynchronizeWithVerticalRetrace = false;
 
         Content.RootDirectory = "Content";
         IsMouseVisible = true;

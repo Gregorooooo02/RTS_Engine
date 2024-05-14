@@ -76,6 +76,20 @@ public class AnimatedSpriteRenderer : Component
         Globals.Renderer.AnimatedSprites.Add(this);
     }
 
+    private void Init()
+    {
+        _frames = Frames;
+        _frameTime = FrameTime;
+
+        var frameWdith = SpriteSheet.Width / Frames;
+        var frameHeight = SpriteSheet.Height;
+
+        for (int i = 0; i < Frames; i++) 
+        {
+            _sourceRectangles.Add(new(i * frameWdith, 0, frameWdith, frameHeight));
+        }
+    }
+
     public override string ComponentToXmlString()
     {
         StringBuilder builder = new StringBuilder();
@@ -119,7 +133,6 @@ public class AnimatedSpriteRenderer : Component
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
         
         _isAnimationActive = element.Element("isAnimationActive")?.Value == "True";
-        Globals.Renderer.AnimatedSprites.Add(this);
     }
 
     public override void RemoveComponent()
@@ -149,7 +162,7 @@ public class AnimatedSpriteRenderer : Component
     {
         SpriteSheet = spriteSheet;
         _sourceRectangles.Clear();
-        Initialize();
+        Init();
     }
 
     public void SetFrameTime(float frameTime) 
@@ -163,14 +176,14 @@ public class AnimatedSpriteRenderer : Component
     {
         Frames = frames;
         _sourceRectangles.Clear();
-        Initialize();
+        Init();
     }
 
     public void LoadSpriteSheet(string name) 
     {
         SpriteSheet = AssetManager.GetSprite(name);
         _sourceRectangles.Clear();
-        Initialize();
+        Init();
     }
 
 #if DEBUG
