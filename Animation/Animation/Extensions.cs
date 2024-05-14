@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Graphics;
 
-namespace Animation.Animation
+namespace Animation
 {
     public static class Extensions
     {
@@ -16,5 +17,6 @@ namespace Animation.Animation
             var animatedVertexBuffer = meshPart.VertexBuffer as CpuAnimatedVertexBuffer;
             animatedVertexBuffer.UpdateVertices(boneTransforms, meshPart.VertexOffset, meshPart.NumVertices);
         }
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content.Pipeline.Processors;
+using Pipeline.Graphics;
 
-namespace AnimationPipeline.Animation
+namespace Pipeline.Animation
 {
     public class CpuAnimatedVertexBufferContent : DynamicVertexBufferContent
     {

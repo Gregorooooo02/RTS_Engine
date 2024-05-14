@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Animation.Animation.Content
+namespace Animation.Content
 {
     public class AnimationsReader : ContentTypeReader<Animations>
     {

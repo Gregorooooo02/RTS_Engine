@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Animation.Animation
+namespace Animation
 {
     public class Clip
     {

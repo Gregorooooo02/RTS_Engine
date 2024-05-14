@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Animation.Animation
+namespace Animation
 {    
     public class Animations
     {

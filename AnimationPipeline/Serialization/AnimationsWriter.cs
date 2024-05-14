@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using AnimationPipeline.Animation;
+using Pipeline.Animation;
 
-namespace AnimationPipeline.Serialization
+namespace Pipeline.Serialization
 {   
     [ContentTypeWriter]
     class AnimationsDataWriter : ContentTypeWriter<AnimationsContent>
@@ -81,12 +81,12 @@ namespace AnimationPipeline.Serialization
 
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "AnimationPipeline.Animation.Animations, Animation";
+            return "Animation.Animations, Animation";
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "AnimationPipeline.Animation.Content.AnimationsReader, Animation";
+            return "Animation.Content.AnimationsReader, Animation";
         }
     }
         

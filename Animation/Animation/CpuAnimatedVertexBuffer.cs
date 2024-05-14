@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Animation.Graphics;
+using Graphics;
 
-namespace Animation.Animation
+namespace Animation
 {
     public class CpuAnimatedVertexBuffer: DynamicVertexBuffer
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace AnimationPipeline.Animation
+namespace Pipeline.Animation
 {
     public struct KeyframeContent
     {

@@ -25,7 +25,7 @@ public class AssetManager
 #if _WINDOWS
         StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
 #else
-        StreamReader sr = new StreamReader("Content/Content.mgcb");
+        StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
 #endif
         string line = sr.ReadLine();
         while (line != null)

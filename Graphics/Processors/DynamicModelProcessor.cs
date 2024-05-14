@@ -5,9 +5,9 @@ using System.ComponentModel;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
-using AnimationPipeline.Animation;
+using Pipeline.Graphics;
 
-namespace AnimationPipeline.Processors
+namespace Pipeline.Serialization
 {
     [ContentProcessor(DisplayName = "DynamicModel - Custom")]
     public class DynamicModelProcessor : ModelProcessor, IContentProcessor

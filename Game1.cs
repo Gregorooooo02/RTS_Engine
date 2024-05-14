@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using Animation.Animation;
+using Animation;
 
 namespace RTS_Engine;
 
@@ -90,17 +90,17 @@ public class Game1 : Game
         Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
         Globals.TerrainEffect = Content.Load<Effect>("Terrain_Shader");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/PBR_Shader");
+        byte[] bytecode = File.ReadAllBytes("../../../Content/PBR_Shader");
         Globals.MainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 
-        bytecode = File.ReadAllBytes("Content/Terrain_Shader");
+        bytecode = File.ReadAllBytes("../../../Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
         // Testing animation
-        _model = Content.Load<Model>("Dude/dude");
-        _animations = _model.GetAnimations();
-        var clip = _animations.Clips["Take 001"];
-        _animations.SetClip(clip);
+        _model = Content.Load<Model>("Dude/dude_GPU");
+        // _animations = _model.GetAnimations();
+        // var clip = _animations.Clips["Take 001"];
+        // _animations.SetClip(clip);
 
         _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(new ThirdScene());
@@ -148,11 +148,10 @@ public class Game1 : Game
         {
             foreach (var part in mesh.MeshParts)
             {
-                ((BasicEffect)part.Effect).SpecularColor = Vector3.Zero;
-                ConfigureEffectMatrices((IEffectMatrices)part.Effect, Matrix.Identity, Globals.View, Globals.Projection);
+                ((SkinnedEffect)part.Effect).SpecularColor = Vector3.Zero;
+                ConfigureEffectMatrices((IEffectMatrices)part.Effect, transforms[mesh.ParentBone.Index], Globals.View, Globals.Projection);
                 ConfigureEffectLighting((IEffectLights)part.Effect);
-
-                part.UpdateVertices(_animations.AnimationTransforms);
+                ((SkinnedEffect)part.Effect).SetBoneTransforms(_animations.AnimationTransforms);
             }
         }
 

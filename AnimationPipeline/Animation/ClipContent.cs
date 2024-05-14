@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AnimationPipeline.Animation
+namespace Pipeline.Animation
 {
     public class ClipContent
     {

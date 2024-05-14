@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using AnimationPipeline.Animation;
+using Pipeline.Animation;
 
-namespace AnimationPipeline.Serialization
+
+namespace Pipeline.Serialization
 {
     [ContentTypeWriter]
     class ClipWriter : ContentTypeWriter<ClipContent>
@@ -49,12 +50,12 @@ namespace AnimationPipeline.Serialization
 
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "AnimationPipeline.Animation.Clip, Animation";
+            return "Animation.Clip, Animation";
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "AnimationPipeline.Animation.Content.ClipReader, Animation";
+            return "Animation.Content.ClipReader, Animation";
         }
     }
     

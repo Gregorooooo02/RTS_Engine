@@ -1,30 +1,34 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AnimationPipeline.Graphics
+namespace Graphics.Content
 {
-    public class DynamicVertexBufferReader : ContentTypeReader<DynamicVertexBuffer>
+    public class DynamicIndexBufferReader : ContentTypeReader<DynamicIndexBuffer>
     {
-        protected override DynamicVertexBuffer Read(ContentReader input, DynamicVertexBuffer buffer)
+        protected override DynamicIndexBuffer Read(ContentReader input, DynamicIndexBuffer buffer)
         {   
             IGraphicsDeviceService graphicsDeviceService = (IGraphicsDeviceService)input.ContentManager.ServiceProvider.GetService(typeof(IGraphicsDeviceService));
             var device = graphicsDeviceService.GraphicsDevice;
 
-            // read standard VertexBuffer
-            var declaration = input.ReadRawObject<VertexDeclaration>();
-            var vertexCount = (int)input.ReadUInt32();
-            int dataSize = vertexCount * declaration.VertexStride;
+            // read IndexBuffer
+            var is16Bit = input.ReadBoolean();
+            var dataSize = (int)input.ReadUInt32();
             byte[] data = new byte[dataSize];
             input.Read(data, 0, dataSize);
 
-            // read extras
+            // read IsWriteOnly
             bool IsWriteOnly = input.ReadBoolean();
-            
+
+
             if (buffer == null)
             {
+                var elementSize = (is16Bit) ? IndexElementSize.SixteenBits : IndexElementSize.ThirtyTwoBits;
+                var stride = (is16Bit) ? 2 : 4;
+                var indexCount = dataSize / stride;
                 BufferUsage usage = (IsWriteOnly) ? BufferUsage.WriteOnly : BufferUsage.None;
-                buffer = new DynamicVertexBuffer(device, declaration, vertexCount, usage);
+                buffer = new DynamicIndexBuffer(device, elementSize, indexCount, usage);
             }
+
             buffer.SetData(data, 0, dataSize);
 
             return buffer;

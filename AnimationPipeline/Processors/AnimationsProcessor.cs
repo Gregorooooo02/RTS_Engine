@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Graphics;
-using AnimationPipeline.Animation;
+using Pipeline.Animation;
 
-namespace AnimationPipeline.Processors
+namespace Pipeline.Processors
 {
     [ContentProcessor(DisplayName = "Animation - Custom")]
     class AnimationsProcessor : ContentProcessor<NodeContent, AnimationsContent>

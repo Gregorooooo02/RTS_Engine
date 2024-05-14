@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using AnimationPipeline.Animation;
+using Pipeline.Animation;
+using Pipeline.Graphics;
 
-namespace AnimationPipeline.Animation
+namespace Pipeline.Serialization
 {
     [ContentTypeWriter]
     public class CpuAnimatedVertexBufferWriter : ContentTypeWriter<CpuAnimatedVertexBufferContent>
@@ -11,10 +12,10 @@ namespace AnimationPipeline.Animation
         protected override void Write(ContentWriter output, CpuAnimatedVertexBufferContent buffer)
         {
             WriteVertexBuffer(output, buffer);
-
+            
             output.Write(buffer.IsWriteOnly);
         }
-
+                
         private void WriteVertexBuffer(ContentWriter output, DynamicVertexBufferContent buffer)
         {
             var vertexCount = buffer.VertexData.Length / buffer.VertexDeclaration.VertexStride;
@@ -22,10 +23,10 @@ namespace AnimationPipeline.Animation
             output.Write((UInt32)vertexCount);
             output.Write(buffer.VertexData);
         }
-
+        
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "tainicom.Aether.Animation.Content.CpuAnimatedVertexBufferReader, Aether.Animation";
+            return "Animation.Content.CpuAnimatedVertexBufferReader, Animation";
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace AnimationPipeline.Animation
+namespace Pipeline.Graphics
 {
     public class DynamicIndexBufferContent: Collection<int>
     {

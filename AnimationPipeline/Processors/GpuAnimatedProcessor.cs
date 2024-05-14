@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AnimationPipeline.Processors
+namespace Pipeline.Processors
 {
     [ContentProcessor(DisplayName = "GPU AnimatedModel - Custom")]
     public class GpuAnimatedModelProcessor : ModelProcessor

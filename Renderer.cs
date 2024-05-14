@@ -41,7 +41,7 @@ public class Renderer
 #if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/ShadowMaps");
+        byte[] bytecode = File.ReadAllBytes("../../../Content/ShadowMaps");
         _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
 #endif
         Meshes = new List<MeshRenderer>();

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content;
 
-namespace Animation.Animation.Content
+namespace Animation.Content
 {
     public class ClipReader : ContentTypeReader<Clip>
     {

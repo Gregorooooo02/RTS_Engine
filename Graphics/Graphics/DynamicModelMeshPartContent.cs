@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 
-namespace AnimationPipeline.Animation
+namespace Pipeline.Graphics
 {
     public class DynamicModelMeshPartContent
     {

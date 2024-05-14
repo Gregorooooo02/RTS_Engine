@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Animation.Animation
+namespace Animation
 {
     public struct Keyframe
     {

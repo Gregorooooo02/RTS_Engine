@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Animation.Graphics
+namespace Graphics
 {
     [StructLayout(LayoutKind.Explicit)]
     public struct VertexIndicesWeightsPositionNormal : IVertexType
