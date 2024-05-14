@@ -70,6 +70,15 @@ public class KeyBindsData
 #endregion
 
 #region SceneDeserialization
+    public static Scene PopulateScene(string name)
+    {
+        Scene loadedScene = new LoadedScene();
+        loadedScene.Name = name;
+        loadedScene.TempName = name;
+        loadedScene.SceneRoot = DeserializeScene(name);
+        return loadedScene;
+    }
+
     public static GameObject DeserializeScene(string filePath)
     {
         XDocument scene;

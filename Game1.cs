@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using System.IO;
 
 namespace RTS_Engine;
 
@@ -43,7 +44,9 @@ public class Game1 : Game
             _graphics.PreferredBackBufferWidth = 1440;
             _graphics.PreferredBackBufferHeight = 900;
         }
-        
+        IsFixedTimeStep = false;
+        _graphics.SynchronizeWithVerticalRetrace = false;
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -53,8 +56,10 @@ public class Game1 : Game
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _sceneManager = new SceneManager();
 
+#if DEBUG
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
+#endif
         
         GenerateMap.GenerateNoiseTexture();
 
@@ -64,7 +69,6 @@ public class Game1 : Game
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-        
         base.Initialize();
     }
 
@@ -89,7 +93,12 @@ public class Game1 : Game
         bytecode = File.ReadAllBytes("Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
+#if DEBUG
         _sceneManager.AddScene(new MapScene());
+#elif RELEASE
+        _sceneManager.AddScene(FileManager.PopulateScene(Globals.MainPath + "Scenes/ThirdScene.xml"));
+        _sceneManager.AddScene(FileManager.PopulateScene(Globals.MainPath + "Scenes/BaseScene.xml"));
+#endif
     }
 
     protected override void Update(GameTime gameTime)
@@ -134,8 +143,6 @@ public class Game1 : Game
         _performanceTimer.Reset();
 #endif
     }
-    
-    
     
 #if DEBUG
     private double AvgFromLastSec()

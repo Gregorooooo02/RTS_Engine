@@ -59,12 +59,12 @@ public class MapScene : Scene
     {
         SceneRoot.RemoveChildObject(gameObject);
     }
-
+#if DEBUG
     public override void DrawHierarchy()
     {
         SceneRoot.DrawTree();
     }
-
+#endif
     public override void SaveToFile()
     {
         StringBuilder builder = new StringBuilder();

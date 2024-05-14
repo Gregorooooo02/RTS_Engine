@@ -87,17 +87,17 @@ namespace RTS_Engine
             return assembly.GetTypes().Where(x => baseType.IsAssignableFrom(x) && x != baseType && x != transform).ToList();
         }
 
+#if _WINDOWS
+        public static readonly string MainPath = "../../../";
+#else
+        public static string MainPath = "";
+#endif
+
         public static List<Type> ComponentsTypes;
 #if DEBUG
         public static GameObject CurrentlySelectedObject;
         public static List<string> AvailableScenes = new List<string>();
         public static List<string> AvailablePrefabs = new List<string>();
-
-        #if _WINDOWS
-        public static readonly string MainPath = "../../../";
-        #else
-        public static string MainPath = "";
-        #endif
 
         public static void UpdateScenesList()
         {

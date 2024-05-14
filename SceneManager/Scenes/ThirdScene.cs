@@ -118,10 +118,12 @@ public class ThirdScene : Scene
         SceneRoot.RemoveChildObject(gameObject);
     }
 
+#if DEBUG
     public override void DrawHierarchy()
     {
         SceneRoot.DrawTree();
     }
+#endif
 
     public override void SaveToFile()
     {

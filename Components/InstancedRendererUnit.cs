@@ -66,6 +66,7 @@ public class InstancedRendererUnit : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("InstancedRendererUnit"))
@@ -78,4 +79,5 @@ public class InstancedRendererUnit : Component
             }
         }   
     }
+#endif
 }

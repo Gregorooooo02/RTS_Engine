@@ -56,6 +56,7 @@ public class Camera : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Camera"))
@@ -69,7 +70,8 @@ public class Camera : Component
             }
         }
     }
-   
+#endif
+
     public Camera(GameObject parentObject)
     {
         ParentObject = parentObject;
