@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
-using Microsoft.Xna.Framework;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace RTS_Engine;
 

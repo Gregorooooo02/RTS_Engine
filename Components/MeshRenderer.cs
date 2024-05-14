@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using ImGuiNET;
 
 namespace RTS_Engine;
