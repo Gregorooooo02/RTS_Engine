@@ -43,7 +43,6 @@ public class SpiteRenderer : Component
 
     public override void Initialize()
     {
-        Globals.Renderer.Sprites.Add(this);
         Sprite = AssetManager.DefaultSprite;
     }
 

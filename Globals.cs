@@ -14,6 +14,7 @@ namespace RTS_Engine
         public static void Initialize() 
         {
             ComponentsTypes = GetAllComponents();
+            BoundingFrustum = new BoundingFrustum(Matrix.Identity);
 
             ShadowInstanceDeclaration = new VertexDeclaration
             (

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
-using System.IO;
 
 namespace RTS_Engine;
 
@@ -96,7 +94,6 @@ public class Game1 : Game
 #if DEBUG
         _sceneManager.AddScene(new MapScene());
 #elif RELEASE
-        _sceneManager.AddScene(FileManager.PopulateScene(Globals.MainPath + "Scenes/ThirdScene.xml"));
         _sceneManager.AddScene(FileManager.PopulateScene(Globals.MainPath + "Scenes/BaseScene.xml"));
 #endif
     }
@@ -131,8 +128,6 @@ public class Game1 : Game
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
 #endif
-        //Idk if line below is necessary. Shit seems to work even if it's commented out so whatever
-        //base.Draw(gameTime);
         Globals.Renderer.PrepareForNextFrame();
         
 #if DEBUG
