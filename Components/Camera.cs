@@ -21,7 +21,7 @@ public class Camera : Component
 
     public float cameraSpeed = 20.0f;
     
-    public float nearPlane = 0.05f;
+    public float nearPlane = 0.5f;
     public float farPlane = 2000.0f;
     
     public override void Initialize()
