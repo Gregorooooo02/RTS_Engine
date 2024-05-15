@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 
@@ -6,6 +7,8 @@ namespace RTS_Engine;
 
 public class Pathfinder : Component
 {
+
+    public Point[,] nodes;
     public override void Update()
     {
       

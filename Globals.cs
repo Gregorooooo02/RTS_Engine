@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RTS_Engine.Pathfinding;
+using Point = System.Drawing.Point;
 
 namespace RTS_Engine
 {
@@ -14,6 +16,7 @@ namespace RTS_Engine
         public static void Initialize() 
         {
             ComponentsTypes = GetAllComponents();
+            CreateNodes();
         }
         
         public static float DeltaTime { get; set; }
@@ -25,6 +28,7 @@ namespace RTS_Engine
         public static Matrix Projection = Matrix.Identity;
         public static Vector3 ViewPos;
         public static float ZoomDegrees = 45.0f;
+        public static Node[,] Nodes;
 
         public static Renderer Renderer;
         public static PickingManager PickingManager;
@@ -59,6 +63,19 @@ namespace RTS_Engine
         }
 
         public static List<Type> ComponentsTypes;
+
+        //for pathfinding
+        public static void CreateNodes()
+        {
+            for (int i = 0; i < 128; i++)
+            {
+                for (int j = 0; j < 128; j++)
+                {
+                    Nodes[i, j] = new Node(new Point(i, j), true);
+                }
+            }
+        }
+        
 #if DEBUG
         public static GameObject CurrentlySelectedObject;
         public static List<string> AvailableScenes = new List<string>();
