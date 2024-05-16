@@ -30,7 +30,6 @@ public class ModelData
      * [4] - ambient occlusion
      *--------------------------------------------------------------------------------------------------------------------------
      */
-    //public List<Texture2D> Textures = new();
 
     public readonly List<List<List<Texture2D>>> Textures = new();
 
@@ -195,14 +194,45 @@ public class ModelData
                             CurrentModelIndex = lod - i - 1;
                         }
                     }
+                    string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
                     //if model has multiple meshes with separate texture maps
                     if (IsMultiMesh)
                     {
-            
+                        int meshCount = int.Parse(modelConfig?.Element("meshes")?.Value);
+                        for (int i = 0; i < lod; i++)
+                        {
+                            Textures.Add(new List<List<Texture2D>>());
+                            for (int j = 0; j < meshCount; j++)
+                            {
+                                Textures[i].Add(new List<Texture2D>());
+                                for (int k = 0; k < _modelMaps.Length; k++)
+                                {
+                                    Texture2D temp;
+                                    try
+                                    {
+                                        temp = manager.Load<Texture2D>(modelPath + "/" + (i + 1) + "/" + (j + 1) + "/" +_modelMaps[k]);
+                                    }
+                                    catch (ContentLoadException)
+                                    {
+                                        Textures[i][j].Add(AssetManager.DefaultTextureMaps[k]);
+                                        continue;
+                                    }
+                                    Textures[i][j].Add(temp);
+                                }
+                            }
+                            try
+                            {
+                                Models.Add(manager.Load<Model>(modelPath + "/" + (i + 1) + "/" + modelName));
+                            }
+                            catch (Exception)
+                            {
+                                Models.Add(AssetManager.DefaultModel.Models[0]);
+                                modelPath = AssetManager.DefaultModel.ModelPath;
+                            }
+                        }
                     }
                     else
                     {
-                        string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
                         for (int i = 0; i < lod; i++)
                         {
                             Textures.Add(new List<List<Texture2D>>());
@@ -240,7 +270,44 @@ public class ModelData
             //if model has multiple meshes with separate texture maps
             if (IsMultiMesh)
             {
-            
+                
+                var value = modelConfig?.Element("meshes")?.Value;
+                if (value != null)
+                {
+                    int meshCount = int.Parse(value);
+                    Textures.Add(new List<List<Texture2D>>());
+                    for (int i = 0; i < meshCount; i++)
+                    {
+                        Textures[0].Add(new List<Texture2D>());
+                        for (int j = 0; j < _modelMaps.Length; j++)
+                        {
+                            Texture2D temp;
+                            try
+                            {
+                                temp = manager.Load<Texture2D>(modelPath + "/" + (i + 1) + "/" + _modelMaps[j]);
+                            }
+                            catch (ContentLoadException)
+                            {
+                                Textures[0][i].Add(AssetManager.DefaultTextureMaps[j]);
+                                continue;
+                            }
+                            Textures[0][i].Add(temp);
+                        }
+                    }
+                    //Loading model itself, saving model name
+                    string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+                    try
+                    {
+                        Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+                    }
+                    catch (Exception)
+                    {
+                        Models.Add(AssetManager.DefaultModel.Models[0]);
+                        modelPath = AssetManager.DefaultModel.ModelPath;
+                    }
+                    
+                }
+                
             }
             else
             {
