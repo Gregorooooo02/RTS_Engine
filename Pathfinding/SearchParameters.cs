@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace RTS_Engine.Pathfinding;
@@ -19,26 +20,35 @@ public class SearchParameters
 
     private bool Search(Node currentNode, Node[,] nodes)
     {
+        currentNode.State = NodeState.Closed;
         List<Node> nextNodes = GetAdjacentWalkableNodes(currentNode, nodes);
         nextNodes.Sort((node1, node2) => node1.F.CompareTo(node2.F));
         foreach (var nextNode in nextNodes)
         {
-            
+            if (nextNode.Location == EndLocation)
+            {
+                return true;
+            }
+            else
+            {
+                if(Search(nextNode, nodes))
+                    return true;
+            }
+           
         }
-
-        return true;
+        return false;
     }
     
     private List<Node> GetAdjacentWalkableNodes(Node fromNode, Node[,] nodes)
     {
         List<Node> walkableNodes = new List<Node>();
         List<Point> nextLocations = GetAdjacentLocations(fromNode.Location);
-
+        
         foreach (var location in nextLocations)
         {
             int x = location.X;
             int y = location.Y;
-
+            
             if (x < 0 || x >= Map.GetLength(0) || y < 0 || y >= Map.GetLength(1))
                 continue;
 
@@ -46,10 +56,10 @@ public class SearchParameters
 
             if (!node.IsWalkable)
                 continue;
-
+            
             if (node.State == NodeState.Closed)
                 continue;
-
+            
             if (node.State == NodeState.Open)
             {
 
@@ -59,16 +69,19 @@ public class SearchParameters
                 {
                     node.ParentNode = fromNode;
                     walkableNodes.Add(node);
-                }
-                else
-                {
-                    // If it's untested, set the parent and flag it as 'Open' for consideration
-                    node.ParentNode = fromNode;
-                    node.State = NodeState.Open;
-                    walkableNodes.Add(node);
+                    
                 }
             }
+            else
+            {
+                // If it's untested, set the parent and flag it as 'Open' for consideration
+                node.ParentNode = fromNode;
+                node.State = NodeState.Open;
+                walkableNodes.Add(node);
+            }
         }
+        
+        // Console.WriteLine(walkableNodes.Count);
         return walkableNodes;
     }
         
@@ -89,22 +102,40 @@ public class SearchParameters
         return adjacentLocations;
     }
     
-    private void assignCosts(Point startingPoint, Point endPoint)
+    private void assignCosts(Point startingPoint, Point endPoint, int width, int height, Node[,] nodes)
     {
-        for (int i = 0; i < 128; i++)
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < 128; j++)
+            for (int j = 0; j < height; j++)
             {
-                Node node = Globals.Nodes[i, j];
+                Node node = nodes[i, j];
                 node.H = Node.GetTraversalCost(node.Location, endPoint);
                 node.G = Node.GetTraversalCost(node.Location, startingPoint);
                 node.F = node.G + node.H;
                 if (Map[i, j] == false)
                 {
-                    Globals.Nodes[i, j].IsWalkable = false;
+                    nodes[i, j].IsWalkable = false;
                 }
             }
         }
        
+    }
+    
+    public List<Point> FindPath(Node[,] nodes)
+    {
+        assignCosts(StartLocation, EndLocation, Map.GetLength(0), Map.GetLength(1), nodes);
+        List<Point> path = new List<Point>();
+        bool success = Search(nodes[StartLocation.X, StartLocation.Y], nodes);
+        if (success)
+        {
+            Node node = nodes[EndLocation.X, EndLocation.Y];
+            while (node.ParentNode != null)
+            {
+                path.Add(node.Location);
+                node = node.ParentNode;
+            }
+            path.Reverse();
+        }
+        return path;
     }
 }
