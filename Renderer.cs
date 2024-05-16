@@ -91,6 +91,8 @@ public class Renderer
         Globals.PickingManager.DrawSelectionBox();
         DrawSprites();
         DrawAnimatedSprites();
+        Globals.SpriteBatch.End();
+        Globals.SpriteBatch.Begin();
         DrawText();
         Globals.SpriteBatch.End();
 
