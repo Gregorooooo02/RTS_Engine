@@ -222,15 +222,10 @@ public class Renderer
 
     private void DrawShadowMapInstanced(InstancedRendererController rendererController)
     {
-        if(rendererController.WorldMatrices.Count == 0 || !rendererController.Active) return;
+        if(rendererController.CurrentIndex == 0 || !rendererController.Active) return;
         DynamicVertexBuffer instanceVertexBuffer = new DynamicVertexBuffer(Globals.GraphicsDevice,
-            Globals.ShadowInstanceDeclaration, rendererController.WorldMatrices.Count, BufferUsage.WriteOnly);
-        List<Matrix> matrices = new List<Matrix>();
-        foreach (InstancedRendererController.InstanceData data in rendererController.WorldMatrices)
-        {
-            matrices.Add(data.World);
-        }
-        instanceVertexBuffer.SetData<Matrix>(matrices.ToArray(),0,rendererController.WorldMatrices.Count, SetDataOptions.Discard);
+            Globals.ShadowInstanceDeclaration, rendererController.CurrentIndex, BufferUsage.WriteOnly);
+        instanceVertexBuffer.SetData<Matrix>(rendererController.Matrices,0,rendererController.CurrentIndex, SetDataOptions.Discard);
         
         foreach (ModelMesh mesh in rendererController.ModelData.Models[rendererController.ModelData.CurrentModelIndex].Meshes)
         {
@@ -243,7 +238,7 @@ public class Renderer
                 );
                 Globals.GraphicsDevice.Indices = part.IndexBuffer;
                 _shadowMapGenerator.CurrentTechnique.Passes[0].Apply();
-                Globals.GraphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, part.StartIndex, part.PrimitiveCount, rendererController.WorldMatrices.Count);
+                Globals.GraphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, part.StartIndex, part.PrimitiveCount, rendererController.CurrentIndex);
             }
         } 
     }

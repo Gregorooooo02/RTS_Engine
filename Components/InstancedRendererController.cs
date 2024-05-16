@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -10,8 +10,24 @@ namespace RTS_Engine;
 public class InstancedRendererController : Component
 {
     public ModelData ModelData;
-    public List<InstanceData> WorldMatrices = new();
+    private InstanceData[] _instanceData = new InstanceData[128];
+    public Matrix[] Matrices = new Matrix[128];
+    public int CurrentIndex = 0;
+    private int _currentBufferSize = 128;
 
+    public void Add(InstanceData data)
+    {
+        _instanceData[CurrentIndex] = data;
+        Matrices[CurrentIndex] = data.World;
+        CurrentIndex++;
+        if (CurrentIndex == _currentBufferSize)
+        {
+            _currentBufferSize *= 2;
+            Array.Resize(ref _instanceData,_currentBufferSize);
+            Array.Resize(ref Matrices,_currentBufferSize);
+        }
+    }
+    
     public struct InstanceData
     {
         public Matrix World;
@@ -32,12 +48,12 @@ public class InstancedRendererController : Component
     
     public void Draw()
     {
-        if (Active && WorldMatrices.Count > 0)
+        if (Active && CurrentIndex > 0)
         {
             var instanceVertexBuffer = new DynamicVertexBuffer(Globals.GraphicsDevice,
-                Globals.InstanceVertexDeclaration, WorldMatrices.Count, BufferUsage.WriteOnly);
+                Globals.InstanceVertexDeclaration, CurrentIndex, BufferUsage.WriteOnly);
             
-            instanceVertexBuffer.SetData(WorldMatrices.ToArray(),0,WorldMatrices.Count);
+            instanceVertexBuffer.SetData(_instanceData,0,CurrentIndex);
             
             ModelData.ApplyLod();
             
@@ -59,7 +75,7 @@ public class InstancedRendererController : Component
                     for (int j = 0; j < Globals.MainEffect.CurrentTechnique.Passes.Count; j++)
                     {
                         Globals.MainEffect.CurrentTechnique.Passes[j].Apply();
-                        Globals.GraphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, part.StartIndex, part.PrimitiveCount, WorldMatrices.Count);
+                        Globals.GraphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, part.StartIndex, part.PrimitiveCount, CurrentIndex);
                     }
                 }
             }
@@ -77,7 +93,8 @@ public class InstancedRendererController : Component
     
     public override void Update()
     {
-        WorldMatrices.Clear();
+        //WorldMatrices.Clear();
+        CurrentIndex = 0;
     }
 
     public override void Initialize()
@@ -159,6 +176,7 @@ public class InstancedRendererController : Component
             ImGui.Checkbox("Controller active", ref Active);
             ImGui.Text("Current mesh: " + ModelData.ModelPath);
             ImGui.Text("Current technique: " + ModelData.ShaderTechniqueName);
+            ImGui.Text("CurrentIndex: " + CurrentIndex);
             ImGui.InputInt("Current model", ref ModelData.CurrentModelIndex);
             if (ImGui.Button("Add Unit to all children"))
             {

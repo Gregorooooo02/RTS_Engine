@@ -20,7 +20,7 @@ public class InstancedRendererUnit : Component
                         .Transform(ParentObject.Transform.ModelMatrix)) != ContainmentType.Disjoint)
                 {
                     _data.SetWorld(ParentObject.Transform.ModelMatrix);
-                    Controller.WorldMatrices.Add(_data);
+                    Controller.Add(_data);
                 }
             }
             else
