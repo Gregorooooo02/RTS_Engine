@@ -10,6 +10,7 @@ public class SpiteRenderer : Component
 {
     public Texture2D Sprite;
     public Color Color = Color.White;
+    public bool useLocalPosition = true;
 
     
     public SpiteRenderer(GameObject parentObject, Texture2D sprite)
@@ -28,7 +29,9 @@ public class SpiteRenderer : Component
     public void Draw()
     {
         if (!Active) return;
-        Globals.SpriteBatch?.Draw(Sprite,
+        if(useLocalPosition)
+        {
+            Globals.SpriteBatch?.Draw(Sprite,
             new Rectangle(
                 (int)ParentObject.Transform._pos.X,
                 (int)ParentObject.Transform._pos.Y,
@@ -40,6 +43,23 @@ public class SpiteRenderer : Component
                 Vector2.Zero,
                 SpriteEffects.None,
                 ParentObject.Transform._pos.Z);
+        } else
+        {
+            ParentObject.Transform.ModelMatrix.Decompose(out Vector3 scale, out Quaternion k, out Vector3 v);
+            Globals.SpriteBatch?.Draw(Sprite,
+           new Rectangle(
+               (int)v.X,
+               (int)v.Y,
+               (int)(Sprite.Width * scale.X),
+               (int)(Sprite.Height * scale.Y)),
+               null,
+               Color,
+               MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+               Vector2.Zero,
+               SpriteEffects.None,
+               ParentObject.Transform._pos.Z);
+        }
+        
     }
 
     public override void Initialize()
@@ -106,6 +126,7 @@ public class SpiteRenderer : Component
         {
             ImGui.Checkbox("Sprite active", ref Active);
             ImGui.Text(Sprite.Name);
+            ImGui.Checkbox("Use local postion", ref useLocalPosition);
             System.Numerics.Vector4 temp = Color.ToVector4().ToNumerics();
             if (ImGui.ColorEdit4("Sprite Color", ref temp))
             {

@@ -6,6 +6,7 @@ namespace RTS_Engine;
 
 public class SceneManager
 {
+    private GameAction[] sceneChangeActions = {GameAction.SCENE0, GameAction.SCENE1, GameAction.SCENE2, GameAction.SCENE3 };
     public static SceneManager Instance;
     private List<Scene> _scenes;
     public Scene CurrentScene = null;
@@ -23,6 +24,15 @@ public class SceneManager
         if (CurrentScene == null)
         {
             ChangeScene(0);
+        }
+    }
+    public void CheckForSceneChanges()
+    {
+        for (int i = 0;i < sceneChangeActions.Length;i++) {
+            if (InputManager.Instance.GetAction(sceneChangeActions[i])?.state == ActionState.RELEASED)
+            {
+                ChangeScene(i);
+            }
         }
     }
 

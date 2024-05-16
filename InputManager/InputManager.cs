@@ -17,7 +17,10 @@ public enum GameAction
     LMB,
     MMB,
     RMB,
-    BASESCENE
+    SCENE0,
+    SCENE1,
+    SCENE2,
+    SCENE3,
 }
 
 public class InputManager

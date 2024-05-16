@@ -112,10 +112,7 @@ public class Game1 : Game
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
 
-        if(InputManager.Instance.GetAction(GameAction.BASESCENE)?.state == ActionState.RELEASED)
-        {
-            _sceneManager.ChangeScene(1);
-        }
+        _sceneManager.CheckForSceneChanges();
         
 #if DEBUG
         if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
