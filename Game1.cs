@@ -93,9 +93,12 @@ public class Game1 : Game
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
 #if DEBUG
+        _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
         _sceneManager.AddScene(new MapScene());
 #elif RELEASE
-        _sceneManager.AddScene(FileManager.PopulateScene(Globals.MainPath + "Scenes/BaseScene.xml"));
+        _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
 #endif
     }
 
@@ -108,6 +111,11 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
+
+        if(InputManager.Instance.GetAction(GameAction.BASESCENE)?.state == ActionState.RELEASED)
+        {
+            _sceneManager.ChangeScene(1);
+        }
         
 #if DEBUG
         if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
@@ -165,6 +173,8 @@ public class Game1 : Game
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
         ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
+        ImGui.Checkbox("Single picking enabled", ref Globals.PickingManager.SinglePickingActive);
+        ImGui.Checkbox("Box picking enabled", ref Globals.PickingManager.BoxPickingActive);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 

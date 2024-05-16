@@ -16,7 +16,8 @@ public enum GameAction
     EXIT,
     LMB,
     MMB,
-    RMB
+    RMB,
+    BASESCENE
 }
 
 public class InputManager

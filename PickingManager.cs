@@ -8,6 +8,8 @@ namespace RTS_Engine;
 
 public class PickingManager
 {
+    public bool SinglePickingActive = false;
+    public bool BoxPickingActive = false;
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
     public List<Pickable> Picked = new() ;
@@ -139,7 +141,7 @@ public class PickingManager
     {
         Picked.Clear();
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
-        if (action is { state: ActionState.RELEASED, duration: <= HoldThreshold})
+        if (action is { state: ActionState.RELEASED, duration: <= HoldThreshold} && SinglePickingActive)
         {
              Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
              if (ray.HasValue)
@@ -164,7 +166,7 @@ public class PickingManager
                  Pickables.Clear();
                  if(candidate != null)Picked.Add(candidate);
              }
-        } else if (action is { state: ActionState.RELEASED, duration: > HoldThreshold})
+        } else if (action is { state: ActionState.RELEASED, duration: > HoldThreshold} && BoxPickingActive)
         {
             PickingFrustum? frustum = CalculatePickingFrustum(action);
             if (frustum.HasValue)
@@ -179,7 +181,7 @@ public class PickingManager
                 Globals.Renderer.PickingFrustum = frustum;
             }
         }
-        shouldDraw = action is { state: ActionState.PRESSED, duration: > HoldThreshold};
+        shouldDraw = action is { state: ActionState.PRESSED, duration: > HoldThreshold} && BoxPickingActive;
         if (shouldDraw)
         {
             Point currentMousePos = InputManager.Instance.MousePosition;
