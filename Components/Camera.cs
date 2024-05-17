@@ -21,7 +21,7 @@ public class Camera : Component
 
     public float cameraSpeed = 20.0f;
     
-    public float nearPlane = 0.05f;
+    public float nearPlane = 0.5f;
     public float farPlane = 2000.0f;
     
     public override void Initialize()
@@ -56,6 +56,7 @@ public class Camera : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Camera"))
@@ -69,7 +70,8 @@ public class Camera : Component
             }
         }
     }
-   
+#endif
+
     public Camera(GameObject parentObject)
     {
         ParentObject = parentObject;

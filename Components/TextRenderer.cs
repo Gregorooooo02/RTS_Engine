@@ -13,7 +13,8 @@ public class TextRenderer : Component
     public SpriteFont Font;
     private string _name;
     public Color Color = Color.White;
-    
+    public bool useLocalPosition = true;
+
     public override void Update() 
     {
         if (NewContent != null) 
@@ -31,16 +32,33 @@ public class TextRenderer : Component
     public void Draw()
     {
         if(!Active) return;
-        Globals.SpriteBatch.DrawString(
+        if(useLocalPosition)
+        {
+            Globals.SpriteBatch.DrawString(
             Font,
             Content,
-            new Vector2(ParentObject.Transform._pos.X,ParentObject.Transform._pos.Y),
+            new Vector2(ParentObject.Transform._pos.X, ParentObject.Transform._pos.Y),
             Color,
             MathHelper.ToRadians(ParentObject.Transform._rot.Z),
-            new Vector2(0,0),
-            new Vector2(ParentObject.Transform._scl.X,ParentObject.Transform._scl.Y),
+            new Vector2(0, 0),
+            new Vector2(ParentObject.Transform._scl.X, ParentObject.Transform._scl.Y),
             SpriteEffects.None,
-            0);
+            ParentObject.Transform._pos.Z);
+        } else
+        {
+            ParentObject.Transform.ModelMatrix.Decompose(out Vector3 scale, out Quaternion k, out Vector3 v);
+            Globals.SpriteBatch.DrawString(
+            Font,
+            Content,
+            new Vector2(v.X, v.Y),
+            Color,
+            MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+            new Vector2(0, 0),
+            new Vector2(scale.X, scale.Y),
+            SpriteEffects.None,
+            ParentObject.Transform._pos.Z);
+        }
+        
     }
 
     public override void Initialize()
@@ -64,6 +82,13 @@ public class TextRenderer : Component
 
         builder.Append("<font>" + _name + "</font>");
         
+        builder.Append("<color>");
+        builder.Append("<r>" + Color.R + "</r>");
+        builder.Append("<g>" + Color.G + "</g>");
+        builder.Append("<b>" + Color.B + "</b>");
+        builder.Append("<a>" + Color.A + "</a>");
+        builder.Append("</color>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -73,7 +98,11 @@ public class TextRenderer : Component
         Active = element.Element("active")?.Value == "True";
         Content = element.Element("contents").Value;
         LoadFont(element.Element("font").Value);
-        Globals.Renderer.Texts.Add(this);
+        
+        XElement color = element.Element("color");
+        if (color == null) Color = new Color(255, 255, 255);
+        else Color = new Color(int.Parse(color.Element("r")?.Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
+
     }
 
     public override void RemoveComponent()
@@ -96,6 +125,7 @@ public class TextRenderer : Component
         if(ImGui.CollapsingHeader("Text Renderer"))
         {
             ImGui.Checkbox("Text active", ref Active);
+            ImGui.Checkbox("Use local postion", ref useLocalPosition);
             System.Numerics.Vector4 temp = Color.ToVector4().ToNumerics();
             if (ImGui.ColorEdit4("Text Color", ref temp))
             {

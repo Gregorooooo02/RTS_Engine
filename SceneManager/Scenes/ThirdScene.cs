@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
@@ -119,10 +118,12 @@ public class ThirdScene : Scene
         SceneRoot.RemoveChildObject(gameObject);
     }
 
+#if DEBUG
     public override void DrawHierarchy()
     {
         SceneRoot.DrawTree();
     }
+#endif
 
     public override void SaveToFile()
     {

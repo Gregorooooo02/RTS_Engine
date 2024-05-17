@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
-using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
@@ -88,7 +87,20 @@ public class GameObject
     public void RemoveChildObject(GameObject gameObject)
     {
         Children.Remove(gameObject);
+        ClearObject(gameObject);
         gameObject.Parent = null; 
+    }
+
+    private void ClearObject(GameObject gameObject)
+    {
+        for (int i = gameObject.Children.Count - 1; i >= 0 ; i--)
+        {
+            ClearObject(gameObject.Children[i]);
+        }
+        for (int i = gameObject._components.Count - 1; i >= 0 ; i--)
+        {
+            gameObject._components[i].RemoveComponent();
+        }
     }
 
     public string SaveSceneToXml()
@@ -140,6 +152,9 @@ public class GameObject
 
 #if DEBUG
     private bool addingOpen = false;
+    private bool savingPrefab = false;
+    private bool loadPrefab = false;
+    private string prefabName;
     public void DrawTree()
     {
         ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.OpenOnArrow;
@@ -167,6 +182,21 @@ public class GameObject
             ImGui.TreePop();
         }
     }
+    private void SaveAsPrefab(string name)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(SaveSceneToXml());
+        XDocument prefab = XDocument.Parse(builder.ToString());
+        StreamWriter streamWriter = new StreamWriter(Globals.MainPath + "/Prefabs/" + name + ".xml");
+        prefab.Save(streamWriter);
+        streamWriter.Close();
+    }
+
+    private void LoadPrefab(string name)
+    {
+        AddChildObject(FileManager.DeserializeScene(name));
+    }
+
 
     public void DrawInspector()
     {
@@ -188,6 +218,16 @@ public class GameObject
         {
             AddChildObject(new GameObject());
         }
+        if(ImGui.Button("Save as prefab"))
+        {
+                prefabName = Name;
+                savingPrefab = true;
+        }
+        if(ImGui.Button("Add prefab as child"))
+        {
+            Globals.UpdatePrefabList();
+            loadPrefab = true;
+        }
         ImGui.Text("");
         Transform.Inspect();
         for(int i = _components.Count  - 1;i >= 0;i--)
@@ -200,6 +240,41 @@ public class GameObject
             addingOpen = true;
         }
         ImGui.End();
+
+        if (savingPrefab)
+        {
+            ImGui.Begin("Save prefab");
+            ImGui.InputText("Prefab name", ref prefabName, 20);
+            if (ImGui.Button("Save"))
+            {
+                SaveAsPrefab(prefabName);
+                savingPrefab = false;
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                savingPrefab = false;
+            }
+            ImGui.End();
+        }
+
+        if (loadPrefab)
+        {
+            ImGui.Begin("Load and add prefab");
+            foreach(string path in Globals.AvailablePrefabs)
+            {
+                if (ImGui.Button(path))
+                {
+                    LoadPrefab(path);
+                    loadPrefab = false;
+                }
+            }
+
+            if (ImGui.Button("Cancel"))
+            {
+                loadPrefab = false;
+            }
+            ImGui.End();
+        }
 
         if (addingOpen)
         {

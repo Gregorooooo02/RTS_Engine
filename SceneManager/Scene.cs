@@ -5,6 +5,7 @@ namespace RTS_Engine;
 public abstract class Scene
 {
     public string Name;
+    public string TempName = "";
     public GameObject SceneRoot;
 
     public abstract void Initialize();
@@ -13,6 +14,8 @@ public abstract class Scene
     public abstract void Deactivate();
     public abstract void AddGameObject(GameObject gameObject);
     public abstract void RemoveGameObject(GameObject gameObject);
+#if DEBUG
     public abstract void DrawHierarchy();
+#endif
     public abstract void SaveToFile();
 }

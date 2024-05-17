@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,6 +10,7 @@ public class SpiteRenderer : Component
 {
     public Texture2D Sprite;
     public Color Color = Color.White;
+    public bool useLocalPosition = true;
 
     
     public SpiteRenderer(GameObject parentObject, Texture2D sprite)
@@ -28,7 +28,10 @@ public class SpiteRenderer : Component
 
     public void Draw()
     {
-        Globals.SpriteBatch?.Draw(Sprite,
+        if (!Active) return;
+        if(useLocalPosition)
+        {
+            Globals.SpriteBatch?.Draw(Sprite,
             new Rectangle(
                 (int)ParentObject.Transform._pos.X,
                 (int)ParentObject.Transform._pos.Y,
@@ -39,7 +42,24 @@ public class SpiteRenderer : Component
                 MathHelper.ToRadians(ParentObject.Transform._rot.Z),
                 Vector2.Zero,
                 SpriteEffects.None,
-                1);
+                ParentObject.Transform._pos.Z);
+        } else
+        {
+            ParentObject.Transform.ModelMatrix.Decompose(out Vector3 scale, out Quaternion k, out Vector3 v);
+            Globals.SpriteBatch?.Draw(Sprite,
+           new Rectangle(
+               (int)v.X,
+               (int)v.Y,
+               (int)(Sprite.Width * scale.X),
+               (int)(Sprite.Height * scale.Y)),
+               null,
+               Color,
+               MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+               Vector2.Zero,
+               SpriteEffects.None,
+               ParentObject.Transform._pos.Z);
+        }
+        
     }
 
     public override void Initialize()
@@ -77,11 +97,17 @@ public class SpiteRenderer : Component
         LoadSprite(element.Element("sprite").Value);
         XElement color = element.Element("color");
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
-        Globals.Renderer.Sprites.Add(this);
     }
 
     public override void RemoveComponent()
     {
+        //Also remove associated button if it's exists anyway
+        Button button = ParentObject.GetComponent<Button>();
+        if (button != null && button.ButtonVisual == this)
+        {
+            ParentObject.RemoveComponent(button);
+        }
+        
         Globals.Renderer.Sprites.Remove(this);
         ParentObject.RemoveComponent(this);
         AssetManager.FreeSprite(Sprite);
@@ -100,6 +126,7 @@ public class SpiteRenderer : Component
         {
             ImGui.Checkbox("Sprite active", ref Active);
             ImGui.Text(Sprite.Name);
+            ImGui.Checkbox("Use local postion", ref useLocalPosition);
             System.Numerics.Vector4 temp = Color.ToVector4().ToNumerics();
             if (ImGui.ColorEdit4("Sprite Color", ref temp))
             {

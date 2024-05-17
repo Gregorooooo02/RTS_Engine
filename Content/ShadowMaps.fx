@@ -31,6 +31,16 @@ CreateShadowMap_VSOut CreateShadowMap_VertexShader(in CreateShadowMap_VSIn input
     return Out;
 }
 
+CreateShadowMap_VSOut ShadowMap_Instanced_VS(CreateShadowMap_VSIn input,float4x4 world : BLENDWEIGHT)
+{
+    CreateShadowMap_VSOut Out = (CreateShadowMap_VSOut) 0;
+    Out.Position = mul(input.Position, mul(transpose(world), LightViewProj));
+    Out.Depth = Out.Position.zw;
+    
+    return Out;
+}
+
+
 float4 CreateShadowMap_PixelShader(CreateShadowMap_VSOut input) : COLOR
 {
     return float4(input.Depth.x / input.Depth.y, 1, 1, 1);
@@ -42,6 +52,16 @@ technique CreateShadowMap
     pass Pass1
     {
         VertexShader = compile VS_SHADERMODEL CreateShadowMap_VertexShader();
+        PixelShader = compile PS_SHADERMODEL CreateShadowMap_PixelShader();
+    }
+}
+
+//Technique for creating the shadow map for instanced objects
+technique ShadowInstanced
+{
+    pass Pass0
+    {
+        VertexShader = compile VS_SHADERMODEL ShadowMap_Instanced_VS();
         PixelShader = compile PS_SHADERMODEL CreateShadowMap_PixelShader();
     }
 }

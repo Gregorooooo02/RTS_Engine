@@ -62,6 +62,7 @@ public class Collider : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Collider"))
@@ -74,4 +75,5 @@ public class Collider : Component
             }
         }
     }
+#endif
 }

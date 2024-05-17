@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
-using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
 public class SceneManager
 {
+    private GameAction[] sceneChangeActions = {GameAction.SCENE0, GameAction.SCENE1, GameAction.SCENE2, GameAction.SCENE3 };
     public static SceneManager Instance;
     private List<Scene> _scenes;
     public Scene CurrentScene = null;
@@ -24,6 +24,15 @@ public class SceneManager
         if (CurrentScene == null)
         {
             ChangeScene(0);
+        }
+    }
+    public void CheckForSceneChanges()
+    {
+        for (int i = 0;i < sceneChangeActions.Length;i++) {
+            if (InputManager.Instance.GetAction(sceneChangeActions[i])?.state == ActionState.RELEASED)
+            {
+                ChangeScene(i);
+            }
         }
     }
 
@@ -52,6 +61,10 @@ public class SceneManager
         AnimatedSpriteRenderer animatedSpriteRenderer = gameObject.GetComponent<AnimatedSpriteRenderer>();
         if(animatedSpriteRenderer != null) Globals.Renderer.AnimatedSprites.Add(animatedSpriteRenderer);
 
+        InstancedRendererController instancedRendererController =
+            gameObject.GetComponent<InstancedRendererController>();
+        if (instancedRendererController != null) Globals.Renderer.InstancedRendererControllers.Add(instancedRendererController);
+
         foreach (GameObject objectChild in gameObject.Children)
         {
             OnLoad(objectChild);
@@ -72,6 +85,7 @@ public class SceneManager
         {
             AddScene(new LoadedScene());
             _scenes.Last().Name = "Scene#" + _scenes.Count;
+            _scenes.Last().TempName = "Scene#" + _scenes.Count;
         }
         ImGui.SameLine();
         if (ImGui.Button("Load scene"))
@@ -84,7 +98,12 @@ public class SceneManager
         {
             if (ImGui.CollapsingHeader(_scenes[i].Name))
             {
-                ImGui.InputText("Scene name",ref _scenes[i].Name, 25);
+                ImGui.InputText("Scene name",ref _scenes[i].TempName, 25);
+                ImGui.SameLine();
+                if(ImGui.Button("Apply name"))
+                {
+                    _scenes[i].Name = _scenes[i].TempName;
+                }
                 if (ImGui.Button("Select " + _scenes[i].Name + " scene"))
                 {
                     ChangeScene(i);
@@ -145,6 +164,7 @@ public class SceneManager
                     loadingScene = false;
                     Scene scene = new LoadedScene();
                     scene.Name = name;
+                    scene.TempName = name;
                     scene.SceneRoot = FileManager.DeserializeScene(path);
                     AddScene(scene);
                 }

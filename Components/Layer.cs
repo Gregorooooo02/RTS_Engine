@@ -37,7 +37,8 @@ public class Layer : Component
         builder.Append("</component>");
         return builder.ToString();
     }
-    
+
+#if DEBUG
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Layer"))
@@ -51,6 +52,7 @@ public class Layer : Component
             }
         }
     }
+#endif
     
     public override void Deserialize(XElement element){}
 

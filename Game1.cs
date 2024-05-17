@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,7 +26,6 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
-    private bool isWireframe = false;
     
     public Game1()
     {
@@ -36,7 +34,7 @@ public class Game1 : Game
 #if DEBUG
         _measurements = new double[_size];
 #endif
-        
+        Globals.GraphicsDeviceManager = _graphics;
         if (isFullscreen)
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -47,7 +45,9 @@ public class Game1 : Game
             _graphics.PreferredBackBufferWidth = 1440;
             _graphics.PreferredBackBufferHeight = 900;
         }
-        
+        //IsFixedTimeStep = false;
+        //_graphics.SynchronizeWithVerticalRetrace = false;
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -57,18 +57,19 @@ public class Game1 : Game
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _sceneManager = new SceneManager();
 
+#if DEBUG
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
+#endif
         
         GenerateMap.GenerateNoiseTexture();
 
         Globals.Renderer = new Renderer(Content);
-        Globals.PickingManager = new PickingManager();
+        Globals.PickingManager = new PickingManager(Content);
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-
         base.Initialize();
     }
 
@@ -93,9 +94,14 @@ public class Game1 : Game
         bytecode = File.ReadAllBytes("../../../Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
-
+#if DEBUG
+        _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
         _sceneManager.AddScene(new MapScene());
-        _sceneManager.AddScene(new ThirdScene());
+#elif RELEASE
+        _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
+#endif
     }
 
     protected override void Update(GameTime gameTime)
@@ -107,16 +113,17 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
+
+        _sceneManager.CheckForSceneChanges();
         
 #if DEBUG
         if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
         Globals.PickingManager.CheckForRay();
-        if (Globals.PickingManager.Picked.Count > 0)
+        foreach (Pickable yes in Globals.PickingManager.Picked)
         {
-            Console.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
-            Debug.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
+            Console.WriteLine(yes.ParentObject.Name);
         }
 
         base.Update(gameTime);
@@ -132,8 +139,6 @@ public class Game1 : Game
         ImGuiLayout();
         _imGuiRenderer.AfterLayout();
 #endif
-        //Idk if line below is necessary. Shit seems to work even if it's commented out so whatever
-        //base.Draw(gameTime);
         Globals.Renderer.PrepareForNextFrame();
         
 #if DEBUG
@@ -161,7 +166,7 @@ public class Game1 : Game
 
         ImGui.Checkbox("Fullscreen", ref isFullscreen);
         ImGui.Separator();
-		ImGui.Checkbox("Wireframe", ref isWireframe);
+		ImGui.Checkbox("Wireframe", ref Globals.DrawWireframe);
 		ImGui.Separator();
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
@@ -169,6 +174,9 @@ public class Game1 : Game
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
+        ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
+        ImGui.Checkbox("Single picking enabled", ref Globals.PickingManager.SinglePickingActive);
+        ImGui.Checkbox("Box picking enabled", ref Globals.PickingManager.BoxPickingActive);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 

@@ -15,6 +15,30 @@ namespace RTS_Engine
         public static void Initialize() 
         {
             ComponentsTypes = GetAllComponents();
+            BoundingFrustum = new BoundingFrustum(Matrix.Identity);
+
+            ShadowInstanceDeclaration = new VertexDeclaration
+            (
+                new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 0),
+                new VertexElement(sizeof(float) * 4, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 1),
+                new VertexElement(sizeof(float) * 8, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 2),
+                new VertexElement(sizeof(float) * 12, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 3)
+            );
+            
+            InstanceVertexDeclaration = new VertexDeclaration
+            (
+                new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 0),
+                new VertexElement(sizeof(float) * 4, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 1),
+                new VertexElement(sizeof(float) * 8, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 2),
+                new VertexElement(sizeof(float) * 12, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 3),
+                new VertexElement(sizeof(float) * 16, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 0),
+                new VertexElement(sizeof(float) * 20, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 1),
+                new VertexElement(sizeof(float) * 24, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 2),
+                new VertexElement(sizeof(float) * 28, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 3)
+            );
+
+            Solid = new RasterizerState() { FillMode = FillMode.Solid };
+            WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame };
         }
         
         public static float DeltaTime { get; set; }
@@ -23,6 +47,7 @@ namespace RTS_Engine
         public static ContentManager content;
         public static TimeSpan ElapsedGameTime { get; set; }
         public static GraphicsDevice GraphicsDevice;
+        public static GraphicsDeviceManager GraphicsDeviceManager;
         public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
         public static Effect TerrainEffect;
@@ -39,7 +64,14 @@ namespace RTS_Engine
 
         public static float Gamma = 2.2f;
         public static float LightIntensity = 10;
+        
+        public static RasterizerState Solid;
+        public static RasterizerState WireFrame;
+        
+        public static VertexDeclaration InstanceVertexDeclaration;
+        public static VertexDeclaration ShadowInstanceDeclaration;
 
+        public static bool HitUI = false;
 
         public enum LayerType 
         {
@@ -56,6 +88,8 @@ namespace RTS_Engine
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ElapsedGameTime = gameTime.ElapsedGameTime;
+
+            HitUI = false;
         }
         
         private static List<Type> GetAllComponents()
@@ -66,16 +100,17 @@ namespace RTS_Engine
             return assembly.GetTypes().Where(x => baseType.IsAssignableFrom(x) && x != baseType && x != transform).ToList();
         }
 
+#if _WINDOWS
+        public static readonly string MainPath = "../../../";
+#else
+        public static string MainPath = "";
+#endif
+
         public static List<Type> ComponentsTypes;
 #if DEBUG
         public static GameObject CurrentlySelectedObject;
         public static List<string> AvailableScenes = new List<string>();
-
-        #if _WINDOWS
-        public static readonly string MainPath = "../../../";
-        #else
-        public static string MainPath = "";
-        #endif
+        public static List<string> AvailablePrefabs = new List<string>();
 
         public static void UpdateScenesList()
         {
@@ -88,6 +123,11 @@ namespace RTS_Engine
 #endif
         }
         
+        public static void UpdatePrefabList()
+        {
+            AvailablePrefabs = Directory.GetFiles(MainPath + "Prefabs").ToList();
+        }
+
         public static int ShadowMapResolutionMultiplier = 3;
         
         //Switches for debug windows UWU
@@ -98,6 +138,8 @@ namespace RTS_Engine
         public static bool DrawShadows = true;
         public static bool DrawMeshes = true;
         public static bool DebugCamera = true;
+        public static bool DrawWireframe = false;
+        public static bool DrawSelectFrustum = false;
 #endif
     }
 }

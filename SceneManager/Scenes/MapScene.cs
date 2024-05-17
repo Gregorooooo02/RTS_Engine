@@ -16,6 +16,7 @@ public class MapScene : Scene
     public override void Initialize()
     {
         Name = "MapScene";
+        TempName = Name;
         SceneRoot = new GameObject();
         SceneRoot.Name = "Root";
         
@@ -50,12 +51,12 @@ public class MapScene : Scene
     {
         SceneRoot.RemoveChildObject(gameObject);
     }
-
+#if DEBUG
     public override void DrawHierarchy()
     {
         SceneRoot.DrawTree();
     }
-
+#endif
     public override void SaveToFile()
     {
         StringBuilder builder = new StringBuilder();
