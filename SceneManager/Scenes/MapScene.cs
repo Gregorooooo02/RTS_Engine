@@ -19,14 +19,6 @@ public class MapScene : Scene
         SceneRoot = new GameObject();
         SceneRoot.Name = "Root";
         
-        gameObject = new GameObject();
-        gameObject.Name = "MapTexture";
-        gameObject.Transform.SetLocalScale(new Vector3(2, 2, 1));
-        gameObject.AddComponent<SpiteRenderer>();
-        gameObject.GetComponent<SpiteRenderer>().Sprite = GenerateMap.noiseTexture;
-        gameObject.Transform.SetLocalPosition(new Vector3(0, 0, 0));
-        SceneRoot.AddChildObject(gameObject);
-
         meshObject = new GameObject();
         meshObject.Name = "WorldMesh";
         meshObject.AddComponent<WorldRenderer>();
