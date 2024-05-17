@@ -158,7 +158,7 @@ namespace RTS_Engine
             AvailablePrefabs = Directory.GetFiles(MainPath + "Prefabs").ToList();
         }
 
-        public static int ShadowMapResolutionMultiplier = 3;
+        public static int ShadowMapResolutionMultiplier = 4;
         
         //Switches for debug windows UWU
         public static bool InspectorVisible = true;

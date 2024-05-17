@@ -41,9 +41,6 @@ public class PickingManager
         public int[] Indices;
         public BasicEffect BasicEffect;
 #endif
-        
-        private static short IntersectMask = 0b0000101010101010;
-        private static short InsideMask = 0b0000010101010101;
         public bool Intersects(BoundingSphere sphere)
         {
             short result = 0;

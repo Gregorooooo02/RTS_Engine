@@ -101,7 +101,6 @@ public class AnimatedMeshRenderer : Component
     {
         Active = element.Element("active")?.Value == "True";
         XElement model = element.Element("model");
-        string path;
 
         if (model?.Element("path") == null)
         {

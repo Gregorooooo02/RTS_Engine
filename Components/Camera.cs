@@ -19,12 +19,12 @@ public class Camera : Component
     private float _cameraSpeed = 20.0f;
 
     private const float NearPlane = 0.5f;
-    private const float FarPlane = 500.0f;
+    private const float FarPlane = 2000.0f;
 
     public override void Initialize()
     {
         UpdateCameraMatrices();
-        ParentObject.Transform.SetLocalRotation(new(-45, 45, 0));
+        ParentObject.Transform.SetLocalRotation(new(-60, 30, 0));
     }
     
     public override string ComponentToXmlString()
@@ -122,12 +122,12 @@ public class Camera : Component
         {
             y -= 1;
         }
-        Vector3 right = Vector3.Cross(ParentObject.Transform.ModelMatrix.Forward, ParentObject.Transform.ModelMatrix.Up) ;
-        right.Y = 0;
-        right.Normalize();
         Vector3 forward = ParentObject.Transform.ModelMatrix.Forward;
         forward.Y = 0;
         forward.Normalize();
+        Vector3 right = Vector3.Cross(forward, Vector3.Up) ;
+        right.Y = 0;
+        right.Normalize();
         Vector3 combined = Vector3.Add(forward * x, right * y);
         if(x + y != 0 || x * y != 0)combined.Normalize();
         ParentObject.Transform.Move(combined * Globals.DeltaTime * _cameraSpeed);

@@ -36,7 +36,9 @@ public class ModelData
 
     public bool IsInView(Matrix world)
     {
-        return Globals.BoundingFrustum.Contains(BoundingSphere.Transform(world)) != ContainmentType.Disjoint;
+        BoundingSphere temp = BoundingSphere.Transform(world);
+        temp.Radius *= 1.5f;
+        return Globals.BoundingFrustum.Contains(temp) != ContainmentType.Disjoint;
     }
 
     public void ApplyLod()

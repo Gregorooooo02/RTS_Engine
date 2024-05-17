@@ -49,6 +49,8 @@ public class Game1 : Game
         //IsFixedTimeStep = false;
         //_graphics.SynchronizeWithVerticalRetrace = false;
 
+        _graphics.PreferMultiSampling = true;
+        
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
