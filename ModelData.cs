@@ -43,10 +43,10 @@ public class ModelData
         if (_lodUsed)
         {
             int levels = Textures.Count;
-            float step = 60.0f / levels;
+            float step = (Globals.MaxZoom - Globals.MinZoom) / levels;
             for (int i = 0; i < levels; i++)
             {
-                if (Globals.ZoomDegrees > 25.0f + (i * step) && Globals.ZoomDegrees < 25.0f + ((i + 1) * step))
+                if (Globals.ZoomDegrees > Globals.MinZoom + (i * step) && Globals.ZoomDegrees < Globals.MinZoom + ((i + 1) * step))
                 {
                     CurrentModelIndex = levels - i - 1;
                 }

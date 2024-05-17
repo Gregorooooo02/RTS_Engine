@@ -84,8 +84,10 @@ public class Camera : Component
     /// Changes the perspective matrix to a new near, far and field of view.
     /// The projection matrix is only set up once at the start of the game.
     /// </summary>
-    public void UpdateCameraMatrices() 
+    public void UpdateCameraMatrices()
     {
+        Globals.MaxZoom = ZoomMax;
+        Globals.MinZoom = ZoomMin;
         Globals.ZoomDegrees = fovDegrees;
         Globals.ViewPos = ParentObject.Transform.ModelMatrix.Translation;
         Globals.View = Matrix.CreateLookAt(Globals.ViewPos, ParentObject.Transform.ModelMatrix.Forward + Globals.ViewPos, Vector3.Up);
