@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,7 +32,7 @@ public class Renderer
     public List<SpiteRenderer> Sprites;
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
-    public List<InstancedRendererController> InstancedRende
+    public List<InstancedRendererController> InstancedRendererControllers = new();
     public WorldRenderer WorldRenderer;
 
     public PickingManager.PickingFrustum? PickingFrustum = null;
@@ -197,9 +198,6 @@ public class Renderer
         {
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
-
-        
-
 #endif
     }
 

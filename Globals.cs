@@ -103,7 +103,7 @@ namespace RTS_Engine
 #if _WINDOWS
         public static readonly string MainPath = "../../../";
 #else
-        public static string MainPath = "";
+        public static string MainPath = "../../../";
 #endif
 
         public static List<Type> ComponentsTypes;
@@ -115,12 +115,6 @@ namespace RTS_Engine
         public static void UpdateScenesList()
         {
             AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
-
-#if _WINDOWS
-            AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
-#else
-            AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
-#endif
         }
         
         public static void UpdatePrefabList()
