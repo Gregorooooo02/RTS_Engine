@@ -3,6 +3,8 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
+using RTS_Engine.Pathfinding;
+using Point = System.Drawing.Point;
 
 namespace RTS_Engine;
 
@@ -26,6 +28,7 @@ public class ThirdScene : Scene
         gameObject.AddComponent<MeshRenderer>();
         gameObject.GetComponent<MeshRenderer>().LoadModel("defaultModel");
         gameObject.AddComponent<Collider>();
+        
         
         gameObject2.AddComponent<MeshRenderer>();
         gameObject2.GetComponent<MeshRenderer>().LoadModel("defaultModel"); 
