@@ -28,14 +28,11 @@ public class Game1 : Game
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
     private bool isWireframe = false;
-
-    // Testing animations
-    private Model _model;
-    private Animations _animations;
     
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        Globals.content = Content;
 #if DEBUG
         _measurements = new double[_size];
 #endif
@@ -96,11 +93,6 @@ public class Game1 : Game
         bytecode = File.ReadAllBytes("../../../Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
-        // Testing animation
-        _model = Content.Load<Model>("Dude/dude");
-        _animations = _model.GetAnimations();
-        var clip = _animations.Clips["Take 001"];
-        _animations.SetClip(clip);
 
         _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(new ThirdScene());
@@ -125,9 +117,6 @@ public class Game1 : Game
         {
             Console.WriteLine(Globals.PickingManager.Picked.ParentObject.Name);
         }
-        
-        // Testing animations
-        _animations.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
 
         base.Update(gameTime);
     }
@@ -137,27 +126,6 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         Globals.Renderer.Render();
-        
-        GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
-
-        Matrix[] transforms = new Matrix[_model.Bones.Count];
-        _model.CopyAbsoluteBoneTransformsTo(transforms);
-        
-        _sw.Reset();
-        _sw.Start();
-        foreach (ModelMesh mesh in _model.Meshes)
-        {
-            foreach (var part in mesh.MeshParts)
-            {
-                ((BasicEffect)part.Effect).SpecularColor = Vector3.Zero;
-                ConfigureEffectMatrices((IEffectMatrices)part.Effect, Matrix.Identity * Matrix.CreateScale(0.25f), Globals.View, Globals.Projection);
-                ConfigureEffectLighting((IEffectLights)part.Effect);
-                part.UpdateVertices(_animations.AnimationTransforms);
-            }
-            mesh.Draw();
-        }
-        _sw.Stop();
-
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
@@ -174,22 +142,6 @@ public class Game1 : Game
         if (_shiftHead == _size) _shiftHead = 0;
         _performanceTimer.Reset();
 #endif
-    }
-    
-    private void ConfigureEffectMatrices(IEffectMatrices effect, Matrix world, Matrix view, Matrix projection)
-    {
-        effect.World = world;
-        effect.View = view;
-        effect.Projection = projection;
-    }
-
-    private void ConfigureEffectLighting(IEffectLights effect)
-    {
-        effect.EnableDefaultLighting();
-        effect.DirectionalLight0.Direction = Vector3.Backward;
-        effect.DirectionalLight0.Enabled = true;
-        effect.DirectionalLight1.Enabled = false;
-        effect.DirectionalLight2.Enabled = false;
     }
     
 #if DEBUG

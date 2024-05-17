@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace RTS_Engine
@@ -17,6 +18,9 @@ namespace RTS_Engine
         }
         
         public static float TotalSeconds { get; set; }
+
+        public static ContentManager content;
+        public static TimeSpan ElapsedGameTime { get; set; }
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
@@ -49,6 +53,7 @@ namespace RTS_Engine
         public static void Update(GameTime gameTime)
         {
             TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            ElapsedGameTime = gameTime.ElapsedGameTime;
         }
         
         private static List<Type> GetAllComponents()
@@ -69,7 +74,7 @@ namespace RTS_Engine
 #if _WINDOWS
             AvailableScenes = Directory.GetFiles("../../../Scenes").ToList();
 #else
-            AvailableScenes = Directory.GetFiles("Scenes").ToList();
+            AvailableScenes = Directory.GetFiles("../../../Scenes").ToList();
 #endif
         }
         

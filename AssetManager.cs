@@ -60,6 +60,7 @@ public class AssetManager
     private readonly List<FontData> _fonts;
 
     public static ModelData DefaultModel {get; private set;}
+    public static Model DefaultAnimatedModel { get; private set; }
     public static List<Texture2D> DefaultTextureMaps { get; private set; }
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
@@ -125,6 +126,7 @@ public class AssetManager
         LoadNames();
 #endif
         DefaultModel = new ModelData(this._content,"defaultModel");
+        DefaultAnimatedModel = this._content.Load<Model>("Dude/dude");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
