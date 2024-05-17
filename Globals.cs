@@ -43,35 +43,55 @@ namespace RTS_Engine
             WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame };
         }
         
-        public static float DeltaTime { get; set; }
-        public static float TotalSeconds { get; set; }
+        #region Shaders
 
-        public static ContentManager content;
-        public static TimeSpan ElapsedGameTime { get; set; }
-        public static GraphicsDevice GraphicsDevice;
-        public static GraphicsDeviceManager GraphicsDeviceManager;
-        public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
         public static Effect TerrainEffect;
+
+        #region ShaderParameters
+
+        public static float Gamma = 2.2f;
+        public static float LightIntensity = 10;
+
+        #endregion
+
+        #endregion
+        
+        #region CameraParameters
+
         public static Matrix View = Matrix.Identity;
         public static Matrix Projection = Matrix.Identity;
         public static Vector3 ViewPos;
         public static float ZoomDegrees = 45.0f;
-        public static Vector3 CameraPosition;
 
-        public static Renderer Renderer;
-        public static PickingManager PickingManager;
         
         public static BoundingFrustum BoundingFrustum = new BoundingFrustum(Matrix.Identity);
+        #endregion
 
-        public static float Gamma = 2.2f;
-        public static float LightIntensity = 10;
+        #region Managers
+
+        public static PickingManager PickingManager;
+        public static ContentManager Content;
+
+        #endregion
+
+        #region Time
         
-        public static RasterizerState Solid;
-        public static RasterizerState WireFrame;
+        public static float DeltaTime { get; set; }
+        public static TimeSpan ElapsedGameTime { get; set; }
+
+        #endregion
         
+        #region Rendering
+        public static GraphicsDevice GraphicsDevice;
+        public static GraphicsDeviceManager GraphicsDeviceManager;
+        public static SpriteBatch SpriteBatch;
+        
+        public static Renderer Renderer;
         public static VertexDeclaration InstanceVertexDeclaration;
         public static VertexDeclaration ShadowInstanceDeclaration;
+        #endregion
+
 
         public static bool HitUI = false;
 
@@ -88,7 +108,6 @@ namespace RTS_Engine
         public static void Update(GameTime gameTime)
         {
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ElapsedGameTime = gameTime.ElapsedGameTime;
 
             HitUI = false;
@@ -123,6 +142,9 @@ namespace RTS_Engine
         // }
         
 #if DEBUG
+        public static RasterizerState Solid;
+        public static RasterizerState WireFrame;
+        
         public static GameObject CurrentlySelectedObject;
         public static List<string> AvailableScenes = new List<string>();
         public static List<string> AvailablePrefabs = new List<string>();

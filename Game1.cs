@@ -31,7 +31,7 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        Globals.content = Content;
+        Globals.Content = Content;
 #if DEBUG
         _measurements = new double[_size];
 #endif
@@ -98,7 +98,7 @@ public class Game1 : Game
 #if DEBUG
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
-        _sceneManager.AddScene(new MapScene());
+        //_sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
@@ -109,7 +109,6 @@ public class Game1 : Game
     {
 #if DEBUG
         _performanceTimer.Start();
-        Globals.CameraPosition = _sceneCamera.Position;
 #endif
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
@@ -129,9 +128,7 @@ public class Game1 : Game
 
         base.Update(gameTime);
     }
-
-    Stopwatch _sw = new Stopwatch();
-
+    
     protected override void Draw(GameTime gameTime)
     {
         Globals.Renderer.Render();

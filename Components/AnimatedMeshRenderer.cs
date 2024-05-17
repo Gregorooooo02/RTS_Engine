@@ -120,7 +120,7 @@ public class AnimatedMeshRenderer : Component
 
     public void LoadModel(string modelPath, string technique = "PBR")
     {
-        _model = Globals.content.Load<Model>("snowman_animated");
+        _model = Globals.Content.Load<Model>("snowman_animated");
         // _model.ShaderTechniqueName = technique;
     }
 
