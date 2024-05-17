@@ -25,7 +25,7 @@ public class AssetManager
 #if _WINDOWS
         StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
 #else
-        StreamReader sr = new StreamReader("Content/Content.mgcb");
+        StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
 #endif
         string line = sr.ReadLine();
         while (line != null)
@@ -71,11 +71,13 @@ public class AssetManager
     private readonly List<FontData> _fonts;
 
     public static ModelData DefaultModel {get; private set;}
-
+    public static Model DefaultAnimatedModel { get; private set; }
     public static List<Texture2D> DefaultTextureMaps { get; private set; }
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
     public static Texture2D DefaultHeightMap{get; private set;}
+    public static List<Texture2D> DefaultTerrainTextrues{get; private set;}
+    public static TextureCube DefaultSkybox{get; private set;}
     public static SpriteFont DefaultFont{get; private set;}
 
     private class ModelPointer
@@ -135,9 +137,22 @@ public class AssetManager
         LoadNames();
 #endif
         DefaultModel = new ModelData(this._content,"defaultModel");
+        DefaultAnimatedModel = this._content.Load<Model>("Dude/dude");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
+
+        DefaultTerrainTextrues = new List<Texture2D>
+        {
+            this._content.Load<Texture2D>("TerrainTextures/woda/albedo"),
+            this._content.Load<Texture2D>("TerrainTextures/piasek/albedo"),
+            this._content.Load<Texture2D>("TerrainTextures/trawa/albedo"),
+            this._content.Load<Texture2D>("TerrainTextures/kamienie/albedo"),
+            this._content.Load<Texture2D>("TerrainTextures/snieg/albedo"),
+        };
+
+        DefaultSkybox = this._content.Load<TextureCube>("TerrainTextures/SkyBox");
+
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
 
         DefaultTextureMaps = DefaultModel.Textures[0][0];

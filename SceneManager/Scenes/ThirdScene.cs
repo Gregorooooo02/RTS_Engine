@@ -25,11 +25,11 @@ public class ThirdScene : Scene
         _sceneCollisionManager = collisionManager;
     
         gameObject.AddComponent<MeshRenderer>();
-        gameObject.GetComponent<MeshRenderer>().LoadModel("monke");
+        gameObject.GetComponent<MeshRenderer>().LoadModel("defaultModel");
         gameObject.AddComponent<Collider>();
         
         gameObject2.AddComponent<MeshRenderer>();
-        gameObject2.GetComponent<MeshRenderer>().LoadModel("monke"); 
+        gameObject2.GetComponent<MeshRenderer>().LoadModel("defaultModel"); 
         gameObject2.AddComponent<Collider>();
         
         gameObject3.AddComponent<Camera>();

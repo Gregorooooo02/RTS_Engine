@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace RTS_Engine
@@ -17,6 +18,10 @@ namespace RTS_Engine
         }
         
         public static float DeltaTime { get; set; }
+        public static float TotalSeconds { get; set; }
+
+        public static ContentManager content;
+        public static TimeSpan ElapsedGameTime { get; set; }
         public static GraphicsDevice GraphicsDevice;
         public static SpriteBatch SpriteBatch;
         public static Effect MainEffect;
@@ -25,11 +30,12 @@ namespace RTS_Engine
         public static Matrix Projection = Matrix.Identity;
         public static Vector3 ViewPos;
         public static float ZoomDegrees = 45.0f;
+        public static Vector3 CameraPosition;
 
         public static Renderer Renderer;
         public static PickingManager PickingManager;
         
-        public static BoundingFrustum BoundingFrustum;
+        public static BoundingFrustum BoundingFrustum = new BoundingFrustum(Matrix.Identity);
 
         public static float Gamma = 2.2f;
         public static float LightIntensity = 10;
@@ -48,6 +54,8 @@ namespace RTS_Engine
         public static void Update(GameTime gameTime)
         {
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            ElapsedGameTime = gameTime.ElapsedGameTime;
         }
         
         private static List<Type> GetAllComponents()
@@ -72,6 +80,12 @@ namespace RTS_Engine
         public static void UpdateScenesList()
         {
             AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
+
+#if _WINDOWS
+            AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
+#else
+            AvailableScenes = Directory.GetFiles(MainPath + "Scenes").ToList();
+#endif
         }
         
         public static int ShadowMapResolutionMultiplier = 3;

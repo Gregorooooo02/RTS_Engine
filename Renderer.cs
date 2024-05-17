@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,10 +28,11 @@ public class Renderer
     
     //Things to render in current frame
     public List<MeshRenderer> Meshes;
+    public List<AnimatedMeshRenderer> AnimatedMeshes;
     public List<SpiteRenderer> Sprites;
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
-    public WorldRenderer WorldMesh;
+    public WorldRenderer WorldRenderer;
     //
 
     public Renderer(ContentManager content)
@@ -41,14 +43,14 @@ public class Renderer
 #if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/ShadowMaps");
+        byte[] bytecode = File.ReadAllBytes("../../../Content/ShadowMaps");
         _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
 #endif
         Meshes = new List<MeshRenderer>();
+        AnimatedMeshes = new List<AnimatedMeshRenderer>();
         Sprites = new List<SpiteRenderer>();
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
-        WorldMesh = new WorldRenderer();
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -70,7 +72,11 @@ public class Renderer
         
         if(Globals.DrawShadows) DrawShadows();
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
-        if(Globals.DrawMeshes) DrawMeshes();
+        if (Globals.DrawMeshes)
+        {
+            DrawMeshes();
+            DrawAnimatedMeshes();
+        }
         DrawWorld();
         
         Globals.SpriteBatch.Begin();
@@ -85,6 +91,7 @@ public class Renderer
 
         DrawShadows();
         DrawMeshes();
+        DrawAnimatedMeshes();
         DrawWorld();
 
         Globals.SpriteBatch.Begin();
@@ -122,15 +129,18 @@ public class Renderer
     public void Clear()
     {
         Meshes.Clear();
+        AnimatedMeshes.Clear();
         Sprites.Clear();
         AnimatedSprites.Clear();
         Texts.Clear();
+        // WorldRenderer = null;
     }
     
     public void PrepareForNextFrame()
     {
         //Clear list of meshes to draw
         Meshes.Clear();
+        AnimatedMeshes.Clear();
         //Prepare camera frustum for next frame culling
         Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
         
@@ -169,9 +179,36 @@ public class Renderer
 #endif
     }
 
+    private void DrawAnimatedMeshes()
+    {
+#if RELEASE
+        Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
+        Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
+        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
+        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        foreach (MeshRenderer renderer in Meshes)
+        {
+            renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
+        }
+#elif DEBUG
+        // Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+        // Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
+        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
+        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
+        {
+            Stopwatch _sw = new Stopwatch();
+            
+            
+            renderer.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            
+        }
+#endif
+    }
+
     private void DrawWorld()
     {
-        WorldMesh.Draw();   
+        WorldRenderer?.Draw();
     }
     
     private void DrawShadows()
@@ -183,6 +220,11 @@ public class Renderer
         Globals.GraphicsDevice.SetRenderTarget(_shadowMapRenderTarget);
         _shadowMapGenerator.Parameters["LightViewProj"].SetValue(_lightViewProjection);
         foreach (MeshRenderer renderer in Meshes)
+        {
+            DrawShadowMap(renderer);
+        }
+
+        foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
             DrawShadowMap(renderer);
         }
@@ -201,8 +243,23 @@ public class Renderer
                 Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
                 Globals.GraphicsDevice.Indices = part.IndexBuffer;
                 Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-                
             }
         } 
+    }
+
+    private void DrawShadowMap(AnimatedMeshRenderer renderer)
+    {
+        _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
+        foreach (ModelMesh mesh in renderer._model.Meshes)
+        {
+            foreach (var part in mesh.MeshParts)
+            {
+                if (part.PrimitiveCount <= 0) continue;
+                _shadowMapGenerator.CurrentTechnique.Passes[0].Apply();
+                Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+            }
+        }
     }
 }

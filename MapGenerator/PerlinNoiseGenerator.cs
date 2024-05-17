@@ -88,7 +88,7 @@ public class PerlinNoiseGenerator
 
         NoiseField<float> perlinNoise = new NoiseField<float>(baseNoise.Width, baseNoise.Height);
         float amplitude = 1.0f;
-        float totalAmplitude = 0.0f;
+        float totalAmplitude = 0.25f;
 
         float halfWidth = baseNoise.Width / 2.0f;
         float halfHeight = baseNoise.Height / 2.0f;
@@ -144,7 +144,7 @@ public class PerlinNoiseGenerator
 
                 float value = Math.Max(Math.Abs(x), Math.Abs(y));
 
-                noiseField.Field[i, j] = Evaluate(value, 1.0f, 20.0f);
+                noiseField.Field[i, j] = Evaluate(value, 1.5f, 5.0f);
             }
         }
 

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using Num = System.Numerics;
+using RTS.Animation;
 
 namespace RTS_Engine;
 
@@ -31,6 +32,7 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        Globals.content = Content;
 #if DEBUG
         _measurements = new double[_size];
 #endif
@@ -66,7 +68,7 @@ public class Game1 : Game
         InputManager.Initialize();
         Globals.Initialize();
         AssetManager.Initialize(Content);
-        
+
         base.Initialize();
     }
 
@@ -85,21 +87,23 @@ public class Game1 : Game
         Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
         Globals.TerrainEffect = Content.Load<Effect>("Terrain_Shader");
 #else
-        byte[] bytecode = File.ReadAllBytes("Content/PBR_Shader");
+        byte[] bytecode = File.ReadAllBytes("../../../Content/PBR_Shader");
         Globals.MainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 
-        bytecode = File.ReadAllBytes("Content/Terrain_Shader");
+        bytecode = File.ReadAllBytes("../../../Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
+
         _sceneManager.AddScene(new MapScene());
+        _sceneManager.AddScene(new ThirdScene());
     }
 
     protected override void Update(GameTime gameTime)
     {
 #if DEBUG
         _performanceTimer.Start();
+        Globals.CameraPosition = _sceneCamera.Position;
 #endif
-        
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
@@ -114,8 +118,11 @@ public class Game1 : Game
             Console.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
             Debug.WriteLine(Globals.PickingManager.Picked[0].ParentObject.Name);
         }
+
         base.Update(gameTime);
     }
+
+    Stopwatch _sw = new Stopwatch();
 
     protected override void Draw(GameTime gameTime)
     {
@@ -137,8 +144,6 @@ public class Game1 : Game
         _performanceTimer.Reset();
 #endif
     }
-    
-    
     
 #if DEBUG
     private double AvgFromLastSec()

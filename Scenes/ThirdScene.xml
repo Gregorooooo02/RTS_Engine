@@ -50,7 +50,7 @@
         <component>
           <type>MeshRenderer</type>
           <active>True</active>
-          <model>defaultCube</model>
+          <model>defaultModel</model>
         </component>
       </components>
       <childObjects></childObjects>
@@ -81,7 +81,7 @@
         <component>
           <type>MeshRenderer</type>
           <active>True</active>
-          <model>defaultCube</model>
+          <model>defaultModel</model>
         </component>
       </components>
       <childObjects></childObjects>
