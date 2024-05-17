@@ -91,12 +91,12 @@ public class ThirdScene : Scene
         
         if (InputManager.Instance.GetAction(GameAction.UP)?.state == ActionState.PRESSED)
         {
-            SceneRoot.Children[2].GetComponent<Camera>().fovDegrees += -0.5f;
+            SceneRoot.Children[2].GetComponent<Camera>().FovDegrees += -0.5f;
         }
         
         if (InputManager.Instance.GetAction(GameAction.DOWN)?.state == ActionState.PRESSED)
         {
-            SceneRoot.Children[2].GetComponent<Camera>().fovDegrees += 0.5f;
+            SceneRoot.Children[2].GetComponent<Camera>().FovDegrees += 0.5f;
         }
         
     }

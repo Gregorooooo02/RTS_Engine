@@ -17,6 +17,7 @@ public class ModelData
     public string ModelPath;
     public BoundingSphere BoundingSphere;
     public string ShaderTechniqueName;
+    private List<float> _lodThresholds = new();
     
     public bool IsMultiMesh;
     private bool _lodUsed;
@@ -43,13 +44,26 @@ public class ModelData
         if (_lodUsed)
         {
             int levels = Textures.Count;
-            float step = (Globals.MaxZoom - Globals.MinZoom) / levels;
-            for (int i = 0; i < levels; i++)
+            //Check first threshold
+            if (Globals.ZoomDegrees < _lodThresholds[0])
             {
-                if (Globals.ZoomDegrees > Globals.MinZoom + (i * step) && Globals.ZoomDegrees < Globals.MinZoom + ((i + 1) * step))
+                CurrentModelIndex = 0;
+                return;
+            }
+
+            //Check thresholds 2nd to (levels - 1)th
+            for (int i = 0; i < _lodThresholds.Count - 1; i++)
+            {
+                if (Globals.ZoomDegrees >= _lodThresholds[i] && Globals.ZoomDegrees < _lodThresholds[i + 1])
                 {
-                    CurrentModelIndex = levels - i - 1;
+                    CurrentModelIndex = i + 1;
+                    return;
                 }
+            }
+            //Check last threshold
+            if (Globals.ZoomDegrees >= _lodThresholds[levels - 2])
+            {
+                CurrentModelIndex = levels - 1;
             }
         }
     }
@@ -142,8 +156,6 @@ public class ModelData
         }
         catch (Exception)
         {
-            //Console.WriteLine(e);
-            //throw;
             Textures.Add(new List<List<Texture2D>>());
             Textures[0].Add(new List<Texture2D>());
             for (int i = 0;i < _modelMaps.Length;i++)
@@ -162,7 +174,6 @@ public class ModelData
             }
         
             //Loading model itself, saving model name
-            
             try
             {
                 string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
@@ -185,81 +196,81 @@ public class ModelData
             if (value != null)
             {
                 int lod = int.Parse(value);
+                for (int i = 0; i < lod; i++)
                 {
-                    float step = 60.0f / lod;
+                    XElement element = modelConfig?.Element("lod")?.Element("thresholds")?.Element("t"+i.ToString());
+                    if (element != null)
+                    {
+                        float threshold = float.Parse(element.Value);
+                        _lodThresholds.Add(threshold);
+                    }
+                }
+                ApplyLod();
+                string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
+                //if model has multiple meshes with separate texture maps
+                if (IsMultiMesh)
+                {
+                    int meshCount = int.Parse(modelConfig?.Element("meshes")?.Value);
                     for (int i = 0; i < lod; i++)
                     {
-                        if (Globals.ZoomDegrees >= 25.0f + (i * step) && Globals.ZoomDegrees < 25.0f + ((i + 1) * step))
+                        Textures.Add(new List<List<Texture2D>>());
+                        for (int j = 0; j < meshCount; j++)
                         {
-                            CurrentModelIndex = lod - i - 1;
-                        }
-                    }
-                    string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
-                    //if model has multiple meshes with separate texture maps
-                    if (IsMultiMesh)
-                    {
-                        int meshCount = int.Parse(modelConfig?.Element("meshes")?.Value);
-                        for (int i = 0; i < lod; i++)
-                        {
-                            Textures.Add(new List<List<Texture2D>>());
-                            for (int j = 0; j < meshCount; j++)
-                            {
-                                Textures[i].Add(new List<Texture2D>());
-                                for (int k = 0; k < _modelMaps.Length; k++)
-                                {
-                                    Texture2D temp;
-                                    try
-                                    {
-                                        temp = manager.Load<Texture2D>(modelPath + "/" + (i + 1) + "/" + (j + 1) + "/" +_modelMaps[k]);
-                                    }
-                                    catch (ContentLoadException)
-                                    {
-                                        Textures[i][j].Add(AssetManager.DefaultTextureMaps[k]);
-                                        continue;
-                                    }
-                                    Textures[i][j].Add(temp);
-                                }
-                            }
-                            try
-                            {
-                                Models.Add(manager.Load<Model>(modelPath + "/" + (i + 1) + "/" + modelName));
-                            }
-                            catch (Exception)
-                            {
-                                Models.Add(AssetManager.DefaultModel.Models[0]);
-                                modelPath = AssetManager.DefaultModel.ModelPath;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < lod; i++)
-                        {
-                            Textures.Add(new List<List<Texture2D>>());
                             Textures[i].Add(new List<Texture2D>());
-                            for (int j = 0;j < _modelMaps.Length;j++)
+                            for (int k = 0; k < _modelMaps.Length; k++)
                             {
                                 Texture2D temp;
                                 try
                                 {
-                                    temp = manager.Load<Texture2D>(modelPath + "/"+ (i + 1) + "/" + _modelMaps[j]);
+                                    temp = manager.Load<Texture2D>(modelPath + "/" + (i + 1) + "/" + (j + 1) + "/" +_modelMaps[k]);
                                 }
                                 catch (ContentLoadException)
                                 {
-                                    Textures[i][0].Add(AssetManager.DefaultTextureMaps[j]);
+                                    Textures[i][j].Add(AssetManager.DefaultTextureMaps[k]);
                                     continue;
                                 }
-                                Textures[i][0].Add(temp);
+                                Textures[i][j].Add(temp);
                             }
+                        }
+                        try
+                        {
+                            Models.Add(manager.Load<Model>(modelPath + "/" + (i + 1) + "/" + modelName));
+                        }
+                        catch (Exception)
+                        {
+                            Models.Add(AssetManager.DefaultModel.Models[0]);
+                            modelPath = AssetManager.DefaultModel.ModelPath;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < lod; i++)
+                    {
+                        Textures.Add(new List<List<Texture2D>>());
+                        Textures[i].Add(new List<Texture2D>());
+                        for (int j = 0;j < _modelMaps.Length;j++)
+                        {
+                            Texture2D temp;
                             try
                             {
-                                Models.Add(manager.Load<Model>(modelPath + "/" + (i + 1) + "/" + modelName));
+                                temp = manager.Load<Texture2D>(modelPath + "/"+ (i + 1) + "/" + _modelMaps[j]);
                             }
-                            catch (Exception)
+                            catch (ContentLoadException)
                             {
-                                Models.Add(AssetManager.DefaultModel.Models[0]);
-                                modelPath = AssetManager.DefaultModel.ModelPath;
+                                Textures[i][0].Add(AssetManager.DefaultTextureMaps[j]);
+                                continue;
                             }
+                            Textures[i][0].Add(temp);
+                        }
+                        try
+                        {
+                            Models.Add(manager.Load<Model>(modelPath + "/" + (i + 1) + "/" + modelName));
+                        }
+                        catch (Exception)
+                        {
+                            Models.Add(AssetManager.DefaultModel.Models[0]);
+                            modelPath = AssetManager.DefaultModel.ModelPath;
                         }
                     }
                 }

@@ -4,5 +4,9 @@
 	<lod>
 		<used>True</used>
 		<levels>3</levels>
+		<thresholds>
+			<t0>40.0</t0>
+			<t1>60.0</t1>
+		</thresholds>
 	</lod>
 </config>
