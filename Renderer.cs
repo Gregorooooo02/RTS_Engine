@@ -34,6 +34,7 @@ public class Renderer
     public List<AnimatedSpriteRenderer> AnimatedSprites;
     public List<InstancedRendererController> InstancedRendererControllers = new();
     public WorldRenderer WorldRenderer;
+    public Puzzle CurrentActivePuzzle;
 
     public PickingManager.PickingFrustum? PickingFrustum = null;
 
@@ -93,6 +94,7 @@ public class Renderer
         Globals.PickingManager.DrawSelectionBox();
         DrawSprites();
         DrawAnimatedSprites();
+        CurrentActivePuzzle?.Draw();
         Globals.SpriteBatch.End();
         Globals.SpriteBatch.Begin();
         DrawText();
