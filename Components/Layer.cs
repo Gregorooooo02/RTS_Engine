@@ -72,8 +72,13 @@ public class Layer : Component
         }
     }
 #endif
-    
-    public override void Deserialize(XElement element){}
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        Enum.TryParse(element?.Element("action")?.Value, out LayerType result);
+        layer = result;
+    }
 
     public override void RemoveComponent()
     {
