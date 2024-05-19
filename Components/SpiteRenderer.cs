@@ -28,7 +28,7 @@ public class SpiteRenderer : Component
 
     public void Draw()
     {
-        if (!Active) return;
+        if (!Active || !ParentObject.Active) return;
         if(useLocalPosition)
         {
             Globals.SpriteBatch?.Draw(Sprite,
@@ -78,6 +78,8 @@ public class SpiteRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
+        builder.Append("<useLocal>" + useLocalPosition +"</useLocal>");
+        
         builder.Append("<sprite>" + Sprite.Name + "</sprite>");
         
         builder.Append("<color>");
@@ -94,6 +96,7 @@ public class SpiteRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        useLocalPosition = element.Element("useLocal")?.Value == "True";
         LoadSprite(element.Element("sprite").Value);
         XElement color = element.Element("color");
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));

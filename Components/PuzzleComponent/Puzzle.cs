@@ -30,6 +30,8 @@ public class Puzzle : Component
     
     private Texture2D _background = Globals.Content.Load<Texture2D>("blank");
     private Rectangle _backgroundDest;
+
+    private bool _drawInMiddle = false;
     
     public Puzzle(){}
     
@@ -38,6 +40,12 @@ public class Puzzle : Component
         //Puzzle logic here
         if (Active)
         {
+            ActionData exitAction = InputManager.Instance.GetAction(GameAction.EXITPUZZLE);
+            if (exitAction is { state: ActionState.RELEASED })
+            {
+                DeactivatePuzzle();
+                return;
+            }
             MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
             if (action is { duration: 0, state: ActionState.PRESSED })
             {
@@ -135,13 +143,24 @@ public class Puzzle : Component
     public void ActivatePuzzle()
     {
         Active = true;
+        ChangeActive(ParentObject,true);
         Globals.Renderer.CurrentActivePuzzle = this;
         ChangePuzzleParameters();
     }
 
+    private void ChangeActive(GameObject gameObject,bool state)
+    {
+        foreach (GameObject child in gameObject.Children)
+        {
+            child.Active = state;
+            ChangeActive(child,state);
+        }  
+    }
+    
     public void DeactivatePuzzle()
     {
         Active = false;
+        ChangeActive(ParentObject,false);
         if(Globals.Renderer.CurrentActivePuzzle == this) Globals.Renderer.CurrentActivePuzzle = null;
     }
     
@@ -212,6 +231,15 @@ public class Puzzle : Component
     {
         if(!Active) return;
         _puzzlePieces.Clear();
+        
+        if (_drawInMiddle)
+        {
+            int windowSize = _gridSize * _puzzlePieceSize + _rimSize * 2;
+            int offsetX = (Globals.GraphicsDeviceManager.PreferredBackBufferWidth - windowSize) / 2;
+            int offsetY = (Globals.GraphicsDeviceManager.PreferredBackBufferHeight - windowSize) / 2;
+            ParentObject.Transform.SetLocalPosition(new Vector3(offsetX,offsetY,0));
+        }
+        
         int offset = _puzzleTexture.Width / _gridSize;
         float depth = 0f;
         float depthStep = 0.9f / (_gridSize *_gridSize);
@@ -249,6 +277,10 @@ public class Puzzle : Component
         if(ImGui.CollapsingHeader("Puzzle"))
         {
             ImGui.Checkbox("Puzzle active", ref Active);
+            if (ImGui.Checkbox("Snap to middle", ref _drawInMiddle))
+            {
+                ChangePuzzleParameters();
+            }
             if(ImGui.InputInt("Puzzle grid size", ref _gridSize))
             {
                 ChangePuzzleParameters();

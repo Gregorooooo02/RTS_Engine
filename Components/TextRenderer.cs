@@ -31,7 +31,7 @@ public class TextRenderer : Component
 
     public void Draw()
     {
-        if(!Active) return;
+        if(!Active || !ParentObject.Active) return;
         if(useLocalPosition)
         {
             Globals.SpriteBatch.DrawString(
@@ -78,6 +78,8 @@ public class TextRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
+        builder.Append("<useLocal>" + useLocalPosition +"</useLocal>");
+        
         builder.Append("<contents>" + Content +"</contents>");
 
         builder.Append("<font>" + _name + "</font>");
@@ -96,6 +98,7 @@ public class TextRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        useLocalPosition = element.Element("useLocal")?.Value == "True";
         Content = element.Element("contents").Value;
         LoadFont(element.Element("font").Value);
         

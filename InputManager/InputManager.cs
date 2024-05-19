@@ -22,6 +22,7 @@ public enum GameAction
     SCENE2,
     SCENE3,
     PAUSE,
+    EXITPUZZLE,
 }
 
 public class InputManager

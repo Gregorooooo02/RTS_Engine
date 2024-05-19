@@ -147,6 +147,7 @@ public class Renderer
         Sprites.Clear();
         AnimatedSprites.Clear();
         Texts.Clear();
+        CurrentActivePuzzle = null;
         // WorldRenderer = null;
     }
     

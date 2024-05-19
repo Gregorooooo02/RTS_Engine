@@ -2,6 +2,8 @@
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
+using Quaternion = System.Numerics.Quaternion;
 
 namespace RTS_Engine;
 
@@ -9,6 +11,10 @@ public class Button : Component
 {
     public SpiteRenderer ButtonVisual = null;
     private GameAction _buttonAction = GameAction.EXIT;
+
+    private Vector3 _pos = new();
+    private Vector3 _scale = new();
+    
     public override void Update()
     {
         if (Active)
@@ -21,11 +27,28 @@ public class Button : Component
                     //Check if the LMB was pressed
                     if (action is {state: ActionState.PRESSED, duration: <= 0})
                     {
+                        if (ButtonVisual.useLocalPosition)
+                        {
+                            _pos.X = ParentObject.Transform._pos.X;
+                            _pos.Y = ParentObject.Transform._pos.Y;
+                            _scale.X = ParentObject.Transform._scl.X;
+                            _scale.Y = ParentObject.Transform._scl.Y;
+                        }
+                        else
+                        {
+                            ParentObject.Transform.ModelMatrix.Decompose(out Vector3 scale, out Microsoft.Xna.Framework.Quaternion k,
+                                out Vector3 translation);
+                            _pos.X = translation.X;
+                            _pos.Y = translation.Y;
+                            _scale.X = scale.X;
+                            _scale.Y = scale.Y;
+                        }
+                        
                         //Check if mouse cursor is over the button
-                        if (action.StartingPosition.X >= ParentObject.Transform._pos.X
-                            && action.StartingPosition.X <= ParentObject.Transform._pos.X + ButtonVisual.Sprite.Width * ParentObject.Transform._scl.X
-                            && action.StartingPosition.Y >= ParentObject.Transform._pos.Y
-                            && action.StartingPosition.Y <= ParentObject.Transform._pos.Y + ButtonVisual.Sprite.Height * ParentObject.Transform._scl.Y)
+                        if (action.StartingPosition.X >= _pos.X
+                            && action.StartingPosition.X <= _pos.X + ButtonVisual.Sprite.Width * _scale.X
+                            && action.StartingPosition.Y >= _pos.Y
+                            && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.X)
                         {
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
                             Globals.HitUI = true;
