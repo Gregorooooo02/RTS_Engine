@@ -11,6 +11,16 @@ using Point = System.Drawing.Point;
 
 namespace RTS_Engine
 {
+    public enum LayerType 
+    {
+        DEFAULT,
+        PLAYER,
+        ENEMY,
+        UI,
+        PROP,
+        BUILDING
+    }
+    
     internal class Globals
     {
         
@@ -93,17 +103,7 @@ namespace RTS_Engine
         #endregion
         
         public static bool HitUI = false;
-
-        public enum LayerType 
-        {
-            DEFAULT,
-            PLAYER,
-            ENEMY,
-            UI,
-            PROP,
-            BUILDING
-        }
-
+        
         public static void Update(GameTime gameTime)
         {
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

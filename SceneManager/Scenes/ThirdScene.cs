@@ -36,7 +36,7 @@ public class ThirdScene : Scene
         
         gameObject3.AddComponent<Camera>();
         gameObject3.AddComponent<Layer>();
-        gameObject3.GetComponent<Layer>().SetLayerType("UI");
+        //gameObject3.GetComponent<Layer>().SetLayerType("UI");
         
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
