@@ -21,6 +21,7 @@ public enum GameAction
     SCENE1,
     SCENE2,
     SCENE3,
+    PAUSE,
 }
 
 public class InputManager

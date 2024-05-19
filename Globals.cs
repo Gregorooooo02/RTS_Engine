@@ -78,6 +78,7 @@ namespace RTS_Engine
         
         public static float DeltaTime { get; set; }
         public static TimeSpan ElapsedGameTime { get; set; }
+        public static bool IsPaused = false;
 
         #endregion
         
@@ -90,8 +91,7 @@ namespace RTS_Engine
         public static VertexDeclaration InstanceVertexDeclaration;
         public static VertexDeclaration ShadowInstanceDeclaration;
         #endregion
-
-
+        
         public static bool HitUI = false;
 
         public enum LayerType 
@@ -109,6 +109,8 @@ namespace RTS_Engine
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ElapsedGameTime = gameTime.ElapsedGameTime;
 
+            if(InputManager.Instance.GetAction(GameAction.PAUSE)?.state == ActionState.RELEASED) IsPaused = !IsPaused;
+            
             HitUI = false;
         }
         
