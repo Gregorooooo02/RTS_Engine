@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -9,15 +10,26 @@ namespace RTS_Engine;
 
 public class Puzzle : Component
 {
-    public Texture2D PuzzleTexture;
-    private readonly List<PuzzlePiece> _puzzlePieces = new();
-
-    private PuzzlePiece selectedPuzzlePiece = null;
-    private Point selectionOffset;
+    public bool Completed = false;
     
+    private Texture2D _puzzleTexture;
+    private readonly List<PuzzlePiece> _puzzlePieces = new();
+    
+    #region SelectedPiece
+    private PuzzlePiece _selectedPuzzlePiece = null;
+    private Point _selectionOffset;
+    #endregion
+    #region SerializedParameters
     private int _gridSize = 3;
     private int _puzzlePieceSize = 200;
+    private int _rimSize = 3;
+    private float _snappingDistance = 30.0f;
+    #endregion
     
+    private int[,] _gridValues;
+    
+    private Texture2D _background = Globals.Content.Load<Texture2D>("blank");
+    private Rectangle _backgroundDest;
     
     public Puzzle(){}
     
@@ -35,28 +47,96 @@ public class Puzzle : Component
                     if (piece.IsHit(action.StartingPosition) && piece.Depth < currentDepth)
                     {
                         currentDepth = piece.Depth;
-                        selectedPuzzlePiece = piece;
-                        selectionOffset = piece.Position - action.StartingPosition;
+                        _selectedPuzzlePiece = piece;
+                        _selectionOffset = piece.Position - action.StartingPosition;
                     }
+                }
+
+                if (_selectedPuzzlePiece != null)
+                {
+                    UnregisterSnap(_selectedPuzzlePiece.PieceId);
+                    _selectedPuzzlePiece.Snapped = false;
                 }
             }
 
-            if (action is { duration: > 0, state: ActionState.PRESSED } && selectedPuzzlePiece != null)
+            if (action is { duration: > 0, state: ActionState.PRESSED } && _selectedPuzzlePiece != null)
             {
-                selectedPuzzlePiece.Position = InputManager.Instance.MousePosition + selectionOffset;
+                _selectedPuzzlePiece.Position = InputManager.Instance.MousePosition + _selectionOffset;
             }
 
-            if (action is { state: ActionState.RELEASED })
+            if (action is { state: ActionState.RELEASED } && _selectedPuzzlePiece != null)
             {
-                selectedPuzzlePiece = null;
+                Point localOffset = new Point((int)ParentObject.Transform._pos.X, (int)ParentObject.Transform._pos.Y);
+                Point localPos = _selectedPuzzlePiece.Position - localOffset;
+                int row = localPos.Y / _puzzlePieceSize;
+                int column = localPos.X / _puzzlePieceSize;
+                if (localPos is { X: >= 0, Y: >= 0 } && row < _gridSize && column < _gridSize)
+                {
+                    Point snapPoint = new Point(column * _puzzlePieceSize + _rimSize, row * _puzzlePieceSize + _rimSize);
+                    if (PointDist(localPos,snapPoint) <= _snappingDistance && _gridValues[row,column] == 0)
+                    {
+                        _selectedPuzzlePiece.Position = snapPoint + localOffset;
+                        RegisterSnap(row,column,_selectedPuzzlePiece.PieceId);
+                        _selectedPuzzlePiece.Snapped = true;
+                    }
+                }
+                _selectedPuzzlePiece = null;
             }
         }
+    }
+
+    private void RegisterSnap(int row, int column, int value)
+    {
+        _gridValues[row,column] = value;
+        if (CheckForWin())
+        {
+            Completed = true;
+            DeactivatePuzzle();
+            Console.WriteLine("WIN");
+        }
+    }
+
+    private bool CheckForWin()
+    {
+        for (int i = 0; i < _gridSize; i++)
+        {
+            for (int j = 0; j < _gridSize; j++)
+            {
+                if (_gridValues[j, i] != i * _gridSize + j + 1)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    private void UnregisterSnap(int value)
+    {
+        for (int i = 0; i < _gridSize; i++)
+        {
+            for (int j = 0; j < _gridSize; j++)
+            {
+                if (_gridValues[i, j] == value)
+                {
+                    _gridValues[i, j] = 0;
+                    return;
+                }
+            }
+        }
+    }
+    
+    private float PointDist(Point point1, Point point2)
+    {
+        Point diff = point1 - point2;
+        return MathF.Sqrt((diff.X * diff.X) + (diff.Y * diff.Y));
     }
     
     public void ActivatePuzzle()
     {
         Active = true;
         Globals.Renderer.CurrentActivePuzzle = this;
+        ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
     }
 
     public void DeactivatePuzzle()
@@ -67,6 +147,8 @@ public class Puzzle : Component
     
     public void Draw()
     {
+        if(!Active) return;
+        Globals.SpriteBatch.Draw(_background, _backgroundDest,null,Color.Black,0,Vector2.Zero,SpriteEffects.None,1);
         foreach (PuzzlePiece piece in _puzzlePieces)
         {
             piece.Draw();
@@ -75,24 +157,53 @@ public class Puzzle : Component
 
     public override void Initialize()
     {
-        PuzzleTexture = AssetManager.DefaultSprite;
+        _puzzleTexture = AssetManager.DefaultSprite;
         ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
     }
 
     public override string ComponentToXmlString()
     {
-        throw new System.NotImplementedException();
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>Puzzle</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("<sprite>" + _puzzleTexture.Name + "</sprite>");
+        
+        builder.Append("<gridSize>" + _gridSize + "</gridSize>");
+        
+        builder.Append("<pieceSize>" + _puzzlePieceSize + "</pieceSize>");
+        
+        builder.Append("<rimSize>" + _rimSize + "</rimSize>");
+        
+        builder.Append("<snappingDist>" + _snappingDistance + "</snappingDist>");
+        
+        builder.Append("</component>");
+        return builder.ToString();
     }
 
     public override void Deserialize(XElement element)
     {
-        throw new System.NotImplementedException();
+        Active = element.Element("active")?.Value == "True";
+        LoadSprite(element?.Element("sprite")?.Value);
+        _gridSize = int.TryParse(element.Element("gridSize")?.Value, out int size) ? size : 3;
+        _puzzlePieceSize = int.TryParse(element.Element("pieceSize")?.Value, out int pieceSize) ? pieceSize : 200;
+        _rimSize = int.TryParse(element.Element("rimSize")?.Value, out int rimSize) ? rimSize : 3;
+        _snappingDistance = float.TryParse(element.Element("snappingDist")?.Value, out float snappingDist) ? snappingDist : 25.0f;
     }
 
+    private void LoadSprite(string name)
+    {
+        _puzzleTexture = AssetManager.GetSprite(name);
+    }
+    
     public override void RemoveComponent()
     {
         ParentObject.RemoveComponent(this);
-        AssetManager.FreeSprite(PuzzleTexture);
+        AssetManager.FreeSprite(_puzzleTexture);
     }
 
     #if DEBUG
@@ -100,19 +211,27 @@ public class Puzzle : Component
     private void ChangePuzzleParameters(int gridSize, int puzzlePieceSize)
     {
         _puzzlePieces.Clear();
-        int offset = PuzzleTexture.Width / gridSize;
-        float depth = 0;
-        float depthStep = 1.0f / (gridSize * gridSize);
+        int offset = _puzzleTexture.Width / gridSize;
+        float depth = 0f;
+        float depthStep = 0.9f / (gridSize * gridSize);
         for (int i = 0; i < gridSize; i++)
         {
             for (int j = 0; j < gridSize; j++)
             {
-                _puzzlePieces.Add(new PuzzlePiece(PuzzleTexture,
+                _puzzlePieces.Add(new PuzzlePiece(_puzzleTexture,
                     new Rectangle(offset * i,offset * j,offset,offset),
-                    new Point((puzzlePieceSize + 20) * i,(puzzlePieceSize + 20) * j),puzzlePieceSize,depth));
+                    new Point((int)ParentObject.Transform._pos.X + _rimSize + (puzzlePieceSize) * i,(int)ParentObject.Transform._pos.Y + _rimSize + (puzzlePieceSize) * j),
+                    puzzlePieceSize,
+                    depth,
+                    i * gridSize + j + 1,
+                    0.98f
+                    ));
                 depth += depthStep;
             }
         }
+        _gridValues = new int[gridSize,gridSize];
+        _backgroundDest = new Rectangle((int)ParentObject.Transform._pos.X, (int)ParentObject.Transform._pos.Y,
+            gridSize * puzzlePieceSize + _rimSize * 2, gridSize * puzzlePieceSize + _rimSize * 2);
     }
     
     private bool _switchingSprites = false;
@@ -131,11 +250,21 @@ public class Puzzle : Component
                 ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
             }
 
+            ImGui.InputFloat("Minimal snap distance", ref _snappingDistance);
+            if(ImGui.InputInt("Rim size", ref _rimSize))
+            {
+                ChangePuzzleParameters(_gridSize,_puzzlePieceSize);   
+            }
+
             if (ImGui.Button("Activate"))
             {
                 ActivatePuzzle();
             }
-            ImGui.Text("Current puzzle: " + PuzzleTexture.Name);
+            if (ImGui.Button("Deactivate"))
+            {
+                DeactivatePuzzle();
+            }
+            ImGui.Text("Current puzzle: " + _puzzleTexture.Name);
             if (ImGui.Button("Switch sprite"))
             {
                 _switchingSprites = true;
@@ -152,8 +281,8 @@ public class Puzzle : Component
             {
                 if (ImGui.Button(n))
                 {
-                    AssetManager.FreeSprite(PuzzleTexture);
-                    PuzzleTexture = AssetManager.GetSprite(n);
+                    AssetManager.FreeSprite(_puzzleTexture);
+                    _puzzleTexture = AssetManager.GetSprite(n);
                     _switchingSprites = false;
                 }
             }

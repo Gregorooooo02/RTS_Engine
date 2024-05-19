@@ -22,6 +22,15 @@
         <z>1</z>
       </scale>
     </component>
+    <component>
+      <type>Puzzle</type>
+      <active>True</active>
+      <sprite>sprite</sprite>
+      <gridSize>3</gridSize>
+      <pieceSize>200</pieceSize>
+      <rimSize>4</rimSize>
+      <snappingDist>30</snappingDist>
+    </component>
   </components>
   <childObjects></childObjects>
 </rootObject>

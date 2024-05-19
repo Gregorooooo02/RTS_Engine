@@ -8,9 +8,15 @@ public class PuzzlePiece
 {
     
     #region PlacementParameters
-    public float Depth;
+    private readonly float _depth;
+    public bool Snapped;
+    private readonly float _snappedDepth;
     private Rectangle _dest;
     private Point _position;
+
+    public float Depth => Snapped ? _snappedDepth : _depth;
+
+
     public Point Position
     {
         get => _position;
@@ -38,17 +44,21 @@ public class PuzzlePiece
     }
 
     #endregion
-    
-    private Texture2D PuzzleTexture;
-    private Rectangle SourceRectangle;
 
-    public PuzzlePiece(Texture2D puzzleTexture,Rectangle sourceRectangle, Point startingPos, int pieceSize, float depth)
+    public readonly int PieceId;
+    
+    private readonly Texture2D _puzzleTexture;
+    private readonly Rectangle _sourceRectangle;
+
+    public PuzzlePiece(Texture2D puzzleTexture,Rectangle sourceRectangle, Point startingPos, int pieceSize, float depth, int id, float snappedDepth)
     {
-        PuzzleTexture = puzzleTexture;
-        SourceRectangle = sourceRectangle;
+        _puzzleTexture = puzzleTexture;
+        _sourceRectangle = sourceRectangle;
         Position = startingPos;
         Size = pieceSize;
-        Depth = depth;
+        _depth = depth;
+        PieceId = id;
+        _snappedDepth = snappedDepth;
     }
 
 
@@ -64,6 +74,6 @@ public class PuzzlePiece
     
     public void Draw()
     {
-        Globals.SpriteBatch.Draw(PuzzleTexture,_dest,SourceRectangle,Color.White,0,Microsoft.Xna.Framework.Vector2.Zero, SpriteEffects.None,Depth);
+        Globals.SpriteBatch.Draw(_puzzleTexture,_dest,_sourceRectangle,Color.White,0,Microsoft.Xna.Framework.Vector2.Zero, SpriteEffects.None,Snapped ? _snappedDepth : _depth);
     }
 }
