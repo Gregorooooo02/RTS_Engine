@@ -136,7 +136,7 @@ public class Puzzle : Component
     {
         Active = true;
         Globals.Renderer.CurrentActivePuzzle = this;
-        ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
+        ChangePuzzleParameters();
     }
 
     public void DeactivatePuzzle()
@@ -158,7 +158,7 @@ public class Puzzle : Component
     public override void Initialize()
     {
         _puzzleTexture = AssetManager.DefaultSprite;
-        ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
+        ChangePuzzleParameters();
     }
 
     public override string ComponentToXmlString()
@@ -208,30 +208,39 @@ public class Puzzle : Component
 
     #if DEBUG
     
-    private void ChangePuzzleParameters(int gridSize, int puzzlePieceSize)
+    private void ChangePuzzleParameters()
     {
+        if(!Active) return;
         _puzzlePieces.Clear();
-        int offset = _puzzleTexture.Width / gridSize;
+        int offset = _puzzleTexture.Width / _gridSize;
         float depth = 0f;
-        float depthStep = 0.9f / (gridSize * gridSize);
-        for (int i = 0; i < gridSize; i++)
+        float depthStep = 0.9f / (_gridSize *_gridSize);
+        Random random = new Random();
+        
+        _backgroundDest = new Rectangle((int)ParentObject.Transform._pos.X, (int)ParentObject.Transform._pos.Y,
+            _gridSize * _puzzlePieceSize + _rimSize * 2, _gridSize * _puzzlePieceSize + _rimSize * 2);
+        
+        for (int i = 0; i < _gridSize; i++)
         {
-            for (int j = 0; j < gridSize; j++)
+            for (int j = 0; j < _gridSize; j++)
             {
+                int posX = random.Next((int)ParentObject.Transform._pos.X + _rimSize * 2,
+                    (int)ParentObject.Transform._pos.X + _backgroundDest.Width - _puzzlePieceSize - (_rimSize * 2));
+                int posY = random.Next((int)ParentObject.Transform._pos.Y + _rimSize * 2,
+                    (int)ParentObject.Transform._pos.Y + _backgroundDest.Height - _puzzlePieceSize - (_rimSize * 2));
+                
                 _puzzlePieces.Add(new PuzzlePiece(_puzzleTexture,
                     new Rectangle(offset * i,offset * j,offset,offset),
-                    new Point((int)ParentObject.Transform._pos.X + _rimSize + (puzzlePieceSize) * i,(int)ParentObject.Transform._pos.Y + _rimSize + (puzzlePieceSize) * j),
-                    puzzlePieceSize,
+                    new Point(posX,posY),
+                    _puzzlePieceSize,
                     depth,
-                    i * gridSize + j + 1,
+                    i * _gridSize + j + 1,
                     0.98f
                     ));
                 depth += depthStep;
             }
         }
-        _gridValues = new int[gridSize,gridSize];
-        _backgroundDest = new Rectangle((int)ParentObject.Transform._pos.X, (int)ParentObject.Transform._pos.Y,
-            gridSize * puzzlePieceSize + _rimSize * 2, gridSize * puzzlePieceSize + _rimSize * 2);
+        _gridValues = new int[_gridSize,_gridSize];
     }
     
     private bool _switchingSprites = false;
@@ -242,18 +251,18 @@ public class Puzzle : Component
             ImGui.Checkbox("Puzzle active", ref Active);
             if(ImGui.InputInt("Puzzle grid size", ref _gridSize))
             {
-                ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
+                ChangePuzzleParameters();
             }
 
             if (ImGui.InputInt("Puzzle piece size", ref _puzzlePieceSize))
             {
-                ChangePuzzleParameters(_gridSize,_puzzlePieceSize);
+                ChangePuzzleParameters();
             }
 
             ImGui.InputFloat("Minimal snap distance", ref _snappingDistance);
             if(ImGui.InputInt("Rim size", ref _rimSize))
             {
-                ChangePuzzleParameters(_gridSize,_puzzlePieceSize);   
+                ChangePuzzleParameters();   
             }
 
             if (ImGui.Button("Activate"))
@@ -263,6 +272,11 @@ public class Puzzle : Component
             if (ImGui.Button("Deactivate"))
             {
                 DeactivatePuzzle();
+            }
+
+            if (ImGui.Button("Re-roll"))
+            {
+                ChangePuzzleParameters();
             }
             ImGui.Text("Current puzzle: " + _puzzleTexture.Name);
             if (ImGui.Button("Switch sprite"))
