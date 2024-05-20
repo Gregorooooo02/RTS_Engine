@@ -58,9 +58,11 @@ public class Renderer
         _blank = content.Load<Texture2D>("blank");
 #endif
     }
-
+    
     public void Render()
     {
+        Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * 1.0f));
+        
         //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
         //TODO: In that case Renderer scene would be, visually, one frame behind game's logic but, if not changed, there might be
         //TODO: some visual inaccuracies with frustum culling if camera moves too fast.

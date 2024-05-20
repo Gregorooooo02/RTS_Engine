@@ -79,6 +79,7 @@ namespace RTS_Engine
 
         #region Managers
 
+        public static FogManager FogManager;
         public static PickingManager PickingManager;
         public static ContentManager Content;
 

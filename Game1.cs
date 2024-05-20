@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
@@ -69,6 +70,7 @@ public class Game1 : Game
 
         Globals.Renderer = new Renderer(Content);
         Globals.PickingManager = new PickingManager(Content);
+        Globals.FogManager = new FogManager();
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
@@ -123,6 +125,11 @@ public class Game1 : Game
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
         Globals.PickingManager.CheckForRay();
+        
+        //if(Globals.FogManager.UpdateFogAsync().IsCompleted)Globals.FogManager.UpdateFogAsync();
+        Globals.FogManager.UpdateFog();
+        
+        
         foreach (Pickable yes in Globals.PickingManager.Picked)
         {
             Console.WriteLine(yes.ParentObject.Name);
