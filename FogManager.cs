@@ -10,6 +10,7 @@ namespace RTS_Engine;
 
 public class FogManager
 {
+    public readonly int FogResolution = 2;
     public readonly int TextureSize = 2048;
     
     public bool FogActive = true;
@@ -74,7 +75,9 @@ public class FogManager
     
     private void MakeHole(Texture2D texture, Point position, float radiusF, Color[] color)
     {
-        int radius = (int)MathF.Round(radiusF,0);
+        position.X /= FogResolution;
+        position.Y /= FogResolution;
+        int radius = (int)MathF.Round(radiusF,0) / FogResolution;
         int px, nx, py, ny, distance;
         for (int i = 0; i < radius; i++)
         {

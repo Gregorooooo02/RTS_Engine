@@ -61,7 +61,7 @@ public class Renderer
     
     public void Render()
     {
-        Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * 1.0f));
+        Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
         
         //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
         //TODO: In that case Renderer scene would be, visually, one frame behind game's logic but, if not changed, there might be
