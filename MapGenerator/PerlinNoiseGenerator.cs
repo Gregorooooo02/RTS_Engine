@@ -8,168 +8,125 @@ public delegate float InterpolationAlgorithm(float a, float b, float t);
 
 public class PerlinNoiseGenerator
 {
-    public int Octaves;
-    public float Persistance;
+        public int OctaveCount { get; set; }
+        public float Persistence { get; set; }
+        public Random Random { get; set; }
+        
+        public InterpolationAlgorithm Interpolation { get; set; }
 
-    public InterpolationAlgorithm Interpolation { get; set; }
-    public Random Random { get; set; }
+        public PerlinNoiseGenerator() {
+            OctaveCount = 4;
+            Persistence = 0.5f;
+            Interpolation = Helpers.LinearInterpolation;
+            Random = new Random();
+        }
+        
+        public NoiseField<float> GenerateWhiteNoise(int width, int height) {
+            return GenerateWhiteNoise(width, height, Random);
+        }
+        
+        public NoiseField<float> GenerateWhiteNoise(int width, int height, Random random) {
+            NoiseField<float> field = new NoiseField<float>(width, height);
 
-    public PerlinNoiseGenerator()
-    {
-        Octaves = 7;
-        Persistance = 0.4f;
-        Interpolation = Helpers.LinearInterpolation;
-        Random = new Random();
-    }
-
-    public NoiseField<float> GenerateWhiteNoise(int width, int height)
-    {
-        NoiseField<float> noiseField = new NoiseField<float>(width, height);
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                noiseField.Field[x, y] = (float)Random.NextDouble() % 1;
+            for(int x = 0; x < width; x++) {
+                for(int y = 0; y < height; y++) {
+                    field.Field[x, y] = (float)random.NextDouble() % 1;
+                }
             }
+
+            return field;
         }
+        
+        public NoiseField<float> SmoothNoiseField(NoiseField<float> whiteNoise, int octave) {
+            NoiseField<float> smooth = new NoiseField<float>(whiteNoise.Width, whiteNoise.Height);
 
-        return noiseField;
-    }
+            int samplePeriod = 1 << octave;
+            float sampleFrequency = 1.0f / samplePeriod;
 
-    public NoiseField<float> SmoothNoiseField(NoiseField<float> whiteNoise, int octaves)
-    {
-        NoiseField<float> smoothNoise = new NoiseField<float>(whiteNoise.Width, whiteNoise.Height);
+            for(int x = 0; x < smooth.Width; x++) {
+                int sampleX1 = (x / samplePeriod) * samplePeriod;
+                int sampleX2 = (sampleX1 + samplePeriod) % smooth.Width;
 
-        int samplePeriod = 1 << octaves;
-        float sampleFrequency = 1.0f / samplePeriod;
+                float horizontalBlend = (x - sampleX1) * sampleFrequency;
 
-        for (int x = 0; x < smoothNoise.Width; x++)
-        {
-            int sampleX0 = (x / samplePeriod) * samplePeriod;
-            int sampleX1 = (sampleX0 + samplePeriod) % smoothNoise.Width;
+                for(int y = 0; y < smooth.Height; y++) {
+                    int sampleY1 = (y / samplePeriod) * samplePeriod;
+                    int sampleY2 = (sampleY1 + samplePeriod) % smooth.Height;
 
-            float horizontalBlend = (x - sampleX0) * sampleFrequency;
+                    float verticalBlend = (y - sampleY1) * sampleFrequency;
 
-            for (int y = 0; y < smoothNoise.Height; y++)
-            {
-                int sampleY0 = (y / samplePeriod) * samplePeriod;
-                int sampleY1 = (sampleY0 + samplePeriod) % smoothNoise.Height;
+                    float top = Interpolation(whiteNoise.Field[sampleX1, sampleY1], whiteNoise.Field[sampleX2, sampleY1], horizontalBlend);
+                    float bottom = Interpolation(whiteNoise.Field[sampleX1, sampleY2], whiteNoise.Field[sampleX2, sampleY2], horizontalBlend);
 
-                float verticalBlend = (y - sampleY0) * sampleFrequency;
-
-                float top = Interpolation(
-                    whiteNoise.Field[sampleX0, sampleY0],
-                    whiteNoise.Field[sampleX1, sampleY0],
-                    horizontalBlend
-                );
-
-                float bottom = Interpolation(
-                    whiteNoise.Field[sampleX0, sampleY1],
-                    whiteNoise.Field[sampleX1, sampleY1],
-                    horizontalBlend
-                );
-
-                smoothNoise.Field[x, y] = Interpolation(top, bottom, verticalBlend);
+                    smooth.Field[x, y] = Interpolation(top, bottom, verticalBlend);
+                }
             }
+
+            return smooth;
         }
 
-        return smoothNoise;
-    }
-
-    public NoiseField<float> PerlinNoiseField(NoiseField<float> baseNoise)
-    {
-        NoiseField<float>[] smoothNoise = new NoiseField<float>[Octaves];
-
-        for (int i = 0; i < Octaves; i++)
+        public NoiseField<float> PerlinNoiseField(NoiseField<float> baseNoise)
         {
-            smoothNoise[i] = SmoothNoiseField(baseNoise, i);
-        }
+            NoiseField<float>[] smoothNoise = new NoiseField<float>[OctaveCount];
 
-        NoiseField<float> perlinNoise = new NoiseField<float>(baseNoise.Width, baseNoise.Height);
-        float amplitude = 1.0f;
-        float totalAmplitude = 0.25f;
+            for (int i = 0; i < OctaveCount; i++)
+            {
+                smoothNoise[i] = SmoothNoiseField(baseNoise, i);
+            }
 
-        float halfWidth = baseNoise.Width / 2.0f;
-        float halfHeight = baseNoise.Height / 2.0f;
+            NoiseField<float> perlinNoise = new NoiseField<float>(baseNoise.Width, baseNoise.Height);
+            float amplitude = 1.0f;
+            float totalAmplitude = 0.0f;
 
-        for (int octave = Octaves - 1; octave >= 0; octave--)
-        {
-            amplitude *= Persistance;
-            totalAmplitude += amplitude;
+            for (int octave = OctaveCount - 1; octave >= 0; octave--)
+            {
+                amplitude *= Persistence;
+                totalAmplitude += amplitude;
 
+                for (int x = 0; x < baseNoise.Width; x++)
+                {
+                    for (int y = 0; y < baseNoise.Height; y++)
+                    {
+                        perlinNoise.Field[x, y] += smoothNoise[octave].Field[x, y] * amplitude;
+                    }
+                }
+            }
+
+            // Normalize the fields
             for (int x = 0; x < baseNoise.Width; x++)
             {
                 for (int y = 0; y < baseNoise.Height; y++)
                 {
-                    perlinNoise.Field[x, y] += smoothNoise[octave].Field[x, y] * amplitude;
+                    perlinNoise.Field[x, y] /= totalAmplitude;
                 }
             }
-        }
 
-        // Normalize the fields
-        for (int x = 0; x < baseNoise.Width; x++)
+            return perlinNoise;
+        }
+        
+        public float CalculateFalloff(int x, int y, int width, int height)
         {
-            for (int y = 0; y < baseNoise.Height; y++)
-            {
-                perlinNoise.Field[x, y] /= totalAmplitude;
-            }
+            float nx = (2.0f * x) / width - 1f;
+            float ny = (2.0f * y) / height - 1f;
+            
+            float distance = MathF.Sqrt(nx * nx + ny * ny);
+            
+            return Helpers.Clamp01(1.25f - distance);
         }
 
-        // Make the noise smoother by normalizing the values
-        for (int x = 0; x < baseNoise.Width; x++)
-        {
-            for (int y = 0; y < baseNoise.Height; y++)
+        public NoiseField<float> GeneratePerlinNoise(int width, int height) {
+            NoiseField<float> whiteNoise = GenerateWhiteNoise(width, height);
+            NoiseField<float> perlinNoise = PerlinNoiseField(whiteNoise);
+
+            for (int x = 0; x < width; x++)
             {
-                perlinNoise.Field[x, y] = Math.Max(0, perlinNoise.Field[x, y]);
-                perlinNoise.Field[x, y] = Math.Min(1, perlinNoise.Field[x, y]);
-
-                perlinNoise.Field[x, y] = MathF.Pow(perlinNoise.Field[x, y], 2.5f);
+                for (int y = 0; y < height; y++)
+                {
+                    float falloff = CalculateFalloff(x, y, width, height);
+                    perlinNoise.Field[x, y] *= falloff;
+                }
             }
+            
+            return perlinNoise;
         }
-
-        return perlinNoise;
-    }
-
-    public NoiseField<float> FallOffNoise(int size)
-    {
-        NoiseField<float> noiseField = new NoiseField<float>(size, size);
-
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                float x = i / (float)size * 2 - 1;
-                float y = j / (float)size * 2 - 1;
-
-                float value = Math.Max(Math.Abs(x), Math.Abs(y));
-
-                noiseField.Field[i, j] = Evaluate(value, 1.5f, 5.0f);
-            }
-        }
-
-        return noiseField;
-    }
-
-    public static float Evaluate(float value, float a, float b)
-    {
-        return MathF.Pow(value, a) / (MathF.Pow(value, a) + MathF.Pow(b - b * value, a));
-    }
-
-    public NoiseField<float> GeneratePerlinNoise(int width, int height)
-    {
-        NoiseField<float> whiteNoise = GenerateWhiteNoise(width, height);
-        NoiseField<float> perlinNoise = PerlinNoiseField(whiteNoise);
-        NoiseField<float> fallOffNoise = FallOffNoise(width);
-    
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                perlinNoise.Field[x, y] = perlinNoise.Field[x,y] - fallOffNoise.Field[x, y];
-            }
-        }
-
-        return perlinNoise;
-    }
 }

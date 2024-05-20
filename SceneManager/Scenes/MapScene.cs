@@ -14,7 +14,7 @@ namespace RTS_Engine;
 public class MapScene : Scene
 {
     GameObject gameObject;
-    GameObject meshObject;
+    GameObject worldObject;
 
     public override void Initialize()
     {
@@ -27,8 +27,6 @@ public class MapScene : Scene
         gameObject = new GameObject();
         gameObject.Name = "MapTexture";
         gameObject.Transform.SetLocalScale(new Vector3(2, 2, 1));
-        gameObject.AddComponent<SpiteRenderer>();
-        gameObject.GetComponent<SpiteRenderer>().Sprite = GenerateMap.noiseTexture;
         gameObject.Transform.SetLocalPosition(new Vector3(0, 0, 0));
         SceneRoot.AddChildObject(gameObject);
         
@@ -88,14 +86,13 @@ public class MapScene : Scene
             Console.WriteLine();
         }
         // end of pathfinding test
-        
-       
-        
-        meshObject = new GameObject();
-        meshObject.Name = "WorldMesh";
-        meshObject.AddComponent<WorldRenderer>();
-        meshObject.Transform.SetLocalPosition(new Vector3(-64, -40, -64));
-        SceneRoot.AddChildObject(meshObject);
+
+        worldObject = new GameObject();
+        worldObject.Name = "World";
+        worldObject.Transform.SetLocalScale(new Vector3(1, 1, 1));
+        worldObject.Transform.SetLocalPosition(new Vector3(-256, -100, -100));
+        worldObject.AddComponent<WorldRenderer>();
+        SceneRoot.AddChildObject(worldObject);
     }
 
     public override void Update(GameTime gameTime)

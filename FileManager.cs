@@ -75,7 +75,12 @@ public class KeyBindsData
         Scene loadedScene = new LoadedScene();
         loadedScene.Name = name;
         loadedScene.TempName = name;
+    #if _WINDOWS
         loadedScene.SceneRoot = DeserializeScene(Globals.MainPath + "Scenes/" + name + ".xml");
+    #else
+        loadedScene.SceneRoot = DeserializeScene("Scenes/" + name + ".xml");
+    #endif
+
         return loadedScene;
     }
 

@@ -33,7 +33,7 @@ public class Renderer
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
     public List<InstancedRendererController> InstancedRendererControllers = new();
-    public WorldRenderer WorldRenderer;
+    public List<WorldRenderer> WorldRenderers;
 
     public PickingManager.PickingFrustum? PickingFrustum = null;
 
@@ -45,7 +45,7 @@ public class Renderer
 #if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
 #else
-        byte[] bytecode = File.ReadAllBytes("../../../Content/ShadowMaps");
+        byte[] bytecode = File.ReadAllBytes("Content/ShadowMaps");
         _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
 #endif
         Meshes = new List<MeshRenderer>();
@@ -53,6 +53,7 @@ public class Renderer
         Sprites = new List<SpiteRenderer>();
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
+        WorldRenderers = new List<WorldRenderer>();
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -149,7 +150,7 @@ public class Renderer
         Sprites.Clear();
         AnimatedSprites.Clear();
         Texts.Clear();
-        // WorldRenderer = null;
+        WorldRenderers.Clear();
     }
     
     public void PrepareForNextFrame()
@@ -220,17 +221,17 @@ public class Renderer
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
             Stopwatch _sw = new Stopwatch();
-            
-            
             renderer.Draw(renderer.ParentObject.Transform.ModelMatrix);
-            
         }
 #endif
     }
 
     private void DrawWorld()
     {
-        WorldRenderer?.Draw();
+        foreach (WorldRenderer renderer in WorldRenderers)
+        {
+            renderer?.Draw();    
+        }
     }
     
     private void DrawShadows()

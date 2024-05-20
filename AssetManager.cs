@@ -25,7 +25,7 @@ public class AssetManager
 #if _WINDOWS
         StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
 #else
-        StreamReader sr = new StreamReader("../../../Content/Content.mgcb");
+        StreamReader sr = new StreamReader("Content/Content.mgcb");
 #endif
         string line = sr.ReadLine();
         while (line != null)
@@ -76,6 +76,7 @@ public class AssetManager
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
     public static Texture2D DefaultHeightMap{get; private set;}
+    public static List<Texture2D> DefaultHeightMaps{get; private set;}
     public static List<Texture2D> DefaultTerrainTextrues{get; private set;}
     public static TextureCube DefaultSkybox{get; private set;}
     public static SpriteFont DefaultFont{get; private set;}
@@ -141,6 +142,14 @@ public class AssetManager
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
+        
+        DefaultHeightMaps = new List<Texture2D>
+        {
+            this._content.Load<Texture2D>("heightmap_0"),
+            this._content.Load<Texture2D>("heightmap_1"),
+            this._content.Load<Texture2D>("heightmap_2"),
+            this._content.Load<Texture2D>("heightmap_3"),
+        };
 
         DefaultTerrainTextrues = new List<Texture2D>
         {

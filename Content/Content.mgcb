@@ -383,6 +383,25 @@
 /processorParam:TextureFormat=Color
 /build:defaultModel/roughness.png
 
+#begin domall/domall.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:domall/domall.fbx
+
 #begin Dude/dude_GPU.fbx
 /importer:FbxImporter
 /processor:GpuAnimatedModelProcessor
@@ -413,11 +432,6 @@
 /processorParam:MaxBones=72
 /processorParam:GenerateKeyframesFrequency=30
 /processorParam:FixRealBoneRoot=False
-/build:Dude/dude.fbx
-
-#begin domall/domall.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
 /processorParam:DefaultEffect=BasicEffect
@@ -432,7 +446,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:domall/domall.fbx
+/build:Dude/dude.fbx
 
 #begin Dude/head.tga
 /importer:TextureImporter
@@ -1346,30 +1360,6 @@
 /processorParam:TextureFormat=Color
 /build:Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
 
-#begin Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Height.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Height.png
-
 #begin Tartak/tekstury/kamien_DefaultMaterial_Height.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1394,18 +1384,6 @@
 /processorParam:TextureFormat=Color
 /build:Tartak/tekstury/kamien_DefaultMaterial_Metallic.png
 
-#begin Tartak/tekstury/kamien_DefaultMaterial_Metallic.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Metallic.png
-
 #begin Tartak/tekstury/kamien_DefaultMaterial_Normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1417,30 +1395,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Tartak/tekstury/kamien_DefaultMaterial_Normal.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Normal.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Normal.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
 
 #begin Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
 /importer:TextureImporter

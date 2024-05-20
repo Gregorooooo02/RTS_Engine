@@ -89,16 +89,17 @@ public class Game1 : Game
         Globals.MainEffect = Content.Load<Effect>("PBR_Shader");
         Globals.TerrainEffect = Content.Load<Effect>("Terrain_Shader");
 #else
-        byte[] bytecode = File.ReadAllBytes("../../../Content/PBR_Shader");
+        byte[] bytecode = File.ReadAllBytes("Content/PBR_Shader");
         Globals.MainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 
-        bytecode = File.ReadAllBytes("../../../Content/Terrain_Shader");
+        bytecode = File.ReadAllBytes("Content/Terrain_Shader");
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
 #if DEBUG
+        _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
-        _sceneManager.AddScene(new MapScene());
+        // _sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));

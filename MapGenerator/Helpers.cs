@@ -15,4 +15,11 @@ public class Helpers
 
         return a * (1 - mu) + b * mu;
     }
+
+    public static float Clamp01(float value)
+    {
+        if (value < 0.0f) return 0.0f;
+        if (value > 1.0f) return 1.0f;
+        return value;
+    }
 }
