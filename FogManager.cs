@@ -112,8 +112,17 @@ public class FogManager
     
     public bool IsVisible(Vector3 position)
     {
-        //TODO: Implement logic for visibility in fog
-        throw new NotImplementedException();
+        if (!FogActive) return true;
+        foreach (FogReveler reveler in Revelers)
+        {
+            float distance = MathF.Sqrt(MathF.Pow(reveler.CurrentPosition.X - position.X, 2) +
+                                        MathF.Pow(reveler.CurrentPosition.Y - position.Z, 2));
+            if (distance <= reveler.RevealRadius)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 
