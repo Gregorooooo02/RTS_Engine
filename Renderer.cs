@@ -89,8 +89,6 @@ public class Renderer
             PickingFrustum.Value.DrawFrustum();
         }
         
-        
-        
         Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
         Globals.PickingManager.DrawSelectionBox();

@@ -3,6 +3,7 @@ using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Point = System.Drawing.Point;
 
 namespace RTS_Engine;
@@ -10,11 +11,14 @@ namespace RTS_Engine;
 public class FogReveler : Component
 {
     private Vector3 _previousPos;
-    public float RevealRadius = 7.0f;
+    public int RevealRadius = 7;
+    private int PreviousRadius = 7;
     public bool Changed = true;
 
     public Point PreviousPosition;
     public Point CurrentPosition;
+
+    public Texture2D Track;
 
     private bool _added = false;
     
@@ -32,6 +36,11 @@ public class FogReveler : Component
         }
         else
         {
+            if (PreviousRadius != RevealRadius)
+            {
+                PreviousRadius = RevealRadius;
+                Track = Globals.FogManager.GetCircleTexture(RevealRadius);
+            }
             if (_added)
             {
                 if (!_previousPos.Equals(ParentObject.Transform.ModelMatrix.Translation))
@@ -46,6 +55,7 @@ public class FogReveler : Component
             {
                 Globals.FogManager.Revelers.Add(this);
                 _added = true;
+                Track = Globals.FogManager.GetCircleTexture(RevealRadius);
             }
         }
     }
@@ -71,7 +81,7 @@ public class FogReveler : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
-        RevealRadius = float.TryParse(element.Element("revealRadius")?.Value, out float revealRadius) ? revealRadius : 7.0f;
+        RevealRadius = int.TryParse(element.Element("revealRadius")?.Value, out int revealRadius) ? revealRadius : 7;
     }
 
     public override void RemoveComponent()
@@ -87,7 +97,7 @@ public class FogReveler : Component
         if(ImGui.CollapsingHeader("Fog Reveler"))
         {
             ImGui.Checkbox("Reveler active", ref Active);
-            ImGui.DragFloat("Reveal radius", ref RevealRadius);
+            ImGui.InputInt("Reveal radius", ref RevealRadius);
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
