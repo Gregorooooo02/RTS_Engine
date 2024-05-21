@@ -184,12 +184,14 @@ public class Game1 : Game
         ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
         ImGui.Checkbox("Single picking enabled", ref Globals.PickingManager.SinglePickingActive);
         ImGui.Checkbox("Box picking enabled", ref Globals.PickingManager.BoxPickingActive);
+        ImGui.Checkbox("Fog Active", ref Globals.FogManager.FogActive);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
         ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
         ImGui.SliderInt("Shadow Map Size", ref Globals.ShadowMapResolutionMultiplier, 0, 5);
+        ImGui.InputInt("Fog resolution factor", ref Globals.FogManager.FogResolution);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         ImGui.Text("Average from " + _size +"x: " + Math.Round(currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
         

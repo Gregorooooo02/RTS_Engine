@@ -12,11 +12,11 @@ namespace RTS_Engine;
 
 public class FogManager
 {
-    public bool FogActive = true;
+    public bool FogActive = false;
 
     #region MasksParameters
 
-    public readonly int FogResolution = 1;
+    public int FogResolution = 2;
     public readonly int TextureSize = 2048;
 
     #endregion
@@ -69,12 +69,8 @@ public class FogManager
         Texture2D output = CreateTexture(radius);
         if (_tracks.TryAdd(radius, new WeakReference<Texture2D>(output)))
         {
-            FileStream fileStream = new FileStream(Globals.MainPath + "/test.jpg",FileMode.Create);
-            output.SaveAsJpeg(fileStream,1 + radius * 2, 1 + radius * 2);
-            fileStream.Close();
             return output;
         }
-
         throw new DataException("Something went wrong!");
     }
     public void UpdateFog()
@@ -88,8 +84,8 @@ public class FogManager
             {
                 if (reveler.Changed)
                 {
-                    Globals.SpriteBatch.Draw(reveler.Track,new Vector2(reveler.CurrentPosition.X,reveler.CurrentPosition.Y),null,_exploredColor,0,
-                        new Vector2(reveler.RevealRadius),new Vector2(FogResolution,FogResolution),SpriteEffects.None,0);
+                    Globals.SpriteBatch.Draw(reveler.Track,new Vector2(reveler.CurrentPosition.X/ (float)FogResolution,reveler.CurrentPosition.Y/ (float)FogResolution),null,_exploredColor,0,
+                        new Vector2(reveler.RevealRadius),new Vector2(1.0f / FogResolution),SpriteEffects.None,0);
                     reveler.Changed = false;
                     reveler.PreviousPosition = reveler.CurrentPosition;
                 }
@@ -99,13 +95,18 @@ public class FogManager
             Globals.SpriteBatch.Begin();
             foreach (FogReveler reveler in Revelers)
             {
-                Globals.SpriteBatch.Draw(reveler.Track,new Vector2(reveler.CurrentPosition.X,reveler.CurrentPosition.Y),null,_visibleColor,0,
-                    new Vector2(reveler.RevealRadius),new Vector2(FogResolution,FogResolution),SpriteEffects.None,0);
+                Globals.SpriteBatch.Draw(reveler.Track,new Vector2(reveler.CurrentPosition.X / (float)FogResolution,reveler.CurrentPosition.Y / (float)FogResolution),null,_visibleColor,0,
+                    new Vector2(reveler.RevealRadius),new Vector2(1.0f / FogResolution),SpriteEffects.None,0);
             }
             Globals.SpriteBatch.End();
             Globals.GraphicsDevice.SetRenderTarget(null);
-            Globals.MainEffect.Parameters["discovery"]?.SetValue(FogActive ? _permanentMaskTarget : _blank);
-            Globals.MainEffect.Parameters["visibility"]?.SetValue(FogActive ? _visibilityMaskTarget : _blank);
+            Globals.MainEffect.Parameters["discovery"]?.SetValue(_permanentMaskTarget);
+            Globals.MainEffect.Parameters["visibility"]?.SetValue(_visibilityMaskTarget);
+        }
+        else if(!FogActive)
+        {
+            Globals.MainEffect.Parameters["discovery"]?.SetValue(_blank);
+            Globals.MainEffect.Parameters["visibility"]?.SetValue(_blank);
         }
     }
     
