@@ -1543,7 +1543,7 @@
 /processorParam:TextureFormat=Color
 /build:TerrainTextures/trawa/albedo.png
 
-#begin TerrainTextures/woda/albedo.png
+#begin TerrainTextures/woda/Water.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1553,7 +1553,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:TerrainTextures/woda/albedo.png
+/build:TerrainTextures/woda/Water.png;TerrainTextures/woda/albedo.png
+
+#begin TerrainTextures/woda/wave0.dds
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TerrainTextures/woda/wave0.dds
 
 #begin TestPBR/albedo.png
 /importer:TextureImporter

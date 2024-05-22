@@ -76,6 +76,7 @@ public class AssetManager
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
     public static Texture2D DefaultHeightMap{get; private set;}
+    public static Texture2D DefaultWaveNormalMap{get; private set;}
     public static List<Texture2D> DefaultHeightMaps{get; private set;}
     public static List<Texture2D> DefaultTerrainTextrues{get; private set;}
     public static TextureCube DefaultSkybox{get; private set;}
@@ -142,6 +143,7 @@ public class AssetManager
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
+        DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
         
         DefaultHeightMaps = new List<Texture2D>
         {

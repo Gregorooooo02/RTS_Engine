@@ -15,9 +15,11 @@ struct PixelToFrame
 float4x4 xView;
 float4x4 xProjection;
 float4x4 xWorld;
+
 float3 xLightDirection;
 float xAmbient;
 bool xEnableLighting;
+
 bool xShowNormals;
 float3 xCamPos;
 float3 xCamUp;
@@ -344,6 +346,80 @@ technique Multitextured
 #else
         VertexShader = compile vs_1_1 MultitexturedVS();
         PixelShader  = compile ps_2_0 MultitexturedPS();
+#endif
+    }
+}
+
+//------- Technique: WaterWaves --------
+float xWaveMapScale;
+float2 xWaveMapOffset;
+float4 xWaterColor;
+
+Texture xWaveNormalMap;
+sampler TextureSamplerWave = sampler_state
+{
+    texture = <xWaveNormalMap>;
+    magfilter = LINEAR;
+    minfilter = LINEAR;
+    mipfilter = LINEAR;
+    AddressU = wrap;
+    AddressV = wrap;
+};
+
+struct WaterVertexToPixel
+{
+    float4 Position    : POSITION;
+    float2 TextureCoords : TEXCOORD0;
+    float2 WaveMapCoords : TEXCOORD1;
+};
+
+struct WaterPixelToFrame
+{
+    float4 Color : COLOR0;
+};
+
+WaterVertexToPixel WaterWavesVS( float4 inPos : POSITION, float2 inTexCoords: TEXCOORD0)
+{
+    WaterVertexToPixel Output = (WaterVertexToPixel)0;
+    float4x4 preViewProjection = mul (xView, xProjection);
+    float4x4 preWorldViewProjection = mul (xWorld, preViewProjection);
+
+    Output.Position = mul(inPos, preWorldViewProjection);
+    Output.TextureCoords = inTexCoords;
+    Output.WaveMapCoords = inTexCoords * xWaveMapScale + xWaveMapOffset;
+
+    return Output;
+}
+
+WaterPixelToFrame WaterWavesPS(WaterVertexToPixel PSIn)
+{
+    WaterPixelToFrame Output = (WaterPixelToFrame)0;
+    
+    float3 normal = tex2D(TextureSamplerWave, PSIn.WaveMapCoords).xyz;
+
+    normal = 2.0f * normal - 1.0f;
+
+    float3 blendedNormal = normalize(normal);
+
+    float lightingFactor = 1;
+    if (xEnableLighting)
+        lightingFactor = dot(blendedNormal, -xLightDirection);
+
+    Output.Color = xWaterColor * saturate(lightingFactor + xAmbient);
+
+    return Output;
+}
+
+technique WaterWaves
+{
+    pass Pass0
+    {
+#if SM4
+        VertexShader = compile vs_4_0_level_9_3 WaterWavesVS();
+        PixelShader  = compile ps_4_0_level_9_3 WaterWavesPS();
+#else
+        VertexShader = compile vs_1_1 WaterWavesVS();
+        PixelShader  = compile ps_2_0 WaterWavesPS();
 #endif
     }
 }

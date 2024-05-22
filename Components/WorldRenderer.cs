@@ -23,7 +23,7 @@ public class WorldRenderer : Component
             new VertexElement(sizeof(float) * 10, VertexElementFormat.Vector4, VertexElementUsage.TextureCoordinate, 1)
         );
     }
-
+    
     private struct Chunk
     {
         public VertexMultitextured[] Vertices;
@@ -42,6 +42,9 @@ public class WorldRenderer : Component
     
     private readonly List<Chunk> _chunks = new List<Chunk>();
     private readonly int _chunkSize = 128;
+    
+    private WaterBody _waterBody;
+    private List<WaterBody> _waterBodies = new List<WaterBody>();
 
     public WorldRenderer(GameObject parentObject)
     {
@@ -159,7 +162,7 @@ public class WorldRenderer : Component
             Position = chunkPosition
         });
     }
-
+    
     public void LoadHeightData(Texture2D heightmap)
     {
         int terrainWidth = heightmap.Width;
@@ -207,11 +210,20 @@ public class WorldRenderer : Component
                     globalMinHeight,
                     globalMaxHeight
                 );
+                
+                _waterBody = new WaterBody(x, y, _chunkSize, 5);
+                _waterBodies.Add(_waterBody);
             }
         }
     }
 
-    public override void Update() {}
+    public override void Update()
+    {
+        foreach (WaterBody waterBody in _waterBodies)
+        {
+            waterBody.Update();
+        }
+    }
 
     public void Draw()
     {
@@ -244,20 +256,27 @@ public class WorldRenderer : Component
             Globals.TerrainEffect.Parameters["xAmbient"].SetValue(0.1f);
             Globals.TerrainEffect.Parameters["xEnableLighting"].SetValue(true);
             
+            Globals.GraphicsDevice.SetVertexBuffer(chunk.VertexBuffer);
+            Globals.GraphicsDevice.Indices = chunk.IndexBuffer;
+            
             foreach (EffectPass pass in Globals.TerrainEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                Globals.GraphicsDevice.Indices = chunk.IndexBuffer;
-                Globals.GraphicsDevice.SetVertexBuffer(chunk.VertexBuffer);
                 Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, chunk.Vertices.Length, 0, chunk.Indices.Length / 3);
             }
         }
-    }
 
+        foreach (WaterBody waterBody in _waterBodies)
+        {
+            waterBody.Draw(ParentObject.Transform.ModelMatrix);
+        }
+    }
+    
     public override void Initialize()
     {
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
+        
         Globals.Renderer.WorldRenderers.Add(this);
     }
 
