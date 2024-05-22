@@ -31,6 +31,7 @@
     <None Remove="Graphics\**" />
     <None Remove="AnimationImporters\**" />
     <None Remove="Animation\**" />
+    <None Remove="VoronoiLib\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
@@ -46,12 +47,14 @@
     <Compile Remove="Graphics\**" />
     <Compile Remove="AnimationImporters\**" />
     <Compile Remove="Animation\**" />
+    <Compile Remove="VoronoiLib\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="GraphicsImporters\**" />
     <EmbeddedResource Remove="Graphics\**" />
     <EmbeddedResource Remove="AnimationImporters\**" />
     <EmbeddedResource Remove="Animation\**" />
+    <EmbeddedResource Remove="VoronoiLib\**" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Animation">

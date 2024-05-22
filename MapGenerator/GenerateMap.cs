@@ -20,7 +20,7 @@ public class GenerateMap
         perlinGen.Persistence = .5f;
         perlinGen.Interpolation = Helpers.CosInterpolation;
 
-        perlinNoise = perlinGen.GeneratePerlinNoise(512, 512);
+        perlinNoise = perlinGen.GeneratePerlinNoise( 512, 512);
 
         
         LinearGradientFilter filter = new LinearGradientFilter();    

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,6 +36,10 @@ public class WorldRenderer : Component
         public Vector3 Position;
     }
     
+    private float[,] _heightData;
+    private int _terrainWidth;
+    private int _terrainHeight;
+    
     private Texture2D _sandTexture;
     private Texture2D _grassTexture;
     private Texture2D _rockTexture;
@@ -45,6 +50,10 @@ public class WorldRenderer : Component
     
     private WaterBody _waterBody;
     private List<WaterBody> _waterBodies = new List<WaterBody>();
+    
+    // Voronoi stuff
+    private Dictionary<Vector2, List<Vector2>> _voronoiRegions;
+    public List<GameObject> Features;
 
     public WorldRenderer(GameObject parentObject)
     {
@@ -165,47 +174,47 @@ public class WorldRenderer : Component
     
     public void LoadHeightData(Texture2D heightmap)
     {
-        int terrainWidth = heightmap.Width;
-        int terrainHeight = heightmap.Height;
+        _terrainWidth = heightmap.Width;
+        _terrainHeight = heightmap.Height;
         
-        Color[] heightMapColors = new Color[terrainWidth * terrainHeight];
+        Color[] heightMapColors = new Color[_terrainWidth * _terrainHeight];
         heightmap.GetData(heightMapColors);
         
-        float[,] heightData = new float[terrainWidth, terrainHeight];
+        _heightData = new float[_terrainWidth, _terrainHeight];
         
         float globalMinHeight = float.MaxValue;
         float globalMaxHeight = float.MinValue;
         
-        for (int x = 0; x < terrainWidth; x++)
+        for (int x = 0; x < _terrainWidth; x++)
         {
-            for (int y = 0; y < terrainHeight; y++)
+            for (int y = 0; y < _terrainHeight; y++)
             {
-                heightData[x, y] = heightMapColors[x + y * terrainWidth].R / 5.0f;
+                _heightData[x, y] = heightMapColors[x + y * _terrainWidth].R / 5.0f;
                 
-                if (heightData[x, y] < globalMinHeight)
+                if (_heightData[x, y] < globalMinHeight)
                 {
-                    globalMinHeight = heightData[x, y];
+                    globalMinHeight = _heightData[x, y];
                 }
-                if (heightData[x, y] > globalMaxHeight)
+                if (_heightData[x, y] > globalMaxHeight)
                 {
-                    globalMaxHeight = heightData[x, y];
+                    globalMaxHeight = _heightData[x, y];
                 }
             }
         }
         
-        for (int x = 0; x < terrainWidth - 1; x += _chunkSize - 1)
+        for (int x = 0; x < _terrainWidth - 1; x += _chunkSize - 1)
         {
-            for (int y = 0; y < terrainHeight - 1; y += _chunkSize - 1)
+            for (int y = 0; y < _terrainHeight - 1; y += _chunkSize - 1)
             {
-                int chunkWidth = Math.Min(_chunkSize, terrainWidth - x);
-                int chunkHeight = Math.Min(_chunkSize, terrainHeight - y);
+                int chunkWidth = Math.Min(_chunkSize, _terrainWidth - x);
+                int chunkHeight = Math.Min(_chunkSize, _terrainHeight - y);
                 
                 CreateChunk(
                     x,
                     y,
                     chunkWidth,
                     chunkHeight,
-                    heightData,
+                    _heightData,
                     heightMapColors,
                     globalMinHeight,
                     globalMaxHeight
@@ -229,6 +238,7 @@ public class WorldRenderer : Component
     {
         if (!Active) return;
         DrawChunk();
+        DrawFeatures();
     }
 
     public void DrawChunk()
@@ -277,7 +287,144 @@ public class WorldRenderer : Component
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
         
+        Features = new List<GameObject>();
+
+        GenerateVoronoiFeatures();
         Globals.Renderer.WorldRenderers.Add(this);
+    }
+    
+    // Voronoi methods
+    private void GenerateVoronoiFeatures()
+    {
+        var points = GenerateRandomPoints(500, _terrainWidth, _terrainHeight);
+        _voronoiRegions = ComputeVoronoiDiagram(points, _terrainWidth, _terrainHeight);
+        ClipVoronoiCells(_voronoiRegions, _terrainWidth, _terrainHeight);
+        
+        Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+        PlaceFeatures(_voronoiRegions);
+    }
+    
+    private List<Vector2> GenerateRandomPoints(int numPoints, int width, int height)
+    {
+        Random random = new Random();
+        List<Vector2> points = new List<Vector2>();
+
+        for (int i = 0; i < numPoints; i++)
+        {
+            float x = (float)(random.NextDouble() * width);
+            float y = (float)(random.NextDouble() * height);
+            points.Add(new Vector2(x, y));
+        }
+        
+        return points;
+    }
+
+    private Dictionary<Vector2, List<Vector2>> ComputeVoronoiDiagram(List<Vector2> sites, int width, int height)
+    {
+        var voronoiRegions = new Dictionary<Vector2, List<Vector2>>();
+
+        foreach (var site in sites)
+        {
+            voronoiRegions[site] = new List<Vector2>();
+        }
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector2 closestSite = Vector2.Zero;
+                float closestDistance = float.MaxValue;
+
+                foreach (var site in sites)
+                {
+                    float distance = Vector2.Distance(new Vector2(x, y), site);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestSite = site;
+                    }
+                }
+                
+                voronoiRegions[closestSite].Add(new Vector2(x, y));
+            }
+        }
+        
+        return voronoiRegions;
+    }
+    
+    public void ClipVoronoiCells(Dictionary<Vector2, List<Vector2>> voronoiRegions, int width, int height)
+    {
+        foreach (var site in voronoiRegions.Keys.ToList())
+        {
+            var region = voronoiRegions[site];
+            var clippedRegion = region.Where(p => p.X >= 0 && p.X < width && p.Y >= 0 && p.Y < height).ToList();
+            voronoiRegions[site] = clippedRegion;
+        }
+    }
+    
+    private void PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions)
+    {
+        Random random = new Random();
+        
+        foreach (var kvp in voronoiRegions)
+        {
+            var site = kvp.Key;
+            var region = kvp.Value;
+            
+            // Place a feature in the center of the region
+            Vector3 position = CalculateCentroid(region);
+            if (random.NextDouble() > 0.5)
+            {
+                if (_heightData[(int)position.X, (int)-position.Z] > 6.0f
+                    && _heightData[(int)position.X, (int)-position.Z] < 25.0f)
+                {
+                    PlaceTree(position);    
+                }
+            }
+            else
+            {
+                // Place a rock
+            }
+        }
+    }
+    
+    private Vector3 CalculateCentroid(List<Vector2> region)
+    {
+        float x = 0;
+        float y = 0;
+        foreach (var point in region)
+        {
+            x += point.X;
+            y += point.Y;
+        }
+        
+        x /= region.Count;
+        y /= region.Count;
+        
+        // Return the position in world space and make that the y coordinate is equal to the height of the terrain
+        return new Vector3(x, _heightData[(int)x, (int)y] + 8, -y);
+    }
+    
+    private void PlaceTree(Vector3 position)
+    {
+        GameObject tree = new GameObject();
+        tree.Name = "Tree";
+        tree.Transform.SetLocalPosition(position);
+        tree.AddComponent<MeshRenderer>();
+        tree.GetComponent<MeshRenderer>().LoadModel("Env/Trees/drzewoiglaste");
+        
+        Features.Add(tree);
+    }
+    
+    private void DrawFeatures()
+    {
+        foreach (var feature in Features)
+        {
+            feature.GetComponent<MeshRenderer>()._model.Draw(
+                ParentObject.Transform.ModelMatrix * 
+                Matrix.CreateTranslation(feature.Transform._pos)
+            );
+        }
     }
 
     public override string ComponentToXmlString()
