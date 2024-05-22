@@ -13,11 +13,15 @@ public sealed class WaterBody
     private IndexBuffer _indexBuffer;
     
     private int _waterSize = 128;
-    private int _waterHeight = 5;
+    private float _waterHeight;
 
     private Vector2 _waveVelocity;
     private Vector2 _waveNormalOffset;
     private float _waveNormalScale;
+
+    private float _waveTime;
+
+    private Random random = new Random(1990);
     
     public int WaterSize
     {
@@ -25,7 +29,7 @@ public sealed class WaterBody
         set => _waterSize = value;
     }
     
-    public int WaterHeight
+    public float WaterHeight
     {
         get => _waterHeight;
         set => _waterHeight = value;
@@ -60,7 +64,16 @@ public sealed class WaterBody
 
     public void Update()
     {
+        _waveTime += Globals.DeltaTime; 
         _waveNormalOffset += _waveVelocity * Globals.DeltaTime;
+        _waterHeight += (float)Math.Sin(_waveTime) * 0.005f;
+        
+        for (int i = 0 ; i < _vertices.Length; i++)
+        {
+            _vertices[i].Position.Y = _waterHeight;
+        }
+        
+        _vertexBuffer.SetData(_vertices);
     }
     
     public void Draw(Matrix world)
