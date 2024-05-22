@@ -30,14 +30,14 @@ public class FogManager
 
     #region RenderTargets
 
-    private readonly RenderTarget2D _permanentMaskTarget;
-    private readonly RenderTarget2D _visibilityMaskTarget;
+    public readonly RenderTarget2D _permanentMaskTarget;
+    public readonly RenderTarget2D _visibilityMaskTarget;
 
     #endregion
     
     #region Colors
 
-    private readonly Color _visibleColor = new(240,0,0,255);
+    private readonly Color _visibleColor = new(239,0,0,255);
     private readonly Color _exploredColor = new(15,0,0,255);
     
     private readonly Color[] _color = {new(255,0,0,255)};

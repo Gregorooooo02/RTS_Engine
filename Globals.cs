@@ -173,6 +173,8 @@ namespace RTS_Engine
         public static bool DebugCamera = true;
         public static bool DrawWireframe = false;
         public static bool DrawSelectFrustum = false;
+        public static bool DrawExplored = false;
+        public static bool DrawVisibility = false;
 #endif
     }
 }

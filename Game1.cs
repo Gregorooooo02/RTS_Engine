@@ -185,6 +185,8 @@ public class Game1 : Game
         ImGui.Checkbox("Single picking enabled", ref Globals.PickingManager.SinglePickingActive);
         ImGui.Checkbox("Box picking enabled", ref Globals.PickingManager.BoxPickingActive);
         ImGui.Checkbox("Fog Active", ref Globals.FogManager.FogActive);
+        ImGui.Checkbox("Draw Explored", ref Globals.DrawExplored);
+        ImGui.Checkbox("Draw Visibility", ref Globals.DrawVisibility);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 
