@@ -20,6 +20,14 @@ namespace RTS_Engine
         PROP,
         BUILDING
     }
+
+    public enum ScreenSize
+    {
+        NOTSET,
+        WINDOWED,
+        WINDOWED_FULLSCREEN,
+        FULLSCREEN
+    }
     
     internal class Globals
     {
@@ -112,6 +120,9 @@ namespace RTS_Engine
 
             if(InputManager.Instance.GetAction(GameAction.PAUSE)?.state == ActionState.RELEASED) IsPaused = !IsPaused;
             
+            if(InputManager.Instance.GetAction(GameAction.RESIZE_FULLSCREEN)?.state == ActionState.RELEASED) ChangeScreenSize(ScreenSize.FULLSCREEN);
+            if(InputManager.Instance.GetAction(GameAction.RESIZE_WINDOWED)?.state == ActionState.RELEASED) ChangeScreenSize(ScreenSize.WINDOWED);
+            
             HitUI = false;
         }
         
@@ -121,6 +132,41 @@ namespace RTS_Engine
             Type transform = typeof(Transform);
             Assembly assembly = Assembly.GetExecutingAssembly();
             return assembly.GetTypes().Where(x => baseType.IsAssignableFrom(x) && x != baseType && x != transform).ToList();
+        }
+
+        private static ScreenSize currentSize;
+        public static void ChangeScreenSize(ScreenSize newSize)
+        {
+            if (currentSize != newSize)
+            {
+                currentSize = newSize;
+                switch (currentSize)
+                {
+                    case ScreenSize.WINDOWED:
+                    {
+                        GraphicsDeviceManager.PreferredBackBufferWidth = 1440;
+                        GraphicsDeviceManager.PreferredBackBufferHeight = 900;
+                        GraphicsDeviceManager.IsFullScreen = false;
+                        break;
+                    }
+                    case ScreenSize.WINDOWED_FULLSCREEN:
+                    {
+                        GraphicsDeviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                        GraphicsDeviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                        GraphicsDeviceManager.IsFullScreen = false;
+                        break; 
+                    }
+                    
+                    case ScreenSize.FULLSCREEN:
+                    {
+                        GraphicsDeviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                        GraphicsDeviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                        GraphicsDeviceManager.IsFullScreen = true;
+                        break;
+                    }
+                }
+                GraphicsDeviceManager.ApplyChanges();
+            }
         }
 
 #if _WINDOWS

@@ -12,6 +12,7 @@ public class SpiteRenderer : Component
     public Color Color = Color.White;
     public bool useLocalPosition = true;
 
+    private Point currentSize;
     
     public SpiteRenderer(GameObject parentObject, Texture2D sprite)
     {
@@ -23,8 +24,21 @@ public class SpiteRenderer : Component
     {
         
     }
-    
-    public override void Update(){}
+
+    private void Resize()
+    {
+        if(!useLocalPosition) return;
+        float ratio = Globals.GraphicsDeviceManager.PreferredBackBufferWidth / (float)currentSize.X;
+        ParentObject.Transform.SetLocalPosition(ParentObject.Transform._pos * ratio);
+        ParentObject.Transform.SetLocalScale(ParentObject.Transform._scl * ratio);
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
+    }
+
+    public override void Update()
+    {
+        if(currentSize.X != Globals.GraphicsDeviceManager.PreferredBackBufferWidth || currentSize.Y != Globals.GraphicsDeviceManager.PreferredBackBufferHeight) Resize();
+    }
 
     public void Draw()
     {
@@ -66,6 +80,8 @@ public class SpiteRenderer : Component
     {
         Globals.Renderer.Sprites.Add(this);
         Sprite = AssetManager.DefaultSprite;
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
     }
 
     public override string ComponentToXmlString()
@@ -89,6 +105,9 @@ public class SpiteRenderer : Component
         builder.Append("<a>" + Color.A + "</a>");
         builder.Append("</color>");
         
+        builder.Append("<screenSizeX>" + currentSize.X + "</screenSizeX>");
+        builder.Append("<screenSizeY>" + currentSize.Y + "</screenSizeY>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -100,6 +119,12 @@ public class SpiteRenderer : Component
         LoadSprite(element.Element("sprite").Value);
         XElement color = element.Element("color");
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
+
+        currentSize =
+            int.TryParse(element.Element("screenSizeX")?.Value, out int x) &&
+            int.TryParse(element.Element("screenSizeY")?.Value, out int y)
+                ? new Point(x, y)
+                : new Point(1440, 900);
     }
 
     public override void RemoveComponent()

@@ -33,24 +33,23 @@ public class Game1 : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Globals.Content = Content;
+        Globals.GraphicsDeviceManager = _graphics;
+        
+
 #if DEBUG
         _measurements = new double[_size];
 #endif
-        Globals.GraphicsDeviceManager = _graphics;
+        
         if (isFullscreen)
         {
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //Globals.ChangeScreenSize(ScreenSize.FULLSCREEN);
         }
         else
         {
-            _graphics.PreferredBackBufferWidth = 1440;
-            _graphics.PreferredBackBufferHeight = 900;
+            Globals.ChangeScreenSize(ScreenSize.WINDOWED);
         }
         //IsFixedTimeStep = false;
         //_graphics.SynchronizeWithVerticalRetrace = false;
-
-        _graphics.PreferMultiSampling = true;
         
         Content.RootDirectory = "Content";
         IsMouseVisible = true;

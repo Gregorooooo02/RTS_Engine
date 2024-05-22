@@ -15,6 +15,8 @@ public class TextRenderer : Component
     public Color Color = Color.White;
     public bool useLocalPosition = true;
 
+    private Point currentSize;
+    
     public override void Update() 
     {
         if (NewContent != null) 
@@ -22,8 +24,19 @@ public class TextRenderer : Component
             Content = NewContent;
             NewContent = null;
         }
+        if(currentSize.X != Globals.GraphicsDeviceManager.PreferredBackBufferWidth || currentSize.Y != Globals.GraphicsDeviceManager.PreferredBackBufferHeight) Resize();
     }
 
+    private void Resize()
+    {
+        if(!useLocalPosition) return;
+        float ratio = Globals.GraphicsDeviceManager.PreferredBackBufferWidth / (float)currentSize.X;
+        ParentObject.Transform.SetLocalPosition(ParentObject.Transform._pos * ratio);
+        ParentObject.Transform.SetLocalScale(ParentObject.Transform._scl * ratio);
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
+    }
+    
     public TextRenderer()
     {
         
@@ -66,6 +79,8 @@ public class TextRenderer : Component
         Font = AssetManager.DefaultFont;
         _name = "defaultFont";
         Globals.Renderer.Texts.Add(this);
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
     }
 
     public override string ComponentToXmlString()
@@ -91,6 +106,9 @@ public class TextRenderer : Component
         builder.Append("<a>" + Color.A + "</a>");
         builder.Append("</color>");
         
+        builder.Append("<screenSizeX>" + currentSize.X + "</screenSizeX>");
+        builder.Append("<screenSizeY>" + currentSize.Y + "</screenSizeY>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -106,6 +124,11 @@ public class TextRenderer : Component
         if (color == null) Color = new Color(255, 255, 255);
         else Color = new Color(int.Parse(color.Element("r")?.Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
 
+        currentSize =
+            int.TryParse(element.Element("screenSizeX")?.Value, out int x) &&
+            int.TryParse(element.Element("screenSizeY")?.Value, out int y)
+                ? new Point(x, y)
+                : new Point(1440, 900);
     }
 
     public override void RemoveComponent()
