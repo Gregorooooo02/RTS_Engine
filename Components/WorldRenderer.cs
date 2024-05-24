@@ -36,7 +36,7 @@ public class WorldRenderer : Component
         public Vector3 Position;
     }
     
-    private float[,] _heightData;
+    public float[,] HeightData;
     private int _terrainWidth;
     private int _terrainHeight;
     
@@ -180,7 +180,7 @@ public class WorldRenderer : Component
         Color[] heightMapColors = new Color[_terrainWidth * _terrainHeight];
         heightmap.GetData(heightMapColors);
         
-        _heightData = new float[_terrainWidth, _terrainHeight];
+        HeightData = new float[_terrainWidth, _terrainHeight];
         
         float globalMinHeight = float.MaxValue;
         float globalMaxHeight = float.MinValue;
@@ -189,15 +189,15 @@ public class WorldRenderer : Component
         {
             for (int y = 0; y < _terrainHeight; y++)
             {
-                _heightData[x, y] = heightMapColors[x + y * _terrainWidth].R / 5.0f;
+                HeightData[x, y] = heightMapColors[x + y * _terrainWidth].R / 5.0f;
                 
-                if (_heightData[x, y] < globalMinHeight)
+                if (HeightData[x, y] < globalMinHeight)
                 {
-                    globalMinHeight = _heightData[x, y];
+                    globalMinHeight = HeightData[x, y];
                 }
-                if (_heightData[x, y] > globalMaxHeight)
+                if (HeightData[x, y] > globalMaxHeight)
                 {
-                    globalMaxHeight = _heightData[x, y];
+                    globalMaxHeight = HeightData[x, y];
                 }
             }
         }
@@ -214,7 +214,7 @@ public class WorldRenderer : Component
                     y,
                     chunkWidth,
                     chunkHeight,
-                    _heightData,
+                    HeightData,
                     heightMapColors,
                     globalMinHeight,
                     globalMaxHeight
@@ -290,17 +290,17 @@ public class WorldRenderer : Component
         Features = new List<GameObject>();
 
         GenerateVoronoiFeatures();
+        Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+        
         Globals.Renderer.WorldRenderers.Add(this);
     }
     
     // Voronoi methods
     private void GenerateVoronoiFeatures()
     {
-        var points = GenerateRandomPoints(500, _terrainWidth, _terrainHeight);
+        var points = GenerateRandomPoints(200, _terrainWidth, _terrainHeight);
         _voronoiRegions = ComputeVoronoiDiagram(points, _terrainWidth, _terrainHeight);
         ClipVoronoiCells(_voronoiRegions, _terrainWidth, _terrainHeight);
-        
-        Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
         PlaceFeatures(_voronoiRegions);
     }
     
@@ -375,8 +375,8 @@ public class WorldRenderer : Component
             Vector3 position = CalculateCentroid(region);
             if (random.NextDouble() > 0.5)
             {
-                if (_heightData[(int)position.X, (int)-position.Z] > 6.0f
-                    && _heightData[(int)position.X, (int)-position.Z] < 25.0f)
+                if (HeightData[(int)position.X, (int)-position.Z] > 6.0f
+                    && HeightData[(int)position.X, (int)-position.Z] < 25.0f)
                 {
                     PlaceTree(position);    
                 }
@@ -402,7 +402,7 @@ public class WorldRenderer : Component
         y /= region.Count;
         
         // Return the position in world space and make that the y coordinate is equal to the height of the terrain
-        return new Vector3(x, _heightData[(int)x, (int)y] + 8, -y);
+        return new Vector3(x, HeightData[(int)x, (int)y] + 8, -y);
     }
     
     private void PlaceTree(Vector3 position)
