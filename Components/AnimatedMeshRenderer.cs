@@ -101,7 +101,6 @@ public class AnimatedMeshRenderer : Component
     {
         Active = element.Element("active")?.Value == "True";
         XElement model = element.Element("model");
-        string path;
 
         if (model?.Element("path") == null)
         {
@@ -120,7 +119,7 @@ public class AnimatedMeshRenderer : Component
 
     public void LoadModel(string modelPath, string technique = "PBR")
     {
-        _model = Globals.content.Load<Model>("snowman_animated");
+        _model = Globals.Content.Load<Model>("snowman_animated");
         // _model.ShaderTechniqueName = technique;
     }
 

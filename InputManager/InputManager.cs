@@ -21,6 +21,10 @@ public enum GameAction
     SCENE1,
     SCENE2,
     SCENE3,
+    PAUSE,
+    EXITPUZZLE,
+    RESIZE_FULLSCREEN,
+    RESIZE_WINDOWED,
 }
 
 public class InputManager

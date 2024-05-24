@@ -36,7 +36,7 @@ public class ThirdScene : Scene
         
         gameObject3.AddComponent<Camera>();
         gameObject3.AddComponent<Layer>();
-        gameObject3.GetComponent<Layer>().SetLayerType("UI");
+        //gameObject3.GetComponent<Layer>().SetLayerType("UI");
         
         gameObject.Transform.SetLocalPosition(new Vector3(-20.0f, 0, 0));
         gameObject.Transform.SetLocalScale(new Vector3(1.0f, 1.0f, 1.0f));
@@ -91,12 +91,12 @@ public class ThirdScene : Scene
         
         if (InputManager.Instance.GetAction(GameAction.UP)?.state == ActionState.PRESSED)
         {
-            SceneRoot.Children[2].GetComponent<Camera>().fovDegrees += -0.5f;
+            SceneRoot.Children[2].GetComponent<Camera>().FovDegrees += -0.5f;
         }
         
         if (InputManager.Instance.GetAction(GameAction.DOWN)?.state == ActionState.PRESSED)
         {
-            SceneRoot.Children[2].GetComponent<Camera>().fovDegrees += 0.5f;
+            SceneRoot.Children[2].GetComponent<Camera>().FovDegrees += 0.5f;
         }
         
     }

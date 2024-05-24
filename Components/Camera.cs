@@ -1,33 +1,30 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace RTS_Engine;
 
 public class Camera : Component
 {
-    public float ZoomSpeed = 8.0f;
-    public float LerpSpeed = 3.5f;
-    private int previousScrollValue = 0;
-    public float fovDegrees = 45.0f;
-    private float TargetFov = 45.0f;
-    public float ZoomMin = 25.0f;
-    public float ZoomMax = 75.0f;
+    private float _zoomSpeed = 8.0f;
+    private float _lerpSpeed = 3.5f;
+    private int _previousScrollValue;
+    public float FovDegrees = 45.0f;
+    private float _targetFov = 45.0f;
+    private float _zoomMin = 25.0f;
+    private float _zoomMax = 75.0f;
 
-    public float cameraSpeed = 20.0f;
-    
-    public float nearPlane = 0.5f;
-    public float farPlane = 2000.0f;
-    
+    private float _cameraSpeed = 20.0f;
+
+    private const float NearPlane = 0.5f;
+    private const float FarPlane = 2000.0f;
+
     public override void Initialize()
     {
         UpdateCameraMatrices();
-        ParentObject.Transform.SetLocalRotation(new(-45, 45, 0));
+        ParentObject.Transform.SetLocalRotation(new(-60, 30, 0));
     }
     
     public override string ComponentToXmlString()
@@ -40,17 +37,32 @@ public class Camera : Component
         
         builder.Append("<active>" + Active + "</active>");
               
-        builder.Append("<fovDegrees>" + fovDegrees + "</fovDegrees>");
+        builder.Append("<fovDegrees>" + FovDegrees + "</fovDegrees>");
         
-        builder.Append("<nearPlane>" + nearPlane + "</nearPlane>");
+        builder.Append("<zoomMin>" + _zoomMin + "</zoomMin>");
         
-        builder.Append("<farPlane>" + farPlane +"</farPlane>");
+        builder.Append("<zoomMax>" + _zoomMax + "</zoomMax>");
+        
+        builder.Append("<lerpSpeed>" + _lerpSpeed + "</lerpSpeed>");
+        
+        builder.Append("<zoomSpeed>" + _zoomSpeed + "</zoomSpeed>");
+        
+        builder.Append("<cameraSpeed>" + _cameraSpeed + "</cameraSpeed>");
         
         builder.Append("</component>");
         return builder.ToString();
     }
-    
-    public override void Deserialize(XElement element){}
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        FovDegrees = float.TryParse(element.Element("fovDegress")?.Value, out float degrees) ? degrees : 45.0f;
+        _zoomMin = float.TryParse(element.Element("zoomMin")?.Value, out float zoomMin) ? zoomMin : 25.0f;
+        _zoomMax = float.TryParse(element.Element("zoomMax")?.Value, out float zoomMax) ? zoomMax : 75.0f;
+        _lerpSpeed = float.TryParse(element.Element("lerpSpeed")?.Value, out float lerpSpeed) ? lerpSpeed : 3.5f;
+        _zoomSpeed = float.TryParse(element.Element("zoomSpeed")?.Value, out float zoomSpeed) ? zoomSpeed : 8.0f;
+        _cameraSpeed = float.TryParse(element.Element("cameraSpeed")?.Value, out float cameraSpeed) ? cameraSpeed : 20.0f;
+    }
     public override void RemoveComponent()
     {
         ParentObject.RemoveComponent(this);
@@ -62,8 +74,11 @@ public class Camera : Component
         if(ImGui.CollapsingHeader("Camera"))
         {
             ImGui.Checkbox("Camera active", ref Active);
-            ImGui.DragFloat("Zoom speed", ref ZoomSpeed, 0.02f,0.1f);
-            ImGui.DragFloat("Zoom Lerp speed", ref LerpSpeed, 0.05f);
+            ImGui.DragFloat("Zoom speed", ref _zoomSpeed, 0.02f,0.1f);
+            ImGui.DragFloat("Zoom Lerp speed", ref _lerpSpeed, 0.05f);
+            ImGui.DragFloat("Camera speed", ref _cameraSpeed, 0.05f);
+            ImGui.DragFloat("Minimum zoom", ref _zoomMin, 0.1f);
+            ImGui.DragFloat("Maximum zoom", ref _zoomMax, 0.1f);
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
@@ -80,16 +95,13 @@ public class Camera : Component
 
     public Camera(){}
     
-    /// <summary>
-    /// Changes the perspective matrix to a new near, far and field of view.
-    /// The projection matrix is only set up once at the start of the game.
-    /// </summary>
-    public void UpdateCameraMatrices() 
+    
+    private void UpdateCameraMatrices()
     {
-        Globals.ZoomDegrees = fovDegrees;
+        Globals.ZoomDegrees = FovDegrees;
         Globals.ViewPos = ParentObject.Transform.ModelMatrix.Translation;
         Globals.View = Matrix.CreateLookAt(Globals.ViewPos, ParentObject.Transform.ModelMatrix.Forward + Globals.ViewPos, Vector3.Up);
-        Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fovDegrees), Globals.GraphicsDevice.Viewport.AspectRatio, nearPlane, farPlane);
+        Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FovDegrees), Globals.GraphicsDevice.Viewport.AspectRatio, NearPlane, FarPlane);
     }
 
     private void MoveCamera()
@@ -110,28 +122,28 @@ public class Camera : Component
         {
             y -= 1;
         }
-        Vector3 right = Vector3.Cross(ParentObject.Transform.ModelMatrix.Forward, ParentObject.Transform.ModelMatrix.Up) ;
-        right.Y = 0;
-        right.Normalize();
         Vector3 forward = ParentObject.Transform.ModelMatrix.Forward;
         forward.Y = 0;
         forward.Normalize();
+        Vector3 right = Vector3.Cross(forward, Vector3.Up) ;
+        right.Y = 0;
+        right.Normalize();
         Vector3 combined = Vector3.Add(forward * x, right * y);
         if(x + y != 0 || x * y != 0)combined.Normalize();
-        ParentObject.Transform.Move(combined * Globals.DeltaTime * cameraSpeed);
+        ParentObject.Transform.Move(combined * Globals.DeltaTime * _cameraSpeed);
     }
 
 
     private void UpdateFov()
     {
-        if(InputManager.Instance.ScrollWheel != previousScrollValue)
+        if(InputManager.Instance.ScrollWheel != _previousScrollValue)
         {
-            TargetFov = fovDegrees + ZoomSpeed * Math.Sign(previousScrollValue - InputManager.Instance.ScrollWheel);
-            previousScrollValue = InputManager.Instance.ScrollWheel;
+            _targetFov = FovDegrees + _zoomSpeed * Math.Sign(_previousScrollValue - InputManager.Instance.ScrollWheel);
+            _previousScrollValue = InputManager.Instance.ScrollWheel;
             
         }
-        if (TargetFov != fovDegrees) fovDegrees = MathHelper.Lerp(fovDegrees, TargetFov, Globals.DeltaTime * LerpSpeed);
-        fovDegrees = Math.Clamp(fovDegrees, ZoomMin, ZoomMax);
+        if (MathF.Abs(_targetFov - FovDegrees) > 0.1f) FovDegrees = MathHelper.Lerp(FovDegrees, _targetFov, Globals.DeltaTime * _lerpSpeed);
+        FovDegrees = Math.Clamp(FovDegrees, _zoomMin, _zoomMax);
     }
 
     /// <summary>

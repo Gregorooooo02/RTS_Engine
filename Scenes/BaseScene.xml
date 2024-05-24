@@ -49,7 +49,7 @@
         </component>
         <component>
           <type>MeshRenderer</type>
-          <active>True</active>
+          <active>False</active>
           <model>
             <path>basicPlane</path>
             <technique>PBR</technique>
@@ -1066,13 +1066,13 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>101,11543</x>
+            <x>77,39341</x>
             <y>50</y>
-            <z>75,96793</z>
+            <z>63,195694</z>
           </position>
           <rotation>
-            <x>-45</x>
-            <y>45</y>
+            <x>-60</x>
+            <y>30</y>
             <z>0</z>
           </rotation>
           <scale>
@@ -1084,9 +1084,12 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>45</fovDegrees>
-          <nearPlane>0,05</nearPlane>
-          <farPlane>2000</farPlane>
+          <fovDegrees>70</fovDegrees>
+          <zoomMin>30</zoomMin>
+          <zoomMax>70</zoomMax>
+          <lerpSpeed>3,5</lerpSpeed>
+          <zoomSpeed>8</zoomSpeed>
+          <cameraSpeed>20,3</cameraSpeed>
         </component>
         <component>
           <type>MeshRenderer</type>
@@ -1127,6 +1130,40 @@
           <active>True</active>
           <model>
             <path>defaultModel</path>
+            <technique>PBR</technique>
+          </model>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Ground2</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>5</x>
+            <y>1,05</y>
+            <z>5</z>
+          </scale>
+        </component>
+        <component>
+          <type>MeshRenderer</type>
+          <active>True</active>
+          <model>
+            <path>basicPlane</path>
             <technique>PBR</technique>
           </model>
         </component>

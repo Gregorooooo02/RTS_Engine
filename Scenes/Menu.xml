@@ -25,6 +25,7 @@
     <component>
       <type>SpiteRenderer</type>
       <active>True</active>
+      <useLocal>False</useLocal>
       <sprite>blank</sprite>
       <color>
         <r>25</r>
@@ -61,6 +62,7 @@
         <component>
           <type>SpiteRenderer</type>
           <active>True</active>
+          <useLocal>True</useLocal>
           <sprite>blank</sprite>
           <color>
             <r>73</r>
@@ -102,6 +104,7 @@
             <component>
               <type>TextRenderer</type>
               <active>True</active>
+              <useLocal>True</useLocal>
               <contents>Exit</contents>
               <font>defaultFont</font>
               <color>
@@ -142,6 +145,7 @@
         <component>
           <type>SpiteRenderer</type>
           <active>True</active>
+          <useLocal>True</useLocal>
           <sprite>blank</sprite>
           <color>
             <r>73</r>
@@ -153,7 +157,7 @@
         <component>
           <type>Button</type>
           <active>True</active>
-          <action>BASESCENE</action>
+          <action>SCENE1</action>
         </component>
       </components>
       <childObjects>
@@ -183,6 +187,7 @@
             <component>
               <type>TextRenderer</type>
               <active>True</active>
+              <useLocal>True</useLocal>
               <contents>Play</contents>
               <font>defaultFont</font>
               <color>

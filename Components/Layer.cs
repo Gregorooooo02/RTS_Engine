@@ -10,15 +10,14 @@ namespace RTS_Engine;
 
 public class Layer : Component
 {
-    private string name;
-    private string layerType = Globals.LayerType.DEFAULT.ToString();
-    
+    public LayerType layer = LayerType.DEFAULT;
     
     public override void Initialize()
     {
         Active = true;
-        name = ParentObject.Name + "Layer";
     }
+    
+    public Layer(){}
     
     public override string ComponentToXmlString()
     {
@@ -30,42 +29,60 @@ public class Layer : Component
         
         builder.Append("<active>" + Active + "</active>");
         
-        builder.Append("<model>" + name + "</model>");
-        
-        builder.Append("<layerType>" + layerType + "</layerType>");
+        builder.Append("<layerType>" + layer + "</layerType>");
         
         builder.Append("</component>");
         return builder.ToString();
     }
 
 #if DEBUG
+    private bool changingLayer = false;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Layer"))
         {
             ImGui.Checkbox("Layer active", ref Active);
-            ImGui.Text(name);
-            ImGui.Text("Layer type: " + layerType);
+            ImGui.Text("Layer: " + layer);
+            if (ImGui.Button("Change layer"))
+            {
+                changingLayer = true;
+            }
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
             }
         }
+        if (changingLayer)
+        {
+            var values = Enum.GetValues(typeof(LayerType));
+            ImGui.Begin("Change Layer");
+            foreach (LayerType currentLayer in values)
+            {
+                if (ImGui.Button(currentLayer.ToString()))
+                {
+                    layer = currentLayer;
+                    changingLayer = false;
+                }
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                changingLayer = false;
+            }
+            ImGui.End();
+        }
     }
 #endif
-    
-    public override void Deserialize(XElement element){}
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        Enum.TryParse(element?.Element("action")?.Value, out LayerType result);
+        layer = result;
+    }
 
     public override void RemoveComponent()
     {
         ParentObject.RemoveComponent(this);
-    }
-    
-    public Layer(){}
-    
-    public void SetLayerType(string layerType)
-    {
-        this.layerType = layerType;
     }
     
     public override void Update(){}

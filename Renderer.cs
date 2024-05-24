@@ -34,6 +34,7 @@ public class Renderer
     public List<AnimatedSpriteRenderer> AnimatedSprites;
     public List<InstancedRendererController> InstancedRendererControllers = new();
     public List<WorldRenderer> WorldRenderers;
+    public Puzzle CurrentActivePuzzle;
 
     public PickingManager.PickingFrustum? PickingFrustum = null;
 
@@ -58,9 +59,11 @@ public class Renderer
         _blank = content.Load<Texture2D>("blank");
 #endif
     }
-
+    
     public void Render()
     {
+        Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
+        
         //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
         //TODO: In that case Renderer scene would be, visually, one frame behind game's logic but, if not changed, there might be
         //TODO: some visual inaccuracies with frustum culling if camera moves too fast.
@@ -72,11 +75,7 @@ public class Renderer
         
 #if DEBUG
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
-        var state = new RasterizerState();
-        state.FillMode = Globals.DrawWireframe ? FillMode.WireFrame : FillMode.Solid;
-        Globals.GraphicsDevice.RasterizerState = state;
-        
-        
+        Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
         
         if(Globals.DrawShadows) DrawShadows();
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
@@ -91,13 +90,14 @@ public class Renderer
             PickingFrustum.Value.DrawFrustum();
         }
         
-        
-        
         Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
+        if(Globals.DrawExplored)Globals.SpriteBatch.Draw(Globals.FogManager._permanentMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
+        if(Globals.DrawVisibility)Globals.SpriteBatch.Draw(Globals.FogManager._visibilityMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
         Globals.PickingManager.DrawSelectionBox();
         DrawSprites();
         DrawAnimatedSprites();
+        CurrentActivePuzzle?.Draw();
         Globals.SpriteBatch.End();
         Globals.SpriteBatch.Begin();
         DrawText();
@@ -151,6 +151,7 @@ public class Renderer
         AnimatedSprites.Clear();
         Texts.Clear();
         WorldRenderers.Clear();
+        CurrentActivePuzzle = null;
     }
     
     public void PrepareForNextFrame()
@@ -220,7 +221,6 @@ public class Renderer
         // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
-            Stopwatch _sw = new Stopwatch();
             renderer.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif
@@ -236,9 +236,12 @@ public class Renderer
     
     private void DrawShadows()
     {
-        Vector3 lightPos = Globals.ViewPos + new Vector3(-60, 15, -60);
+        float sqrtZoom = MathF.Sqrt(Globals.ZoomDegrees);
+        float offset = -sqrtZoom * Globals.ZoomDegrees * 0.2f - 45;
+        float size = sqrtZoom * Globals.ZoomDegrees * 0.62f;
+        Vector3 lightPos = Globals.ViewPos + new Vector3(offset, 15, offset);
         _lightViewProjection = Matrix.CreateLookAt(lightPos, lightPos + new Vector3(0.5f,-1.0f,0.5f), Vector3.Up) *
-                               Matrix.CreateOrthographic(200, 200, 0.1f, 700);
+                               Matrix.CreateOrthographic(size, size, 50.0f, 500 + Globals.ZoomDegrees * 10.5f);
         
         Globals.GraphicsDevice.SetRenderTarget(_shadowMapRenderTarget);
         _shadowMapGenerator.Parameters["LightViewProj"].SetValue(_lightViewProjection);
@@ -265,7 +268,7 @@ public class Renderer
         if(rendererController.CurrentIndex == 0 || !rendererController.Active) return;
         DynamicVertexBuffer instanceVertexBuffer = new DynamicVertexBuffer(Globals.GraphicsDevice,
             Globals.ShadowInstanceDeclaration, rendererController.CurrentIndex, BufferUsage.WriteOnly);
-        instanceVertexBuffer.SetData<Matrix>(rendererController.Matrices,0,rendererController.CurrentIndex, SetDataOptions.Discard);
+        instanceVertexBuffer.SetData(rendererController.Matrices,0,rendererController.CurrentIndex, SetDataOptions.Discard);
         
         foreach (ModelMesh mesh in rendererController.ModelData.Models[rendererController.ModelData.CurrentModelIndex].Meshes)
         {

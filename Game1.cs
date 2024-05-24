@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
@@ -31,24 +32,25 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        Globals.content = Content;
+        Globals.Content = Content;
+        Globals.GraphicsDeviceManager = _graphics;
+        
+
 #if DEBUG
         _measurements = new double[_size];
 #endif
-        Globals.GraphicsDeviceManager = _graphics;
+        
         if (isFullscreen)
         {
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //Globals.ChangeScreenSize(ScreenSize.FULLSCREEN);
         }
         else
         {
-            _graphics.PreferredBackBufferWidth = 1440;
-            _graphics.PreferredBackBufferHeight = 900;
+            Globals.ChangeScreenSize(ScreenSize.WINDOWED);
         }
         //IsFixedTimeStep = false;
         //_graphics.SynchronizeWithVerticalRetrace = false;
-
+        
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -67,6 +69,7 @@ public class Game1 : Game
 
         Globals.Renderer = new Renderer(Content);
         Globals.PickingManager = new PickingManager(Content);
+        Globals.FogManager = new FogManager();
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();
@@ -99,7 +102,7 @@ public class Game1 : Game
         _sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
-        // _sceneManager.AddScene(new MapScene());
+        //_sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
@@ -110,7 +113,6 @@ public class Game1 : Game
     {
 #if DEBUG
         _performanceTimer.Start();
-        Globals.CameraPosition = _sceneCamera.Position;
 #endif
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
@@ -123,6 +125,11 @@ public class Game1 : Game
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
         Globals.PickingManager.CheckForRay();
+        
+        //if(Globals.FogManager.UpdateFogAsync().IsCompleted)Globals.FogManager.UpdateFogAsync();
+        Globals.FogManager.UpdateFog();
+        
+        
         foreach (Pickable yes in Globals.PickingManager.Picked)
         {
             Console.WriteLine(yes.ParentObject.Name);
@@ -130,9 +137,7 @@ public class Game1 : Game
 
         base.Update(gameTime);
     }
-
-    Stopwatch _sw = new Stopwatch();
-
+    
     protected override void Draw(GameTime gameTime)
     {
         Globals.Renderer.Render();
@@ -179,12 +184,16 @@ public class Game1 : Game
         ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
         ImGui.Checkbox("Single picking enabled", ref Globals.PickingManager.SinglePickingActive);
         ImGui.Checkbox("Box picking enabled", ref Globals.PickingManager.BoxPickingActive);
+        ImGui.Checkbox("Fog Active", ref Globals.FogManager.FogActive);
+        ImGui.Checkbox("Draw Explored", ref Globals.DrawExplored);
+        ImGui.Checkbox("Draw Visibility", ref Globals.DrawVisibility);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
         ImGui.SliderFloat("Sun Power", ref Globals.LightIntensity,1,50);
         ImGui.SliderInt("Shadow Map Size", ref Globals.ShadowMapResolutionMultiplier, 0, 5);
+        ImGui.InputInt("Fog resolution factor", ref Globals.FogManager.FogResolution);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         ImGui.Text("Average from " + _size +"x: " + Math.Round(currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
         
