@@ -143,15 +143,15 @@ public class AssetManager
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
-        DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
+        //DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
         
-        DefaultHeightMaps = new List<Texture2D>
-        {
-            this._content.Load<Texture2D>("heightmap_0"),
-            this._content.Load<Texture2D>("heightmap_1"),
-            this._content.Load<Texture2D>("heightmap_2"),
-            this._content.Load<Texture2D>("heightmap_3"),
-        };
+        //DefaultHeightMaps = new List<Texture2D>
+        //{
+        //    this._content.Load<Texture2D>("heightmap_0"),
+        //    this._content.Load<Texture2D>("heightmap_1"),
+        //    this._content.Load<Texture2D>("heightmap_2"),
+        //    this._content.Load<Texture2D>("heightmap_3"),
+        //};
 
         DefaultTerrainTextrues = new List<Texture2D>
         {

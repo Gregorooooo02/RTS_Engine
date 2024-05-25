@@ -81,13 +81,6 @@ public class ModelData
         
         Globals.MainEffect.Parameters["World"]?.SetValue(world);
         Matrix temp = Matrix.Transpose(Matrix.Invert(world));
-        temp.M41 = 0;
-        temp.M42 = 0;
-        temp.M43 = 0;
-        temp.M44 = 1;
-        temp.M14 = 0;
-        temp.M24 = 0;
-        temp.M34 = 0;
         Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
         for (int j = 0; j < Models[CurrentModelIndex].Meshes.Count;j++)
         {
@@ -96,7 +89,7 @@ public class ModelData
             {
                 if (part.PrimitiveCount > 0)
                 {
-                    Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                    Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer,part.VertexOffset);
                     Globals.GraphicsDevice.Indices = part.IndexBuffer;
                     for (int i = 0; i < Globals.MainEffect.CurrentTechnique.Passes.Count; i++)
                     {
@@ -180,12 +173,14 @@ public class ModelData
             {
                 string modelName = modelPath.Substring(modelPath.LastIndexOf('/') + 1);
                 Models.Add(manager.Load<Model>(modelPath + "/" + modelName));
+                ModelPath = modelPath;
+                ShaderTechniqueName = "PBR";
 
             } catch (Exception)
             {
                 Models.Add(AssetManager.DefaultModel.Models[0]);
             }
-            
+            return;
         }
 
         IsMultiMesh = modelConfig?.Element("multimesh")?.Value == "True";

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
@@ -99,7 +100,7 @@ public class MeshRenderer : Component
     {
         _model = AssetManager.GetModel(modelPath);
         _model.ShaderTechniqueName = technique;
-        //foreach (VertexElement element in _model.Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
+        //foreach (VertexElement element in _model.Models[_model.CurrentModelIndex].Meshes[0].MeshParts[0].VertexBuffer.VertexDeclaration.GetVertexElements())
         //{
         //    Console.WriteLine(element.VertexElementUsage);
         //}
