@@ -89,7 +89,7 @@ public class ModelData
             {
                 if (part.PrimitiveCount > 0)
                 {
-                    Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer,part.VertexOffset);
+                    Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
                     Globals.GraphicsDevice.Indices = part.IndexBuffer;
                     for (int i = 0; i < Globals.MainEffect.CurrentTechnique.Passes.Count; i++)
                     {
