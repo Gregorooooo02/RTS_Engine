@@ -206,6 +206,18 @@
 /processorParam:TextureFormat=Color
 /build:blank.png
 
+#begin BloomCombine.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:BloomCombine.fx
+
+#begin BloomExtract.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:BloomExtract.fx
+
 #begin carrot_texture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -758,6 +770,12 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Env/Trees/drzewolisciastejesienne/drzewolisciastejesienne.fbx
+
+#begin GaussianBlur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:GaussianBlur.fx
 
 #begin heightmap.bmp
 /importer:TextureImporter

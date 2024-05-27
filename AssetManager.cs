@@ -81,6 +81,11 @@ public class AssetManager
     public static List<Texture2D> DefaultTerrainTextrues{get; private set;}
     public static TextureCube DefaultSkybox{get; private set;}
     public static SpriteFont DefaultFont{get; private set;}
+    
+    // Bloom effects
+    public static Effect BloomExtractEffect { get; private set; }
+    public static Effect BloomCombineEffect { get; private set; }
+    public static Effect GaussianBlurEffect { get; private set; }
 
     private class ModelPointer
     {
@@ -167,6 +172,10 @@ public class AssetManager
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
 
         DefaultTextureMaps = DefaultModel.Textures[0][0];
+        
+        BloomExtractEffect = this._content.Load<Effect>("BloomExtract");
+        BloomCombineEffect = this._content.Load<Effect>("BloomCombine");
+        GaussianBlurEffect = this._content.Load<Effect>("GaussianBlur");
     }
 
     public static ModelData GetModel(string modelPath)

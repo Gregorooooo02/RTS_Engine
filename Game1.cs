@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using Microsoft.Xna.Framework.Input;
 using Num = System.Numerics;
 using RTS.Animation;
 
@@ -29,12 +30,23 @@ public class Game1 : Game
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
     
+    private Bloom _bloom;
+    private int _bloomSettingsIndex = 0;
+    
+    KeyboardState lastKeyboardState = new KeyboardState();
+    KeyboardState currentKeyboardState = new KeyboardState();
+        
+    GamePadState lastGamePadState = new GamePadState();
+    GamePadState currentGamePadState = new GamePadState();
+    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Globals.Content = Content;
         Globals.GraphicsDeviceManager = _graphics;
         
+        // _bloom = new Bloom(this);
+        // Components.Add(_bloom);
 
 #if DEBUG
         _measurements = new double[_size];
@@ -134,12 +146,16 @@ public class Game1 : Game
         {
             Console.WriteLine(yes.ParentObject.Name);
         }
+        
+        HandleInput();
 
         base.Update(gameTime);
     }
     
     protected override void Draw(GameTime gameTime)
     {
+        // _bloom.BeginDraw();
+        
         Globals.Renderer.Render();
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
@@ -212,6 +228,57 @@ public class Game1 : Game
         }
         if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
+        }
+    }
+    
+    private void HandleInput()
+    {
+        lastKeyboardState = currentKeyboardState;
+        lastGamePadState = currentGamePadState;
+
+        currentKeyboardState = Keyboard.GetState();
+        currentGamePadState = GamePad.GetState(PlayerIndex.One);
+
+        // Check for exit.
+        if (currentKeyboardState.IsKeyDown(Keys.Escape) ||
+            currentGamePadState.Buttons.Back == ButtonState.Pressed)
+        {
+            Exit();
+        }
+
+        // Switch to the next bloom settings preset?
+        if ((currentGamePadState.Buttons.A == ButtonState.Pressed &&
+             lastGamePadState.Buttons.A != ButtonState.Pressed) ||
+            (currentKeyboardState.IsKeyDown(Keys.F) &&
+             lastKeyboardState.IsKeyUp(Keys.F)))
+        {
+            _bloomSettingsIndex = (_bloomSettingsIndex + 1) %
+                                 BloomSettings.PresetSettings.Length;
+         
+            _bloom.Settings = BloomSettings.PresetSettings[_bloomSettingsIndex];
+            _bloom.Visible = true;
+        }
+
+        // Toggle bloom on or off?
+        if ((currentGamePadState.Buttons.B == ButtonState.Pressed &&
+             lastGamePadState.Buttons.B != ButtonState.Pressed) ||
+            (currentKeyboardState.IsKeyDown(Keys.B) &&
+             lastKeyboardState.IsKeyUp(Keys.B)))
+        {
+            _bloom.Visible = !_bloom.Visible;
+        }
+
+        // Cycle through the intermediate buffer debug display modes?
+        if ((currentGamePadState.Buttons.X == ButtonState.Pressed &&
+             lastGamePadState.Buttons.X != ButtonState.Pressed) ||
+            (currentKeyboardState.IsKeyDown(Keys.X) &&
+             lastKeyboardState.IsKeyUp(Keys.X)))
+        {
+            _bloom.Visible = true;
+            _bloom.ShowBuffer++;
+
+            if (_bloom.ShowBuffer > Bloom.IntermediateBuffer.FinalResult)
+                _bloom.ShowBuffer= 0;
         }
     }
 #endif

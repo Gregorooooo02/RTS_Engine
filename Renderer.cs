@@ -22,6 +22,7 @@ public class Renderer
     private Matrix _lightViewProjection;
     
     //Render targets-----------------------------------
+    private RenderTarget2D _sceneRenderTarget;
     private RenderTarget2D _shadowMapRenderTarget;
     
     //-------------------------------------------------
@@ -34,12 +35,17 @@ public class Renderer
     public List<AnimatedSpriteRenderer> AnimatedSprites;
     public List<InstancedRendererController> InstancedRendererControllers = new();
     public List<WorldRenderer> WorldRenderers;
+    public List<Bloom> Blooms;
     public Puzzle CurrentActivePuzzle;
 
     public PickingManager.PickingFrustum? PickingFrustum = null;
 
     public Renderer(ContentManager content)
     {
+        int width = Globals.GraphicsDevice.PresentationParameters.BackBufferWidth;
+        int height = Globals.GraphicsDevice.PresentationParameters.BackBufferHeight;
+        
+        _sceneRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
         _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
             DepthFormat.Depth24);
 
@@ -55,6 +61,8 @@ public class Renderer
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
         WorldRenderers = new List<WorldRenderer>();
+        
+        Blooms = new List<Bloom>();
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -62,6 +70,8 @@ public class Renderer
     
     public void Render()
     {
+        DrawBlooms();
+        
         Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
         
         //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
@@ -78,13 +88,14 @@ public class Renderer
         Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
         
         if(Globals.DrawShadows) DrawShadows();
+        
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if (Globals.DrawMeshes)
         {
             DrawMeshes();
             DrawAnimatedMeshes();
+            DrawWorld();
         }
-        DrawWorld();
         if (PickingFrustum.HasValue && Globals.DrawSelectFrustum)
         {
             PickingFrustum.Value.DrawFrustum();
@@ -106,6 +117,8 @@ public class Renderer
 #elif RELEASE
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
 
+        DrawBlooms();
+
         DrawShadows();
         DrawMeshes();
         DrawAnimatedMeshes();
@@ -115,6 +128,7 @@ public class Renderer
         DrawSprites();
         DrawAnimatedSprites();
         DrawText();
+        DrawBlooms();
         Globals.SpriteBatch.End();
 #endif
     }
@@ -143,6 +157,14 @@ public class Renderer
         }
     }
 
+    private void DrawBlooms()
+    {
+        foreach (Bloom bloom in Blooms)
+        {
+            // bloom.Draw();
+        }
+    }
+
     public void Clear()
     {
         Meshes.Clear();
@@ -151,6 +173,7 @@ public class Renderer
         AnimatedSprites.Clear();
         Texts.Clear();
         WorldRenderers.Clear();
+        Blooms.Clear();
         CurrentActivePuzzle = null;
     }
     
