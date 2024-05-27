@@ -31,6 +31,7 @@ public class MapScene : Scene
         SceneRoot.AddChildObject(gameObject);
         
         // Pathfinding test
+        /*
         gameObject.AddComponent<Pathfinder>();
         
         bool [,] test = new bool[10, 10];
@@ -85,6 +86,7 @@ public class MapScene : Scene
             }
             Console.WriteLine();
         }
+        */
         // end of pathfinding test
 
         worldObject = new GameObject();

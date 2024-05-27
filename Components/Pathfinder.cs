@@ -16,23 +16,7 @@ public class Pathfinder : Component
     
     public override void Initialize()
     {
-        nodes = new Node[10, 10];
         Active = true;
-        // example map, delete later
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                if (i == 2 && j == 2 || i == 3 && j == 2 || i == 3 && j == 3 || i == 3 && j == 4 || i == 3 && j == 5 || i == 4 && j == 5)
-                {
-                    nodes[i, j] = new Node(new Point(i, j), false);
-                    continue;
-                }
-                {
-                    nodes[i, j] = new Node(new Point(i, j), true);
-                }
-            }
-        }
     }
     
     public override string ComponentToXmlString()
