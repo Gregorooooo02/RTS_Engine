@@ -986,7 +986,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>Env/Props/namiot (2)</path>
+                    <path>Env/Props/namiot</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -1047,7 +1047,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>Env/Props/ogniskonaked</path>
+                    <path>Env/Props/ognisko</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -1066,9 +1066,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>77,39341</x>
+            <x>71,30946</x>
             <y>50</y>
-            <z>63,195694</z>
+            <z>75,33721</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -1084,7 +1084,7 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>70</fovDegrees>
+          <fovDegrees>67,062035</fovDegrees>
           <zoomMin>30</zoomMin>
           <zoomMax>70</zoomMax>
           <lerpSpeed>3,5</lerpSpeed>
