@@ -70,8 +70,10 @@ public class Renderer
     
     public void Render()
     {
-        DrawBlooms();
-        
+        foreach (Bloom bloom in Blooms)
+        {
+            bloom.BeginDraw();
+        }
         Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
         
         //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
@@ -113,11 +115,14 @@ public class Renderer
         Globals.SpriteBatch.Begin();
         DrawText();
         Globals.SpriteBatch.End();
+        
+        foreach (Bloom bloom in Blooms)
+        {
+            bloom.Draw();
+        }
 
 #elif RELEASE
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
-
-        DrawBlooms();
 
         DrawShadows();
         DrawMeshes();
@@ -156,15 +161,7 @@ public class Renderer
             text.Draw();
         }
     }
-
-    private void DrawBlooms()
-    {
-        foreach (Bloom bloom in Blooms)
-        {
-            // bloom.Draw();
-        }
-    }
-
+    
     public void Clear()
     {
         Meshes.Clear();

@@ -172,7 +172,7 @@ namespace RTS_Engine
 #if _WINDOWS
         public static readonly string MainPath = "../../../";
 #else
-        public static string MainPath = "../../../";
+        public static string MainPath = "";
 #endif
 
         public static List<Type> ComponentsTypes;
@@ -207,7 +207,7 @@ namespace RTS_Engine
             AvailablePrefabs = Directory.GetFiles(MainPath + "Prefabs").ToList();
         }
 
-        public static int ShadowMapResolutionMultiplier = 4;
+        public static int ShadowMapResolutionMultiplier = 3;
         
         //Switches for debug windows UWU
         public static bool InspectorVisible = true;
