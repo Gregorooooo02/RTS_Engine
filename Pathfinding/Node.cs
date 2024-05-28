@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Point = System.Drawing.Point;
 
 namespace RTS_Engine.Pathfinding;
 

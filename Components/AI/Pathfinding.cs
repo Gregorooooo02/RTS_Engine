@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Point = Microsoft.Xna.Framework.Point;
+using RTS_Engine.Pathfinding;
 
-namespace RTS_Engine.Pathfinding;
+namespace RTS_Engine.AI;
 
-public class PathfindingManager
+public class Pathfinding
 {
-    //TODO: Move some of the implementation to component. Make Map 2D array global so individual pathfinding components can access it.
-    
     public short[][] Map;
     
     private float Euclidan(Node n, Node goal)
@@ -94,6 +92,5 @@ public class PathfindingManager
         output.Reverse();
         return output;
     }
-
 
 }
