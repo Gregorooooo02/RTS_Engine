@@ -85,8 +85,9 @@ public class ModelData
         for (int j = 0; j < Models[CurrentModelIndex].Meshes.Count;j++)
         {
             if (IsMultiMesh)PassTextures(j);
-            foreach (ModelMeshPart part in Models[CurrentModelIndex].Meshes[j].MeshParts)
+            for(int k = 0;k < Models[CurrentModelIndex].Meshes[j].MeshParts.Count;k++)
             {
+                var part = Models[CurrentModelIndex].Meshes[j].MeshParts[k];
                 if (part.PrimitiveCount > 0)
                 {
                     Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);

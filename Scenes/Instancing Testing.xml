@@ -954,13 +954,13 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>112,16411</x>
+            <x>83,21097</x>
             <y>50</y>
-            <z>84,442215</z>
+            <z>73,25785</z>
           </position>
           <rotation>
-            <x>-45</x>
-            <y>45</y>
+            <x>-60</x>
+            <y>30</y>
             <z>0</z>
           </rotation>
           <scale>
@@ -972,9 +972,12 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>43,885746</fovDegrees>
-          <nearPlane>0,05</nearPlane>
-          <farPlane>2000</farPlane>
+          <fovDegrees>45,614105</fovDegrees>
+          <zoomMin>25</zoomMin>
+          <zoomMax>75</zoomMax>
+          <lerpSpeed>3,5</lerpSpeed>
+          <zoomSpeed>8</zoomSpeed>
+          <cameraSpeed>20</cameraSpeed>
         </component>
         <component>
           <type>MeshRenderer</type>

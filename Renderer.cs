@@ -291,8 +291,10 @@ public class Renderer
         _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
         foreach (ModelMesh mesh in renderer._model.Models[renderer._model.CurrentModelIndex].Meshes)
         {
-            foreach (ModelMeshPart part in mesh.MeshParts)
+            //foreach (ModelMeshPart part in mesh.MeshParts)
+            for(int i = 0;i < mesh.MeshParts.Count;i++)
             {
+                var part = mesh.MeshParts[i];
                 if (part.PrimitiveCount <= 0) continue;
                 _shadowMapGenerator.CurrentTechnique.Passes[0].Apply();
                 Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);

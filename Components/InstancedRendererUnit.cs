@@ -16,8 +16,9 @@ public class InstancedRendererUnit : Component
             if (Controller is { ModelData: not null })
             {
                 ModelData modelData = Controller.ModelData;
-                if (Globals.BoundingFrustum.Contains(modelData.BoundingSphere
-                        .Transform(ParentObject.Transform.ModelMatrix)) != ContainmentType.Disjoint)
+                BoundingSphere temp = modelData.BoundingSphere.Transform(ParentObject.Transform.ModelMatrix);
+                temp.Radius *= 1.5f;
+                if (Globals.BoundingFrustum.Contains(temp) != ContainmentType.Disjoint)
                 {
                     _data.SetWorld(ParentObject.Transform.ModelMatrix);
                     Controller.Add(_data);
