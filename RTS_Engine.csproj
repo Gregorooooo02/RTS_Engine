@@ -40,9 +40,6 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content/Tartak/" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="GraphicsImporters\**" />
     <Compile Remove="Graphics\**" />
     <Compile Remove="AnimationImporters\**" />
