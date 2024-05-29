@@ -146,6 +146,7 @@ public class Renderer
     public void Clear()
     {
         Meshes.Clear();
+        InstancedRendererControllers.Clear();
         AnimatedMeshes.Clear();
         Sprites.Clear();
         AnimatedSprites.Clear();
