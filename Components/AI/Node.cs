@@ -8,7 +8,7 @@ public class Node
     public float CurrentCost { get;private set; }
     public Node ParentNode { get; set;}
     
-    public Node(Point gridLocation, Node parentNode, short nodeCost)
+    public Node(Point gridLocation, Node parentNode, float nodeCost)
     {
         Location = gridLocation;
         ParentNode = parentNode;

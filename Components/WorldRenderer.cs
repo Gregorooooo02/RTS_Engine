@@ -71,10 +71,7 @@ public class WorldRenderer : Component
         Initialize();
     }
 
-    public WorldRenderer() 
-    {
-        Initialize();
-    }
+    public WorldRenderer(){}
 
     private void LoadTextures()
     {
@@ -371,7 +368,7 @@ public class WorldRenderer : Component
         GenerateVoronoiFeatures();
         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
         
-        Globals.Renderer.WorldRenderers.Add(this);
+        Globals.Renderer.WorldRenderer = this;
     }
     
     // Voronoi methods

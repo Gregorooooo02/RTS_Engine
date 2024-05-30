@@ -33,7 +33,7 @@ public class Renderer
     public List<TextRenderer> Texts;
     public List<AnimatedSpriteRenderer> AnimatedSprites;
     public List<InstancedRendererController> InstancedRendererControllers = new();
-    public List<WorldRenderer> WorldRenderers;
+    public WorldRenderer WorldRenderer;
     public Puzzle CurrentActivePuzzle;
 
     public PickingManager.PickingFrustum? PickingFrustum = null;
@@ -54,7 +54,7 @@ public class Renderer
         Sprites = new List<SpiteRenderer>();
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
-        WorldRenderers = new List<WorldRenderer>();
+        WorldRenderer = null;
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
@@ -151,7 +151,7 @@ public class Renderer
         Sprites.Clear();
         AnimatedSprites.Clear();
         Texts.Clear();
-        WorldRenderers.Clear();
+        WorldRenderer = null;
         CurrentActivePuzzle = null;
     }
     
@@ -229,10 +229,7 @@ public class Renderer
 
     private void DrawWorld()
     {
-        foreach (WorldRenderer renderer in WorldRenderers)
-        {
-            renderer?.Draw();    
-        }
+        WorldRenderer?.Draw();    
     }
     
     private void DrawShadows()

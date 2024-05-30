@@ -47,7 +47,7 @@ public class SceneManager
     {
         //World Renderer
         WorldRenderer worldRenderer = gameObject.GetComponent<WorldRenderer>();
-        if (worldRenderer != null) Globals.Renderer.WorldRenderers.Add(worldRenderer);
+        if (worldRenderer != null) Globals.Renderer.WorldRenderer = worldRenderer;
         
         //Spite Renderer
         SpiteRenderer spiteRenderer = gameObject.GetComponent<SpiteRenderer>();

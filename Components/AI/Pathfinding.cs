@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 
 namespace RTS_Engine.Components.AI;
@@ -16,23 +17,22 @@ public class Pathfinding
 
     private List<Node> GetNeighbors(Node n)
     {
+        if (Globals.Renderer.WorldRenderer is null) return null;
         List<Node> output = new();
+        byte nodeConnections = Globals.Renderer.WorldRenderer.MapNodes[n.Location.X, n.Location.Y].Connections;
         //It's assumed that each node has up to 8 neighbors.
-        for (int i = -1; i <= 1; i ++)
+        for (int i = 1; i >= -1; i--)
         {
-            for (int j = -1; j <= 1; j ++)
+            for (int j = 1; j >= -1; j--)
             {
                 if(i == 0 && j == 0) continue;
-                try
-                {
-                    short value = Map[n.Location.X][n.Location.Y];
-                    if(value > 10000) continue; //Skip unwalkable nodes
-                    output.Add(new Node(new Point(n.Location.X + i, n.Location.Y + j),n,value));
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
+                if((nodeConnections & 1) > 0)
+                    output.Add(
+                        new Node(
+                            new Point(n.Location.X + i, n.Location.Y + j), 
+                            n, 
+                            Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].NodeCost));
+                nodeConnections >>= 1;
             }
         }
         return output;
@@ -88,8 +88,14 @@ public class Pathfinding
             output.Add(v.Location);
             v = v.ParentNode;
         }
+        output.Add(v.Location);
         output.Reverse();
         return output;
+    }
+
+    public Queue<Point> PathToQueueOfPoints(Node node)
+    {
+        return new Queue<Point>(PathToListOfPoints(node));
     }
 
 }
