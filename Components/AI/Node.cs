@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace RTS_Engine.Pathfinding;
+namespace RTS_Engine.Components.AI;
 
 public class Node
 {

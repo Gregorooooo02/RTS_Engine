@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using RTS_Engine.Pathfinding;
 
-namespace RTS_Engine.AI;
+namespace RTS_Engine.Components.AI;
 
 public class Pathfinding
 {

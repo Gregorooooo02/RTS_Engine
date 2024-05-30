@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using RTS_Engine.Components.AI;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace RTS_Engine.Pathfinding;

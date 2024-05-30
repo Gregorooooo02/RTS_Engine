@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using RTS_Engine.Components.AI;
 
 namespace RTS_Engine;
 
@@ -35,6 +36,15 @@ public class WorldRenderer : Component
         public int TerrainHeight;
         public Vector3 Position;
     }
+    
+    #region Pathfinding parameters
+
+    public MapNode[,] MapNodes;
+    public int NodeFrequency = 1;
+    private float maxAngle = 30.0f;
+    
+    #endregion
+    
     
     public float[,] HeightData;
     private int _terrainWidth;
@@ -223,6 +233,75 @@ public class WorldRenderer : Component
                 _waterBody = new WaterBody(x, y, _chunkSize, 5);
                 _waterBodies.Add(_waterBody);
             }
+        }
+        MapNodes = new MapNode[_terrainWidth / NodeFrequency, _terrainHeight / NodeFrequency];
+
+        //Setup map nodes
+        for (int i = 0; i < MapNodes.GetLength(0); i++)
+        {
+            for (int j = 0; j < MapNodes.GetLength(1); j++)
+            {
+                float nodeHeight = 0;
+                for (int k = 0; k < NodeFrequency; k++)
+                {
+                    for (int l = 0; l < NodeFrequency; l++)
+                    {
+                        try
+                        {
+                            nodeHeight += HeightData[i * NodeFrequency + k, j * NodeFrequency + l];
+                        }
+                        catch (Exception)
+                        {
+                            // ignored
+                        }
+                    }
+                }
+                MapNodes[i,j] = new MapNode(new Point(i, j),nodeHeight / (NodeFrequency * NodeFrequency));
+            }
+        }
+        //Create connection between the nodes
+        for (int i = 0; i < MapNodes.GetLength(0); i++)
+        {
+            for (int j = 0; j < MapNodes.GetLength(1); j++)
+            {
+                byte neighborMask = 0;
+                //Iterate through node's neighbours and check connections
+                for (int k = -1; k < 2; k++)
+                {
+                    for (int l = -1; l < 2; l++)
+                    {
+                        if(k == 0 && l == 0) continue;
+                        try
+                        {
+                            //Calculate height difference between two points
+                            var heightDifference = MathF.Abs(MapNodes[i + k, j + l].Height - MapNodes[i, j].Height);
+                            //Calculate offset vector between the point in XZ space
+                            Point temp = MapNodes[i + k, j + l].Location - MapNodes[i, j].Location;
+                            //Calculate tangent of tilt angle between two points
+                            float tanA = heightDifference / MathF.Sqrt((temp.X * temp.X) + (temp.Y * temp.Y));
+                            //Calculate the angle itself
+                            float angle = MathF.Atan(tanA) * 180.0f / MathF.PI;
+                            //If the calculated angle is smaller than the maximum allowed then there is a connection between points
+                            if (angle <= maxAngle) neighborMask += 1;
+                        }
+                        catch (Exception)
+                        {
+                            // ignored
+                        }
+                        if(k != 1 || l != 1)neighborMask <<= 1;
+                    }
+                }
+                MapNodes[i, j].Connections = neighborMask;
+            }
+        }
+
+        for (int i = 0; i < MapNodes.GetLength(0); i++)
+        {
+            for (int j = 0; j < MapNodes.GetLength(1); j++)
+            {
+                Console.Write(Convert.ToString(MapNodes[i,j].Connections,2).ToCharArray().Count(c => c == '1') + " ");
+            }
+            Console.WriteLine("");
         }
     }
 
