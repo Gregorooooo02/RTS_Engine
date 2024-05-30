@@ -126,13 +126,15 @@ public class Game1 : Game
         _sceneManager.CurrentScene.Update(gameTime);
         Globals.PickingManager.CheckForRay();
         
-        //if(Globals.FogManager.UpdateFogAsync().IsCompleted)Globals.FogManager.UpdateFogAsync();
         Globals.FogManager.UpdateFog();
-        
-        
-        foreach (Pickable yes in Globals.PickingManager.Picked)
+
+        if (InputManager.Instance.GetMouseAction(GameAction.RMB)?.state == ActionState.RELEASED)
         {
-            Console.WriteLine(yes.ParentObject.Name);
+            Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
+            if (point.HasValue)
+            {
+                _sceneManager.CurrentScene.SceneRoot.Children[2].Transform.SetLocalPosition(point.Value);
+            }
         }
 
         base.Update(gameTime);

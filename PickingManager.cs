@@ -276,4 +276,59 @@ public class PickingManager
         direction.Normalize();
         return new Ray(Globals.ViewPos, direction);
     }
+
+    public Vector3? PickGround(Point mousePosition, float heightGrace)
+    {
+        if (Globals.Renderer.WorldRenderer is null) throw new InvalidOperationException("Can't pick the ground because there is no ground to pick.");
+        Ray? ray_ = CalculateMouseRay(mousePosition);
+        if (ray_.HasValue)
+        {
+            Ray ray = ray_.Value;
+            float h = 0;
+            while (true)
+            {
+                //Find k that satisfies the equation: P.Y + k * D.Y = h
+                //where: 
+                //P.Y - Y element of ray position
+                //D.Y - Y element of ray direction
+                //h - tested height
+                float k = (ray.Position.Y - h / -ray.Direction.Y);
+            
+                //Using calculated k find intersection point between ray and tested height
+                Vector2 intersectionPoint = new Vector2(ray.Position.X + k * ray.Direction.X,
+                    ray.Position.Z + k * ray.Direction.Z);
+            
+                //Calculate indexes of vertices between which the intersection is
+                int xDown = (int)MathF.Floor(intersectionPoint.X);
+                int xUp = xDown + 1;
+                int zDown = (int)MathF.Floor(intersectionPoint.Y);
+                int zUp = zDown + 1;
+
+                //Calculate weights for vertices
+                float weightX = intersectionPoint.X % 1;
+                float weightZ = intersectionPoint.Y % 1;
+            
+                //Prepare height data from selected vertices
+                float height1 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zDown].Height;
+                float height2 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zUp].Height;
+                float height3 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zDown].Height;
+                float height4 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zUp].Height;
+
+                //Calculate weighted average of height values in selected vertices.
+                float avg = 
+                    (   height1 * (1 - weightX) + height1 * (1 - weightZ) + 
+                        height2 * (1 - weightX) + height2 * weightZ + 
+                        height3 * weightX + height3 * (1 - weightZ) +
+                        height4 * weightX + height4 * weightZ) / 4.0f;
+
+                //If calculated avg value is close enough return the position of the intersection.
+                if (MathF.Abs(avg - h) <= heightGrace) return new Vector3(intersectionPoint.X, avg, intersectionPoint.Y);
+                //Else try again with new height value
+                h = avg;
+            }
+        }
+        return null;
+    }
+    
+    
 }
