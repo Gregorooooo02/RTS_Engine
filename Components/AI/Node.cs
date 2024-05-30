@@ -12,6 +12,6 @@ public class Node
     {
         Location = gridLocation;
         ParentNode = parentNode;
-        CurrentCost = parentNode.CurrentCost + nodeCost;
+        CurrentCost = parentNode != null ? parentNode.CurrentCost + nodeCost : nodeCost;
     }
 }

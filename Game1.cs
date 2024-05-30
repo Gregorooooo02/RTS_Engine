@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using RTS_Engine.Components.AI;
 using Num = System.Numerics;
 using RTS.Animation;
 
@@ -22,6 +24,10 @@ public class Game1 : Game
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     private SceneCamera _sceneCamera;
+
+    private Components.AI.Pathfinding _pathfinding = new Components.AI.Pathfinding();
+    Queue<Point> points;
+    private Point CurrentPoint;
 #endif
     
     private GraphicsDeviceManager _graphics;
@@ -128,14 +134,44 @@ public class Game1 : Game
         
         Globals.FogManager.UpdateFog();
 
-        if (InputManager.Instance.GetMouseAction(GameAction.RMB)?.state == ActionState.RELEASED)
+        try
         {
-            Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
-            if (point.HasValue)
+            Transform transform = _sceneManager.CurrentScene.SceneRoot.Children[2].Transform;
+            if (InputManager.Instance.GetMouseAction(GameAction.RMB)?.state == ActionState.RELEASED)
             {
-                _sceneManager.CurrentScene.SceneRoot.Children[2].Transform.SetLocalPosition(point.Value);
+                Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
+                if (point.HasValue)
+                {
+                    Node start = new Node(new Point((int)transform._pos.X, (int)transform._pos.Z), null, 1);
+                    Node goal = new Node(new Point((int)point.Value.X, (int)point.Value.Z), null, 1);
+                    
+                    points = _pathfinding.PathToQueueOfPoints(_pathfinding.CalculatePath(goal,start));
+                    CurrentPoint = points.Dequeue();
+                }
+            }
+
+            if (points is not null)
+            {
+                MapNode node = Globals.Renderer.WorldRenderer.MapNodes[CurrentPoint.X, CurrentPoint.Y];
+                Vector3 offset = new Vector3(node.Location.X - transform._pos.X, node.Height - transform._pos.Y,
+                    node.Location.Y - transform._pos.Z);
+        
+                Console.WriteLine(offset);
+                
+                if (offset.Length() <= 0.1f)
+                {
+                    CurrentPoint = points.Dequeue();
+                }
+                offset.Normalize();
+                transform.Move(offset * 10.0f * Globals.DeltaTime);
             }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
+        
 
         base.Update(gameTime);
     }
