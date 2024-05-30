@@ -93,7 +93,7 @@ public class WorldRenderer : Component
             for (int y = 0; y < chunkHeight; y++)
             {
                 float heightValue = heightMapColors[(x + chunkX) + (y + chunkY) * heightData.GetLength(0)].R / 5.0f;
-                vertices[x + y * chunkWidth].Position = new Vector3(x + chunkX, heightValue, -(y + chunkY));
+                vertices[x + y * chunkWidth].Position = new Vector3(x + chunkX, heightValue, (y + chunkY));
             }
         }
         
@@ -292,6 +292,7 @@ public class WorldRenderer : Component
             }
         }
 
+        /*
         for (int i = 0; i < MapNodes.GetLength(0); i++)
         {
             for (int j = 0; j < MapNodes.GetLength(1); j++)
@@ -300,6 +301,7 @@ public class WorldRenderer : Component
             }
             Console.WriteLine("");
         }
+        */
     }
 
     public override void Update()
@@ -451,8 +453,8 @@ public class WorldRenderer : Component
             Vector3 position = CalculateCentroid(region);
             if (random.NextDouble() > 0.5)
             {
-                if (HeightData[(int)position.X, (int)-position.Z] > 6.0f
-                    && HeightData[(int)position.X, (int)-position.Z] < 25.0f)
+                if (HeightData[(int)position.X, (int)position.Z] > 6.0f
+                    && HeightData[(int)position.X, (int)position.Z] < 25.0f)
                 {
                     PlaceTree(position);    
                 }
@@ -478,7 +480,7 @@ public class WorldRenderer : Component
         y /= region.Count;
         
         // Return the position in world space and make that the y coordinate is equal to the height of the terrain
-        return new Vector3(x, HeightData[(int)x, (int)y] + 8, -y);
+        return new Vector3(x, HeightData[(int)x, (int)y] + 8, y);
     }
     
     private void PlaceTree(Vector3 position)

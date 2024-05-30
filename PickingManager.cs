@@ -277,7 +277,7 @@ public class PickingManager
         return new Ray(Globals.ViewPos, direction);
     }
 
-    public Vector3? PickGround(Point mousePosition, float heightGrace)
+    public Vector3? PickGround(Point mousePosition, float heightGrace, int maxTries = 10)
     {
         if (Globals.Renderer.WorldRenderer is null) throw new InvalidOperationException("Can't pick the ground because there is no ground to pick.");
         Ray? ray_ = CalculateMouseRay(mousePosition);
@@ -285,6 +285,7 @@ public class PickingManager
         {
             Ray ray = ray_.Value;
             float h = 0;
+            int tries = 0;
             while (true)
             {
                 //Find k that satisfies the equation: P.Y + k * D.Y = h
@@ -292,7 +293,7 @@ public class PickingManager
                 //P.Y - Y element of ray position
                 //D.Y - Y element of ray direction
                 //h - tested height
-                float k = (ray.Position.Y - h / -ray.Direction.Y);
+                float k = ((ray.Position.Y - h) / -ray.Direction.Y);
             
                 //Using calculated k find intersection point between ray and tested height
                 Vector2 intersectionPoint = new Vector2(ray.Position.X + k * ray.Direction.X,
@@ -325,6 +326,8 @@ public class PickingManager
                 if (MathF.Abs(avg - h) <= heightGrace) return new Vector3(intersectionPoint.X, avg, intersectionPoint.Y);
                 //Else try again with new height value
                 h = avg;
+                tries++;
+                if(tries > maxTries) return new Vector3(intersectionPoint.X, avg, intersectionPoint.Y);
             }
         }
         return null;
