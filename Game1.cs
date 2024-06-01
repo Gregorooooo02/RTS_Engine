@@ -24,8 +24,7 @@ public class Game1 : Game
     private ImGuiRenderer _imGuiRenderer;
     private Num.Vector3 _position = new Num.Vector3(0,0,10);
     private SceneCamera _sceneCamera;
-
-    private Components.AI.Pathfinding _pathfinding = new Components.AI.Pathfinding();
+    
     Queue<Point> points;
     private Point CurrentPoint;
 #endif
@@ -142,10 +141,11 @@ public class Game1 : Game
                 Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
                 if (point.HasValue)
                 {
+                    Console.WriteLine(point.Value);
                     Node start = new Node(new Point((int)transform._pos.X, (int)transform._pos.Z), null, 1);
                     Node goal = new Node(new Point((int)point.Value.X, (int)point.Value.Z), null, 1);
                     
-                    points = _pathfinding.PathToQueueOfPoints(_pathfinding.CalculatePath(goal,start));
+                    points = RTS_Engine.Components.AI.Pathfinding.PathToQueueOfPoints(RTS_Engine.Components.AI.Pathfinding.CalculatePath(goal,start));
                     CurrentPoint = points.Dequeue();
                 }
             }
@@ -155,10 +155,8 @@ public class Game1 : Game
                 MapNode node = Globals.Renderer.WorldRenderer.MapNodes[CurrentPoint.X, CurrentPoint.Y];
                 Vector3 offset = new Vector3(node.Location.X - transform._pos.X, node.Height - transform._pos.Y,
                     node.Location.Y - transform._pos.Z);
-        
-                Console.WriteLine(offset);
                 
-                if (offset.Length() <= 0.1f)
+                if (offset.Length() <= 0.1f  && points.Count > 0)
                 {
                     CurrentPoint = points.Dequeue();
                 }

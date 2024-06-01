@@ -5,17 +5,14 @@ using Microsoft.Xna.Framework;
 
 namespace RTS_Engine.Components.AI;
 
-public class Pathfinding
+public static class Pathfinding
 {
-    public short[][] Map;
-    
-    private float Euclidan(Node n, Node goal)
+    private static float Euclidan(Node n, Node goal)
     {
         return new Vector2(n.Location.X - goal.Location.X, n.Location.Y - goal.Location.Y).Length();
     }
-
-
-    private List<Node> GetNeighbors(Node n)
+    
+    private static List<Node> GetNeighbors(Node n)
     {
         if (Globals.Renderer.WorldRenderer is null) return null;
         List<Node> output = new();
@@ -53,7 +50,7 @@ public class Pathfinding
         }
     }
     
-    public Node CalculatePath(Node goal, Node start)
+    public static Node CalculatePath(Node goal, Node start)
     {
         NodeComparer comparer = new NodeComparer();
         PriorityQueue<Node, float> open = new PriorityQueue<Node, float>();
@@ -79,7 +76,7 @@ public class Pathfinding
         return null;
     }
 
-    public List<Point> PathToListOfPoints(Node node)
+    public static List<Point> PathToListOfPoints(Node node)
     {
         List<Point> output = new List<Point>();
         Node v = node;
@@ -93,7 +90,7 @@ public class Pathfinding
         return output;
     }
 
-    public Queue<Point> PathToQueueOfPoints(Node node)
+    public static Queue<Point> PathToQueueOfPoints(Node node)
     {
         return new Queue<Point>(PathToListOfPoints(node));
     }

@@ -29,6 +29,14 @@
             <Key>Escape</Key>
             <Action>EXIT</Action>
         </KeyBinding>
+        <KeyBinding>
+            <Key>F12</Key>
+            <Action>RESIZE_FULLSCREEN</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>F11</Key>
+            <Action>RESIZE_WINDOWED</Action>
+        </KeyBinding>
     </Keyboard>
     <Mouse>
         <MouseBinding>

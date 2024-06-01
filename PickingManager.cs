@@ -280,10 +280,10 @@ public class PickingManager
     public Vector3? PickGround(Point mousePosition, float heightGrace, int maxTries = 10)
     {
         if (Globals.Renderer.WorldRenderer is null) throw new InvalidOperationException("Can't pick the ground because there is no ground to pick.");
-        Ray? ray_ = CalculateMouseRay(mousePosition);
-        if (ray_.HasValue)
+        Ray? mouseRay = CalculateMouseRay(mousePosition);
+        if (mouseRay.HasValue)
         {
-            Ray ray = ray_.Value;
+            Ray ray = mouseRay.Value;
             float h = 0;
             int tries = 0;
             while (true)
@@ -298,29 +298,9 @@ public class PickingManager
                 //Using calculated k find intersection point between ray and tested height
                 Vector2 intersectionPoint = new Vector2(ray.Position.X + k * ray.Direction.X,
                     ray.Position.Z + k * ray.Direction.Z);
-            
-                //Calculate indexes of vertices between which the intersection is
-                int xDown = (int)MathF.Floor(intersectionPoint.X);
-                int xUp = xDown + 1;
-                int zDown = (int)MathF.Floor(intersectionPoint.Y);
-                int zUp = zDown + 1;
-
-                //Calculate weights for vertices
-                float weightX = intersectionPoint.X % 1;
-                float weightZ = intersectionPoint.Y % 1;
-            
-                //Prepare height data from selected vertices
-                float height1 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zDown].Height;
-                float height2 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zUp].Height;
-                float height3 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zDown].Height;
-                float height4 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zUp].Height;
-
-                //Calculate weighted average of height values in selected vertices.
-                float avg = 
-                    (   height1 * (1 - weightX) + height1 * (1 - weightZ) + 
-                        height2 * (1 - weightX) + height2 * weightZ + 
-                        height3 * weightX + height3 * (1 - weightZ) +
-                        height4 * weightX + height4 * weightZ) / 4.0f;
+                
+                //Calculate weighted average of height values in neighboring vertices
+                float avg = InterpolateWorldHeight(intersectionPoint);
 
                 //If calculated avg value is close enough return the position of the intersection.
                 if (MathF.Abs(avg - h) <= heightGrace) return new Vector3(intersectionPoint.X, avg, intersectionPoint.Y);
@@ -331,6 +311,31 @@ public class PickingManager
             }
         }
         return null;
+    }
+
+    public static float InterpolateWorldHeight(Vector2 location)
+    {
+        //Calculate indexes of vertices between which the provided location is
+        int xDown = (int)MathF.Floor(location.X);
+        int xUp = xDown + 1;
+        int zDown = (int)MathF.Floor(location.Y);
+        int zUp = zDown + 1;
+
+        //Calculate weights for vertices
+        float weightX = location.X % 1;
+        float weightZ = location.Y % 1;
+            
+        //Prepare height data from selected vertices
+        float height1 = Globals.Renderer.WorldRenderer.HeightData[xDown, zDown];
+        float height2 = Globals.Renderer.WorldRenderer.HeightData[xDown, zUp];
+        float height3 = Globals.Renderer.WorldRenderer.HeightData[xUp, zDown];
+        float height4 = Globals.Renderer.WorldRenderer.HeightData[xUp, zUp];
+
+        //Calculate weighted average of height values in selected vertices.
+        return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
+                height2 * (1 - weightX) + height2 * weightZ + 
+                height3 * weightX + height3 * (1 - weightZ) +
+                height4 * weightX + height4 * weightZ) / 4.0f;
     }
     
     
