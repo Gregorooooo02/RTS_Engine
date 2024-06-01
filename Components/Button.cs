@@ -29,10 +29,10 @@ public class Button : Component
                     {
                         if (ButtonVisual.useLocalPosition)
                         {
-                            _pos.X = ParentObject.Transform._pos.X;
-                            _pos.Y = ParentObject.Transform._pos.Y;
-                            _scale.X = ParentObject.Transform._scl.X;
-                            _scale.Y = ParentObject.Transform._scl.Y;
+                            _pos.X = ParentObject.Transform.Pos.X;
+                            _pos.Y = ParentObject.Transform.Pos.Y;
+                            _scale.X = ParentObject.Transform.Scl.X;
+                            _scale.Y = ParentObject.Transform.Scl.Y;
                         }
                         else
                         {

@@ -49,13 +49,13 @@ public class AnimatedSpriteRenderer : Component
     {
         Globals.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(
-                (int)ParentObject.Transform._pos.X,
-                (int)ParentObject.Transform._pos.Y,
-                (int)(SpriteSheet.Width * ParentObject.Transform._scl.X),
-                (int)(SpriteSheet.Height * ParentObject.Transform._scl.Y)),
+                (int)ParentObject.Transform.Pos.X,
+                (int)ParentObject.Transform.Pos.Y,
+                (int)(SpriteSheet.Width * ParentObject.Transform.Scl.X),
+                (int)(SpriteSheet.Height * ParentObject.Transform.Scl.Y)),
                 _sourceRectangles[_frame],
                 Color,
-                MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+                MathHelper.ToRadians(ParentObject.Transform.Rot.Z),
                 Vector2.One,
                 SpriteEffects.None,
                 1);

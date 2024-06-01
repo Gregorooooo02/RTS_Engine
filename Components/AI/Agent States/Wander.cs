@@ -19,13 +19,11 @@ public class Wander : AgentState
     
     public override void Initialize(Agent agent)
     {
-        //Add to agent any AgentState that this state needs.In example below the state needs Wander state so it looks for it and if it's not present add it.
+        //Add to agent any AgentState that this state needs.In example below the state needs Idle state so it looks for it and if it's not present adds it.
         /*
-        if (agent.AgentStates.Find((x) => x.State == Agent.EnemyState.Wander) == null)
+        if (agent.AgentStates.TryAdd(Agent.State.Idle, new Idle()) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
         {
-            AgentState temp = new Wander();
-            agent.AgentStates.Add(temp);
-            temp.Initialize(agent);
+            value.Initialize(agent);
         }
         */
         
@@ -47,6 +45,13 @@ public class Wander : AgentState
     {
         return new Vector2(point.X - position.X, point.Y - position.Z).Length();
     }
+
+    public static float AngleDegrees(Vector2 first, Vector2 second)
+    {
+        return MathF.Atan2(first.X * second.Y - first.Y * second.X, first.X * second.X - first.Y * second.Y) * (180.0f / MathF.PI);
+        return MathF.Acos((first.X * second.X + first.Y * second.Y) / (first.Length() * second.Length())) * (180.0f / MathF.PI);
+    }
+    
     public override AgentState UpdateState(Agent agent)
     {
         Vector3 agentPosition = agent.ParentObject.Transform.ModelMatrix.Translation;
@@ -62,6 +67,7 @@ public class Wander : AgentState
             do
             {
                 Vector2 offset = RandomUnitVector2() * agent.WanderingDistance;
+                
                 
                 if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0) continue;
                 
@@ -82,11 +88,7 @@ public class Wander : AgentState
             }
             else
             {
-                Vector3 offset = new Vector3(_currentPoint.X - agentPosition.X, 0, _currentPoint.Y - agentPosition.Z);
-                offset.Y =
-                    PickingManager.InterpolateWorldHeight(new Vector2(agentPosition.X + offset.X,
-                        agentPosition.Z + offset.Z)) - agentPosition.Y;
-                agent.ParentObject.Transform.Move(offset * Globals.DeltaTime * agent.WalkingSpeed);
+                agent.MoveToPoint(_currentPoint, agent.WalkingSpeed);
             }
         }
 

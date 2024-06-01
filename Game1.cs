@@ -133,6 +133,7 @@ public class Game1 : Game
         
         Globals.FogManager.UpdateFog();
 
+        /*
         try
         {
             Transform transform = _sceneManager.CurrentScene.SceneRoot.Children[2].Transform;
@@ -168,7 +169,7 @@ public class Game1 : Game
         {
             Console.WriteLine(e);
         }
-        
+        */
         
 
         base.Update(gameTime);

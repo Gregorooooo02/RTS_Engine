@@ -500,7 +500,7 @@ public class WorldRenderer : Component
         {
             feature.GetComponent<MeshRenderer>()._model.Draw(
                 ParentObject.Transform.ModelMatrix * 
-                Matrix.CreateTranslation(feature.Transform._pos)
+                Matrix.CreateTranslation(feature.Transform.Pos)
             );
         }
     }

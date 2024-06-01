@@ -74,7 +74,7 @@ public class Puzzle : Component
 
             if (action is { state: ActionState.RELEASED } && _selectedPuzzlePiece != null)
             {
-                Point localOffset = new Point((int)ParentObject.Transform._pos.X, (int)ParentObject.Transform._pos.Y);
+                Point localOffset = new Point((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y);
                 Point localPos = _selectedPuzzlePiece.Position - localOffset;
                 int row = localPos.Y / _puzzlePieceSize;
                 int column = localPos.X / _puzzlePieceSize;
@@ -245,17 +245,17 @@ public class Puzzle : Component
         float depthStep = 0.9f / (_gridSize *_gridSize);
         Random random = new Random();
         
-        _backgroundDest = new Rectangle((int)ParentObject.Transform._pos.X, (int)ParentObject.Transform._pos.Y,
+        _backgroundDest = new Rectangle((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y,
             _gridSize * _puzzlePieceSize + _rimSize * 2, _gridSize * _puzzlePieceSize + _rimSize * 2);
         
         for (int i = 0; i < _gridSize; i++)
         {
             for (int j = 0; j < _gridSize; j++)
             {
-                int posX = random.Next((int)ParentObject.Transform._pos.X + _rimSize * 2,
-                    (int)ParentObject.Transform._pos.X + _backgroundDest.Width - _puzzlePieceSize - (_rimSize * 2));
-                int posY = random.Next((int)ParentObject.Transform._pos.Y + _rimSize * 2,
-                    (int)ParentObject.Transform._pos.Y + _backgroundDest.Height - _puzzlePieceSize - (_rimSize * 2));
+                int posX = random.Next((int)ParentObject.Transform.Pos.X + _rimSize * 2,
+                    (int)ParentObject.Transform.Pos.X + _backgroundDest.Width - _puzzlePieceSize - (_rimSize * 2));
+                int posY = random.Next((int)ParentObject.Transform.Pos.Y + _rimSize * 2,
+                    (int)ParentObject.Transform.Pos.Y + _backgroundDest.Height - _puzzlePieceSize - (_rimSize * 2));
                 
                 _puzzlePieces.Add(new PuzzlePiece(_puzzleTexture,
                     new Rectangle(offset * i,offset * j,offset,offset),

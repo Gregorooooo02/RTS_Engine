@@ -19,7 +19,7 @@ public class Collider : Component
         {
             sphere = ParentObject.GetComponent<MeshRenderer>().GetModel().Meshes[meshIndex1].BoundingSphere;
             sphere = sphere.Transform(ParentObject.Transform.ModelMatrix);
-            sphere.Radius = ParentObject.Transform._scl.X;
+            sphere.Radius = ParentObject.Transform.Scl.X;
         }
     }
 

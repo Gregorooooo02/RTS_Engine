@@ -31,8 +31,8 @@ public class TextRenderer : Component
     {
         if(!useLocalPosition) return;
         float ratio = Globals.GraphicsDeviceManager.PreferredBackBufferWidth / (float)currentSize.X;
-        ParentObject.Transform.SetLocalPosition(ParentObject.Transform._pos * ratio);
-        ParentObject.Transform.SetLocalScale(ParentObject.Transform._scl * ratio);
+        ParentObject.Transform.SetLocalPosition(ParentObject.Transform.Pos * ratio);
+        ParentObject.Transform.SetLocalScale(ParentObject.Transform.Scl * ratio);
         currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
             Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
     }
@@ -50,13 +50,13 @@ public class TextRenderer : Component
             Globals.SpriteBatch.DrawString(
             Font,
             Content,
-            new Vector2(ParentObject.Transform._pos.X, ParentObject.Transform._pos.Y),
+            new Vector2(ParentObject.Transform.Pos.X, ParentObject.Transform.Pos.Y),
             Color,
-            MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+            MathHelper.ToRadians(ParentObject.Transform.Rot.Z),
             new Vector2(0, 0),
-            new Vector2(ParentObject.Transform._scl.X, ParentObject.Transform._scl.Y),
+            new Vector2(ParentObject.Transform.Scl.X, ParentObject.Transform.Scl.Y),
             SpriteEffects.None,
-            ParentObject.Transform._pos.Z);
+            ParentObject.Transform.Pos.Z);
         } else
         {
             ParentObject.Transform.ModelMatrix.Decompose(out Vector3 scale, out Quaternion k, out Vector3 v);
@@ -65,11 +65,11 @@ public class TextRenderer : Component
             Content,
             new Vector2(v.X, v.Y),
             Color,
-            MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+            MathHelper.ToRadians(ParentObject.Transform.Rot.Z),
             new Vector2(0, 0),
             new Vector2(scale.X, scale.Y),
             SpriteEffects.None,
-            ParentObject.Transform._pos.Z);
+            ParentObject.Transform.Pos.Z);
         }
         
     }

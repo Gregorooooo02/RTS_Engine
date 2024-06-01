@@ -29,8 +29,8 @@ public class SpiteRenderer : Component
     {
         if(!useLocalPosition) return;
         float ratio = Globals.GraphicsDeviceManager.PreferredBackBufferWidth / (float)currentSize.X;
-        ParentObject.Transform.SetLocalPosition(ParentObject.Transform._pos * ratio);
-        ParentObject.Transform.SetLocalScale(ParentObject.Transform._scl * ratio);
+        ParentObject.Transform.SetLocalPosition(ParentObject.Transform.Pos * ratio);
+        ParentObject.Transform.SetLocalScale(ParentObject.Transform.Scl * ratio);
         currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
             Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
     }
@@ -47,16 +47,16 @@ public class SpiteRenderer : Component
         {
             Globals.SpriteBatch?.Draw(Sprite,
             new Rectangle(
-                (int)ParentObject.Transform._pos.X,
-                (int)ParentObject.Transform._pos.Y,
-                (int)(Sprite.Width * ParentObject.Transform._scl.X),
-                (int)(Sprite.Height * ParentObject.Transform._scl.Y)),
+                (int)ParentObject.Transform.Pos.X,
+                (int)ParentObject.Transform.Pos.Y,
+                (int)(Sprite.Width * ParentObject.Transform.Scl.X),
+                (int)(Sprite.Height * ParentObject.Transform.Scl.Y)),
                 null,
                 Color,
-                MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+                MathHelper.ToRadians(ParentObject.Transform.Rot.Z),
                 Vector2.Zero,
                 SpriteEffects.None,
-                ParentObject.Transform._pos.Z);
+                ParentObject.Transform.Pos.Z);
         } else
         {
             ParentObject.Transform.ModelMatrix.Decompose(out Vector3 scale, out Quaternion k, out Vector3 v);
@@ -68,10 +68,10 @@ public class SpiteRenderer : Component
                (int)(Sprite.Height * scale.Y)),
                null,
                Color,
-               MathHelper.ToRadians(ParentObject.Transform._rot.Z),
+               MathHelper.ToRadians(ParentObject.Transform.Rot.Z),
                Vector2.Zero,
                SpriteEffects.None,
-               ParentObject.Transform._pos.Z);
+               ParentObject.Transform.Pos.Z);
         }
         
     }
