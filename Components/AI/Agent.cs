@@ -28,7 +28,7 @@ public class Agent : Component
     public float MinIdleTime = 0.1f;
     public float MaxIdleTime = 5.0f;
 
-    public float TurnSpeed = 1.0f;
+    public float TurnSpeed = 2.0f;
 
     #endregion
 
@@ -55,15 +55,14 @@ public class Agent : Component
     {
         Vector3 agentPosition = ParentObject.Transform.ModelMatrix.Translation;
         Vector3 offset = new Vector3(point.X - agentPosition.X, 0, point.Y - agentPosition.Z);
-        offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(agentPosition.X + offset.X, agentPosition.Z + offset.Z)) - agentPosition.Y;
+        offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(agentPosition.X + offset.X, agentPosition.Z + offset.Z)) - agentPosition.Y + 2.0f;
         ParentObject.Transform.Move(offset * Globals.DeltaTime * speed);
 
         Vector2 destinationVector = new Vector2(offset.X, offset.Z);
-        Direction = Vector2.Lerp(Direction, destinationVector, Globals.DeltaTime * TurnSpeed);
-
-        //Rotating is fucked as of now
-        float angle = Wander.AngleDegrees(Vector2.UnitX, Direction);
-        Console.WriteLine(angle);
+        destinationVector.Normalize();
+        Direction = Vector2.Lerp(Direction,destinationVector, Globals.DeltaTime * TurnSpeed);
+        
+        float angle = Wander.AngleDegrees(-Vector2.UnitY, Direction);
         ParentObject.Transform.SetLocalRotationY(angle);
     }
     
