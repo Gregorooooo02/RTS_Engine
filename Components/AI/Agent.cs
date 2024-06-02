@@ -61,9 +61,6 @@ public class Agent : Component
             Active = false;
             Console.WriteLine("No terrain found. Disabling agent");
         }
-
-        
-        
     }
 
     private void UpdateState()
@@ -285,14 +282,14 @@ public class Agent : Component
                             _currentState = ((WandererData)AgentData).EntryState;
                             break;
                         case AgentType.Soldier:
-                            //AgentData = 
+                            AgentData = new SoldierData();
+                            _currentState = ((SoldierData)AgentData).EntryState;
                             break;
                         case AgentType.PlayerUnit:
                             AgentData = new PlayerUnitData();
                             _currentState = ((PlayerUnitData)AgentData).EntryState;
                             break;
                     }
-
                     _changingBehavior = false;
                 }
             }
