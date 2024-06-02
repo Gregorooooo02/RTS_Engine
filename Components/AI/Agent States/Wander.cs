@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine.Components.AI.Agent_States;
 
@@ -11,6 +12,7 @@ public class Wander : AgentState
     private Queue<Point> _points;
     private Point _currentPoint;
     private bool _traversing = false;
+    private int _maxAttempts = 10;
     
     public Wander()
     {
@@ -49,12 +51,12 @@ public class Wander : AgentState
     public static float AngleDegrees(Vector2 first, Vector2 second)
     {
         return MathF.Atan2(first.X * second.Y - first.Y * second.X, first.X * second.X - first.Y * second.Y) * (180.0f / MathF.PI);
-        return MathF.Acos((first.X * second.X + first.Y * second.Y) / (first.Length() * second.Length())) * (180.0f / MathF.PI);
     }
     
     public override AgentState UpdateState(Agent agent)
     {
         Vector3 agentPosition = agent.ParentObject.Transform.ModelMatrix.Translation;
+        WandererData data = (WandererData)agent.AgentData;
         if (_points == null || _points.Count == 0)
         {
             if (_traversing && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
@@ -64,9 +66,10 @@ public class Wander : AgentState
                 return value;
             }
             Node end = null;
+            int attempts = 0;
             do
             {
-                Vector2 offset = RandomUnitVector2() * agent.WanderingDistance;
+                Vector2 offset = RandomUnitVector2() * data.WanderingDistance;
                 
                 
                 if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0) continue;
@@ -75,23 +78,31 @@ public class Wander : AgentState
                 Node goal = new Node(new Point((int)(agentPosition.X + offset.X), (int)(agentPosition.Z + offset.Y)), null, 1);
             
                 end = Pathfinding.CalculatePath(goal, start);
-            } while (end is null || end.CurrentCost > agent.MaxWanderingDistance);
+                attempts++;
+                if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
+                {
+                    _traversing = false;
+                    ((Idle)idle).Caller = this;
+                    return idle;
+                }
+            } while (end is null || end.CurrentCost > data.MaxWanderingDistance);
             _points = Pathfinding.PathToQueueOfPoints(end);
             _traversing = true;
             _currentPoint = _points.Dequeue();
         }
         else
         {
-            if (Distance(_currentPoint, agentPosition) <= agent.MinPointDistance)
+            if (Distance(_currentPoint, agentPosition) <= data.MinPointDistance)
             {
                 _currentPoint = _points.Dequeue();
             }
             else
             {
-                agent.MoveToPoint(_currentPoint, agent.WalkingSpeed);
+                agent.MoveToPoint(_currentPoint, data.WanderingSpeed);
             }
         }
 
         return this;
     }
+    
 }

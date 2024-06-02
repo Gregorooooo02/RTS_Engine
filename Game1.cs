@@ -75,6 +75,7 @@ public class Game1 : Game
         Globals.Renderer = new Renderer(Content);
         Globals.PickingManager = new PickingManager(Content);
         Globals.FogManager = new FogManager();
+        Globals.AgentsManager = new AgentsManager();
         FileManager.Initialize();
         InputManager.Initialize();
         Globals.Initialize();

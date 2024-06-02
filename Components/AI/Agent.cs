@@ -4,12 +4,20 @@ using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.Agent_States;
+using RTS_Engine.Components.AI.AgentData;
 using RTS_Engine.Exceptions;
 
 namespace RTS_Engine.Components.AI;
 
 public class Agent : Component
 {
+    public enum AgentType
+    {
+        Civilian,
+        Soldier,
+        PlayerUnit
+    }
+    
     public enum State
     {
         Idle,
@@ -19,8 +27,6 @@ public class Agent : Component
         Wander
     }
     
-    #region Agent Parameters
-
     public float WalkingSpeed = 10.0f;
     public float MaxWanderingDistance = 50.0f;
     public float WanderingDistance = 25.0f;
@@ -28,18 +34,17 @@ public class Agent : Component
 
     public float MinIdleTime = 0.1f;
     public float MaxIdleTime = 5.0f;
-
+    
     public float TurnSpeed = 2.0f;
 
-    #endregion
-
+    public AgentData.AgentData AgentData = new WandererData();
+    
     public Vector2 Direction = Vector2.UnitX;
     
+    private AgentState _currentState;
     public Dictionary<State, AgentState> AgentStates = new();
 
     public LayerType AgentLayer = LayerType.ENEMY;
-    
-    private AgentState _currentState;
     
     public Agent(){}
     
@@ -54,6 +59,11 @@ public class Agent : Component
         {
             Active = false;
             Console.WriteLine("No terrain found. Disabling agent");
+        }
+
+        if (AgentLayer == LayerType.ENEMY)
+        {
+            //TODO: Do the line of sight here
         }
         
     }
@@ -113,6 +123,7 @@ public class Agent : Component
                 AgentLayer = AgentLayer == LayerType.ENEMY ? LayerType.PLAYER : LayerType.ENEMY;
             }
             ImGui.Text("Current state: " + _currentState);
+            AgentData.Inspect();
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();

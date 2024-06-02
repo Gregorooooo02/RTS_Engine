@@ -1,13 +1,14 @@
 ﻿using System;
+using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine.Components.AI.Agent_States;
 
 public class Idle : AgentState
 {
-    private float IdleTimer = 0.0f;
+    private float _idleTimer = 0.0f;
     private bool _active = false;
-    private float MaxTime;
-    private Random _random = new();
+    private float _maxTime;
+    private readonly Random _random = new();
     
     public AgentState Caller;
     
@@ -21,17 +22,18 @@ public class Idle : AgentState
 
     public override AgentState UpdateState(Agent agent)
     {
+        WandererData data = (WandererData)agent.AgentData;
         if (!_active)
         {
-            MaxTime = (float)_random.NextDouble() * (agent.MaxIdleTime - agent.MinIdleTime) + agent.MinIdleTime;
+            _maxTime = (float)_random.NextDouble() * (data.MaxIdleTime - data.MinIdleTime) + data.MinIdleTime;
             _active = true;
         }
         if (_active)
         {
-            IdleTimer += Globals.DeltaTime;
-            if (IdleTimer >= MaxTime)
+            _idleTimer += Globals.DeltaTime;
+            if (_idleTimer >= _maxTime)
             {
-                IdleTimer = 0;
+                _idleTimer = 0;
                 _active = false;
                 return Caller;
             }

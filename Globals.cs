@@ -90,6 +90,7 @@ namespace RTS_Engine
         public static FogManager FogManager;
         public static PickingManager PickingManager;
         public static ContentManager Content;
+        public static AgentsManager AgentsManager;
 
         #endregion
 
