@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using RTS_Engine.Exceptions;
 
 namespace RTS_Engine.Components.AI;
 
@@ -14,7 +15,7 @@ public static class Pathfinding
     
     private static List<Node> GetNeighbors(Node n)
     {
-        if (Globals.Renderer.WorldRenderer is null) return null;
+        if (Globals.Renderer.WorldRenderer is null) throw new NoTerrainException("There isn't any terrain to pick the nodes from!");
         List<Node> output = new();
         byte nodeConnections = Globals.Renderer.WorldRenderer.MapNodes[n.Location.X, n.Location.Y].Connections;
         //It's assumed that each node has up to 8 neighbors.

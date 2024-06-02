@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.Agent_States;
+using RTS_Engine.Exceptions;
 
 namespace RTS_Engine.Components.AI;
 
@@ -35,6 +36,8 @@ public class Agent : Component
     public Vector2 Direction = Vector2.UnitX;
     
     public Dictionary<State, AgentState> AgentStates = new();
+
+    public LayerType AgentLayer = LayerType.ENEMY;
     
     private AgentState _currentState;
     
@@ -43,7 +46,16 @@ public class Agent : Component
     public override void Update()
     {
         if(!Active)return;
-        UpdateState();
+        try
+        {
+            UpdateState();
+        }
+        catch (NoTerrainException e)
+        {
+            Active = false;
+            Console.WriteLine("No terrain found. Disabling agent");
+        }
+        
     }
 
     private void UpdateState()
@@ -94,6 +106,12 @@ public class Agent : Component
         if(ImGui.CollapsingHeader("Agent"))
         {
             ImGui.Checkbox("Agent active", ref Active);
+            ImGui.Text("Agent type: " + AgentLayer);
+            ImGui.SameLine();
+            if (ImGui.Button("Switch type"))
+            {
+                AgentLayer = AgentLayer == LayerType.ENEMY ? LayerType.PLAYER : LayerType.ENEMY;
+            }
             ImGui.Text("Current state: " + _currentState);
             if (ImGui.Button("Remove component"))
             {
