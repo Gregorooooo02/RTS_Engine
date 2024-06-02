@@ -133,7 +133,6 @@ public class Renderer
         DrawSprites();
         DrawAnimatedSprites();
         DrawText();
-        DrawBlooms();
         Globals.SpriteBatch.End();
 #endif
     }
@@ -182,7 +181,6 @@ public class Renderer
         //Prepare camera frustum for next frame culling
         Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
         
-#if DEBUG
         if (currentMultiplier != Globals.ShadowMapResolutionMultiplier)
         {
             currentMultiplier = Globals.ShadowMapResolutionMultiplier;
@@ -190,7 +188,6 @@ public class Renderer
             _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
                 DepthFormat.Depth24);
         }
-#endif
     }
     
     private void DrawMeshes()

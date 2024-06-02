@@ -105,10 +105,8 @@ public class Game1 : Game
 #endif
 #if DEBUG
         //_sceneManager.AddScene(new MapScene());
-        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
-        // _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
-        //_sceneManager.AddScene(new MapScene());
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
-  <name>BackGround</name>
+  <name>Root</name>
   <active>True</active>
   <components>
     <component>
@@ -22,30 +22,59 @@
         <z>1</z>
       </scale>
     </component>
-    <component>
-      <type>SpiteRenderer</type>
-      <active>True</active>
-      <useLocal>False</useLocal>
-      <sprite>blank</sprite>
-      <color>
-        <r>25</r>
-        <g>62</g>
-        <b>119</b>
-        <a>255</a>
-      </color>
-    </component>
   </components>
   <childObjects>
     <object>
-      <name>Exit Button</name>
+      <name>Title</name>
       <active>True</active>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>510</x>
-            <y>551,2</y>
+            <x>30</x>
+            <y>30</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>3</x>
+            <y>3</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>TextRenderer</type>
+          <active>True</active>
+          <useLocal>True</useLocal>
+          <contents>Furninotura</contents>
+          <font>defaultFont</font>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1440</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Buttons</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>0</x>
+            <y>0</y>
             <z>0</z>
           </position>
           <rotation>
@@ -55,39 +84,22 @@
           </rotation>
           <scale>
             <x>1</x>
-            <y>0,5</y>
+            <y>1</y>
             <z>1</z>
           </scale>
-        </component>
-        <component>
-          <type>SpiteRenderer</type>
-          <active>True</active>
-          <useLocal>True</useLocal>
-          <sprite>blank</sprite>
-          <color>
-            <r>73</r>
-            <g>110</g>
-            <b>133</b>
-            <a>255</a>
-          </color>
-        </component>
-        <component>
-          <type>Button</type>
-          <active>True</active>
-          <action>EXIT</action>
         </component>
       </components>
       <childObjects>
         <object>
-          <name>NewObject</name>
+          <name>Play_Button</name>
           <active>True</active>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>602,7</x>
-                <y>587,3</y>
+                <x>2</x>
+                <y>90</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -96,111 +108,279 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
+                <x>0,2</x>
+                <y>0,1</y>
                 <z>1</z>
               </scale>
             </component>
             <component>
-              <type>TextRenderer</type>
+              <type>SpiteRenderer</type>
               <active>True</active>
-              <useLocal>True</useLocal>
-              <contents>Exit</contents>
-              <font>defaultFont</font>
+              <useLocal>False</useLocal>
+              <sprite>blank</sprite>
               <color>
-                <r>0</r>
-                <g>0</g>
-                <b>0</b>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
                 <a>255</a>
               </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <action>SCENE1</action>
+              <linkedObject>Root</linkedObject>
             </component>
           </components>
-          <childObjects></childObjects>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>95</x>
+                    <y>20</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>4</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>False</useLocal>
+                  <contents>Play</contents>
+                  <font>defaultFont</font>
+                  <color>
+                    <r>0</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Settings_Button</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>2</x>
+                <y>125</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,2</x>
+                <y>0,1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>False</useLocal>
+              <sprite>blank</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>60</x>
+                    <y>20</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>4</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>False</useLocal>
+                  <contents>Settings</contents>
+                  <font>defaultFont</font>
+                  <color>
+                    <r>0</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Exit_Button</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>2</x>
+                <y>160</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,2</x>
+                <y>0,1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>False</useLocal>
+              <sprite>blank</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <action>EXIT</action>
+              <linkedObject>Root</linkedObject>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>90</x>
+                    <y>20</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>4</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>False</useLocal>
+                  <contents>Exit</contents>
+                  <font>defaultFont</font>
+                  <color>
+                    <r>0</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
         </object>
       </childObjects>
     </object>
     <object>
-      <name>Play button</name>
+      <name>DUDE</name>
       <active>True</active>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>510</x>
-            <y>300</y>
-            <z>0</z>
+            <x>-46,9</x>
+            <y>-5,9</y>
+            <z>-25</z>
           </position>
           <rotation>
             <x>0</x>
-            <y>0</y>
+            <y>-90</y>
             <z>0</z>
           </rotation>
           <scale>
-            <x>1</x>
-            <y>0,5</y>
-            <z>1</z>
+            <x>0,25</x>
+            <y>0,25</y>
+            <z>2</z>
           </scale>
         </component>
         <component>
-          <type>SpiteRenderer</type>
+          <type>AnimatedMeshRenderer</type>
           <active>True</active>
-          <useLocal>True</useLocal>
-          <sprite>blank</sprite>
-          <color>
-            <r>73</r>
-            <g>110</g>
-            <b>133</b>
-            <a>255</a>
-          </color>
-        </component>
-        <component>
-          <type>Button</type>
-          <active>True</active>
-          <action>SCENE1</action>
+          <model>Microsoft.Xna.Framework.Graphics.Model</model>
+          <animations>RTS.Animation.Animations</animations>
         </component>
       </components>
-      <childObjects>
-        <object>
-          <name>NewObject</name>
-          <active>True</active>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>606,9</x>
-                <y>336,9</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>TextRenderer</type>
-              <active>True</active>
-              <useLocal>True</useLocal>
-              <contents>Play</contents>
-              <font>defaultFont</font>
-              <color>
-                <r>0</r>
-                <g>0</g>
-                <b>0</b>
-                <a>255</a>
-              </color>
-            </component>
-          </components>
-          <childObjects></childObjects>
-        </object>
-      </childObjects>
+      <childObjects></childObjects>
     </object>
   </childObjects>
 </rootObject>

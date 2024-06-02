@@ -85,7 +85,8 @@ public class Bloom : Component
 		Globals.Renderer.Blooms.Remove(this);
 		ParentObject.RemoveComponent(this);
 	}
-
+	
+#if DEBUG
 	public override void Inspect()
 	{
 		if (ImGui.CollapsingHeader("Bloom Effect"))
@@ -104,7 +105,8 @@ public class Bloom : Component
 			}
 		}
 	}
-	
+#endif	
+
 	#region Draw
 
 	/// <summary>

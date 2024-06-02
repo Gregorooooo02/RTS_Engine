@@ -57,8 +57,10 @@ namespace RTS_Engine
                 new VertexElement(sizeof(float) * 28, VertexElementFormat.Vector4, VertexElementUsage.BlendIndices, 3)
             );
 
+#if DEBUG
             Solid = new RasterizerState() { FillMode = FillMode.Solid };
             WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame };
+#endif
         }
         
         #region Shaders
@@ -207,8 +209,6 @@ namespace RTS_Engine
             AvailablePrefabs = Directory.GetFiles(MainPath + "Prefabs").ToList();
         }
 
-        public static int ShadowMapResolutionMultiplier = 3;
-        
         //Switches for debug windows UWU
         public static bool InspectorVisible = true;
         public static bool HierarchyVisible = true;
@@ -222,5 +222,6 @@ namespace RTS_Engine
         public static bool DrawExplored = false;
         public static bool DrawVisibility = false;
 #endif
+        public static int ShadowMapResolutionMultiplier = 3;
     }
 }

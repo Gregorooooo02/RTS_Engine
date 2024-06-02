@@ -17,6 +17,8 @@ public enum GameAction
     LMB,
     MMB,
     RMB,
+    TOGGLE_ACTIVE,
+    TOGGLE_ACTIVE_PARENT,
     SCENE0,
     SCENE1,
     SCENE2,

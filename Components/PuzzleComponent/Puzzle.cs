@@ -145,7 +145,9 @@ public class Puzzle : Component
         Active = true;
         ChangeActive(ParentObject,true);
         Globals.Renderer.CurrentActivePuzzle = this;
+#if DEBUG
         ChangePuzzleParameters();
+#endif
     }
 
     private void ChangeActive(GameObject gameObject,bool state)
@@ -177,7 +179,9 @@ public class Puzzle : Component
     public override void Initialize()
     {
         _puzzleTexture = AssetManager.DefaultSprite;
+#if DEBUG
         ChangePuzzleParameters();
+#endif
     }
 
     public override string ComponentToXmlString()

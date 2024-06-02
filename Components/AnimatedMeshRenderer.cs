@@ -89,8 +89,6 @@ public class AnimatedMeshRenderer : Component
         builder.Append("<type>AnimatedMeshRenderer</type>");
         
         builder.Append("<active>" + Active + "</active>");
-
-        builder.Append("<model>" + _model.ToString() + "</model>");
         
         builder.Append("</component>");
         
@@ -109,6 +107,12 @@ public class AnimatedMeshRenderer : Component
         else
         {
             LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
+        }
+        
+        XElement animations = element.Element("animations");
+        if (animations?.Element("clip") != null)
+        {
+            _animations.SetClip(animations?.Element("clip")?.Value);
         }
     }
 

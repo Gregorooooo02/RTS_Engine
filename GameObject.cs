@@ -12,6 +12,7 @@ public class GameObject
 {
     public string Name = "NewObject";
     public bool Active = true;
+    private bool _wasActive;
 
     public Transform Transform;
     private List<Component> _components = new();
@@ -22,23 +23,37 @@ public class GameObject
     public GameObject()
     {
         Transform = new Transform(this);
+        _wasActive = Active;
     }
 
     public void Update()
     {
-        if (!Active) return;
-        Transform.Update();
-        //Update all components
-        foreach (Component c in _components)
+        if (!Active && _wasActive)
         {
-            c.Update();
+            SetChildrenInactive(this);
+        } 
+        else if (Active && !_wasActive)
+        {
+            SetChildrenActive(this);    
+        }
+
+        if (Active)
+        {
+            Transform.Update();
+            //Update all components
+            foreach (Component c in _components)
+            {
+                c.Update();
+            }
+        
+            //Update all children
+            foreach (GameObject gameObject in Children)
+            {
+                gameObject.Update();
+            }
         }
         
-        //Update all children
-        foreach (GameObject gameObject in Children)
-        {
-            gameObject.Update();
-        }
+        _wasActive = Active;
     }
     
     public T GetComponent<T>() where T : Component
@@ -100,6 +115,61 @@ public class GameObject
         for (int i = gameObject._components.Count - 1; i >= 0 ; i--)
         {
             gameObject._components[i].RemoveComponent();
+        }
+    }
+    
+    private void SetChildrenInactive(GameObject parent)
+    {
+        foreach (var child in parent.Children)
+        {
+            child.Active = false;
+            SetChildrenInactive(child);
+        }
+    }
+    
+    private void SetChildrenActive(GameObject parent)
+    {
+        foreach (var child in parent.Children)
+        {
+            child.Active = true;
+            SetChildrenActive(child);
+        }
+    }
+    
+    public GameObject FindGameObjectByName(string name)
+    {
+        if (Name == name) return this;
+        
+        foreach (var child in Children)
+        {
+            GameObject result = child.FindGameObjectByName(name);
+            if (result != null) return result;
+        }
+
+        return null;
+    }
+    
+    public void ToggleGameObjectActiveState(string name)
+    {
+        GameObject gameObject = FindGameObjectByName(name);
+        
+        if (gameObject != null)
+        {
+            gameObject.Active = !gameObject.Active;
+        }
+    }
+    
+    public void ToggleParentActiveState()
+    {
+        Parent.Active = !Parent.Active;
+        
+        if (Parent.Active)
+        {
+            SetChildrenActive(Parent);
+        }
+        else
+        {
+            SetChildrenInactive(Parent);
         }
     }
 

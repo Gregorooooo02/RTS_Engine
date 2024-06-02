@@ -14,6 +14,8 @@ public class Button : Component
 
     private Vector3 _pos = new();
     private Vector3 _scale = new();
+
+    public string GameObjectName = "Root";
     
     public override void Update()
     {
@@ -52,6 +54,16 @@ public class Button : Component
                         {
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
                             Globals.HitUI = true;
+                            
+                            if (_buttonAction == GameAction.TOGGLE_ACTIVE)
+                            {
+                                ParentObject.ToggleGameObjectActiveState(GameObjectName);
+                            }
+
+                            if (_buttonAction == GameAction.TOGGLE_ACTIVE_PARENT)
+                            {
+                                ParentObject.ToggleParentActiveState();
+                            }
                         }
                     }
                 }
@@ -85,6 +97,8 @@ public class Button : Component
         
         builder.Append("<action>"+ _buttonAction +"</action>");
         
+        builder.Append("<linkedObject>"+ GameObjectName +"</linkedObject>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -94,13 +108,13 @@ public class Button : Component
         Active = element.Element("active")?.Value == "True";
         Enum.TryParse(element?.Element("action")?.Value, out GameAction action);
         _buttonAction = action;
+        GameObjectName = element?.Element("linkedObject")?.Value;
     }
 
     public override void RemoveComponent()
     {
         ParentObject.RemoveComponent(this);
     }
-
     
     #if DEBUG
     private bool changingFunction = false;
@@ -115,6 +129,12 @@ public class Button : Component
             {
                 changingFunction = true;
             }
+
+            if (_buttonAction == GameAction.TOGGLE_ACTIVE)
+            {
+                ImGui.InputText("GameObject name", ref GameObjectName, 100);
+            }
+            
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
