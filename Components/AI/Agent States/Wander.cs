@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.AgentData;
 
@@ -33,6 +32,11 @@ public class Wander : AgentState
         {
             value.Initialize(agent);
         }
+        
+        if (agent.AgentStates.TryAdd(Agent.State.RunAway, new Flee()) && agent.AgentStates.TryGetValue(Agent.State.RunAway, out AgentState flee))
+        {
+            flee.Initialize(agent);
+        }
     }
 
 
@@ -50,13 +54,22 @@ public class Wander : AgentState
 
     public static float AngleDegrees(Vector2 first, Vector2 second)
     {
-        return MathF.Atan2(first.X * second.Y - first.Y * second.X, first.X * second.X - first.Y * second.Y) * (180.0f / MathF.PI);
+        return MathF.Atan2(first.X * second.Y - first.Y * second.X, first.X * second.X + first.Y * second.Y) * (180.0f / MathF.PI);
     }
     
     public override AgentState UpdateState(Agent agent)
     {
         Vector3 agentPosition = agent.ParentObject.Transform.ModelMatrix.Translation;
         WandererData data = (WandererData)agent.AgentData;
+        if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
+        {
+            _traversing = false;
+            ((Flee)flee).Target = data.Target;
+            data.Alarmed = true;
+            data.Awareness = 0;
+            return flee;
+        }
+        
         if (_points == null || _points.Count == 0)
         {
             if (_traversing && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))

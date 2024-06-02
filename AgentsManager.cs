@@ -7,5 +7,4 @@ public class AgentsManager
 {
     public List<Agent> Units = new();
     public List<Agent> Enemies = new();
-    
 }

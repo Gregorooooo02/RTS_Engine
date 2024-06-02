@@ -23,6 +23,15 @@ public class Idle : AgentState
     public override AgentState UpdateState(Agent agent)
     {
         WandererData data = (WandererData)agent.AgentData;
+        if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
+        {
+            ((Flee)flee).Target = data.Target;
+            data.Alarmed = true;
+            data.Awareness = 0;
+            _active = false;
+            _idleTimer = 0;
+            return flee;
+        }
         if (!_active)
         {
             _maxTime = (float)_random.NextDouble() * (data.MaxIdleTime - data.MinIdleTime) + data.MinIdleTime;

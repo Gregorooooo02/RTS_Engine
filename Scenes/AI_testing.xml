@@ -1066,9 +1066,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>71,32787</x>
+            <x>80,118164</x>
             <y>50</y>
-            <z>78,933716</z>
+            <z>75,664116</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -1084,7 +1084,7 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>70</fovDegrees>
+          <fovDegrees>63,638073</fovDegrees>
           <zoomMin>30</zoomMin>
           <zoomMax>70</zoomMax>
           <lerpSpeed>3,5</lerpSpeed>
@@ -1164,6 +1164,40 @@
           <active>True</active>
           <model>
             <path>basicPlane</path>
+            <technique>PBR</technique>
+          </model>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>NewObject</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>MeshRenderer</type>
+          <active>True</active>
+          <model>
+            <path>defaultModel</path>
             <technique>PBR</technique>
           </model>
         </component>
