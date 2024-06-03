@@ -12,17 +12,37 @@ public class SoldierData : AgentData
         GoBack
     }
     
-    public int pathID;
+    public int PathId;
     public PatrolType PatrollingType;
+    
+    
+    public float Awareness = 0;
+    public float AwarenessThreshold = 100.0f;
+    public float AwarenessDecay = 0.1f;
 
     public float MinPointDistance = 0.3f;
     public float PatrollingSpeed = 7.0f;
+    public float AttackingWalkingSpeed = 9.0f;
     
     public float MaxIdleTime = 5;
     public float MinIdleTime = 2;
     
+    public float Damage = 10.0f;
+    public float AttackDelay = 0.8f;
+    public float MinAttackRange = 1.5f;
+    public float MaxAttackRange = 2.5f;
     
-    public SoldierData() : base(){}
+    public float RepathDelay = 2.0f;
+    
+    public float SightRange = 40.0f;
+    public float SightAngle = 60.0f;
+    public float SightHeight = 4.0f;
+    public float MinPresenceMultiplier = 0.2f;
+
+    public bool Alarmed = false;
+    
+    public Agent Target = null;
+    public SoldierData() : base(100){}
 
 
     
@@ -33,7 +53,7 @@ public class SoldierData : AgentData
     public override void Inspect()
     {
         base.Inspect();
-        ImGui.InputInt("Patrol path ID", ref pathID);
+        ImGui.InputInt("Patrol path ID", ref PathId);
         ImGui.Text("Patrolling type: " + PatrollingType);
         if (ImGui.Button("Change patrolling type"))
         {
@@ -41,13 +61,26 @@ public class SoldierData : AgentData
         }
         ImGui.Separator();
         ImGui.DragFloat("Patrolling speed", ref PatrollingSpeed);
+        ImGui.DragFloat("Attack walking speed", ref AttackingWalkingSpeed);
         ImGui.Separator();
         ImGui.DragFloat("Max idle time", ref MaxIdleTime);
         ImGui.DragFloat("Min idle time", ref MinIdleTime);
         ImGui.Separator();
         ImGui.DragFloat("Min point distance", ref MinPointDistance);
-        
-        
+        ImGui.Separator();
+        ImGui.DragFloat("Damage", ref Damage);
+        ImGui.DragFloat("Attack delay", ref AttackDelay);
+        ImGui.DragFloat("Min attack range", ref MinAttackRange);
+        ImGui.DragFloat("Max attack range", ref MaxAttackRange);
+        ImGui.Separator();
+        ImGui.Text("Awareness: " + Awareness);
+        ImGui.DragFloat("Awareness threshold", ref AwarenessThreshold);
+        ImGui.DragFloat("Awareness decay", ref AwarenessDecay);
+        ImGui.Separator();
+        ImGui.DragFloat("Sight range", ref SightRange);
+        ImGui.DragFloat("Sight angle", ref SightAngle);
+        ImGui.DragFloat("Sight height", ref SightHeight);
+        ImGui.DragFloat("Min presence multiplier", ref MinPresenceMultiplier,0.01f,0,0.99f);
         
         if (_changePatrolType)
         {

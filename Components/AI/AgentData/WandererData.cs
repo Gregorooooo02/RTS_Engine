@@ -33,7 +33,7 @@ public class WandererData : AgentData
     public Agent Target = null;
     public readonly AgentState EntryState = new CivilianStart();
     
-    public WandererData(){}
+    public WandererData() : base(100){}
     public WandererData(float maxHp, float wanderingSpeed, float fleeingSpeed, float maxIdleTime, float minIdleTime, float maxWanderingDistance, float wanderingDistance, float minPointDistance) : base(maxHp)
     {
         WanderingSpeed = wanderingSpeed;

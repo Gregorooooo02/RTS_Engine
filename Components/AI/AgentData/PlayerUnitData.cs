@@ -13,7 +13,7 @@ public class PlayerUnitData : AgentData
     public float AttackDelay = 0.8f;
     
     
-    
+    public PlayerUnitData() : base(100){}
     
     public readonly AgentState EntryState = new UnitStart();
     

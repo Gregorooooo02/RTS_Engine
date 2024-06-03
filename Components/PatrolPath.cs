@@ -37,7 +37,7 @@ public class PatrolPath : Component
         
         builder.Append("<component>");
         
-        builder.Append("<type>PatrolPathUnit</type>");
+        builder.Append("<type>PatrolPath</type>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -54,7 +54,7 @@ public class PatrolPath : Component
 #if DEBUG
     public override void Inspect()
     {
-        if(ImGui.CollapsingHeader("PatrolPathUnit"))
+        if(ImGui.CollapsingHeader("PatrolPath"))
         {
             ImGui.Checkbox("Path Unit active", ref Active);
             if (ImGui.Button("Remove component"))

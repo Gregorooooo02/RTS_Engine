@@ -18,6 +18,13 @@ public class SoldierIdle : AgentState
     public override AgentState UpdateState(Agent agent)
     {
         SoldierData data = (SoldierData)agent.AgentData;
+        if (data.Awareness >= data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
+        {
+            ((Attack)attack).Target = data.Target;
+            data.Awareness = 0;
+            data.Alarmed = true;
+            return attack;
+        }
         if (!_active)
         {
             _maxTime = (float)_random.NextDouble() * (data.MaxIdleTime - data.MinIdleTime) + data.MinIdleTime;

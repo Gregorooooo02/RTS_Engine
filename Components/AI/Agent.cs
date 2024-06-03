@@ -46,6 +46,20 @@ public class Agent : Component
     {
         if(!Active)return;
         Position = ParentObject.Transform.ModelMatrix.Translation;
+        if (!AgentData.Alive)
+        {
+            ParentObject.Active = false;
+            switch (AgentLayer)
+            {
+                case LayerType.ENEMY:
+                    Globals.AgentsManager.Enemies.Remove(this);
+                    break;
+                case LayerType.PLAYER:
+                    Globals.AgentsManager.Units.Remove(this);
+                    break;
+            }
+            return;
+        }
         
         if (AgentLayer == LayerType.ENEMY)
         {
@@ -90,6 +104,7 @@ public class Agent : Component
         if (Type == AgentType.Civilian)
         {
             WandererData data = (WandererData)AgentData;
+            if(data.Alarmed) return;
             data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
@@ -136,7 +151,51 @@ public class Agent : Component
         } 
         else if (Type == AgentType.Soldier)
         {
-            //TODO: Implement vision for soldier
+            SoldierData data = (SoldierData)AgentData;
+            if(data.Alarmed) return;
+            data.Target = null;
+            foreach (Agent t in Globals.AgentsManager.Units)
+            {
+                //Calculate offset vector from this civilian to player unit from the list
+                offset = new Vector2(t.Position.X - Position.X, t.Position.Z - Position.Z);
+                float length = offset.Length();
+                //Console.WriteLine(MathF.Abs(Wander.AngleDegrees(Direction,offset)));
+                //Using if's condition order, first check if checked player unit is in sight range and if it is
+                //then check the angle between civilian's direction vector and offset vector.
+                //If absolute value of this angle is smaller than half of civilian's fov that means that it's in sight 
+                if (length <= data.SightRange && MathF.Abs(Wander.AngleDegrees(Direction,offset)) <= data.SightAngle / 2.0f)
+                {
+                    //This means checked unit is in vision cone
+                    //Now check if sight line is not obstructed by terrain or static props
+                    //First lets check the difference in height between them, if it's too high target is not visible
+                    if (MathF.Abs(t.Position.Y - Position.Y) <= data.SightHeight)
+                    {
+                        //Get coordinates of all point that the line of sight "intersects with"
+                        List<Point> points = GetIntersections(new Vector2(Position.X, Position.Z),
+                            new Vector2(t.Position.X, t.Position.Z));
+                        bool success = true;
+                        //Then use this point to determine visibility
+                        foreach (Point point in points)
+                        {
+                            MapNode node = Globals.Renderer.WorldRenderer.MapNodes[point.X, point.Y];
+                            if (node == null || (node.Height - Position.Y) > data.SightHeight)
+                            {
+                                //if null then node doesn't exist there implying an obstacle
+                                //if second condition passes then it means that there is a significant enough incline in terrain to obstruct line of sight
+                                success = false;
+                                break;
+                            }
+                        }
+                        if (success)
+                        {
+                            PlayerUnitData playerUnitData = (PlayerUnitData)t.AgentData;
+                            data.Target = t;
+                            data.Awareness += playerUnitData.Presence * ((1.0f - (length / data.SightRange)) * (1.0f - data.MinPresenceMultiplier) + data.MinPresenceMultiplier);
+                        }
+                    }
+                }
+            }
+            if(data.Awareness > 0)data.Awareness -= data.AwarenessDecay;
         }
         
     }

@@ -23,6 +23,7 @@ public class AgentData
 
     public void DealDamage(float damage)
     {
+        if(!Alive) return;
         Hp -= damage;
         if (Hp <= 0) Alive = false;
     }
@@ -32,6 +33,12 @@ public class AgentData
     {
         ImGui.DragFloat("Max HP", ref MaxHp);
         ImGui.Text("Current Hp: " + Hp);
+        ImGui.SameLine();
+        if (ImGui.Button("Heal"))
+        {
+            Hp = MaxHp;
+            Alive = true;
+        }
     }
 #endif
 }

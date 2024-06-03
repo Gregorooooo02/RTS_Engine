@@ -1066,9 +1066,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>78,22</x>
+            <x>76,804115</x>
             <y>50</y>
-            <z>62,591385</z>
+            <z>59,574924</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -1129,7 +1129,7 @@
           <type>MeshRenderer</type>
           <active>True</active>
           <model>
-            <path>defaultModel</path>
+            <path>krzeslo</path>
             <technique>PBR</technique>
           </model>
         </component>
@@ -1197,7 +1197,7 @@
           <type>MeshRenderer</type>
           <active>True</active>
           <model>
-            <path>defaultModel</path>
+            <path>krzeslo</path>
             <technique>PBR</technique>
           </model>
         </component>
@@ -1228,7 +1228,7 @@
           </scale>
         </component>
         <component>
-          <type>PatrolPathUnit</type>
+          <type>PatrolPath</type>
         </component>
       </components>
       <childObjects>

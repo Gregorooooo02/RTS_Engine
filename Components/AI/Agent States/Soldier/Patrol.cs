@@ -26,6 +26,11 @@ public class Patrol : AgentState
         {
             idle.Initialize(agent);
         }
+        
+        if (agent.AgentStates.TryAdd(Agent.State.Attack, new Attack()) && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
+        {
+            attack.Initialize(agent);
+        }
     }
 
     private void UpdateIndex()
@@ -67,9 +72,18 @@ public class Patrol : AgentState
     {
         SoldierData data = (SoldierData)agent.AgentData;
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
-        if (data.pathID != _currentPathId || _currentPatrolType != data.PatrollingType)
+        if (data.Awareness >= data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
-            _currentPathId = data.pathID;
+            _traversing = false;
+            ((Attack)attack).Target = data.Target;
+            _points.Clear();
+            data.Awareness = 0;
+            data.Alarmed = true;
+            return attack;
+        }
+        if (data.PathId != _currentPathId || _currentPatrolType != data.PatrollingType)
+        {
+            _currentPathId = data.PathId;
             _currentPatrolType = data.PatrollingType;
             List<Vector3> points = Globals.AgentsManager.PatrolManager.GetPathByIndex(_currentPathId);
             _patrolPoints.Clear();
