@@ -1066,9 +1066,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>80,118164</x>
+            <x>78,22</x>
             <y>50</y>
-            <z>75,664116</z>
+            <z>62,591385</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -1084,7 +1084,7 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>63,638073</fovDegrees>
+          <fovDegrees>70</fovDegrees>
           <zoomMin>30</zoomMin>
           <zoomMax>70</zoomMax>
           <lerpSpeed>3,5</lerpSpeed>
@@ -1203,6 +1203,172 @@
         </component>
       </components>
       <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Path1</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>PatrolPathUnit</type>
+        </component>
+      </components>
+      <childObjects>
+        <object>
+          <name>NewObject</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>10</x>
+                <y>0</y>
+                <z>10</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>defaultModel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>NewObject</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>24,7</x>
+                <y>0</y>
+                <z>27,5</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>defaultModel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>NewObject</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>50</x>
+                <y>0</y>
+                <z>20</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>defaultModel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>NewObject</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>8,8</x>
+                <y>0</y>
+                <z>64,3</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>defaultModel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+      </childObjects>
     </object>
   </childObjects>
 </rootObject>

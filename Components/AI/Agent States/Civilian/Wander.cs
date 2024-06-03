@@ -85,6 +85,14 @@ public class Wander : AgentState
             do
             {
                 offset = RandomUnitVector2() * data.WanderingDistance;
+                attempts++;
+                
+                if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
+                {
+                    _traversing = false;
+                    ((Idle)idle).Caller = this;
+                    return idle;
+                }
                 
                 if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0) continue;
                 
@@ -92,13 +100,7 @@ public class Wander : AgentState
                 Node goal = new Node(new Point((int)(agentPosition.X + offset.X), (int)(agentPosition.Z + offset.Y)), null, 1);
             
                 end = Pathfinding.CalculatePath(goal, start);
-                attempts++;
-                if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
-                {
-                    _traversing = false;
-                    ((Idle)idle).Caller = this;
-                    return idle;
-                }
+                
             } while (end is null || end.CurrentCost > data.MaxWanderingDistance);
             _points = Pathfinding.PathToQueueOfVectors(end);
             _points.Enqueue(new Vector2(agentPosition.X + offset.X,agentPosition.Z + offset.Y));
