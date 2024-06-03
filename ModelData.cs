@@ -23,7 +23,7 @@ public class ModelData
     private bool _lodUsed;
     /*
      *--------------------------------------------------------------------------------------------------------------------------
-     *Textures as stored like:
+     *Textures as stored like: 
      * [0] - albedo
      * [1] - normal
      * [2] - roughness

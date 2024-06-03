@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using Microsoft.Xna.Framework.Input;
 using RTS_Engine.Components.AI;
 using Num = System.Numerics;
 using RTS.Animation;
@@ -34,13 +35,17 @@ public class Game1 : Game
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
     
+    KeyboardState lastKeyboardState = new KeyboardState();
+    KeyboardState currentKeyboardState = new KeyboardState();
+        
+    GamePadState lastGamePadState = new GamePadState();
+    GamePadState currentGamePadState = new GamePadState();
+    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Globals.Content = Content;
         Globals.GraphicsDeviceManager = _graphics;
-        
-
 #if DEBUG
         _measurements = new double[_size];
 #endif
@@ -108,7 +113,7 @@ public class Game1 : Game
         //_sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
-        //_sceneManager.AddScene(new MapScene());
+        // _sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
@@ -191,7 +196,6 @@ public class Game1 : Game
         _imGuiRenderer.AfterLayout();
 #endif
         Globals.Renderer.PrepareForNextFrame();
-        
 #if DEBUG
         _measurements[_shiftHead] = (_performanceTimer.ElapsedTicks / (double)Stopwatch.Frequency) * 1000.0;
         if (_shiftHead == _size - 1) currentAvg = AvgFromLastSec();
@@ -256,6 +260,10 @@ public class Game1 : Game
         }
         if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
+        }
+        if (Globals.CheatMenuVisible)
+        {
+            GameManager.CheatMenu();
         }
     }
 #endif

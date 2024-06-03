@@ -23,7 +23,7 @@ public class GenerateMap
         perlinNoise = perlinGen.GeneratePerlinNoise( 512, 512);
 
         
-        LinearGradientFilter filter = new LinearGradientFilter();    
+        LinearGradientFilter filter = new LinearGradientFilter();
         Texture2DTransformer transformer = new Texture2DTransformer(Globals.GraphicsDevice);
 
         noiseTexture = transformer.Transform(filter.Filter(perlinNoise));

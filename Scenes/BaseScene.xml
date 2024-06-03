@@ -49,9 +49,9 @@
         </component>
         <component>
           <type>MeshRenderer</type>
-          <active>False</active>
+          <active>True</active>
           <model>
-            <path>basicPlane</path>
+            <path>trawa</path>
             <technique>PBR</technique>
           </model>
         </component>
@@ -926,16 +926,124 @@
           </components>
           <childObjects>
             <object>
-              <name>Tartak</name>
+              <name>Sawmill_Place</name>
               <active>True</active>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>61,7</x>
+                    <x>57</x>
+                    <y>0,1</y>
+                    <z>23,3</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
                     <y>0</y>
-                    <z>16,8</z>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>2</x>
+                    <y>2</y>
+                    <z>2</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>sand</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+                <component>
+                  <type>Pickable</type>
+                  <active>True</active>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Sawmill</name>
+                  <active>False</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>1,7</x>
+                        <y>0</y>
+                        <z>-4</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,5</x>
+                        <y>0,5</y>
+                        <z>0,5</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>MeshRenderer</type>
+                      <active>True</active>
+                      <model>
+                        <path>tartak</path>
+                        <technique>PBR</technique>
+                      </model>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Puzzle</name>
+                  <active>True</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>400</x>
+                        <y>120</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>Puzzle</type>
+                      <active>False</active>
+                      <sprite>sprite</sprite>
+                      <gridSize>3</gridSize>
+                      <pieceSize>200</pieceSize>
+                      <rimSize>3</rimSize>
+                      <snappingDist>30</snappingDist>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
+            <object>
+              <name>Strucure_Place1</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -947,33 +1055,25 @@
                     <y>1</y>
                     <z>1</z>
                   </scale>
-                </component>
-                <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Tartak/TARTACZEK</path>
-                    <technique>PBR</technique>
-                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
             </object>
             <object>
-              <name>Tent</name>
+              <name>Structure_Place2</name>
               <active>True</active>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>26,7</x>
+                    <x>0</x>
                     <y>0</y>
-                    <z>53,6</z>
+                    <z>0</z>
                   </position>
                   <rotation>
                     <x>0</x>
-                    <y>-40</y>
+                    <y>0</y>
                     <z>0</z>
                   </rotation>
                   <scale>
@@ -981,14 +1081,6 @@
                     <y>1</y>
                     <z>1</z>
                   </scale>
-                </component>
-                <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Props/namiot</path>
-                    <technique>PBR</technique>
-                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -1028,9 +1120,9 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>55</x>
+                    <x>30,2</x>
                     <y>0,3</y>
-                    <z>55</z>
+                    <z>54,3</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -1047,7 +1139,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>Env/Props/ognisko</path>
+                    <path>ognisko</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -1066,9 +1158,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>71,30946</x>
+            <x>75,459175</x>
             <y>50</y>
-            <z>75,33721</z>
+            <z>71,520805</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -1084,12 +1176,15 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>67,062035</fovDegrees>
+          <fovDegrees>45</fovDegrees>
           <zoomMin>30</zoomMin>
           <zoomMax>70</zoomMax>
           <lerpSpeed>3,5</lerpSpeed>
           <zoomSpeed>8</zoomSpeed>
           <cameraSpeed>20,3</cameraSpeed>
+          <keyboardControl>False</keyboardControl>
+          <mouseControl>False</mouseControl>
+          <scrollControl>False</scrollControl>
         </component>
         <component>
           <type>MeshRenderer</type>
@@ -1103,16 +1198,16 @@
       <childObjects></childObjects>
     </object>
     <object>
-      <name>LODtest</name>
+      <name>UI</name>
       <active>True</active>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>45</x>
-            <y>2</y>
-            <z>45</z>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
           </position>
           <rotation>
             <x>0</x>
@@ -1125,50 +1220,484 @@
             <z>1</z>
           </scale>
         </component>
-        <component>
-          <type>MeshRenderer</type>
-          <active>True</active>
-          <model>
-            <path>defaultModel</path>
-            <technique>PBR</technique>
-          </model>
-        </component>
       </components>
-      <childObjects></childObjects>
-    </object>
-    <object>
-      <name>Ground2</name>
-      <active>True</active>
-      <components>
-        <component>
-          <type>Transform</type>
+      <childObjects>
+        <object>
+          <name>Meat_Counter</name>
           <active>True</active>
-          <position>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </position>
-          <rotation>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </rotation>
-          <scale>
-            <x>5</x>
-            <y>1,05</y>
-            <z>5</z>
-          </scale>
-        </component>
-        <component>
-          <type>MeshRenderer</type>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>10</x>
+                <y>10</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>False</useLocal>
+              <sprite>UI/meatCounter</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>73</x>
+                    <y>20</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>False</useLocal>
+                  <contents>0</contents>
+                  <font>defaultFont</font>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Puzzle_Counter</name>
           <active>True</active>
-          <model>
-            <path>basicPlane</path>
-            <technique>PBR</technique>
-          </model>
-        </component>
-      </components>
-      <childObjects></childObjects>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>210</x>
+                <y>10</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>False</useLocal>
+              <sprite>UI/puzzleCounter</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>75</x>
+                    <y>20</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>False</useLocal>
+                  <contents>0</contents>
+                  <font>defaultFont</font>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Exit_Button</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>1360</x>
+                <y>820</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>False</useLocal>
+              <sprite>UI/exitButton</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <action>TOGGLE_ACTIVE</action>
+              <linkedObject>Confirm_Window</linkedObject>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Confirm_Window</name>
+              <active>False</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>460</x>
+                    <y>300</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,75</x>
+                    <y>0,75</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/widthWindow</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Text</name>
+                  <active>False</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>488,7</x>
+                        <y>368,4</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>TextRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <contents>Are you sure you want to exit?</contents>
+                      <font>defaultFont</font>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1440</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Yes_Button</name>
+                  <active>False</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>500</x>
+                        <y>480</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/buttonNormal</sprite>
+                      <color>
+                        <r>185</r>
+                        <g>185</g>
+                        <b>185</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1440</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                    <component>
+                      <type>Button</type>
+                      <active>True</active>
+                      <action>SCENE0</action>
+                      <linkedObject>Root</linkedObject>
+                    </component>
+                    <component>
+                      <type>Button</type>
+                      <active>True</active>
+                      <action>TOGGLE_ACTIVE_PARENT</action>
+                      <linkedObject>Root</linkedObject>
+                    </component>
+                  </components>
+                  <childObjects>
+                    <object>
+                      <name>Text</name>
+                      <active>False</active>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>560</x>
+                            <y>485</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>1</x>
+                            <y>1</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>TextRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <contents>Yes</contents>
+                          <font>defaultFont</font>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1440</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                  </childObjects>
+                </object>
+                <object>
+                  <name>No_Button</name>
+                  <active>False</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>730</x>
+                        <y>480</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/buttonNormal</sprite>
+                      <color>
+                        <r>185</r>
+                        <g>185</g>
+                        <b>185</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1440</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                    <component>
+                      <type>Button</type>
+                      <active>True</active>
+                      <action>TOGGLE_ACTIVE_PARENT</action>
+                      <linkedObject>Root</linkedObject>
+                    </component>
+                  </components>
+                  <childObjects>
+                    <object>
+                      <name>Text</name>
+                      <active>False</active>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>800</x>
+                            <y>485</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>1</x>
+                            <y>1</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>TextRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <contents>No</contents>
+                          <font>defaultFont</font>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1440</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                  </childObjects>
+                </object>
+              </childObjects>
+            </object>
+          </childObjects>
+        </object>
+      </childObjects>
     </object>
   </childObjects>
 </rootObject>

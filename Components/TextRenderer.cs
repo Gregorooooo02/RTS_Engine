@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using ImGuiNET;
 using System.Text;
@@ -16,6 +19,13 @@ public class TextRenderer : Component
     public bool useLocalPosition = true;
 
     private Point currentSize;
+
+    private List<string> _selectedVariables = new List<string>();
+    private static Dictionary<string, Func<string>> _gameManagerVariables = new()
+    {
+        { "MeatNumber", () => GameManager.MeatNumber.ToString() },
+        { "PuzzleNumber", () => GameManager.PuzzleNumber.ToString() }
+    };
     
     public override void Update() 
     {
@@ -25,6 +35,11 @@ public class TextRenderer : Component
             NewContent = null;
         }
         if(currentSize.X != Globals.GraphicsDeviceManager.PreferredBackBufferWidth || currentSize.Y != Globals.GraphicsDeviceManager.PreferredBackBufferHeight) Resize();
+        
+        if (_selectedVariables.Count > 0)
+        {
+            UpdateContentFromVariable();
+        }
     }
 
     private void Resize()
@@ -144,6 +159,19 @@ public class TextRenderer : Component
         _name = name;
     }
 
+    public void UpdateContentFromVariable()
+    {
+        StringBuilder contentBuilder = new StringBuilder();
+        foreach (var variable in _selectedVariables)
+        {
+            if (_gameManagerVariables.ContainsKey(variable))
+            {
+                contentBuilder.Append(_gameManagerVariables[variable]());
+            }
+        }
+        Content = contentBuilder.ToString();
+    }
+
 #if DEBUG
     private bool _switchingFont = false;
     public override void Inspect()
@@ -158,9 +186,26 @@ public class TextRenderer : Component
                 Color = new Color(temp);
             }
             ImGui.InputText("Contents", ref Content, 200);
+            ImGui.Text("Font: " + _name);
             if (ImGui.Button("Switch font"))
             {
                 _switchingFont = true;
+            }
+            ImGui.Text("Select variables to display:");
+            foreach (var variable in _gameManagerVariables.Keys)
+            {
+                var isSelected = _selectedVariables.Contains(variable);
+                if (ImGui.Checkbox(variable, ref isSelected))
+                {
+                    if (isSelected)
+                    {
+                        _selectedVariables.Add(variable);
+                    }
+                    else
+                    {
+                        _selectedVariables.Remove(variable);
+                    }
+                }
             }
             if (ImGui.Button("Remove component"))
             {
@@ -176,6 +221,7 @@ public class TextRenderer : Component
                     {
                         AssetManager.FreeFont(Font);
                         Font = AssetManager.GetFont(n);
+                        _name = n;
                         _switchingFont = false;
                     }
                 }

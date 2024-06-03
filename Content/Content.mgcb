@@ -206,6 +206,18 @@
 /processorParam:TextureFormat=Color
 /build:blank.png
 
+#begin BloomCombine.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:BloomCombine.fx
+
+#begin BloomExtract.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:BloomExtract.fx
+
 #begin carrot_texture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -402,6 +414,205 @@
 /processorParam:TextureFormat=Compressed
 /build:domall/domall.fbx
 
+#begin domludzi/1/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/1/albedo.png
+
+#begin domludzi/1/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/1/ao.png
+
+#begin domludzi/1/metalness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/1/metalness.png
+
+#begin domludzi/1/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/1/normal.png
+
+#begin domludzi/1/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/1/roughness.png
+
+#begin domludzi/2/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/2/albedo.png
+
+#begin domludzi/2/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/2/ao.png
+
+#begin domludzi/2/metalness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/2/metalness.png
+
+#begin domludzi/2/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/2/normal.png
+
+#begin domludzi/2/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/2/roughness.png
+
+#begin domludzi/3/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/3/albedo.png
+
+#begin domludzi/3/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/3/ao.png
+
+#begin domludzi/3/metalness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/3/metalness.png
+
+#begin domludzi/3/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/3/normal.png
+
+#begin domludzi/3/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:domludzi/3/roughness.png
+
+#begin domludzi/domludzi.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=-90
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:domludzi/domludzi.fbx
+
 #begin Dude/dude_GPU.fbx
 /importer:FbxImporter
 /processor:GpuAnimatedModelProcessor
@@ -592,7 +803,7 @@
 /processorParam:TextureFormat=Color
 /build:Dude/upBodyS.tga
 
-#begin Env/Props/namiot/1/albedo.png
+#begin Env/props/namiot/1/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -604,7 +815,7 @@
 /processorParam:TextureFormat=Color
 /build:Env/Props/namiot/1/albedo.png
 
-#begin Env/Props/namiot/1/ao.png
+#begin Env/props/namiot/1/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -614,9 +825,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/1/ao.png
+/build:Env/props/namiot/1/ao.png
 
-#begin Env/Props/namiot/1/metalness.png
+#begin Env/props/namiot/1/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -626,9 +837,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/1/metalness.png
+/build:Env/props/namiot/1/metalness.png
 
-#begin Env/Props/namiot/1/normal.png
+#begin Env/props/namiot/1/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -638,9 +849,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/1/normal.png
+/build:Env/props/namiot/1/normal.png
 
-#begin Env/Props/namiot/1/roughness.png
+#begin Env/props/namiot/1/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -650,9 +861,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/1/roughness.png
+/build:Env/props/namiot/1/roughness.png
 
-#begin Env/Props/namiot/2/albedo.png
+#begin Env/props/namiot/2/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -662,9 +873,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/2/albedo.png
+/build:Env/props/namiot/2/albedo.png
 
-#begin Env/Props/namiot/2/ao.png
+#begin Env/props/namiot/2/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -674,9 +885,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/2/ao.png
+/build:Env/props/namiot/2/ao.png
 
-#begin Env/Props/namiot/2/metalness.png
+#begin Env/props/namiot/2/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -686,9 +897,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/2/metalness.png
+/build:Env/props/namiot/2/metalness.png
 
-#begin Env/Props/namiot/2/normal.png
+#begin Env/props/namiot/2/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -698,9 +909,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/2/normal.png
+/build:Env/props/namiot/2/normal.png
 
-#begin Env/Props/namiot/2/roughness.png
+#begin Env/props/namiot/2/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -710,9 +921,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/2/roughness.png
+/build:Env/props/namiot/2/roughness.png
 
-#begin Env/Props/namiot/3/albedo.png
+#begin Env/props/namiot/3/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -722,9 +933,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/3/albedo.png
+/build:Env/props/namiot/3/albedo.png
 
-#begin Env/Props/namiot/3/ao.png
+#begin Env/props/namiot/3/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -734,9 +945,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/3/ao.png
+/build:Env/props/namiot/3/ao.png
 
-#begin Env/Props/namiot/3/metalness.png
+#begin Env/props/namiot/3/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -746,9 +957,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/3/metalness.png
+/build:Env/props/namiot/3/metalness.png
 
-#begin Env/Props/namiot/3/normal.png
+#begin Env/props/namiot/3/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -758,9 +969,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/3/normal.png
+/build:Env/props/namiot/3/normal.png
 
-#begin Env/Props/namiot/3/roughness.png
+#begin Env/props/namiot/3/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -770,9 +981,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/3/roughness.png
+/build:Env/props/namiot/3/roughness.png
 
-#begin Env/Props/namiot/4/albedo.png
+#begin Env/props/namiot/4/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -782,9 +993,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/4/albedo.png
+/build:Env/props/namiot/4/albedo.png
 
-#begin Env/Props/namiot/4/ao.png
+#begin Env/props/namiot/4/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -794,9 +1005,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/4/ao.png
+/build:Env/props/namiot/4/ao.png
 
-#begin Env/Props/namiot/4/metalness.png
+#begin Env/props/namiot/4/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -806,9 +1017,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/4/metalness.png
+/build:Env/props/namiot/4/metalness.png
 
-#begin Env/Props/namiot/4/normal.png
+#begin Env/props/namiot/4/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -818,9 +1029,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/4/normal.png
+/build:Env/props/namiot/4/normal.png
 
-#begin Env/Props/namiot/4/roughness.png
+#begin Env/props/namiot/4/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -830,9 +1041,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/4/roughness.png
+/build:Env/props/namiot/4/roughness.png
 
-#begin Env/Props/namiot/5/albedo.png
+#begin Env/props/namiot/5/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -842,9 +1053,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/5/albedo.png
+/build:Env/props/namiot/5/albedo.png
 
-#begin Env/Props/namiot/5/ao.png
+#begin Env/props/namiot/5/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -854,9 +1065,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/5/ao.png
+/build:Env/props/namiot/5/ao.png
 
-#begin Env/Props/namiot/5/metalness.png
+#begin Env/props/namiot/5/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -866,9 +1077,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/5/metalness.png
+/build:Env/props/namiot/5/metalness.png
 
-#begin Env/Props/namiot/5/normal.png
+#begin Env/props/namiot/5/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -878,9 +1089,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/5/normal.png
+/build:Env/props/namiot/5/normal.png
 
-#begin Env/Props/namiot/5/roughness.png
+#begin Env/props/namiot/5/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -890,9 +1101,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Env/Props/namiot/5/roughness.png
+/build:Env/props/namiot/5/roughness.png
 
-#begin Env/Props/namiot/namiot.fbx
+#begin Env/props/namiot/namiot.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -909,122 +1120,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Env/Props/namiot/namiot.fbx
-
-#begin Env/Props/ognisko/1/albedo.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/1/albedo.png
-
-#begin Env/Props/ognisko/1/ao.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/1/ao.png
-
-#begin Env/Props/ognisko/1/normal.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/1/normal.png
-
-#begin Env/Props/ognisko/2/albedo.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/2/albedo.png
-
-#begin Env/Props/ognisko/2/height.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/2/height.png
-
-#begin Env/Props/ognisko/2/metalness.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/2/metalness.png
-
-#begin Env/Props/ognisko/2/normal.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/2/normal.png
-
-#begin Env/Props/ognisko/2/roughness.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Env/Props/ognisko/2/roughness.png
-
-#begin Env/Props/ognisko/ognisko.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=-90
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Env/Props/ognisko/ognisko.fbx
+/build:Env/props/namiot/namiot.fbx
 
 #begin Env/Tex/kamien_DefaultMaterial_BaseColor.png
 /importer:TextureImporter
@@ -1191,6 +1287,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Env/Trees/drzewolisciastejesienne/drzewolisciastejesienne.fbx
 
+#begin Fonts/lightFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/lightFont.spritefont
+
+#begin Fonts/mediumFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/mediumFont.spritefont
+
+#begin Fonts/titleFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/titleFont.spritefont
+
+#begin GaussianBlur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:GaussianBlur.fx
+
 #begin heightmap.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1349,6 +1472,54 @@
 /processorParam:TextureFormat=Color
 /build:krzeslo/roughness.png
 
+#begin minion/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:minion/albedo.png
+
+#begin minion/minion.fbx
+/importer:FbxImporter
+/processor:CpuAnimatedModelProcessor
+/processorParam:VertexBufferType=DynamicWriteOnly
+/processorParam:IndexBufferType=Default
+/processorParam:MaxBones=72
+/processorParam:GenerateKeyframesFrequency=0
+/processorParam:FixRealBoneRoot=False
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:minion/minion.fbx
+
+#begin minion/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:minion/normal.png
+
 #begin monsterMid/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1415,6 +1586,121 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:monsterMid/roughness.png
+
+#begin ognisko/1/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/1/albedo.png
+
+#begin ognisko/1/height.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/1/height.png
+
+#begin ognisko/1/metalness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/1/metalness.png
+
+#begin ognisko/1/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/1/normal.png
+
+#begin ognisko/1/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/1/roughness.png
+
+#begin ognisko/2/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/2/albedo.png
+
+#begin ognisko/2/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/2/ao.png
+
+#begin ognisko/2/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ognisko/2/normal.png
+
+#begin ognisko/ognisko.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=-90
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:ognisko/ognisko.fbx
 
 #begin PBR_Shader.fx
 /importer:EffectImporter
@@ -1488,6 +1774,37 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:peasant/roughness.png
+
+#begin sand/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sand/albedo.png
+
+#begin sand/sand.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:sand/sand.fbx
 
 #begin ShadowMaps.fx
 /importer:EffectImporter
@@ -1622,7 +1939,7 @@
 /processorParam:TextureFormat=Compressed
 /build:szafa/szafa.fbx
 
-#begin TARTACZEK/albedo.png
+#begin tartak/1/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1632,9 +1949,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:TARTACZEK/albedo.png
+/build:tartak/1/albedo.png
 
-#begin TARTACZEK/metalness.png
+#begin tartak/1/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1644,9 +1961,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:TARTACZEK/metalness.png
+/build:tartak/1/ao.png
 
-#begin TARTACZEK/normal.png
+#begin tartak/1/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1656,9 +1973,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:TARTACZEK/normal.png
+/build:tartak/1/metalness.png
 
-#begin TARTACZEK/roughness.png
+#begin tartak/1/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1668,28 +1985,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:TARTACZEK/roughness.png
+/build:tartak/1/normal.png
 
-#begin TARTACZEK/TARTACZEK.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TARTACZEK/TARTACZEK.fbx
-
-#begin Tartak/TARTACZEK/1/albedo.png
+#begin tartak/1/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1699,9 +1997,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/1/albedo.png
+/build:tartak/1/roughness.png
 
-#begin Tartak/TARTACZEK/1/ao.png
+#begin tartak/2/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1711,9 +2009,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/1/ao.png
+/build:tartak/2/albedo.png
 
-#begin Tartak/TARTACZEK/1/metalness.png
+#begin tartak/2/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1723,9 +2021,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/1/metalness.png
+/build:tartak/2/ao.png
 
-#begin Tartak/TARTACZEK/1/normal.png
+#begin tartak/2/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1735,9 +2033,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/1/normal.png
+/build:tartak/2/metalness.png
 
-#begin Tartak/TARTACZEK/1/roughness.png
+#begin tartak/2/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1747,9 +2045,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/1/roughness.png
+/build:tartak/2/normal.png
 
-#begin Tartak/TARTACZEK/2/albedo.jpg
+#begin tartak/2/roughness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1759,9 +2057,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/2/albedo.jpg
+/build:tartak/2/roughness.png
 
-#begin Tartak/TARTACZEK/3/albedo.png
+#begin tartak/3/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1771,9 +2069,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/3/albedo.png
+/build:tartak/3/albedo.png
 
-#begin Tartak/TARTACZEK/3/ao.png
+#begin tartak/3/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1783,9 +2081,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/3/ao.png
+/build:tartak/3/ao.png
 
-#begin Tartak/TARTACZEK/3/normal.png
+#begin tartak/3/metalness.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1795,9 +2093,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/3/normal.png
+/build:tartak/3/metalness.png
 
-#begin Tartak/TARTACZEK/3/roughness.png
+#begin tartak/3/normal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1807,9 +2105,21 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tartak/TARTACZEK/3/roughness.png
+/build:tartak/3/normal.png
 
-#begin Tartak/TARTACZEK/TARTACZEK.fbx
+#begin tartak/3/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tartak/3/roughness.png
+
+#begin tartak/tartak.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -1826,67 +2136,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Tartak/TARTACZEK/TARTACZEK.fbx
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_BaseColor.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Height.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Height.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Metallic.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Metallic.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Normal.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Normal.png
-
-#begin Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tartak/tekstury/kamien_DefaultMaterial_Roughness.png
+/build:tartak/tartak.fbx
 
 #begin teapot/1/teapot.fbx
 /importer:FbxImporter
@@ -2193,7 +2443,7 @@
 /processorParam:TextureFormat=Compressed
 /build:TestWall/TestWall.fbx
 
-#begin Wall2/albedo.jpg
+#begin trawa/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -2203,45 +2453,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Wall2/albedo.jpg
+/build:trawa/albedo.png
 
-#begin Wall2/ao.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Wall2/ao.jpg
-
-#begin Wall2/normal.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Wall2/normal.jpg
-
-#begin Wall2/roughness.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Wall2/roughness.jpg
-
-#begin Wall2/Wall2.fbx
+#begin trawa/trawa.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -2258,9 +2472,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Wall2/Wall2.fbx
+/build:trawa/trawa.fbx
 
-#begin Wall2Flat/albedo.jpg
+#begin UI/buttonHovered.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -2270,9 +2484,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Wall2Flat/albedo.jpg
+/build:UI/buttonHovered.png
 
-#begin Wall2Flat/ao.jpg
+#begin UI/buttonNormal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -2282,9 +2496,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Wall2Flat/ao.jpg
+/build:UI/buttonNormal.png
 
-#begin Wall2Flat/roughness.jpg
+#begin UI/exitButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -2294,24 +2508,53 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Wall2Flat/roughness.jpg
+/build:UI/exitButton.png
 
-#begin Wall2Flat/Wall2Flat.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
+#begin UI/meatCounter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
 /processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Wall2Flat/Wall2Flat.fbx
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/meatCounter.png
+
+#begin UI/pauseButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/pauseButton.png
+
+#begin UI/puzzleCounter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/puzzleCounter.png
+
+#begin UI/widthWindow.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/widthWindow.png
 

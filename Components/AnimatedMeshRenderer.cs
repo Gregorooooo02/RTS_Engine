@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Xml.Linq;
@@ -15,6 +16,15 @@ public class AnimatedMeshRenderer : Component
     public Animations _animations { get; private set; }
     public bool IsVisible { get; private set; } = false;
     
+    
+    private string _currentAnimation = "attack";
+
+    private enum ProcessType
+    {
+        CPU,
+        GPU
+    };
+    
     public AnimatedMeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
@@ -29,19 +39,20 @@ public class AnimatedMeshRenderer : Component
         {
             IsVisible = true;
             Globals.Renderer.AnimatedMeshes.Add(this);
+            
+            _animations.Update(Globals.ElapsedGameTime, true, ParentObject.Transform.ModelMatrix);
         }
         else
         {
             IsVisible = false;
         }
-        _animations.Update(Globals.ElapsedGameTime, true, ParentObject.Transform.ModelMatrix);
     }
 
     public override void Initialize()
     {
         _model = AssetManager.DefaultAnimatedModel;
-        _animations = _model.GetAnimations();
-        var clip = _animations.Clips["Take 001"];
+        _animations = CloneAnimations(_model.GetAnimations());
+        var clip = _animations.Clips[_currentAnimation];
         _animations.SetClip(clip);
     }
     
@@ -89,8 +100,6 @@ public class AnimatedMeshRenderer : Component
         builder.Append("<type>AnimatedMeshRenderer</type>");
         
         builder.Append("<active>" + Active + "</active>");
-
-        builder.Append("<model>" + _model.ToString() + "</model>");
         
         builder.Append("</component>");
         
@@ -110,6 +119,12 @@ public class AnimatedMeshRenderer : Component
         {
             LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
         }
+        
+        XElement animations = element.Element("animations");
+        if (animations?.Element("clip") != null)
+        {
+            _animations.SetClip(animations?.Element("clip")?.Value);
+        }
     }
 
     public override void RemoveComponent()
@@ -128,6 +143,19 @@ public class AnimatedMeshRenderer : Component
         // return _model.Model;
         return _model;
     }
+
+    private Animations CloneAnimations(Animations original)
+    {
+        Animations clone = new Animations(original._bindPose, original._invBindPose, original._skeletonHierarchy, original._boneMap, original.Clips);
+        clone.Clips = original.Clips;
+        clone.CurrentClip = original.CurrentClip;
+        clone.CurrentTime = original.CurrentTime;
+        clone._boneTransforms = original._boneTransforms;
+        clone._worldTransforms = original._worldTransforms;
+        clone._animationTransforms = original._animationTransforms;
+        
+        return clone;
+    }
     
 #if DEBUG
     private bool _switchingModel = false;
@@ -136,17 +164,18 @@ public class AnimatedMeshRenderer : Component
         if (ImGui.CollapsingHeader("Animated Mesh Renderer"))
         {
             ImGui.Checkbox("Animated Mesh Active", ref Active);
-            // ImGui.Text("Current anim. mesh: " + _model.ModelPath);
-            // ImGui.Text("Current technique: " + _model.ShaderTechniqueName);
             if (ImGui.Button("Switch anim. mesh"))
             {
                 _switchingModel = true;
             }
+            ImGui.InputText("Current animation", ref _currentAnimation, 100);
 
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
             }
+            ImGui.Separator();
+            
 
             if (_switchingModel)
             {

@@ -376,7 +376,7 @@ public class WorldRenderer : Component
     // Voronoi methods
     private void GenerateVoronoiFeatures()
     {
-        var points = GenerateRandomPoints(200, _terrainWidth, _terrainHeight);
+        var points = GenerateRandomPoints(10, _terrainWidth, _terrainHeight);
         _voronoiRegions = ComputeVoronoiDiagram(points, _terrainWidth, _terrainHeight);
         ClipVoronoiCells(_voronoiRegions, _terrainWidth, _terrainHeight);
         PlaceFeatures(_voronoiRegions);

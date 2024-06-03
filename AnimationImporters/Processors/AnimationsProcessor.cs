@@ -16,9 +16,7 @@ namespace AnimationImporters.Processors
         private int _generateKeyframesFrequency = 0;
         private bool _fixRealBoneRoot = false;
 
-#if !PORTABLE
         [DisplayName("MaxBones")]
-#endif
         [DefaultValue(SkinnedEffect.MaxBones)]
         public virtual int MaxBones
         {
@@ -26,9 +24,7 @@ namespace AnimationImporters.Processors
             set { _maxBones = value; }
         }
 
-#if !PORTABLE
         [DisplayName("Generate Keyframes Frequency")]
-#endif
         [DefaultValue(0)] // (0=no, 30=30fps, 60=60fps)
         public virtual int GenerateKeyframesFrequency
         {
@@ -36,9 +32,7 @@ namespace AnimationImporters.Processors
             set { _generateKeyframesFrequency = value; }
         }
 
-#if !PORTABLE
         [DisplayName("Fix BoneRoot from MG importer")]
-#endif
         [DefaultValue(false)]
         public virtual bool FixRealBoneRoot
         {
@@ -76,7 +70,7 @@ namespace AnimationImporters.Processors
             List<int> skeletonHierarchy = new List<int>();
             List<string> boneNames = new List<string>();
 
-            foreach(var bone in bones)
+            foreach(BoneContent bone in bones)
             {
                 bindPose.Add(bone.Transform);
                 invBindPose.Add(Matrix.Invert(bone.AbsoluteTransform));
@@ -94,37 +88,41 @@ namespace AnimationImporters.Processors
         /// <summary>
         /// MonoGame converts some NodeContent into BoneContent.
         /// Here we revert that to get the original Skeleton and  
-        /// add the real boneroot to the root node.
+        /// add the real boneRoot to the root node.
         /// </summary>
         private void MGFixRealBoneRoot(NodeContent input, ContentProcessorContext context)
         {
             for (int i = input.Children.Count - 1; i >= 0; i--)
             {
-                var node = input.Children[i];
-                if (node is BoneContent &&
-                    node.AbsoluteTransform == Matrix.Identity &&
-                    node.Children.Count ==1 &&
-                    node.Children[0] is BoneContent &&
-                    node.Children[0].AbsoluteTransform == Matrix.Identity
+                NodeContent node = input.Children[i];
+
+                if (node is BoneContent 
+                &&  node.AbsoluteTransform == Matrix.Identity
+                &&  node.Children.Count == 1
+                &&  node.Children[0] is BoneContent
+                &&  node.Children[0].AbsoluteTransform == Matrix.Identity
                     )
                 {
                     //dettach real boneRoot
-                    var realBoneRoot = node.Children[0];
+                    NodeContent realBoneRoot = node.Children[0];
                     node.Children.RemoveAt(0);
+
                     //copy animation from node to boneRoot
                     foreach (var animation in node.Animations)
                         realBoneRoot.Animations.Add(animation.Key, animation.Value);
+
                     // convert fake BoneContent back to NodeContent
-                    input.Children[i] = new NodeContent()
-                    {
-                        Name = node.Name,
-                        Identity = node.Identity,
-                        Transform = node.Transform,                        
-                    };
+                    NodeContent realNode = new NodeContent();
+                    realNode.Name = node.Name;
+                    realNode.Identity = node.Identity;
+                    realNode.Transform = node.Transform;
+
+                    input.Children[i] = realNode;
                     foreach (var animation in node.Animations)
                         input.Children[i].Animations.Add(animation.Key, animation.Value);
                     foreach (var opaqueData in node.OpaqueData)
                         input.Children[i].OpaqueData.Add(opaqueData.Key, opaqueData.Value);
+
                     //attach real boneRoot to the root node
                     input.Children.Add(realBoneRoot);
 
@@ -401,7 +399,7 @@ namespace AnimationImporters.Processors
                                 
                 if (boneFrames[b][0].Time != TimeSpan.Zero)
                 {
-                    var keyframe0 = new KeyframeContent(boneFrames[b][0].Bone, TimeSpan.Zero, boneFrames[b][0].Transform);
+                    KeyframeContent keyframe0 = new KeyframeContent(boneFrames[b][0].Bone, TimeSpan.Zero, boneFrames[b][0].Transform);
                     boneFrames[b].Insert(0, keyframe0);
                 }
             }
@@ -516,7 +514,7 @@ namespace AnimationImporters.Processors
         {
             int a = i;
             int b = i + 1;
-            var diff = frames[b].Time - frames[a].Time;
+            TimeSpan diff = frames[b].Time - frames[a].Time;
             Matrix mBlend = Matrix.Identity;
             if (diff > keySpan)
             {

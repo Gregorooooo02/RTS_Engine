@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
-  <name>BackGround</name>
+  <name>Root</name>
   <active>True</active>
   <components>
     <component>
@@ -17,35 +17,23 @@
         <z>0</z>
       </rotation>
       <scale>
-        <x>7,25</x>
-        <y>4,05</y>
+        <x>1</x>
+        <y>1</y>
         <z>1</z>
       </scale>
-    </component>
-    <component>
-      <type>SpiteRenderer</type>
-      <active>True</active>
-      <useLocal>False</useLocal>
-      <sprite>blank</sprite>
-      <color>
-        <r>25</r>
-        <g>62</g>
-        <b>119</b>
-        <a>255</a>
-      </color>
     </component>
   </components>
   <childObjects>
     <object>
-      <name>Exit Button</name>
+      <name>Title</name>
       <active>True</active>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>510</x>
-            <y>551,2</y>
+            <x>30</x>
+            <y>60</y>
             <z>0</z>
           </position>
           <rotation>
@@ -55,39 +43,63 @@
           </rotation>
           <scale>
             <x>1</x>
-            <y>0,5</y>
+            <y>1</y>
             <z>1</z>
           </scale>
         </component>
         <component>
-          <type>SpiteRenderer</type>
+          <type>TextRenderer</type>
           <active>True</active>
           <useLocal>True</useLocal>
-          <sprite>blank</sprite>
+          <contents>Furninotura</contents>
+          <font>Fonts/titleFont</font>
           <color>
-            <r>73</r>
-            <g>110</g>
-            <b>133</b>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
             <a>255</a>
           </color>
+          <screenSizeX>1440</screenSizeX>
+          <screenSizeY>900</screenSizeY>
         </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Buttons</name>
+      <active>True</active>
+      <components>
         <component>
-          <type>Button</type>
+          <type>Transform</type>
           <active>True</active>
-          <action>EXIT</action>
+          <position>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
         </component>
       </components>
       <childObjects>
         <object>
-          <name>NewObject</name>
+          <name>Play_Button</name>
           <active>True</active>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>602,7</x>
-                <y>587,3</y>
+                <x>0</x>
+                <y>400</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -96,39 +108,297 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
+                <x>1,2</x>
+                <y>0,3</y>
                 <z>1</z>
               </scale>
             </component>
             <component>
-              <type>TextRenderer</type>
+              <type>SpiteRenderer</type>
               <active>True</active>
               <useLocal>True</useLocal>
-              <contents>Exit</contents>
-              <font>defaultFont</font>
+              <sprite>blank</sprite>
               <color>
                 <r>0</r>
                 <g>0</g>
                 <b>0</b>
-                <a>255</a>
+                <a>0</a>
               </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <action>SCENE1</action>
+              <linkedObject>Root</linkedObject>
             </component>
           </components>
-          <childObjects></childObjects>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>30</x>
+                    <y>412</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <contents>Play</contents>
+                  <font>Fonts/lightFont</font>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Settings_Button</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>0</x>
+                <y>500</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1,2</x>
+                <y>0,3</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>blank</sprite>
+              <color>
+                <r>0</r>
+                <g>0</g>
+                <b>0</b>
+                <a>0</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>30</x>
+                    <y>512</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <contents>Settings</contents>
+                  <font>Fonts/lightFont</font>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Exit_Button</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>0</x>
+                <y>600</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1,2</x>
+                <y>0,3</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>blank</sprite>
+              <color>
+                <r>0</r>
+                <g>0</g>
+                <b>0</b>
+                <a>0</a>
+              </color>
+              <screenSizeX>1440</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <action>EXIT</action>
+              <linkedObject>Root</linkedObject>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Text</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>30</x>
+                    <y>612</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>TextRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <contents>Exit</contents>
+                  <font>Fonts/lightFont</font>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
         </object>
       </childObjects>
     </object>
     <object>
-      <name>Play button</name>
+      <name>Camera</name>
       <active>True</active>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>510</x>
-            <y>300</y>
+            <x>71,389015</x>
+            <y>50</y>
+            <z>69,84142</z>
+          </position>
+          <rotation>
+            <x>-60</x>
+            <y>30</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>Camera</type>
+          <active>True</active>
+          <fovDegrees>45</fovDegrees>
+          <zoomMin>25</zoomMin>
+          <zoomMax>75</zoomMax>
+          <lerpSpeed>3,5</lerpSpeed>
+          <zoomSpeed>8</zoomSpeed>
+          <cameraSpeed>20</cameraSpeed>
+          <keyboardControl>False</keyboardControl>
+          <mouseControl>False</mouseControl>
+          <scrollControl>False</scrollControl>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Ground</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>0</x>
+            <y>0</y>
             <z>0</z>
           </position>
           <rotation>
@@ -138,39 +408,30 @@
           </rotation>
           <scale>
             <x>1</x>
-            <y>0,5</y>
+            <y>1</y>
             <z>1</z>
           </scale>
         </component>
         <component>
-          <type>SpiteRenderer</type>
+          <type>MeshRenderer</type>
           <active>True</active>
-          <useLocal>True</useLocal>
-          <sprite>blank</sprite>
-          <color>
-            <r>73</r>
-            <g>110</g>
-            <b>133</b>
-            <a>255</a>
-          </color>
-        </component>
-        <component>
-          <type>Button</type>
-          <active>True</active>
-          <action>SCENE1</action>
+          <model>
+            <path>trawa</path>
+            <technique>PBR</technique>
+          </model>
         </component>
       </components>
       <childObjects>
         <object>
-          <name>NewObject</name>
+          <name>Trees</name>
           <active>True</active>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>606,9</x>
-                <y>336,9</y>
+                <x>0</x>
+                <y>0</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -184,18 +445,516 @@
                 <z>1</z>
               </scale>
             </component>
-            <component>
-              <type>TextRenderer</type>
+          </components>
+          <childObjects>
+            <object>
+              <name>Tree1</name>
               <active>True</active>
-              <useLocal>True</useLocal>
-              <contents>Play</contents>
-              <font>defaultFont</font>
-              <color>
-                <r>0</r>
-                <g>0</g>
-                <b>0</b>
-                <a>255</a>
-              </color>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>23,2</x>
+                    <y>9</y>
+                    <z>16,8</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-69</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree2</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>26,1</x>
+                    <y>7</y>
+                    <z>0,4</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree3</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>38,2</x>
+                    <y>9</y>
+                    <z>-4,4</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-144</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree4</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>51,3</x>
+                    <y>9</y>
+                    <z>-2,5</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>46</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree5</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>62,4</x>
+                    <y>7</y>
+                    <z>11</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-143</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree6</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>74,3</x>
+                    <y>9</y>
+                    <z>38,4</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-46</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree7</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>61,2</x>
+                    <y>6</y>
+                    <z>63,1</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-164</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree8</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>66,3</x>
+                    <y>3,3</y>
+                    <z>51,8</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-137</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>0,5</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree9</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>16,4</x>
+                    <y>7</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree10</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>40,7</x>
+                    <y>9</y>
+                    <z>-18,7</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree11</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>55,7</x>
+                    <y>9</y>
+                    <z>-17,1</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree12</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>9,3</x>
+                    <y>8,2</y>
+                    <z>16,3</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+            <object>
+              <name>Tree13</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0,4</x>
+                    <y>6</y>
+                    <z>23,1</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>-55</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>Env/Trees/drzewoiglaste</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>House</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>-17,6</x>
+                <y>0</y>
+                <z>-61,8</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>-40</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>domludzi</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Campfire</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>28,8</x>
+                <y>0,5</y>
+                <z>39,8</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>ognisko</path>
+                <technique>PBR</technique>
+              </model>
             </component>
           </components>
           <childObjects></childObjects>
