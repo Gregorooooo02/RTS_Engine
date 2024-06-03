@@ -204,10 +204,11 @@ public class PickingManager
 
     public Pickable PickEnemy()
     {
-        PickedUnits = false;
+        PickedEnemy = false;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.RMB);
         if (action is {state: ActionState.RELEASED})
         {
+            PickedEnemy = true;
             Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
             if (ray.HasValue)
             {
@@ -231,7 +232,6 @@ public class PickingManager
                 }
                 return candidate;
             }
-            PickedUnits = true;
         }
         return null;
     }

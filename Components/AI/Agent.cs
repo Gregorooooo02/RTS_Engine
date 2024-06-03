@@ -24,7 +24,8 @@ public class Agent : Component
         Patrol,
         Attack,
         RunAway,
-        Wander
+        Wander,
+        Move
     }
     
     public float TurnSpeed = 2.0f;
@@ -68,7 +69,7 @@ public class Agent : Component
         
         try
         {
-            if(AgentLayer == LayerType.ENEMY)UpdateState();
+            UpdateState();
         }
         catch (NoTerrainException e)
         {

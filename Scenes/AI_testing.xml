@@ -1084,7 +1084,7 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>70</fovDegrees>
+          <fovDegrees>69,672966</fovDegrees>
           <zoomMin>30</zoomMin>
           <zoomMax>70</zoomMax>
           <lerpSpeed>3,5</lerpSpeed>
@@ -1178,9 +1178,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
+            <x>49,5</x>
+            <y>4</y>
+            <z>54,2</z>
           </position>
           <rotation>
             <x>0</x>

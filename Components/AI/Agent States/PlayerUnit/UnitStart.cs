@@ -11,6 +11,10 @@ public class UnitStart : AgentState
             wander.Initialize(agent);
         }
         */
+        if (agent.AgentStates.TryAdd(Agent.State.Idle, new UnitIdle()) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
+        {
+            idle.Initialize(agent);
+        }
         
     }
 
@@ -23,6 +27,10 @@ public class UnitStart : AgentState
             return value;
         }
         */
+        if (agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
+        {
+            return idle;
+        }
         
         return this;
     }

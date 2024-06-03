@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.Agent_States;
 
 namespace RTS_Engine.Components.AI.AgentData;
@@ -11,7 +12,23 @@ public class PlayerUnitData : AgentData
     
     public float Damage = 10.0f;
     public float AttackDelay = 0.8f;
-    
+
+    public float MinPointDistance = 0.5f;
+
+    public Agent Target;
+
+
+    private Vector2 _destination;
+    public Vector2 Destination
+    {
+        get => _destination;
+        set
+        {
+            _destination = value;
+            MovementScheduled = true;
+        }
+    }
+    public bool MovementScheduled = false;
     
     public PlayerUnitData() : base(100){}
     

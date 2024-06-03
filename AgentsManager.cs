@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI;
+using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine;
 
@@ -36,7 +38,14 @@ public class AgentsManager
             Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
             if (point.HasValue)
             {
+                Console.WriteLine(point.Value);
+                Vector2 dest = new Vector2(point.Value.X,point.Value.Z);
                 //TODO: Pass order 'move to point' to all selected units
+                foreach (Agent selectedUnit in SelectedUnits)
+                {
+                    PlayerUnitData data = (PlayerUnitData)selectedUnit.AgentData;
+                    data.Destination = dest;
+                }
             }
         }
         else if(selectedEnemy != null)
