@@ -213,6 +213,7 @@ namespace RTS_Engine
         public static bool InspectorVisible = true;
         public static bool HierarchyVisible = true;
         public static bool SceneSelectionVisible = true;
+        public static bool CheatMenuVisible = true;
         public static bool ShowShadowMap = false;
         public static bool DrawShadows = true;
         public static bool DrawMeshes = true;

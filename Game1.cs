@@ -104,9 +104,9 @@ public class Game1 : Game
         Globals.TerrainEffect = new Effect(_graphics.GraphicsDevice, bytecode);
 #endif
 #if DEBUG
-        //_sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
+        // _sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
@@ -215,6 +215,10 @@ public class Game1 : Game
         }
         if (Globals.SceneSelectionVisible) {
             _sceneManager.DrawSelection();
+        }
+        if (Globals.CheatMenuVisible)
+        {
+            GameManager.CheatMenu();
         }
     }
 #endif

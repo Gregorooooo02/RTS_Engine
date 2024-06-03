@@ -358,9 +358,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>75</x>
+            <x>71,389015</x>
             <y>50</y>
-            <z>71</z>
+            <z>69,84142</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -382,6 +382,9 @@
           <lerpSpeed>3,5</lerpSpeed>
           <zoomSpeed>8</zoomSpeed>
           <cameraSpeed>20</cameraSpeed>
+          <keyboardControl>False</keyboardControl>
+          <mouseControl>False</mouseControl>
+          <scrollControl>False</scrollControl>
         </component>
       </components>
       <childObjects></childObjects>

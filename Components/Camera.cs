@@ -53,6 +53,12 @@ public class Camera : Component
         
         builder.Append("<cameraSpeed>" + _cameraSpeed + "</cameraSpeed>");
         
+        builder.Append("<keyboardControl>" + _keyboardControl + "</keyboardControl>");
+        
+        builder.Append("<mouseControl>" + _mouseControl + "</mouseControl>");
+        
+        builder.Append("<scrollControl>" + _scrollControl + "</scrollControl>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -66,6 +72,9 @@ public class Camera : Component
         _lerpSpeed = float.TryParse(element.Element("lerpSpeed")?.Value, out float lerpSpeed) ? lerpSpeed : 3.5f;
         _zoomSpeed = float.TryParse(element.Element("zoomSpeed")?.Value, out float zoomSpeed) ? zoomSpeed : 8.0f;
         _cameraSpeed = float.TryParse(element.Element("cameraSpeed")?.Value, out float cameraSpeed) ? cameraSpeed : 20.0f;
+        _keyboardControl = element.Element("keyboardControl")?.Value == "True";
+        _mouseControl = element.Element("mouseControl")?.Value == "True";
+        _scrollControl = element.Element("scrollControl")?.Value == "True";
     }
     public override void RemoveComponent()
     {

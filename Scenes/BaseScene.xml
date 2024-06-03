@@ -49,7 +49,7 @@
         </component>
         <component>
           <type>MeshRenderer</type>
-          <active>False</active>
+          <active>True</active>
           <model>
             <path>trawa</path>
             <technique>PBR</technique>
@@ -926,16 +926,124 @@
           </components>
           <childObjects>
             <object>
-              <name>Tartak</name>
+              <name>Sawmill_Place</name>
               <active>True</active>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>61,7</x>
+                    <x>57</x>
+                    <y>0,1</y>
+                    <z>23,3</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
                     <y>0</y>
-                    <z>16,8</z>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>2</x>
+                    <y>2</y>
+                    <z>2</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>sand</path>
+                    <technique>PBR</technique>
+                  </model>
+                </component>
+                <component>
+                  <type>Pickable</type>
+                  <active>True</active>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Sawmill</name>
+                  <active>False</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>1,7</x>
+                        <y>0</y>
+                        <z>-4</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,5</x>
+                        <y>0,5</y>
+                        <z>0,5</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>MeshRenderer</type>
+                      <active>True</active>
+                      <model>
+                        <path>tartak</path>
+                        <technique>PBR</technique>
+                      </model>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Puzzle</name>
+                  <active>True</active>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>400</x>
+                        <y>120</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>Puzzle</type>
+                      <active>False</active>
+                      <sprite>sprite</sprite>
+                      <gridSize>3</gridSize>
+                      <pieceSize>200</pieceSize>
+                      <rimSize>3</rimSize>
+                      <snappingDist>30</snappingDist>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
+            <object>
+              <name>Strucure_Place1</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -947,33 +1055,25 @@
                     <y>1</y>
                     <z>1</z>
                   </scale>
-                </component>
-                <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>tartak</path>
-                    <technique>PBR</technique>
-                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
             </object>
             <object>
-              <name>Tent</name>
+              <name>Structure_Place2</name>
               <active>True</active>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>26,7</x>
-                    <y>-1,1</y>
-                    <z>53,6</z>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
                   </position>
                   <rotation>
                     <x>0</x>
-                    <y>-40</y>
+                    <y>0</y>
                     <z>0</z>
                   </rotation>
                   <scale>
@@ -981,14 +1081,6 @@
                     <y>1</y>
                     <z>1</z>
                   </scale>
-                </component>
-                <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/props/namiot</path>
-                    <technique>PBR</technique>
-                  </model>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -1028,9 +1120,9 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>30</x>
+                    <x>30,2</x>
                     <y>0,3</y>
-                    <z>50</z>
+                    <z>54,3</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -1090,6 +1182,9 @@
           <lerpSpeed>3,5</lerpSpeed>
           <zoomSpeed>8</zoomSpeed>
           <cameraSpeed>20,3</cameraSpeed>
+          <keyboardControl>False</keyboardControl>
+          <mouseControl>False</mouseControl>
+          <scrollControl>False</scrollControl>
         </component>
         <component>
           <type>MeshRenderer</type>
@@ -1101,143 +1196,6 @@
         </component>
       </components>
       <childObjects></childObjects>
-    </object>
-    <object>
-      <name>Chair</name>
-      <active>True</active>
-      <components>
-        <component>
-          <type>Transform</type>
-          <active>True</active>
-          <position>
-            <x>61,8</x>
-            <y>1,8</y>
-            <z>43,1</z>
-          </position>
-          <rotation>
-            <x>0</x>
-            <y>-13</y>
-            <z>0</z>
-          </rotation>
-          <scale>
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
-          </scale>
-        </component>
-        <component>
-          <type>MeshRenderer</type>
-          <active>True</active>
-          <model>
-            <path>krzeslo</path>
-            <technique>PBR</technique>
-          </model>
-        </component>
-      </components>
-      <childObjects></childObjects>
-    </object>
-    <object>
-      <name>Ground2</name>
-      <active>True</active>
-      <components>
-        <component>
-          <type>Transform</type>
-          <active>True</active>
-          <position>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </position>
-          <rotation>
-            <x>0</x>
-            <y>0</y>
-            <z>0</z>
-          </rotation>
-          <scale>
-            <x>5</x>
-            <y>1,05</y>
-            <z>5</z>
-          </scale>
-        </component>
-        <component>
-          <type>MeshRenderer</type>
-          <active>True</active>
-          <model>
-            <path>trawa</path>
-            <technique>PBR</technique>
-          </model>
-        </component>
-      </components>
-      <childObjects></childObjects>
-    </object>
-    <object>
-      <name>wardrobe</name>
-      <active>True</active>
-      <components>
-        <component>
-          <type>Transform</type>
-          <active>True</active>
-          <position>
-            <x>49,5</x>
-            <y>3,3</y>
-            <z>58,6</z>
-          </position>
-          <rotation>
-            <x>0</x>
-            <y>0</y>
-            <z>21</z>
-          </rotation>
-          <scale>
-            <x>2</x>
-            <y>2</y>
-            <z>2</z>
-          </scale>
-        </component>
-        <component>
-          <type>MeshRenderer</type>
-          <active>True</active>
-          <model>
-            <path>monsterMid</path>
-            <technique>PBR</technique>
-          </model>
-        </component>
-      </components>
-      <childObjects>
-        <object>
-          <name>NewObject</name>
-          <active>True</active>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>0</x>
-                <y>0,6</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>-90</x>
-                <y>-90</y>
-                <z>-32</z>
-              </rotation>
-              <scale>
-                <x>1,2</x>
-                <y>1,1</y>
-                <z>1,1</z>
-              </scale>
-            </component>
-            <component>
-              <type>MeshRenderer</type>
-              <active>True</active>
-              <model>
-                <path>szafa</path>
-                <technique>PBR</technique>
-              </model>
-            </component>
-          </components>
-          <childObjects></childObjects>
-        </object>
-      </childObjects>
     </object>
     <object>
       <name>UI</name>
@@ -1311,7 +1269,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>72,7</x>
+                    <x>73</x>
                     <y>20</y>
                     <z>0</z>
                   </position>
@@ -1354,8 +1312,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1184</x>
-                <y>0</y>
+                <x>210</x>
+                <y>10</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -1365,7 +1323,7 @@
               </rotation>
               <scale>
                 <x>1</x>
-                <y>0,3</y>
+                <y>1</y>
                 <z>1</z>
               </scale>
             </component>
@@ -1373,7 +1331,7 @@
               <type>SpiteRenderer</type>
               <active>True</active>
               <useLocal>False</useLocal>
-              <sprite>blank</sprite>
+              <sprite>UI/puzzleCounter</sprite>
               <color>
                 <r>255</r>
                 <g>255</g>
@@ -1393,8 +1351,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1224</x>
-                    <y>15</y>
+                    <x>75</x>
+                    <y>20</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -1411,13 +1369,13 @@
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
-                  <useLocal>True</useLocal>
-                  <contents>Puzzles : 0</contents>
+                  <useLocal>False</useLocal>
+                  <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
-                    <r>0</r>
-                    <g>0</g>
-                    <b>0</b>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
                     <a>255</a>
                   </color>
                   <screenSizeX>1440</screenSizeX>
@@ -1491,7 +1449,7 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>2</x>
+                    <x>0,75</x>
                     <y>0,75</y>
                     <z>1</z>
                   </scale>
@@ -1500,7 +1458,7 @@
                   <type>SpiteRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <sprite>blank</sprite>
+                  <sprite>UI/widthWindow</sprite>
                   <color>
                     <r>255</r>
                     <g>255</g>
@@ -1521,7 +1479,7 @@
                       <active>True</active>
                       <position>
                         <x>488,7</x>
-                        <y>320</y>
+                        <y>368,4</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -1542,9 +1500,9 @@
                       <contents>Are you sure you want to exit?</contents>
                       <font>defaultFont</font>
                       <color>
-                        <r>0</r>
-                        <g>0</g>
-                        <b>0</b>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
                         <a>255</a>
                       </color>
                       <screenSizeX>1440</screenSizeX>
@@ -1561,8 +1519,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>520</x>
-                        <y>400</y>
+                        <x>500</x>
+                        <y>480</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -1571,8 +1529,8 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,5</x>
-                        <y>0,25</y>
+                        <x>1</x>
+                        <y>1</y>
                         <z>1</z>
                       </scale>
                     </component>
@@ -1580,7 +1538,7 @@
                       <type>SpiteRenderer</type>
                       <active>True</active>
                       <useLocal>True</useLocal>
-                      <sprite>blank</sprite>
+                      <sprite>UI/buttonNormal</sprite>
                       <color>
                         <r>185</r>
                         <g>185</g>
@@ -1612,8 +1570,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>555</x>
-                            <y>405</y>
+                            <x>560</x>
+                            <y>485</y>
                             <z>0</z>
                           </position>
                           <rotation>
@@ -1634,9 +1592,9 @@
                           <contents>Yes</contents>
                           <font>defaultFont</font>
                           <color>
-                            <r>0</r>
-                            <g>0</g>
-                            <b>0</b>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
                             <a>255</a>
                           </color>
                           <screenSizeX>1440</screenSizeX>
@@ -1655,8 +1613,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>780</x>
-                        <y>400</y>
+                        <x>730</x>
+                        <y>480</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -1665,8 +1623,8 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,5</x>
-                        <y>0,25</y>
+                        <x>1</x>
+                        <y>1</y>
                         <z>1</z>
                       </scale>
                     </component>
@@ -1674,7 +1632,7 @@
                       <type>SpiteRenderer</type>
                       <active>True</active>
                       <useLocal>True</useLocal>
-                      <sprite>blank</sprite>
+                      <sprite>UI/buttonNormal</sprite>
                       <color>
                         <r>185</r>
                         <g>185</g>
@@ -1700,8 +1658,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>820</x>
-                            <y>405</y>
+                            <x>800</x>
+                            <y>485</y>
                             <z>0</z>
                           </position>
                           <rotation>
@@ -1722,9 +1680,9 @@
                           <contents>No</contents>
                           <font>defaultFont</font>
                           <color>
-                            <r>0</r>
-                            <g>0</g>
-                            <b>0</b>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
                             <a>255</a>
                           </color>
                           <screenSizeX>1440</screenSizeX>
@@ -1738,52 +1696,6 @@
               </childObjects>
             </object>
           </childObjects>
-        </object>
-        <object>
-          <name>Options_Button</name>
-          <active>True</active>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>1360</x>
-                <y>730</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>0,25</x>
-                <y>0,25</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>SpiteRenderer</type>
-              <active>True</active>
-              <useLocal>True</useLocal>
-              <sprite>blank</sprite>
-              <color>
-                <r>255</r>
-                <g>255</g>
-                <b>255</b>
-                <a>255</a>
-              </color>
-              <screenSizeX>1440</screenSizeX>
-              <screenSizeY>900</screenSizeY>
-            </component>
-            <component>
-              <type>Button</type>
-              <active>True</active>
-              <action>EXIT</action>
-              <linkedObject>Root</linkedObject>
-            </component>
-          </components>
-          <childObjects></childObjects>
         </object>
       </childObjects>
     </object>
