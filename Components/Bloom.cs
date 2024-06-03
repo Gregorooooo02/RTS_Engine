@@ -34,7 +34,7 @@ public class Bloom : Component
 	
 	public Bloom()
 	{
-		Globals.Renderer.Blooms.Add(this);
+		// Globals.Renderer.Blooms.Add(this);
 		Initialize();
 	}
 
@@ -82,7 +82,7 @@ public class Bloom : Component
 
 	public override void RemoveComponent()
 	{
-		Globals.Renderer.Blooms.Remove(this);
+		// Globals.Renderer.Blooms.Remove(this);
 		ParentObject.RemoveComponent(this);
 	}
 	
