@@ -135,10 +135,10 @@ public class Game1 : Game
         
         Globals.AgentsManager.CheckForOrders();
 
-        foreach (Agent unit in Globals.AgentsManager.SelectedUnits)
-        {
+        //foreach (Agent unit in Globals.AgentsManager.SelectedUnits)
+        //{
             //Console.WriteLine(unit.ParentObject.Name);
-        }
+        //}
         
         /*
         try

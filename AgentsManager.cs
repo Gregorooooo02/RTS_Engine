@@ -38,7 +38,6 @@ public class AgentsManager
             Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
             if (point.HasValue)
             {
-                Console.WriteLine(point.Value);
                 Vector2 dest = new Vector2(point.Value.X,point.Value.Z);
                 //TODO: Pass order 'move to point' to all selected units
                 foreach (Agent selectedUnit in SelectedUnits)

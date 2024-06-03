@@ -20,7 +20,6 @@ public class UnitIdle : AgentState
     public override AgentState UpdateState(Agent agent)
     {
         PlayerUnitData data = (PlayerUnitData)agent.AgentData;
-        Console.WriteLine(data.MovementScheduled);
         if (data.MovementScheduled && agent.AgentStates.TryGetValue(Agent.State.Move,out AgentState move))
         {
             return move;
