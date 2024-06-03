@@ -5,7 +5,7 @@ using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine.Components.AI.Agent_States;
 
-public class Patrol : AgentState
+public class SoldierPatrol : AgentState
 {
     private int _currentPathId = -1;
     private SoldierData.PatrolType _currentPatrolType;
@@ -27,7 +27,7 @@ public class Patrol : AgentState
             idle.Initialize(agent);
         }
         
-        if (agent.AgentStates.TryAdd(Agent.State.Attack, new Attack()) && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
+        if (agent.AgentStates.TryAdd(Agent.State.Attack, new SoldierAttack()) && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
             attack.Initialize(agent);
         }
@@ -75,7 +75,7 @@ public class Patrol : AgentState
         if (data.Awareness >= data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
             _traversing = false;
-            ((Attack)attack).Target = data.Target;
+            ((SoldierAttack)attack).Target = data.Target;
             _points.Clear();
             data.Awareness = 0;
             data.Alarmed = true;

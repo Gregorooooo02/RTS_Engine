@@ -20,7 +20,7 @@ public class SoldierIdle : AgentState
         SoldierData data = (SoldierData)agent.AgentData;
         if (data.Awareness >= data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
-            ((Attack)attack).Target = data.Target;
+            ((SoldierAttack)attack).Target = data.Target;
             data.Awareness = 0;
             data.Alarmed = true;
             return attack;

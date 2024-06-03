@@ -5,7 +5,7 @@ using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine.Components.AI.Agent_States;
 
-public class Wander : AgentState
+public class CivilianWander : AgentState
 {
     private static readonly Random Random = new();
     private Queue<Vector2> _points;
@@ -13,7 +13,7 @@ public class Wander : AgentState
     private bool _traversing = false;
     private int _maxAttempts = 10;
     
-    public Wander()
+    public CivilianWander()
     {
         State = Agent.State.Wander;
     }
@@ -28,12 +28,12 @@ public class Wander : AgentState
         }
         */
         
-        if (agent.AgentStates.TryAdd(Agent.State.Idle, new Idle()) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
+        if (agent.AgentStates.TryAdd(Agent.State.Idle, new CivilianIdle()) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
         {
             value.Initialize(agent);
         }
         
-        if (agent.AgentStates.TryAdd(Agent.State.RunAway, new Flee()) && agent.AgentStates.TryGetValue(Agent.State.RunAway, out AgentState flee))
+        if (agent.AgentStates.TryAdd(Agent.State.RunAway, new CivilianFlee()) && agent.AgentStates.TryGetValue(Agent.State.RunAway, out AgentState flee))
         {
             flee.Initialize(agent);
         }
@@ -64,7 +64,7 @@ public class Wander : AgentState
         if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
         {
             _traversing = false;
-            ((Flee)flee).Target = data.Target;
+            ((CivilianFlee)flee).Target = data.Target;
             data.Alarmed = true;
             data.Awareness = 0;
             _points.Clear();
@@ -76,7 +76,7 @@ public class Wander : AgentState
             if (_traversing && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
             {
                 _traversing = false;
-                ((Idle)value).Caller = this;
+                ((CivilianIdle)value).Caller = this;
                 return value;
             }
             Node end = null;
@@ -90,7 +90,7 @@ public class Wander : AgentState
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
                 {
                     _traversing = false;
-                    ((Idle)idle).Caller = this;
+                    ((CivilianIdle)idle).Caller = this;
                     return idle;
                 }
                 

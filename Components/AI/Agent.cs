@@ -94,7 +94,7 @@ public class Agent : Component
         destinationVector.Normalize();
         Direction = Vector2.Lerp(Direction,destinationVector, Globals.DeltaTime * TurnSpeed);
         
-        float angle = Wander.AngleDegrees(Vector2.UnitY, Direction);
+        float angle = CivilianWander.AngleDegrees(Vector2.UnitY, Direction);
         ParentObject.Transform.SetLocalRotationY(-angle);
     }
 
@@ -115,7 +115,7 @@ public class Agent : Component
                 //Using if's condition order, first check if checked player unit is in sight range and if it is
                 //then check the angle between civilian's direction vector and offset vector.
                 //If absolute value of this angle is smaller than half of civilian's fov that means that it's in sight 
-                if (length <= data.SightRange && MathF.Abs(Wander.AngleDegrees(Direction,offset)) <= data.SightAngle / 2.0f)
+                if (length <= data.SightRange && MathF.Abs(CivilianWander.AngleDegrees(Direction,offset)) <= data.SightAngle / 2.0f)
                 {
                     //This means checked unit is in vision cone
                     //Now check if sight line is not obstructed by terrain or static props
@@ -163,7 +163,7 @@ public class Agent : Component
                 //Using if's condition order, first check if checked player unit is in sight range and if it is
                 //then check the angle between civilian's direction vector and offset vector.
                 //If absolute value of this angle is smaller than half of civilian's fov that means that it's in sight 
-                if (length <= data.SightRange && MathF.Abs(Wander.AngleDegrees(Direction,offset)) <= data.SightAngle / 2.0f)
+                if (length <= data.SightRange && MathF.Abs(CivilianWander.AngleDegrees(Direction,offset)) <= data.SightAngle / 2.0f)
                 {
                     //This means checked unit is in vision cone
                     //Now check if sight line is not obstructed by terrain or static props

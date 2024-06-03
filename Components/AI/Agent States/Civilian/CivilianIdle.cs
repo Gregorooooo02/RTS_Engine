@@ -3,7 +3,7 @@ using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine.Components.AI.Agent_States;
 
-public class Idle : AgentState
+public class CivilianIdle : AgentState
 {
     private float _idleTimer = 0.0f;
     private bool _active = false;
@@ -14,7 +14,7 @@ public class Idle : AgentState
     
     public override void Initialize(Agent agent)
     {
-        if (agent.AgentStates.TryAdd(Agent.State.Wander, new Wander()) && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState value))
+        if (agent.AgentStates.TryAdd(Agent.State.Wander, new CivilianWander()) && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState value))
         {
             value.Initialize(agent);
         }
@@ -25,7 +25,7 @@ public class Idle : AgentState
         WandererData data = (WandererData)agent.AgentData;
         if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
         {
-            ((Flee)flee).Target = data.Target;
+            ((CivilianFlee)flee).Target = data.Target;
             data.Alarmed = true;
             data.Awareness = 0;
             _active = false;

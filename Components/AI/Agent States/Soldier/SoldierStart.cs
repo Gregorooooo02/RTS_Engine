@@ -4,7 +4,7 @@ public class SoldierStart : AgentState
 {
     public override void Initialize(Agent agent)
     {
-        if (agent.AgentStates.TryAdd(Agent.State.Patrol, new Patrol()) && agent.AgentStates.TryGetValue(Agent.State.Patrol, out AgentState patrol))
+        if (agent.AgentStates.TryAdd(Agent.State.Patrol, new SoldierPatrol()) && agent.AgentStates.TryGetValue(Agent.State.Patrol, out AgentState patrol))
         {
             patrol.Initialize(agent);
         }

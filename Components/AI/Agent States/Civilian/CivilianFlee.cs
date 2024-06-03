@@ -6,7 +6,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace RTS_Engine.Components.AI.Agent_States;
 
-public class Flee : AgentState
+public class CivilianFlee : AgentState
 {
     public Agent Target;
     private float _timeSinceLastRepath = 10;
@@ -48,7 +48,7 @@ public class Flee : AgentState
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle) && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState wander))
                 {
                     //If flee attempts fails return to idle
-                    ((Idle)idle).Caller = wander;
+                    ((CivilianIdle)idle).Caller = wander;
                     Target = null;
                     data.Alarmed = false;
                     return idle;
@@ -74,7 +74,7 @@ public class Flee : AgentState
         else
         {
             _timeSinceLastRepath += Globals.DeltaTime;
-            if (Wander.Distance(_currentPoint, agent.Position) <= data.MinPointDistance)
+            if (CivilianWander.Distance(_currentPoint, agent.Position) <= data.MinPointDistance)
             {
                 _currentPoint = _points.Dequeue();
             }
