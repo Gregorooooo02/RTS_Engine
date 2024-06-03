@@ -130,10 +130,12 @@ public class Game1 : Game
         if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
 #endif
         _sceneManager.CurrentScene.Update(gameTime);
-        Globals.PickingManager.CheckForRay();
         
         Globals.FogManager.UpdateFog();
+        
+        Globals.AgentsManager.CheckForOrders();
 
+        
         /*
         try
         {
@@ -172,7 +174,7 @@ public class Game1 : Game
         }
         */
         
-
+        Globals.PickingManager.Pickables.Clear();
         base.Update(gameTime);
     }
     

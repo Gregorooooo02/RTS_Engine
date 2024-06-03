@@ -25,6 +25,7 @@ public enum GameAction
     EXITPUZZLE,
     RESIZE_FULLSCREEN,
     RESIZE_WINDOWED,
+    CTRL,
 }
 
 public class InputManager

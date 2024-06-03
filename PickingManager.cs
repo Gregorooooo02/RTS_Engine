@@ -12,8 +12,10 @@ public class PickingManager
     public bool BoxPickingActive = false;
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
-    public List<Pickable> Picked = new() ;
     private const int HoldThreshold = 5;
+
+    public bool PickedUnits = false;
+    public bool PickedEnemy = false;
 
     #region Visual Parameters
     private Texture2D _selectionBox;
@@ -134,9 +136,10 @@ public class PickingManager
         
     }
     
-    public void CheckForRay()
+    public List<Pickable> PickUnits()
     {
-        Picked.Clear();
+        PickedUnits = false;
+        List<Pickable> picked = new();
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED, duration: <= HoldThreshold} && SinglePickingActive)
         {
@@ -147,6 +150,7 @@ public class PickingManager
                  Pickable candidate = null;
                  foreach (Pickable entity in Pickables)
                  {
+                     if(entity.Type != Pickable.PickableType.Unit) continue;
                      BoundingSphere sphere =
                          entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
                      float? dist = sphere.Intersects(ray.Value);
@@ -160,23 +164,26 @@ public class PickingManager
                          }
                      }
                  }
-                 Pickables.Clear();
-                 if(candidate != null)Picked.Add(candidate);
+                 if(candidate != null)picked.Add(candidate);
              }
-        } else if (action is { state: ActionState.RELEASED, duration: > HoldThreshold} && BoxPickingActive)
+
+             PickedUnits = true;
+        } 
+        else if (action is { state: ActionState.RELEASED, duration: > HoldThreshold} && BoxPickingActive)
         {
             PickingFrustum? frustum = CalculatePickingFrustum(action);
             if (frustum.HasValue)
             {
                 foreach (Pickable entity in Pickables)
                 {
-                    if (frustum.Value.Intersects(entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix)))
+                    if (entity.Type == Pickable.PickableType.Unit && frustum.Value.Intersects(entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix)))
                     {
-                        Picked.Add(entity); 
+                        picked.Add(entity); 
                     }
                 }
                 Globals.Renderer.PickingFrustum = frustum;
             }
+            PickedUnits = true;
         }
         shouldDraw = action is { state: ActionState.PRESSED, duration: > HoldThreshold} && BoxPickingActive;
         if (shouldDraw)
@@ -192,7 +199,41 @@ public class PickingManager
             selectionBoxArea.Size = dimensions;
             selectionBoxArea.Location = origin;
         }
-        Pickables.Clear();
+        return picked;
+    }
+
+    public Pickable PickEnemy()
+    {
+        PickedUnits = false;
+        MouseAction action = InputManager.Instance.GetMouseAction(GameAction.RMB);
+        if (action is {state: ActionState.RELEASED})
+        {
+            Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
+            if (ray.HasValue)
+            {
+                float minDist = 10000.0f;
+                Pickable candidate = null;
+                foreach (Pickable entity in Pickables)
+                {
+                    if(entity.Type != Pickable.PickableType.Enemy) continue;
+                    BoundingSphere sphere =
+                        entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                    float? dist = sphere.Intersects(ray.Value);
+                     
+                    if (dist.HasValue)
+                    {
+                        if ((IncludeZeroDist && dist.Value < minDist) || (!IncludeZeroDist && dist.Value < minDist && dist.Value > 0))
+                        {
+                            minDist = dist.Value;
+                            candidate = entity;
+                        }
+                    }
+                }
+                return candidate;
+            }
+            PickedUnits = true;
+        }
+        return null;
     }
 
     private PickingFrustum? CalculatePickingFrustum(MouseAction action)

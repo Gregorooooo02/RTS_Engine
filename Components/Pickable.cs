@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 
@@ -6,7 +7,17 @@ namespace RTS_Engine;
 
 public class Pickable : Component
 {
+    public enum PickableType
+    {
+        Enemy,
+        Unit,
+        EnemyBuilding,
+        Building
+    }
+    
     public MeshRenderer Renderer = null;
+
+    public PickableType Type;
     
     public override void Update()
     {
@@ -59,17 +70,42 @@ public class Pickable : Component
         ParentObject.RemoveComponent(this);
     }
 #if DEBUG
+    private bool _changeType = false;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Pickable"))
         {
             ImGui.Checkbox("Pickable active", ref Active);
             ImGui.Text("Linked with MeshRenderer from object: " + Renderer?.ParentObject.Name);
+            if (ImGui.Button("Change type"))
+            {
+                _changeType = true;
+            }
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
             }
-        }   
+        }
+
+        if (_changeType)
+        {
+            ImGui.Begin("Changing type");
+            var values = Enum.GetValues(typeof(PickableType));
+            foreach (PickableType type in values)
+            {
+                if (ImGui.Button(type.ToString()))
+                {
+                    Type = type;
+                    _changeType = false;
+                    break;
+                }
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                _changeType = false;
+            }
+            ImGui.End();
+        }
     }
 #endif
 }

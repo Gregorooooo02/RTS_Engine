@@ -37,6 +37,10 @@
             <Key>F11</Key>
             <Action>RESIZE_WINDOWED</Action>
         </KeyBinding>
+        <KeyBinding>
+            <Key>LeftControl</Key>
+            <Action>CTRL</Action>
+        </KeyBinding>
     </Keyboard>
     <Mouse>
         <MouseBinding>
