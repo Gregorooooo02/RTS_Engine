@@ -4,13 +4,14 @@ namespace RTS_Engine.Components.AI.AgentData;
 
 public class AgentData
 {
-    public float Hp = 100.0f;
+    public float Hp;
     public float MaxHp;
 
     public bool Alive = true;
     
     public AgentData()
     {
+        Hp = 100.0f; 
         Hp = MaxHp;
     }
     

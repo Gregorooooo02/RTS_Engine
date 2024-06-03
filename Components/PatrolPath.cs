@@ -6,10 +6,18 @@ using Vector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace RTS_Engine;
 
-public class PatrolPathUnit : Component
+public class PatrolPath : Component
 {
-    public PatrolPathController Controller;
-    public override void Update() {}
+    public PatrolPath(){}
+    
+    public override void Update()
+    {
+        if(!Active) return;
+        if (!Globals.AgentsManager.PatrolManager.PatrolPaths.Contains(this))
+        {
+            Globals.AgentsManager.PatrolManager.PatrolPaths.Add(this);
+        }
+    }
 
     public List<Vector3> GetPathPoints()
     {
@@ -21,18 +29,7 @@ public class PatrolPathUnit : Component
         return output;
     }
     
-    public override void Initialize()
-    {
-        Controller = ParentObject.Parent.GetComponent<PatrolPathController>();
-        if (Controller == null)
-        {
-            Active = false;
-        }
-        else
-        {
-            Controller.PatrolPaths.Add(this);
-        }
-    }
+    public override void Initialize(){}
 
     public override string ComponentToXmlString()
     {
@@ -50,7 +47,7 @@ public class PatrolPathUnit : Component
 
     public override void RemoveComponent()
     {
-        Controller.PatrolPaths.Remove(this);
+        Globals.AgentsManager.PatrolManager.PatrolPaths.Remove(this);
         ParentObject.RemoveComponent(this);
     }
 

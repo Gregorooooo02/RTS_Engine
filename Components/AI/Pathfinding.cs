@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -94,6 +95,25 @@ public static class Pathfinding
     public static Queue<Point> PathToQueueOfPoints(Node node)
     {
         return new Queue<Point>(PathToListOfPoints(node));
+    }
+
+    public static List<Vector2> PathToListOfVectors(Node node)
+    {
+        List<Vector2> output = new List<Vector2>();
+        Node v = node;
+        while (v.ParentNode != null)
+        {
+            output.Add(new Vector2(v.Location.X,v.Location.Y));
+            v = v.ParentNode;
+        }
+        output.Add(new Vector2(v.Location.X,v.Location.Y));
+        output.Reverse();
+        return output;
+    }
+
+    public static Queue<Vector2> PathToQueueOfVectors(Node node)
+    {
+        return new Queue<Vector2>(PathToListOfVectors(node));
     }
 
 }

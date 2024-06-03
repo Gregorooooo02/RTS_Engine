@@ -8,8 +8,8 @@ namespace RTS_Engine.Components.AI.Agent_States;
 public class Wander : AgentState
 {
     private static readonly Random Random = new();
-    private Queue<Point> _points;
-    private Point _currentPoint;
+    private Queue<Vector2> _points;
+    private Vector2 _currentPoint;
     private bool _traversing = false;
     private int _maxAttempts = 10;
     
@@ -47,7 +47,7 @@ public class Wander : AgentState
         return new Vector2(MathF.Cos(angle), MathF.Sin(angle));
     }
 
-    public static float Distance(Point point, Vector3 position)
+    public static float Distance(Vector2 point, Vector3 position)
     {
         return new Vector2(point.X - position.X, point.Y - position.Z).Length();
     }
@@ -67,6 +67,7 @@ public class Wander : AgentState
             ((Flee)flee).Target = data.Target;
             data.Alarmed = true;
             data.Awareness = 0;
+            _points.Clear();
             return flee;
         }
         
@@ -79,11 +80,11 @@ public class Wander : AgentState
                 return value;
             }
             Node end = null;
+            Vector2 offset;
             int attempts = 0;
             do
             {
-                Vector2 offset = RandomUnitVector2() * data.WanderingDistance;
-                
+                offset = RandomUnitVector2() * data.WanderingDistance;
                 
                 if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0) continue;
                 
@@ -99,7 +100,8 @@ public class Wander : AgentState
                     return idle;
                 }
             } while (end is null || end.CurrentCost > data.MaxWanderingDistance);
-            _points = Pathfinding.PathToQueueOfPoints(end);
+            _points = Pathfinding.PathToQueueOfVectors(end);
+            _points.Enqueue(new Vector2(agentPosition.X + offset.X,agentPosition.Z + offset.Y));
             _traversing = true;
             _currentPoint = _points.Dequeue();
         }

@@ -68,11 +68,12 @@ public class Agent : Component
         _currentState = _currentState.UpdateState(this);
     }
 
-    public void MoveToPoint(Point point, float speed)
+    public void MoveToPoint(Vector2 point, float speed)
     {
         Vector3 agentPosition = ParentObject.Transform.ModelMatrix.Translation;
         Vector3 offset = new Vector3(point.X - agentPosition.X, 0, point.Y - agentPosition.Z);
         offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(agentPosition.X + offset.X, agentPosition.Z + offset.Z)) - agentPosition.Y + 2.0f;
+        offset.Normalize();
         ParentObject.Transform.Move(offset * Globals.DeltaTime * speed);
 
         Vector2 destinationVector = new Vector2(offset.X, offset.Z);
@@ -290,6 +291,8 @@ public class Agent : Component
                             _currentState = ((PlayerUnitData)AgentData).EntryState;
                             break;
                     }
+                    AgentStates.Clear();
+                    _currentState.Initialize(this);
                     _changingBehavior = false;
                 }
             }

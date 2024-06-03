@@ -6,7 +6,7 @@ namespace RTS_Engine.Components.AI.AgentData;
 public class SoldierData : AgentData
 {
     
-    
+    public SoldierData() : base(){}
     
     public readonly AgentState EntryState = new SoldierStart();
     
