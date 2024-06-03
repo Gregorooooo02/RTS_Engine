@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using AnimationImporters.Animation;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
@@ -13,9 +14,7 @@ namespace AnimationImporters.Processors
         private int _generateKeyframesFrequency = 0;
         private bool _fixRealBoneRoot = false;
 
-#if !PORTABLE
         [DisplayName("MaxBones")]
-#endif
         [DefaultValue(SkinnedEffect.MaxBones)]
         public virtual int MaxBones 
         {
@@ -23,9 +22,7 @@ namespace AnimationImporters.Processors
             set { _maxBones = value; }
         }
 
-#if !PORTABLE
         [DisplayName("Generate Keyframes Frequency")]
-#endif
         [DefaultValue(0)] // (0=no, 30=30fps, 60=60fps)
         public virtual int GenerateKeyframesFrequency
         {
@@ -33,9 +30,7 @@ namespace AnimationImporters.Processors
             set { _generateKeyframesFrequency = value; }
         }
 
-#if !PORTABLE
         [DisplayName("Fix BoneRoot from MG importer")]
-#endif
         [DefaultValue(false)]
         public virtual bool FixRealBoneRoot
         {
@@ -57,11 +52,11 @@ namespace AnimationImporters.Processors
 
         public override ModelContent Process(NodeContent input, ContentProcessorContext context)
         {
-            var animationProcessor = new AnimationsProcessor();
+            AnimationsProcessor animationProcessor = new AnimationsProcessor();
             animationProcessor.MaxBones = this.MaxBones;   
             animationProcessor.GenerateKeyframesFrequency = this.GenerateKeyframesFrequency;
             animationProcessor.FixRealBoneRoot = this._fixRealBoneRoot;
-            var animation = animationProcessor.Process(input, context);
+            AnimationsContent animation = animationProcessor.Process(input, context);
             
             ModelContent model = base.Process(input, context);
             model.Tag = animation;

@@ -35,9 +35,7 @@ namespace AnimationImporters.Processors
             set { base.IndexBufferType = value; }
         }
         
-#if !PORTABLE
         [DisplayName("MaxBones")]
-#endif
         [DefaultValue(SkinnedEffect.MaxBones)]
         public virtual int MaxBones
         {
@@ -45,9 +43,7 @@ namespace AnimationImporters.Processors
             set { _maxBones = value; }
         }
         
-#if !PORTABLE
         [DisplayName("Generate Keyframes Frequency")]
-#endif
         [DefaultValue(0)] // (0=no, 30=30fps, 60=60fps)
         public virtual int GenerateKeyframesFrequency
         {
@@ -55,9 +51,7 @@ namespace AnimationImporters.Processors
             set { _generateKeyframesFrequency = value; }
         }
 
-#if !PORTABLE
         [DisplayName("Fix BoneRoot from MG importer")]
-#endif
         [DefaultValue(false)]
         public virtual bool FixRealBoneRoot
         {
@@ -73,12 +67,12 @@ namespace AnimationImporters.Processors
 
         object IContentProcessor.Process(object input, ContentProcessorContext context)
         {
-            var model = Process((NodeContent)input, context);
-            var outputModel = new DynamicModelContent(model);
+            ModelContent model = Process((NodeContent)input, context);
+            DynamicModelContent outputModel = new DynamicModelContent(model);
             
-            foreach(var mesh in outputModel.Meshes)
+            foreach(DynamicModelMeshContent mesh in outputModel.Meshes)
             {
-                foreach(var part in mesh.MeshParts)
+                foreach(DynamicModelMeshPartContent part in mesh.MeshParts)
                 {
                     ProcessVertexBuffer(outputModel, context, part);
                     ProcessIndexBuffer(outputModel, context, part);
@@ -86,11 +80,11 @@ namespace AnimationImporters.Processors
             }
 
             // import animation
-            var animationProcessor = new AnimationsProcessor();
+            AnimationsProcessor animationProcessor = new AnimationsProcessor();
             animationProcessor.MaxBones = this.MaxBones;
             animationProcessor.GenerateKeyframesFrequency = this.GenerateKeyframesFrequency;
             animationProcessor.FixRealBoneRoot = this._fixRealBoneRoot;
-            var animation = animationProcessor.Process((NodeContent)input, context);
+            AnimationsContent animation = animationProcessor.Process((NodeContent)input, context);
             outputModel.Tag = animation;
 
             //ProcessNode((NodeContent)input);

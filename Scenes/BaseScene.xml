@@ -1272,8 +1272,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>0</x>
-                <y>0</y>
+                <x>10</x>
+                <y>10</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -1283,7 +1283,7 @@
               </rotation>
               <scale>
                 <x>1</x>
-                <y>0,3</y>
+                <y>1</y>
                 <z>1</z>
               </scale>
             </component>
@@ -1291,7 +1291,7 @@
               <type>SpiteRenderer</type>
               <active>True</active>
               <useLocal>False</useLocal>
-              <sprite>blank</sprite>
+              <sprite>UI/meatCounter</sprite>
               <color>
                 <r>255</r>
                 <g>255</g>
@@ -1311,8 +1311,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>40</x>
-                    <y>15</y>
+                    <x>72,7</x>
+                    <y>20</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -1329,13 +1329,13 @@
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
-                  <useLocal>True</useLocal>
-                  <contents>Meat : 0</contents>
+                  <useLocal>False</useLocal>
+                  <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
-                    <r>0</r>
-                    <g>0</g>
-                    <b>0</b>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
                     <a>255</a>
                   </color>
                   <screenSizeX>1440</screenSizeX>
@@ -1429,87 +1429,6 @@
           </childObjects>
         </object>
         <object>
-          <name>Bar</name>
-          <active>True</active>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>256,9</x>
-                <y>0</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>3,625</x>
-                <y>0,15</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>SpiteRenderer</type>
-              <active>True</active>
-              <useLocal>False</useLocal>
-              <sprite>blank</sprite>
-              <color>
-                <r>121</r>
-                <g>121</g>
-                <b>121</b>
-                <a>255</a>
-              </color>
-              <screenSizeX>1440</screenSizeX>
-              <screenSizeY>900</screenSizeY>
-            </component>
-          </components>
-          <childObjects>
-            <object>
-              <name>Fill</name>
-              <active>True</active>
-              <components>
-                <component>
-                  <type>Transform</type>
-                  <active>True</active>
-                  <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                  </position>
-                  <rotation>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                  </rotation>
-                  <scale>
-                    <x>0,1</x>
-                    <y>1</y>
-                    <z>1</z>
-                  </scale>
-                </component>
-                <component>
-                  <type>SpiteRenderer</type>
-                  <active>True</active>
-                  <useLocal>False</useLocal>
-                  <sprite>blank</sprite>
-                  <color>
-                    <r>255</r>
-                    <g>0</g>
-                    <b>0</b>
-                    <a>255</a>
-                  </color>
-                  <screenSizeX>1440</screenSizeX>
-                  <screenSizeY>900</screenSizeY>
-                </component>
-              </components>
-              <childObjects></childObjects>
-            </object>
-          </childObjects>
-        </object>
-        <object>
           <name>Exit_Button</name>
           <active>True</active>
           <components>
@@ -1527,8 +1446,8 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,25</x>
-                <y>0,25</y>
+                <x>1</x>
+                <y>1</y>
                 <z>1</z>
               </scale>
             </component>
@@ -1536,7 +1455,7 @@
               <type>SpiteRenderer</type>
               <active>True</active>
               <useLocal>False</useLocal>
-              <sprite>blank</sprite>
+              <sprite>UI/exitButton</sprite>
               <color>
                 <r>255</r>
                 <g>255</g>

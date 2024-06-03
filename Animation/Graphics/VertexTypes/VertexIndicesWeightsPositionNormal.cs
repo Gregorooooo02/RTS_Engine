@@ -18,13 +18,13 @@ namespace Animation.Graphics.VertexTypes
         
         #region IVertexType Members
         public readonly static VertexDeclaration VertexDeclaration = new VertexDeclaration(
-                new VertexElement[] 
-                {                  
-                    new VertexElement( 0, VertexElementFormat.Byte4, VertexElementUsage.BlendIndices, 0),
-                    new VertexElement( 4, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 0),
-                    new VertexElement(20, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-                    new VertexElement(32, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
-                });
+            new VertexElement[] 
+            {                  
+                new VertexElement( 0, VertexElementFormat.Byte4, VertexElementUsage.BlendIndices, 0),
+                new VertexElement( 4, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 0),
+                new VertexElement(20, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+                new VertexElement(32, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
+            });
 
         VertexDeclaration IVertexType.VertexDeclaration { get { return VertexDeclaration; } }
         #endregion

@@ -6,21 +6,21 @@ namespace RTS.Animation
 {    
     public class Animations
     {
-        internal List<Matrix> _bindPose;
-        internal List<Matrix> _invBindPose; // TODO: convert those from List<T> to simple T[] arrays.
-        internal List<int> _skeletonHierarchy;
-        internal Dictionary<string, int> _boneMap;
+        public List<Matrix> _bindPose;
+        public List<Matrix> _invBindPose;
+        public List<int> _skeletonHierarchy;
+        public Dictionary<string, int> _boneMap;
 
-        private Matrix[] _boneTransforms;
-        private Matrix[] _worldTransforms;
-        private Matrix[] _animationTransforms;
+        public Matrix[] _boneTransforms;
+        public Matrix[] _worldTransforms;
+        public Matrix[] _animationTransforms;
 
         private int _currentKeyframe;
 
 
-        public Dictionary<string, Clip> Clips { get; private set; }
-        public Clip CurrentClip { get; private set; }
-        public TimeSpan CurrentTime { get; private set; }
+        public Dictionary<string, Clip> Clips { get; set; }
+        public Clip CurrentClip { get; set; }
+        public TimeSpan CurrentTime { get; set; }
 
         /// <summary>
         /// The current bone transform matrices, relative to their parent bones.
@@ -38,7 +38,7 @@ namespace RTS.Animation
         public Matrix[] AnimationTransforms { get { return _animationTransforms; } }
 
 
-        internal Animations(List<Matrix> bindPose, List<Matrix> invBindPose, List<int> skeletonHierarchy, Dictionary<string, int> boneMap, Dictionary<string, Clip> clips)
+        public Animations(List<Matrix> bindPose, List<Matrix> invBindPose, List<int> skeletonHierarchy, Dictionary<string, int> boneMap, Dictionary<string, Clip> clips)
         {
             _bindPose = bindPose;
             _invBindPose = invBindPose;
@@ -54,7 +54,7 @@ namespace RTS.Animation
 
         public void SetClip(string clipName)
         {
-            var clip = Clips["Base Stack"];
+            Clip clip = Clips["Base Stack"];
             SetClip(clip);
         }
 

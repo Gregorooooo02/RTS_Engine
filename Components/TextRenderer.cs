@@ -158,6 +158,7 @@ public class TextRenderer : Component
                 Color = new Color(temp);
             }
             ImGui.InputText("Contents", ref Content, 200);
+            ImGui.Text("Font: " + _name);
             if (ImGui.Button("Switch font"))
             {
                 _switchingFont = true;
@@ -176,6 +177,7 @@ public class TextRenderer : Component
                     {
                         AssetManager.FreeFont(Font);
                         Font = AssetManager.GetFont(n);
+                        _name = n;
                         _switchingFont = false;
                     }
                 }

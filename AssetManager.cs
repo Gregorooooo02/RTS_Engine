@@ -144,7 +144,7 @@ public class AssetManager
         LoadNames();
 #endif
         DefaultModel = new ModelData(this._content,"defaultModel");
-        DefaultAnimatedModel = this._content.Load<Model>("Dude/dude");
+        DefaultAnimatedModel = this._content.Load<Model>("minion/minion");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");

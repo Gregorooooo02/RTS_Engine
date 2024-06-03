@@ -54,6 +54,9 @@
     <EmbeddedResource Remove="VoronoiLib\**" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Prefabs\" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Animation">
       <HintPath>DLLS\Animation.dll</HintPath>
     </Reference>
@@ -66,7 +69,6 @@
     <Reference Include="GraphicsImporters">
       <HintPath>DLLS\GraphicsImporters.dll</HintPath>
     </Reference>
-    <Folder Include="Prefabs\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

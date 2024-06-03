@@ -133,7 +133,5 @@ namespace Animation.ContentReaders
 
             return boneMap;
         }
-        
     }
-    
 }

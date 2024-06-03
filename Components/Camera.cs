@@ -20,6 +20,10 @@ public class Camera : Component
 
     private const float NearPlane = 0.5f;
     private const float FarPlane = 2000.0f;
+    
+    private bool _keyboardControl = true;
+    private bool _mouseControl = true;
+    private bool _scrollControl = true;
 
     public override void Initialize()
     {
@@ -79,6 +83,9 @@ public class Camera : Component
             ImGui.DragFloat("Camera speed", ref _cameraSpeed, 0.05f);
             ImGui.DragFloat("Minimum zoom", ref _zoomMin, 0.1f);
             ImGui.DragFloat("Maximum zoom", ref _zoomMax, 0.1f);
+            ImGui.Checkbox("Keyboard control", ref _keyboardControl);
+            ImGui.Checkbox("Mouse control", ref _mouseControl);
+            ImGui.Checkbox("Scroll control", ref _scrollControl);
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
@@ -106,6 +113,7 @@ public class Camera : Component
 
     private void MoveCamera()
     {
+        if(!_keyboardControl) return;
         int x = 0, y = 0;
         if(InputManager.Instance.IsActive(GameAction.FORWARD)){
             x += 1;
@@ -136,6 +144,7 @@ public class Camera : Component
 
     private void UpdateFov()
     {
+        if(!_scrollControl) return;
         if(InputManager.Instance.ScrollWheel != _previousScrollValue)
         {
             _targetFov = FovDegrees + _zoomSpeed * Math.Sign(_previousScrollValue - InputManager.Instance.ScrollWheel);

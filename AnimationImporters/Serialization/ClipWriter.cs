@@ -55,7 +55,6 @@ namespace AnimationImporters.Serialization
             var type = typeof(Clip);
             var readerType = type.Namespace + ".Clip, " + type.Assembly.FullName;
             return readerType;
-          //  return "Animation.Animation.Clip, Aether.Animation";// "tainicom.Aether.Animation.Clip, Aether.Animation";
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
