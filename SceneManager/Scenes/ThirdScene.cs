@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
-using RTS_Engine.Pathfinding;
 using Point = System.Drawing.Point;
 
 namespace RTS_Engine;

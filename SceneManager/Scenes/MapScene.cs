@@ -4,9 +4,6 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ImGuiNET;
-using RTS_Engine.Pathfinding;
 using Point = System.Drawing.Point;
 
 namespace RTS_Engine;

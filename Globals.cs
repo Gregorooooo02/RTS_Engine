@@ -6,8 +6,6 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using RTS_Engine.Pathfinding;
-using Point = System.Drawing.Point;
 
 namespace RTS_Engine
 {
