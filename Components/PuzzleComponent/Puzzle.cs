@@ -32,6 +32,8 @@ public class Puzzle : Component
     private Rectangle _backgroundDest;
 
     private bool _drawInMiddle = false;
+
+    public event Action PuzzleCompleted;
     
     public Puzzle(){}
     
@@ -44,6 +46,7 @@ public class Puzzle : Component
             if (exitAction is { state: ActionState.RELEASED })
             {
                 DeactivatePuzzle();
+                Globals.PickingManager.PlayerBuildingPickingActive = true;
                 return;
             }
             MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
@@ -99,6 +102,8 @@ public class Puzzle : Component
         if (CheckForWin())
         {
             Completed = true;
+            PuzzleCompleted?.Invoke();
+                        
             DeactivatePuzzle();
             Console.WriteLine("WIN");
         }

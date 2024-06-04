@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ImGuiNET;
 
 namespace RTS_Engine;
@@ -11,11 +12,6 @@ public static class GameManager
     {
         MeatNumber = 0;
         PuzzleNumber = 0;
-    }
-    
-    public static void Update()
-    {
-        
     }
     
     public static void AddMeat(int amount)

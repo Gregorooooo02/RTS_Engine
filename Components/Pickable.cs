@@ -55,6 +55,8 @@ public class Pickable : Component
         builder.Append("<type>Pickable</type>");
         
         builder.Append("<active>" + Active +"</active>");
+
+        builder.Append("<pickableType>" + Type + "</pickableType>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -63,6 +65,8 @@ public class Pickable : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        Enum.TryParse(element?.Element("pickableType")?.Value, out PickableType type);
+        Type = type;
     }
 
     public override void RemoveComponent()

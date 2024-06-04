@@ -61,6 +61,10 @@ public class GameObject
         return (T)_components.Find(x => x.GetType() == typeof(T));
     }
     
+    public bool HasComponent<T>() where T : Component
+    {
+        return _components.Any(x => x.GetType() == typeof(T));
+    }
     
     public void AddComponent<T>() where T : Component,new()
     {

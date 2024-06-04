@@ -20,7 +20,7 @@ public class TextRenderer : Component
 
     private Point currentSize;
 
-    private List<string> _selectedVariables = new List<string>();
+    private List<string> _selectedVariables = new();
     private static Dictionary<string, Func<string>> _gameManagerVariables = new()
     {
         { "MeatNumber", () => GameManager.MeatNumber.ToString() },
@@ -124,6 +124,13 @@ public class TextRenderer : Component
         builder.Append("<screenSizeX>" + currentSize.X + "</screenSizeX>");
         builder.Append("<screenSizeY>" + currentSize.Y + "</screenSizeY>");
         
+        builder.Append("<selectedVariables>");
+        foreach (var variable in _selectedVariables)
+        {
+            builder.Append("<variable>" + variable + "</variable>");
+        }
+        builder.Append("</selectedVariables>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -144,6 +151,16 @@ public class TextRenderer : Component
             int.TryParse(element.Element("screenSizeY")?.Value, out int y)
                 ? new Point(x, y)
                 : new Point(1440, 900);
+
+        _selectedVariables.Clear();
+        XElement selectedVariables = element.Element("selectedVariables");
+        if (selectedVariables != null)
+        {
+            foreach (var variable in selectedVariables.Elements("variable"))
+            {
+                _selectedVariables.Add(variable.Value);
+            }
+        }
     }
 
     public override void RemoveComponent()

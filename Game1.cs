@@ -139,6 +139,8 @@ public class Game1 : Game
         Globals.FogManager.UpdateFog();
         
         Globals.AgentsManager.CheckForOrders();
+        
+        Globals.PickingManager.CheckForBuildingSelection();
 
         //foreach (Agent unit in Globals.AgentsManager.SelectedUnits)
         //{
