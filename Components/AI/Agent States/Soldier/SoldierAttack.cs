@@ -99,9 +99,10 @@ public class SoldierAttack : AgentState
         else
         {
             _timeSinceLastRepath += Globals.DeltaTime;
+            _attackTimer += Globals.DeltaTime;
             if (dist > data.MaxAttackRange || dist < data.MinAttackRange)
             {
-                _attackTimer = 0;
+                //_attackTimer = 0;
                 if (Vector2.Distance(location,_currentPoint) <= data.MinPointDistance)
                 {
                     _currentPoint = _points.Dequeue();
@@ -113,7 +114,6 @@ public class SoldierAttack : AgentState
             }
             else
             {
-                _attackTimer += Globals.DeltaTime;
                 if (_attackTimer >= data.AttackDelay)
                 {
                     //Successful attack

@@ -154,7 +154,7 @@ public class Agent : Component
         {
             SoldierData data = (SoldierData)AgentData;
             if(data.Alarmed) return;
-            data.Target = null;
+            if(data.Awareness < data.AwarenessThreshold)data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
                 //Calculate offset vector from this civilian to player unit from the list
