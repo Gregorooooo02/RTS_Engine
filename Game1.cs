@@ -33,7 +33,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
-    private bool isFullscreen = false;
+    private bool isFullscreen = true;
     
     KeyboardState lastKeyboardState = new KeyboardState();
     KeyboardState currentKeyboardState = new KeyboardState();
@@ -52,7 +52,7 @@ public class Game1 : Game
         
         if (isFullscreen)
         {
-            //Globals.ChangeScreenSize(ScreenSize.FULLSCREEN);
+            Globals.ChangeScreenSize(ScreenSize.FULLSCREEN);
         }
         else
         {
@@ -232,6 +232,8 @@ public class Game1 : Game
         ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
         ImGui.Checkbox("Single picking enabled", ref Globals.PickingManager.SinglePickingActive);
         ImGui.Checkbox("Box picking enabled", ref Globals.PickingManager.BoxPickingActive);
+        ImGui.Checkbox("Enemy picking enabled", ref Globals.PickingManager.EnemyPickingActive);
+        ImGui.Checkbox("Ground picking enabled", ref Globals.PickingManager.GroundPickingActive);
         ImGui.Checkbox("Fog Active", ref Globals.FogManager.FogActive);
         ImGui.Checkbox("Draw Explored", ref Globals.DrawExplored);
         ImGui.Checkbox("Draw Visibility", ref Globals.DrawVisibility);

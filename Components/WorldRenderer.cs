@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -369,8 +370,6 @@ public class WorldRenderer : Component
 
         GenerateVoronoiFeatures();
         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
-        
-        Globals.Renderer.WorldRenderer = this;
     }
     
     // Voronoi methods
@@ -507,12 +506,22 @@ public class WorldRenderer : Component
 
     public override string ComponentToXmlString()
     {
-        throw new NotImplementedException();
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>WorldRenderer</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("</component>");
+        return builder.ToString();
     }
 
     public override void Deserialize(XElement element)
     {
-        throw new NotImplementedException();
+        Active = element.Element("active")?.Value == "True";
+        Initialize();
     }
 
     public override void RemoveComponent()

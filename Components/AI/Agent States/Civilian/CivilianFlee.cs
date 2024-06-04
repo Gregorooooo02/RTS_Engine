@@ -38,10 +38,12 @@ public class CivilianFlee : AgentState
         {
             Node end = null;
             int attempts = 0;
+            Vector2 offset = location - target;
+            offset.Normalize();
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, offset);
+            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -offset);
             do
             {
-                Vector2 offset = location - target;
-                offset.Normalize();
                 offset *= data.FleeingDistance;
                 attempts++;
 
@@ -56,7 +58,7 @@ public class CivilianFlee : AgentState
                 _destination = location + offset;
                 
                 //TODO: Try changing offset direction by 90 degrees if calculated point falls off the map
-                if((int)(location.X + offset.X) < 0 || (int)(location.Y + offset.Y) < 0) continue;
+                if((int)(location.X + offset.X) < 0 || (int)(location.Y + offset.Y) < 0 || (int)(location.X + offset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 || (int)(location.Y + offset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1) continue;
                 
                 Node start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
                 Node goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);

@@ -201,12 +201,38 @@ public class Agent : Component
         
     }
 
+    public static Vector2 GetFirstIntersectingGridPoint(Vector2 startingPos,Vector2 direction)
+    {
+        float k1 = 10, k2 = 10;
+        if (direction.X > 0)
+        {
+            k1 = -((startingPos.X % 1) - 1.0f / direction.X);
+        }
+        else if(direction.X < 0)
+        {
+            k1 = -((startingPos.X % 1) / direction.X);
+        }
+        if (direction.Y > 0)
+        {
+            k2 = -((startingPos.Y % 1) - 1.0f / direction.Y);
+        }
+        else if(direction.Y < 0)
+        {
+            k2 = -((startingPos.Y % 1) / direction.Y);
+        }
+
+        Vector2 intersectionPoint = startingPos + (k1 < k2 ? k1 : k2) * direction;
+        intersectionPoint.Round();
+        return intersectionPoint;
+    }
+    
     private List<Point> GetIntersections(Vector2 source, Vector2 destination)
     {
         List<Point> output = new();
         Vector2 direction = new Vector2(destination.X - source.X, destination.Y - source.Y);
         direction.Normalize();
         
+        /*
         float k1 = 10, k2 = 10;
         if (direction.X > 0)
         {
@@ -227,6 +253,8 @@ public class Agent : Component
 
         Vector2 intersectionPoint = source + (k1 < k2 ? k1 : k2) * direction;
         intersectionPoint.Round();
+        */
+        Vector2 intersectionPoint = GetFirstIntersectingGridPoint(source, direction);
         //Now 'intersectionPoint' holds coordinates of the first point on the "line"
         
         float ratio;
@@ -314,6 +342,8 @@ public class Agent : Component
             {
                 _changingBehavior = true;
             }
+
+            ImGui.DragFloat("Turn speed", ref TurnSpeed);
             AgentData.Inspect();
             if (ImGui.Button("Remove component"))
             {

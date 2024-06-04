@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>EnemyTesting</name>
+  <active>True</active>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>45</x>
+        <y>4,2</y>
+        <z>45</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>3</x>
+        <y>3</y>
+        <z>3</z>
+      </scale>
+    </component>
+    <component>
+      <type>MeshRenderer</type>
+      <active>True</active>
+      <model>
+        <path>knight</path>
+        <technique>PBR</technique>
+      </model>
+    </component>
+    <component>
+      <type>Pickable</type>
+      <active>True</active>
+      <pickableType>Enemy</pickableType>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>
