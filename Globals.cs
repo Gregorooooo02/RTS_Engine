@@ -145,7 +145,7 @@ namespace RTS_Engine
                 {
                     case ScreenSize.WINDOWED:
                     {
-                        GraphicsDeviceManager.PreferredBackBufferWidth = 1440;
+                        GraphicsDeviceManager.PreferredBackBufferWidth = 1600;
                         GraphicsDeviceManager.PreferredBackBufferHeight = 900;
                         GraphicsDeviceManager.IsFullScreen = false;
                         break;
