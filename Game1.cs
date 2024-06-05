@@ -35,12 +35,6 @@ public class Game1 : Game
     private SceneManager _sceneManager;
     private bool isFullscreen = false;
     
-    KeyboardState lastKeyboardState = new KeyboardState();
-    KeyboardState currentKeyboardState = new KeyboardState();
-        
-    GamePadState lastGamePadState = new GamePadState();
-    GamePadState currentGamePadState = new GamePadState();
-    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
