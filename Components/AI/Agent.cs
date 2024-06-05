@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -291,12 +292,59 @@ public class Agent : Component
 
     public override string ComponentToXmlString()
     {
-        throw new System.NotImplementedException();
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<component>");
+        
+        builder.Append("<type>Agent</type>");
+        
+        builder.Append("<active>" + Active +"</active>");
+        
+        builder.Append("<agentType>" + Type + "</agentType>");
+        
+        builder.Append("<agentLayer>" + AgentLayer + "</agentLayer>");
+        
+        builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
+        
+        builder.Append("</component>");
+        
+        return builder.ToString();
     }
 
     public override void Deserialize(XElement element)
     {
-        throw new System.NotImplementedException();
+        Active = element.Element("active")?.Value == "True";
+        Type = (AgentType)Enum.Parse(typeof(AgentType), element.Element("agentType")?.Value);
+        AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
+        switch (Type)
+        {
+            case AgentType.Civilian:
+                AgentData = new WandererData();
+                AgentData.Deserialize(element.Element("agentData"));
+                _currentState = ((WandererData)AgentData).EntryState;
+                break;
+            case AgentType.Soldier:
+                AgentData = new SoldierData();
+                AgentData.Deserialize(element.Element("agentData"));
+                _currentState = ((SoldierData)AgentData).EntryState;
+                break;
+            case AgentType.PlayerUnit:
+                AgentData = new PlayerUnitData();
+                AgentData.Deserialize(element.Element("agentData"));
+                _currentState = ((PlayerUnitData)AgentData).EntryState;
+                break;
+        }
+        
+        _currentState.Initialize(this);
+        switch (AgentLayer)
+        {
+            case LayerType.ENEMY:
+                Globals.AgentsManager.Enemies.Add(this);
+                break;
+            case LayerType.PLAYER:
+                Globals.AgentsManager.Units.Add(this);
+                break;
+        }
     }
 
     public override void RemoveComponent()

@@ -12,13 +12,18 @@ public class PickingManager
     public bool BoxPickingActive = false;
     public bool EnemyPickingActive = false;
     public bool GroundPickingActive = false;
+    
+    public bool PlayerBuildingPickingActive = true;
+    public bool PlayerMissionSelectPickingActive = true;
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
     private const int HoldThreshold = 5;
 
     public bool PickedUnits = false;
     public bool PickedEnemy = false;
-
+    public bool PickedBuilding = false;
+    public bool PickedMissionSelect = false;
+    
     #region Visual Parameters
     private Texture2D _selectionBox;
     private Rectangle selectionBoxArea;
@@ -237,6 +242,100 @@ public class PickingManager
             }
         }
         return null;
+    }
+
+    public Pickable PickBuilding()
+    {
+        PickedBuilding = false;
+        if (!PlayerBuildingPickingActive) return null;
+        MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
+        if (action is { state: ActionState.RELEASED })
+        {
+            PickedBuilding = true;
+            Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
+            if (ray.HasValue)
+            {
+                float minDist = 10000.0f;
+                Pickable candidate = null;
+                
+                foreach (Pickable entity in Pickables)
+                {
+                    if(entity.Type != Pickable.PickableType.Building) continue;
+                    BoundingSphere sphere =
+                        entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                    float? dist = sphere.Intersects(ray.Value);
+                     
+                    if (dist.HasValue)
+                    {
+                        if ((IncludeZeroDist && dist.Value < minDist) || (!IncludeZeroDist && dist.Value < minDist && dist.Value > 0))
+                        {
+                            minDist = dist.Value;
+                            candidate = entity;
+                        }
+                    }
+                }
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    public Pickable PickMissionSelect()
+    {
+        PickedMissionSelect = false;
+        if (!PlayerMissionSelectPickingActive) return null;
+        MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
+        if (action is { state : ActionState.RELEASED })
+        {
+            PickedMissionSelect = true;
+            Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
+            if (ray.HasValue)
+            {
+                float minDist = 10000.0f;
+                Pickable candidate = null;
+
+                foreach (Pickable entity in Pickables)
+                {
+                    if (entity.Type != Pickable.PickableType.MissionSelect) continue;
+                    BoundingSphere sphere =
+                        entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                    float? dist = sphere.Intersects(ray.Value);
+                    
+                    if (dist.HasValue)
+                    {
+                        if ((IncludeZeroDist && dist.Value < minDist) || (!IncludeZeroDist && dist.Value < minDist && dist.Value > 0))
+                        {
+                            minDist = dist.Value;
+                            candidate = entity;
+                        }
+                    }
+                }
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    public void CheckForBuildingSelection()
+    {
+        Pickable pickedBuilding = Globals.PickingManager.PickBuilding();
+
+        if (pickedBuilding is { Type : Pickable.PickableType.Building })
+        {
+            Building temp = pickedBuilding.ParentObject.GetComponent<Building>();
+            temp?.OnClick();
+        }
+    }
+    
+    public void CheckForMissionSelection()
+    {
+        Pickable pickedMission = Globals.PickingManager.PickMissionSelect();
+
+        if (pickedMission is { Type : Pickable.PickableType.MissionSelect })
+        {
+            MissionSelection temp = pickedMission.ParentObject.GetComponent<MissionSelection>();
+            temp?.OnClick();
+        }
     }
 
     private PickingFrustum? CalculatePickingFrustum(MouseAction action)

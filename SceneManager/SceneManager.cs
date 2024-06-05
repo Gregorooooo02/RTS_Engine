@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
@@ -15,6 +16,50 @@ public class SceneManager
     {
         Instance = this;
         _scenes = new List<Scene>();
+    }
+
+    public void CreateMissionScene()
+    {
+        Scene missionScene = new LoadedScene();
+        
+        missionScene.Name = "MissionScene";
+        
+        GameObject missionRoot = new GameObject();
+        missionScene.SceneRoot = missionRoot;
+        missionRoot.Name = "Root";
+        missionRoot.AddComponent<WorldRenderer>();
+        
+        GameObject camera = new GameObject();
+        camera.Name = "Camera";
+        missionRoot.AddChildObject(camera);
+        camera.AddComponent<Camera>();
+        camera.Transform.SetLocalPosition(new Vector3(200, 70, 200));
+
+        GameObject civilians = new GameObject();
+        civilians.Name = "Civilians";
+        missionRoot.AddChildObject(civilians);
+        for (int i = 0; i < 15; i++)
+        {
+#if _WINDOWS
+            civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
+#else
+            civilians.LoadPrefab("Prefabs/Civilian.xml");
+#endif
+        }
+        
+        GameObject chairs = new GameObject();
+        chairs.Name = "Chairs";
+        missionRoot.AddChildObject(chairs);
+        for (int i = 0; i < 5; i++)
+        {
+#if _WINDOWS
+            chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
+#else
+            chairs.LoadPrefab("Prefabs/Chair.xml");
+#endif
+        }
+
+        AddScene(missionScene);
     }
 
     public void AddScene(Scene scene)
@@ -33,6 +78,11 @@ public class SceneManager
             {
                 ChangeScene(i);
             }
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.CREATE_MISSION)?.state == ActionState.RELEASED)
+        {
+            CreateMissionScene();
         }
     }
 
@@ -155,9 +205,12 @@ public class SceneManager
         {
             ImGui.Begin("Load scene");
             foreach (string path in Globals.AvailableScenes)
-            {
-                //TODO: Check if line below works on mac. Might not work because of '/' or '\' problem.
+            { 
+#if _WINDOWS
                 string name = path.Substring(path.LastIndexOf('\\') + 1);
+#else
+                string name = path.Substring(path.LastIndexOf('/') + 1);
+#endif
                 name = name[..^4];
                 if (ImGui.Button(name))
                 {

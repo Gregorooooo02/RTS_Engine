@@ -128,7 +128,7 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
-
+        
         _sceneManager.CheckForSceneChanges();
         
 #if DEBUG
@@ -139,6 +139,9 @@ public class Game1 : Game
         Globals.FogManager.UpdateFog();
         
         Globals.AgentsManager.CheckForOrders();
+        
+        Globals.PickingManager.CheckForBuildingSelection();
+        Globals.PickingManager.CheckForMissionSelection();
 
         //foreach (Agent unit in Globals.AgentsManager.SelectedUnits)
         //{

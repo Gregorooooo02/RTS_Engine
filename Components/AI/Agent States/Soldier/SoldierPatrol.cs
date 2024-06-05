@@ -7,7 +7,7 @@ namespace RTS_Engine.Components.AI.Agent_States;
 
 public class SoldierPatrol : AgentState
 {
-    private int _currentPathId = -1;
+    private string _currentPathId = "";
     private SoldierData.PatrolType _currentPatrolType;
 
     private bool _reverse;
@@ -85,7 +85,7 @@ public class SoldierPatrol : AgentState
         {
             _currentPathId = data.PathId;
             _currentPatrolType = data.PatrollingType;
-            List<Vector3> points = Globals.AgentsManager.PatrolManager.GetPathByIndex(_currentPathId);
+            List<Vector3> points = Globals.AgentsManager.PatrolManager.GetPathByName(_currentPathId);
             _patrolPoints.Clear();
             foreach (Vector3 point in points)
             {

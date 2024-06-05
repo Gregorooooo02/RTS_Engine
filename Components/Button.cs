@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -50,7 +51,7 @@ public class Button : Component
                         if (action.StartingPosition.X >= _pos.X
                             && action.StartingPosition.X <= _pos.X + ButtonVisual.Sprite.Width * _scale.X
                             && action.StartingPosition.Y >= _pos.Y
-                            && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.X)
+                            && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
                         {
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
                             Globals.HitUI = true;
@@ -64,6 +65,17 @@ public class Button : Component
                             {
                                 ParentObject.ToggleParentActiveState();
                             }
+                            
+                            if (_buttonAction == GameAction.CONFIRM)
+                            {
+                                SelectAndDeselect(_buttonAction);
+                                _buttonAction = GameAction.DECLINE;
+                            }
+                            else if (_buttonAction == GameAction.DECLINE)
+                            {
+                                SelectAndDeselect(_buttonAction);
+                                _buttonAction = GameAction.CONFIRM;
+                            }
                         }
                     }
                 }
@@ -72,7 +84,29 @@ public class Button : Component
             {
                 Initialize();
             }
-            
+        }
+    }
+    
+    public void SelectAndDeselect(GameAction action)
+    {
+        string currentSpriteName = ButtonVisual.Sprite.Name;
+        string newSpriteName;
+
+        if (action == GameAction.CONFIRM)
+        {
+            if (!currentSpriteName.EndsWith("Selected"))
+            {
+                newSpriteName = currentSpriteName.Replace("Normal", "Selected");
+                ButtonVisual.LoadSprite(newSpriteName);
+            }
+        }
+        else if (action == GameAction.DECLINE)
+        {
+            if (currentSpriteName.EndsWith("Selected"))
+            {
+                newSpriteName = currentSpriteName.Replace("Selected", "Normal");
+                ButtonVisual.LoadSprite(newSpriteName);
+            }
         }
     }
 
@@ -96,8 +130,11 @@ public class Button : Component
         builder.Append("<active>" + Active +"</active>");
         
         builder.Append("<action>"+ _buttonAction +"</action>");
-        
-        builder.Append("<linkedObject>"+ GameObjectName +"</linkedObject>");
+
+        if (_buttonAction == GameAction.TOGGLE_ACTIVE)
+        {
+            builder.Append("<linkedObject>"+ GameObjectName +"</linkedObject>");    
+        }
         
         builder.Append("</component>");
         return builder.ToString();
@@ -108,7 +145,6 @@ public class Button : Component
         Active = element.Element("active")?.Value == "True";
         Enum.TryParse(element?.Element("action")?.Value, out GameAction action);
         _buttonAction = action;
-        GameObjectName = element?.Element("linkedObject")?.Value;
     }
 
     public override void RemoveComponent()

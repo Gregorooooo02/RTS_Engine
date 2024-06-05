@@ -12,7 +12,8 @@ public class Pickable : Component
         Enemy,
         Unit,
         EnemyBuilding,
-        Building
+        Building,
+        MissionSelect
     }
     
     public MeshRenderer Renderer = null;
@@ -55,6 +56,8 @@ public class Pickable : Component
         builder.Append("<type>Pickable</type>");
         
         builder.Append("<active>" + Active +"</active>");
+
+        builder.Append("<pickableType>" + Type + "</pickableType>");
         
         builder.Append("<pickableType>" + Type +"</pickableType>");
         

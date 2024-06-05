@@ -36,7 +36,7 @@ public class GameObject
         {
             SetChildrenActive(this);    
         }
-
+        
         if (Active)
         {
             Transform.Update();
@@ -61,6 +61,10 @@ public class GameObject
         return (T)_components.Find(x => x.GetType() == typeof(T));
     }
     
+    public bool HasComponent<T>() where T : Component
+    {
+        return _components.Any(x => x.GetType() == typeof(T));
+    }
     
     public void AddComponent<T>() where T : Component,new()
     {
@@ -257,12 +261,16 @@ public class GameObject
         StringBuilder builder = new StringBuilder();
         builder.Append(SaveSceneToXml());
         XDocument prefab = XDocument.Parse(builder.ToString());
+#if _WINDOWS
         StreamWriter streamWriter = new StreamWriter(Globals.MainPath + "/Prefabs/" + name + ".xml");
+#else
+        StreamWriter streamWriter = new StreamWriter(Globals.MainPath + "Prefabs/" + name + ".xml");
+#endif
         prefab.Save(streamWriter);
         streamWriter.Close();
     }
 
-    private void LoadPrefab(string name)
+    public void LoadPrefab(string name)
     {
         AddChildObject(FileManager.DeserializeScene(name));
     }

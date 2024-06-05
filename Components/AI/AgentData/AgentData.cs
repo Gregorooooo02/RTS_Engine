@@ -1,4 +1,6 @@
-﻿using ImGuiNET;
+﻿using System.Text;
+using System.Xml.Linq;
+using ImGuiNET;
 
 namespace RTS_Engine.Components.AI.AgentData;
 
@@ -26,6 +28,26 @@ public class AgentData
         if(!Alive) return;
         Hp -= damage;
         if (Hp <= 0) Alive = false;
+    }
+
+    public virtual string Serialize()
+    {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.Append("<hp>" + Hp + "</hp>");
+        
+        builder.Append("<maxHp>" + MaxHp + "</maxHp>");
+        
+        builder.Append("<alive>" + Alive + "</alive>");
+        
+        return builder.ToString();
+    }
+
+    public virtual void Deserialize(XElement element)
+    {
+        Hp = float.TryParse(element.Element("hp")?.Value, out float hp) ? hp : 100.0f;
+        MaxHp = float.TryParse(element.Element("maxHp")?.Value, out float maxHp) ? maxHp : 100.0f;
+        Alive = !bool.TryParse(element.Element("alive")?.Value, out bool alive) || alive;
     }
 
 #if DEBUG

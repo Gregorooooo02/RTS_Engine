@@ -46,7 +46,6 @@ public class WorldRenderer : Component
     
     #endregion
     
-    
     public float[,] HeightData;
     private int _terrainWidth;
     private int _terrainHeight;
@@ -64,7 +63,6 @@ public class WorldRenderer : Component
     
     // Voronoi stuff
     private Dictionary<Vector2, List<Vector2>> _voronoiRegions;
-    public List<GameObject> Features;
 
     public WorldRenderer(GameObject parentObject)
     {
@@ -84,7 +82,7 @@ public class WorldRenderer : Component
     
     private void CreateChunk(int chunkX, int chunkY, int chunkWidth, int chunkHeight, float[,] heightData, Color[] heightMapColors, float globalMin, float globalMax)
     {
-        Vector3 chunkPosition = new Vector3(chunkX, 0, -chunkY);
+        Vector3 chunkPosition = new Vector3(chunkX, 0, chunkY);
         
         VertexMultitextured[] vertices = new VertexMultitextured[chunkWidth * chunkHeight];
         short[] indices = new short[(chunkWidth - 1) * (chunkHeight - 1) * 6];
@@ -228,7 +226,7 @@ public class WorldRenderer : Component
                     globalMaxHeight
                 );
                 
-                _waterBody = new WaterBody(x, y, _chunkSize, 5);
+                _waterBody = new WaterBody(x, y, _chunkSize - 1, 5);
                 _waterBodies.Add(_waterBody);
             }
         }
@@ -292,17 +290,6 @@ public class WorldRenderer : Component
                 MapNodes[i, j].Connections = neighborMask;
             }
         }
-
-        /*
-        for (int i = 0; i < MapNodes.GetLength(0); i++)
-        {
-            for (int j = 0; j < MapNodes.GetLength(1); j++)
-            {
-                Console.Write(Convert.ToString(MapNodes[i,j].Connections,2).ToCharArray().Count(c => c == '1') + " ");
-            }
-            Console.WriteLine("");
-        }
-        */
     }
 
     public override void Update()
@@ -317,7 +304,6 @@ public class WorldRenderer : Component
     {
         if (!Active) return;
         DrawChunk();
-        DrawFeatures();
     }
 
     public void DrawChunk()
@@ -339,7 +325,7 @@ public class WorldRenderer : Component
             Globals.TerrainEffect.Parameters["xTexture2"].SetValue(_rockTexture);
             Globals.TerrainEffect.Parameters["xTexture3"].SetValue(_snowTexture);
             
-            Vector3 lightDir = new Vector3(1.0f, -1.0f, -1.0f);
+            Vector3 lightDir = new Vector3(1.0f, 1.0f, -1.0f);
             lightDir.Normalize();
             Globals.TerrainEffect.Parameters["xLightDirection"].SetValue(lightDir);
             Globals.TerrainEffect.Parameters["xAmbient"].SetValue(0.1f);
@@ -366,8 +352,6 @@ public class WorldRenderer : Component
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
         
-        Features = new List<GameObject>();
-
         GenerateVoronoiFeatures();
         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
@@ -443,6 +427,13 @@ public class WorldRenderer : Component
     {
         Random random = new Random();
         
+        GameObject trees = new GameObject();
+        trees.Name = "Trees";
+        
+        this.ParentObject.AddChildObject(trees);
+        trees.AddComponent<InstancedRendererController>();
+        trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+        
         foreach (var kvp in voronoiRegions)
         {
             var site = kvp.Key;
@@ -455,7 +446,7 @@ public class WorldRenderer : Component
                 if (HeightData[(int)position.X, (int)position.Z] > 6.0f
                     && HeightData[(int)position.X, (int)position.Z] < 25.0f)
                 {
-                    PlaceTree(position);    
+                    PlaceTree(trees, position);
                 }
             }
             else
@@ -482,26 +473,13 @@ public class WorldRenderer : Component
         return new Vector3(x, HeightData[(int)x, (int)y] + 8, y);
     }
     
-    private void PlaceTree(Vector3 position)
+    private void PlaceTree(GameObject root, Vector3 position)
     {
         GameObject tree = new GameObject();
         tree.Name = "Tree";
+        root.AddChildObject(tree);
+        tree.AddComponent<InstancedRendererUnit>();
         tree.Transform.SetLocalPosition(position);
-        tree.AddComponent<MeshRenderer>();
-        tree.GetComponent<MeshRenderer>().LoadModel("Env/Trees/drzewoiglaste");
-        
-        Features.Add(tree);
-    }
-    
-    private void DrawFeatures()
-    {
-        foreach (var feature in Features)
-        {
-            feature.GetComponent<MeshRenderer>()._model.Draw(
-                ParentObject.Transform.ModelMatrix * 
-                Matrix.CreateTranslation(feature.Transform.Pos)
-            );
-        }
     }
 
     public override string ComponentToXmlString()
@@ -515,6 +493,7 @@ public class WorldRenderer : Component
         builder.Append("<active>" + Active +"</active>");
         
         builder.Append("</component>");
+        
         return builder.ToString();
     }
 

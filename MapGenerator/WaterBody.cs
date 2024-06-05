@@ -68,6 +68,8 @@ public sealed class WaterBody
         _waveNormalOffset += _waveVelocity * Globals.DeltaTime;
         _waterHeight += (float)Math.Sin(_waveTime) * 0.005f;
         
+        // TODO: Change this to modify the world matrix and not all the vertices
+        
         for (int i = 0 ; i < _vertices.Length; i++)
         {
             _vertices[i].Position.Y = _waterHeight;
@@ -104,16 +106,16 @@ public sealed class WaterBody
     {
         _vertices = new VertexPositionTexture[4];
         
-        _vertices[0].Position = new Vector3(x, _waterHeight, -y);
+        _vertices[0].Position = new Vector3(x, _waterHeight, y);
         _vertices[0].TextureCoordinate = new Vector2(0, 0);
         
-        _vertices[1].Position = new Vector3(x, _waterHeight, -(_waterSize + y));
+        _vertices[1].Position = new Vector3(x, _waterHeight, (_waterSize + y));
         _vertices[1].TextureCoordinate = new Vector2(0, 1);
         
-        _vertices[2].Position = new Vector3(_waterSize + x, _waterHeight, -y);
+        _vertices[2].Position = new Vector3(_waterSize + x, _waterHeight, y);
         _vertices[2].TextureCoordinate = new Vector2(1, 0);
         
-        _vertices[3].Position = new Vector3(_waterSize + x, _waterHeight, -(_waterSize + y));
+        _vertices[3].Position = new Vector3(_waterSize + x, _waterHeight, (_waterSize + y));
         _vertices[3].TextureCoordinate = new Vector2(1, 1);
     }
     
