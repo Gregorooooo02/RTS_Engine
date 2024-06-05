@@ -30,6 +30,10 @@ public class UnitMove : AgentState
         if (data.MovementScheduled)
         {
             data.MovementScheduled = false;
+            Vector2 direction = data.Destination - location;
+            direction.Normalize();
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
+            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(data.Destination, -direction);
             Node end = null;
             int attempts = 0;
             do
@@ -40,9 +44,10 @@ public class UnitMove : AgentState
                     //If pathing attempts fails, for some reason, return to idle
                     return idle;
                 }
-
-                Node start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
-                Node goal = new Node(new Point((int)data.Destination.X, (int)data.Destination.Y), null, 1);
+                
+                
+                Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+                Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                 
                 end = Pathfinding.CalculatePath(goal, start);
                 

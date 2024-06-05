@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>UnitTesting</name>
+  <active>True</active>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>49,5</x>
+        <y>4</y>
+        <z>54,2</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </scale>
+    </component>
+    <component>
+      <type>MeshRenderer</type>
+      <active>True</active>
+      <model>
+        <path>krzeslo</path>
+        <technique>PBR</technique>
+      </model>
+    </component>
+    <component>
+      <type>Pickable</type>
+      <active>True</active>
+      <pickableType>Unit</pickableType>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>

@@ -39,6 +39,9 @@ public class SoldierData : AgentData
     public float SightHeight = 4.0f;
     public float MinPresenceMultiplier = 0.2f;
 
+    public float TimeToCoolDown = 10.0f;
+    public float MinDistanceToCoolDown = 50.0f;
+
     public bool Alarmed = false;
     
     public Agent Target = null;
@@ -81,6 +84,8 @@ public class SoldierData : AgentData
         ImGui.DragFloat("Sight angle", ref SightAngle);
         ImGui.DragFloat("Sight height", ref SightHeight);
         ImGui.DragFloat("Min presence multiplier", ref MinPresenceMultiplier,0.01f,0,0.99f);
+        ImGui.Separator();
+        ImGui.DragFloat("Repath delay", ref RepathDelay,0.1f,0.3f,10);
         
         if (_changePatrolType)
         {

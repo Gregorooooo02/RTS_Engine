@@ -56,6 +56,8 @@ public class Pickable : Component
         
         builder.Append("<active>" + Active +"</active>");
         
+        builder.Append("<pickableType>" + Type +"</pickableType>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -63,6 +65,8 @@ public class Pickable : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        Enum.TryParse(element?.Element("pickableType")?.Value, out PickableType result);
+        Type = result;
     }
 
     public override void RemoveComponent()
@@ -77,6 +81,7 @@ public class Pickable : Component
         {
             ImGui.Checkbox("Pickable active", ref Active);
             ImGui.Text("Linked with MeshRenderer from object: " + Renderer?.ParentObject.Name);
+            ImGui.Text("Selected type: " + Type);
             if (ImGui.Button("Change type"))
             {
                 _changeType = true;

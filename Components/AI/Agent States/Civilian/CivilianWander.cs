@@ -94,7 +94,7 @@ public class CivilianWander : AgentState
                     return idle;
                 }
                 
-                if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0) continue;
+                if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0 || (int)(agentPosition.X + offset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 || (int)(agentPosition.Z + offset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1) continue;
                 
                 Node start = new Node(new Point((int)agentPosition.X, (int)agentPosition.Z), null, 1);
                 Node goal = new Node(new Point((int)(agentPosition.X + offset.X), (int)(agentPosition.Z + offset.Y)), null, 1);

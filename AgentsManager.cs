@@ -52,7 +52,11 @@ public class AgentsManager
             Agent enemy = selectedEnemy.ParentObject.GetComponent<Agent>();
             if (enemy != null)
             {
-                //TODO: Pass order 'attack' to all selected units
+                foreach (Agent selectedUnit in SelectedUnits)
+                {
+                    PlayerUnitData data = (PlayerUnitData)selectedUnit.AgentData;
+                    data.Target = enemy;
+                }
             }
         }
     }

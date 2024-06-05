@@ -7,7 +7,8 @@ namespace RTS_Engine.Components.AI.Agent_States;
 public class SoldierAttack : AgentState
 {
     public Agent Target;
-    
+
+    private float _cooldownTimer;
     private float _attackTimer;
     private float _timeSinceLastRepath = 10;
     
@@ -26,21 +27,41 @@ public class SoldierAttack : AgentState
         if ((Target == null || !Target.AgentData.Alive) && agent.AgentStates.TryGetValue(Agent.State.Patrol,out AgentState patrol))
         {
             data.Alarmed = false;
+            Target = null;
             return patrol;
         }
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
         Vector2 target = new Vector2(Target.Position.X, Target.Position.Z);
         float dist = Vector2.Distance(location, target);
+        if (dist > data.MinDistanceToCoolDown)
+        {
+            _cooldownTimer += Globals.DeltaTime;
+            if (_cooldownTimer >= data.TimeToCoolDown && agent.AgentStates.TryGetValue(Agent.State.Patrol,out AgentState back))
+            {
+                data.Alarmed = false;
+                Target = null;
+                return back;
+            }
+        }
+        else
+        {
+            _cooldownTimer = 0;
+        }
         if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
         {
             Node end = null;
             int attempts = 0;
+            Vector2 direction = target - location;
+            direction.Normalize();
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
+            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
             do
             {
                 attempts++;
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Patrol, out AgentState value))
                 {
                     //If pathing attempts fails, for some reason, return to patrolling
+                    data.Alarmed = false;
                     Target = null;
                     return value;
                 }
@@ -50,8 +71,8 @@ public class SoldierAttack : AgentState
                 if (dist > data.MaxAttackRange)
                 {
                     //If it's to far, walk to target
-                    start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
-                    goal = new Node(new Point((int)target.X, (int)target.Y), null, 1);
+                    start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+                    goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                     
                     end = Pathfinding.CalculatePath(goal, start);
                 }
@@ -63,7 +84,7 @@ public class SoldierAttack : AgentState
                     offset.Normalize();
                     offset *= awayDist;
                     
-                    start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
+                    start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                     goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);
                     
                     end = Pathfinding.CalculatePath(goal, start);
@@ -78,9 +99,10 @@ public class SoldierAttack : AgentState
         else
         {
             _timeSinceLastRepath += Globals.DeltaTime;
+            _attackTimer += Globals.DeltaTime;
             if (dist > data.MaxAttackRange || dist < data.MinAttackRange)
             {
-                _attackTimer = 0;
+                //_attackTimer = 0;
                 if (Vector2.Distance(location,_currentPoint) <= data.MinPointDistance)
                 {
                     _currentPoint = _points.Dequeue();
@@ -92,10 +114,11 @@ public class SoldierAttack : AgentState
             }
             else
             {
-                _attackTimer += Globals.DeltaTime;
                 if (_attackTimer >= data.AttackDelay)
                 {
                     //Successful attack
+                    PlayerUnitData playerUnitData = (PlayerUnitData)Target.AgentData;
+                    playerUnitData.Target ??= agent;
                     _attackTimer = 0;
                     Target.AgentData.DealDamage(data.Damage);
                 }

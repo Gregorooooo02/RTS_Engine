@@ -10,6 +10,8 @@ public class PickingManager
 {
     public bool SinglePickingActive = false;
     public bool BoxPickingActive = false;
+    public bool EnemyPickingActive = false;
+    public bool GroundPickingActive = false;
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
     private const int HoldThreshold = 5;
@@ -205,6 +207,7 @@ public class PickingManager
     public Pickable PickEnemy()
     {
         PickedEnemy = false;
+        if (!EnemyPickingActive) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.RMB);
         if (action is {state: ActionState.RELEASED})
         {
@@ -320,6 +323,7 @@ public class PickingManager
 
     public Vector3? PickGround(Point mousePosition, float heightGrace, int maxTries = 10)
     {
+        if (!GroundPickingActive) return null;
         if (Globals.Renderer.WorldRenderer is null) throw new InvalidOperationException("Can't pick the ground because there is no ground to pick.");
         Ray? mouseRay = CalculateMouseRay(mousePosition);
         if (mouseRay.HasValue)

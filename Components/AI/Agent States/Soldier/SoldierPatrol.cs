@@ -102,10 +102,14 @@ public class SoldierPatrol : AgentState
             }
             Node end = null;
             int attempts = 0;
+            Vector2 direction = _patrolPoints[_currentPatrolPointIndex] - location;
+            direction.Normalize();
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
+            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(_patrolPoints[_currentPatrolPointIndex], -direction);
             do
             {
-                Node start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
-                Node goal = new Node(new Point((int)(_patrolPoints[_currentPatrolPointIndex].X), (int)(_patrolPoints[_currentPatrolPointIndex].Y)), null, 1);
+                Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+                Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
 
                 UpdateIndex();
                 

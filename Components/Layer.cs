@@ -76,7 +76,7 @@ public class Layer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
-        Enum.TryParse(element?.Element("action")?.Value, out LayerType result);
+        Enum.TryParse(element?.Element("layerType")?.Value, out LayerType result);
         layer = result;
     }
 
