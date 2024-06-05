@@ -9,7 +9,7 @@ public class MissionSelection : Component
     public override void Update()
     {
         if (!Active) return;
-        CheckIfWindowClosed();
+        
     }
     
     public override void Initialize() {}
@@ -26,15 +26,6 @@ public class MissionSelection : Component
         {
             missionWindow.Active = true;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
-        }
-    }
-
-    public void CheckIfWindowClosed()
-    {
-        GameObject missionWindow = ParentObject.Children.Find(child => child.FindGameObjectByName("Mission_Window") != null);
-        if (!missionWindow.Active)
-        {
-            Globals.PickingManager.PlayerBuildingPickingActive = true;
         }
     }
     

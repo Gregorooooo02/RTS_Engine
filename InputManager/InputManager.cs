@@ -19,6 +19,7 @@ public enum GameAction
     RMB,
     TOGGLE_ACTIVE,
     TOGGLE_ACTIVE_PARENT,
+    CANCEL_MISSION_SELECT,
     SCENE0,
     SCENE1,
     SCENE2,

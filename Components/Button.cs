@@ -65,6 +65,12 @@ public class Button : Component
                             {
                                 ParentObject.ToggleParentActiveState();
                             }
+
+                            if (_buttonAction == GameAction.CANCEL_MISSION_SELECT)
+                            {
+                                ParentObject.ToggleParentActiveState();
+                                Globals.PickingManager.PlayerBuildingPickingActive = true;
+                            }
                             
                             if (_buttonAction == GameAction.CONFIRM)
                             {
@@ -145,6 +151,7 @@ public class Button : Component
         Active = element.Element("active")?.Value == "True";
         Enum.TryParse(element?.Element("action")?.Value, out GameAction action);
         _buttonAction = action;
+        GameObjectName = element?.Element("linkedObject")?.Value;
     }
 
     public override void RemoveComponent()

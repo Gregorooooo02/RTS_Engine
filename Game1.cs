@@ -33,7 +33,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
-    private bool isFullscreen = true;
+    private bool isFullscreen = false;
     
     KeyboardState lastKeyboardState = new KeyboardState();
     KeyboardState currentKeyboardState = new KeyboardState();

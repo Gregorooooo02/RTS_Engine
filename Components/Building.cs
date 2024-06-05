@@ -43,8 +43,8 @@ public class Building : Component
                 GameManager.RemovePuzzle(PuzzleCost);
             };
             
-            puzzle.ActivatePuzzle();
             Globals.PickingManager.PlayerBuildingPickingActive = false;
+            puzzle.ActivatePuzzle();
         }
     }
 

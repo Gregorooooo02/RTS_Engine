@@ -80,6 +80,14 @@
                 <z>1</z>
               </scale>
             </component>
+            <component>
+              <type>InstancedRendererController</type>
+              <active>True</active>
+              <model>
+                <path>Env/Trees/drzewoiglaste</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
           </components>
           <childObjects>
             <object>
@@ -106,12 +114,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -140,12 +143,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -174,12 +172,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -208,12 +201,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -242,12 +230,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -276,12 +259,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -310,12 +288,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -344,12 +317,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -378,12 +346,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -412,12 +375,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -446,12 +404,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -480,12 +433,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -514,12 +462,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -548,12 +491,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -582,12 +520,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -616,12 +549,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -650,12 +578,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -684,12 +607,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -718,12 +636,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -752,12 +665,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -786,12 +694,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -820,12 +723,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -854,12 +752,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -888,12 +781,7 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>Env/Trees/drzewoiglaste</path>
-                    <technique>PBR</technique>
-                  </model>
+                  <type>InstancedRendererUnit</type>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -965,6 +853,7 @@
                 <component>
                   <type>Pickable</type>
                   <active>True</active>
+                  <pickableType>Building</pickableType>
                   <pickableType>Building</pickableType>
                 </component>
               </components>
@@ -1164,6 +1053,7 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Building</pickableType>
+                  <pickableType>Building</pickableType>
                 </component>
                 <component>
                   <type>Building</type>
@@ -1359,6 +1249,7 @@
                 <component>
                   <type>Pickable</type>
                   <active>True</active>
+                  <pickableType>Building</pickableType>
                   <pickableType>Building</pickableType>
                 </component>
                 <component>
@@ -1599,6 +1490,7 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>MissionSelect</pickableType>
+                  <pickableType>MissionSelect</pickableType>
                 </component>
                 <component>
                   <type>MissionSelection</type>
@@ -1727,7 +1619,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
-                          <action>TOGGLE_ACTIVE_PARENT</action>
+                          <action>CANCEL_MISSION_SELECT</action>
                         </component>
                       </components>
                       <childObjects>
