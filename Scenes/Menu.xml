@@ -61,6 +61,7 @@
           </color>
           <screenSizeX>1440</screenSizeX>
           <screenSizeY>900</screenSizeY>
+          <selectedVariables></selectedVariables>
         </component>
       </components>
       <childObjects></childObjects>
@@ -131,7 +132,6 @@
               <type>Button</type>
               <active>True</active>
               <action>SCENE1</action>
-              <linkedObject>Root</linkedObject>
             </component>
           </components>
           <childObjects>
@@ -172,6 +172,7 @@
                   </color>
                   <screenSizeX>1440</screenSizeX>
                   <screenSizeY>900</screenSizeY>
+                  <selectedVariables></selectedVariables>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -254,6 +255,7 @@
                   </color>
                   <screenSizeX>1440</screenSizeX>
                   <screenSizeY>900</screenSizeY>
+                  <selectedVariables></selectedVariables>
                 </component>
               </components>
               <childObjects></childObjects>
@@ -301,7 +303,6 @@
               <type>Button</type>
               <active>True</active>
               <action>EXIT</action>
-              <linkedObject>Root</linkedObject>
             </component>
           </components>
           <childObjects>
@@ -342,6 +343,7 @@
                   </color>
                   <screenSizeX>1440</screenSizeX>
                   <screenSizeY>900</screenSizeY>
+                  <selectedVariables></selectedVariables>
                 </component>
               </components>
               <childObjects></childObjects>

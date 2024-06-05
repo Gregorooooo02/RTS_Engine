@@ -2289,7 +2289,7 @@
               <type>Button</type>
               <active>True</active>
               <action>TOGGLE_ACTIVE</action>
-              <linkedObject>Root</linkedObject>
+              <linkedObject>Confirm_Window</linkedObject>
             </component>
           </components>
           <childObjects>

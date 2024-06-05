@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
@@ -25,7 +26,14 @@ public class SceneManager
         
         GameObject missionRoot = new GameObject();
         missionScene.SceneRoot = missionRoot;
+        missionRoot.Name = "Root";
         missionRoot.AddComponent<WorldRenderer>();
+        
+        GameObject camera = new GameObject();
+        camera.Name = "Camera";
+        missionRoot.AddChildObject(camera);
+        camera.AddComponent<Camera>();
+        camera.Transform.SetLocalPosition(new Vector3(650, 500, 600));
         
         AddScene(missionScene);
     }
@@ -174,8 +182,11 @@ public class SceneManager
             ImGui.Begin("Load scene");
             foreach (string path in Globals.AvailableScenes)
             {
-                //TODO: Check if line below works on mac. Might not work because of '/' or '\' problem.
+#if _WINDOWS
                 string name = path.Substring(path.LastIndexOf('\\') + 1);
+#else
+                string name = path.Substring(path.LastIndexOf('/') + 1);
+#endif
                 name = name[..^4];
                 if (ImGui.Button(name))
                 {

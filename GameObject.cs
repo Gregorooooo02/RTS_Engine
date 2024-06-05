@@ -261,7 +261,11 @@ public class GameObject
         StringBuilder builder = new StringBuilder();
         builder.Append(SaveSceneToXml());
         XDocument prefab = XDocument.Parse(builder.ToString());
+#if _WINDOWS
         StreamWriter streamWriter = new StreamWriter(Globals.MainPath + "/Prefabs/" + name + ".xml");
+#else
+        StreamWriter streamWriter = new StreamWriter(Globals.MainPath + "Prefabs/" + name + ".xml");
+#endif
         prefab.Save(streamWriter);
         streamWriter.Close();
     }
