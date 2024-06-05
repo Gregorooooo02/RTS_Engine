@@ -36,7 +36,7 @@ public class GameObject
         {
             SetChildrenActive(this);    
         }
-
+        
         if (Active)
         {
             Transform.Update();

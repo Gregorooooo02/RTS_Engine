@@ -23,6 +23,8 @@ public enum GameAction
     SCENE1,
     SCENE2,
     SCENE3,
+    CONFIRM,
+    DECLINE,
     PAUSE,
     EXITPUZZLE,
     RESIZE_FULLSCREEN,

@@ -12,7 +12,8 @@ public class Pickable : Component
         Enemy,
         Unit,
         EnemyBuilding,
-        Building
+        Building,
+        MissionSelect
     }
     
     public MeshRenderer Renderer = null;

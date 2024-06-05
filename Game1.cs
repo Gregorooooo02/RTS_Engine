@@ -141,6 +141,7 @@ public class Game1 : Game
         Globals.AgentsManager.CheckForOrders();
         
         Globals.PickingManager.CheckForBuildingSelection();
+        Globals.PickingManager.CheckForMissionSelection();
 
         //foreach (Agent unit in Globals.AgentsManager.SelectedUnits)
         //{
