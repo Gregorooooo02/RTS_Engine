@@ -63,7 +63,6 @@ public class WorldRenderer : Component
     
     // Voronoi stuff
     private Dictionary<Vector2, List<Vector2>> _voronoiRegions;
-    public List<GameObject> Features;
 
     public WorldRenderer(GameObject parentObject)
     {
@@ -305,7 +304,6 @@ public class WorldRenderer : Component
     {
         if (!Active) return;
         DrawChunk();
-        DrawFeatures();
     }
 
     public void DrawChunk()
@@ -354,8 +352,6 @@ public class WorldRenderer : Component
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
         
-        Features = new List<GameObject>();
-
         GenerateVoronoiFeatures();
         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
@@ -431,6 +427,13 @@ public class WorldRenderer : Component
     {
         Random random = new Random();
         
+        GameObject trees = new GameObject();
+        trees.Name = "Trees";
+        
+        this.ParentObject.AddChildObject(trees);
+        trees.AddComponent<InstancedRendererController>();
+        trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+        
         foreach (var kvp in voronoiRegions)
         {
             var site = kvp.Key;
@@ -443,7 +446,7 @@ public class WorldRenderer : Component
                 if (HeightData[(int)position.X, (int)position.Z] > 6.0f
                     && HeightData[(int)position.X, (int)position.Z] < 25.0f)
                 {
-                    PlaceTree(position);    
+                    PlaceTree(trees, position);
                 }
             }
             else
@@ -470,26 +473,13 @@ public class WorldRenderer : Component
         return new Vector3(x, HeightData[(int)x, (int)y] + 8, y);
     }
     
-    private void PlaceTree(Vector3 position)
+    private void PlaceTree(GameObject root, Vector3 position)
     {
         GameObject tree = new GameObject();
         tree.Name = "Tree";
+        root.AddChildObject(tree);
+        tree.AddComponent<InstancedRendererUnit>();
         tree.Transform.SetLocalPosition(position);
-        tree.AddComponent<MeshRenderer>();
-        tree.GetComponent<MeshRenderer>().LoadModel("Env/Trees/drzewoiglaste");
-        
-        Features.Add(tree);
-    }
-    
-    private void DrawFeatures()
-    {
-        foreach (var feature in Features)
-        {
-            feature.GetComponent<MeshRenderer>()._model.Draw(
-                ParentObject.Transform.ModelMatrix * 
-                Matrix.CreateTranslation(feature.Transform.Pos)
-            );
-        }
     }
 
     public override string ComponentToXmlString()

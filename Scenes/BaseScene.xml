@@ -1947,6 +1947,11 @@
                           <screenSizeX>1440</screenSizeX>
                           <screenSizeY>900</screenSizeY>
                         </component>
+                        <component>
+                          <type>Button</type>
+                          <active>True</active>
+                          <action>CREATE_MISSION</action>
+                        </component>
                       </components>
                       <childObjects>
                         <object>

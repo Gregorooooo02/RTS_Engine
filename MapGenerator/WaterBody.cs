@@ -68,6 +68,8 @@ public sealed class WaterBody
         _waveNormalOffset += _waveVelocity * Globals.DeltaTime;
         _waterHeight += (float)Math.Sin(_waveTime) * 0.005f;
         
+        // TODO: Change this to modify the world matrix and not all the vertices
+        
         for (int i = 0 ; i < _vertices.Length; i++)
         {
             _vertices[i].Position.Y = _waterHeight;

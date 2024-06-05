@@ -23,6 +23,7 @@ public enum GameAction
     SCENE1,
     SCENE2,
     SCENE3,
+    CREATE_MISSION,
     CONFIRM,
     DECLINE,
     PAUSE,

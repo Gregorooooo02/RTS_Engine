@@ -17,6 +17,19 @@ public class SceneManager
         _scenes = new List<Scene>();
     }
 
+    public void CreateMissionScene()
+    {
+        Scene missionScene = new LoadedScene();
+        
+        missionScene.Name = "MissionScene";
+        
+        GameObject missionRoot = new GameObject();
+        missionScene.SceneRoot = missionRoot;
+        missionRoot.AddComponent<WorldRenderer>();
+        
+        AddScene(missionScene);
+    }
+
     public void AddScene(Scene scene)
     {
         scene.Initialize();
@@ -33,6 +46,11 @@ public class SceneManager
             {
                 ChangeScene(i);
             }
+        }
+        
+        if (InputManager.Instance.GetAction(GameAction.CREATE_MISSION)?.state == ActionState.RELEASED)
+        {
+            CreateMissionScene();
         }
     }
 

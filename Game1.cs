@@ -113,7 +113,6 @@ public class Game1 : Game
         //_sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
-        _sceneManager.AddScene(FileManager.PopulateScene("MissionScene"));
         // _sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
@@ -129,7 +128,7 @@ public class Game1 : Game
         InputManager.Instance.PollInput();
         if (InputManager.Instance.IsActive(GameAction.EXIT)) Exit();
         Globals.Update(gameTime);
-
+        
         _sceneManager.CheckForSceneChanges();
         
 #if DEBUG
