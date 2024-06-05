@@ -270,7 +270,7 @@ public class GameObject
         streamWriter.Close();
     }
 
-    private void LoadPrefab(string name)
+    public void LoadPrefab(string name)
     {
         AddChildObject(FileManager.DeserializeScene(name));
     }

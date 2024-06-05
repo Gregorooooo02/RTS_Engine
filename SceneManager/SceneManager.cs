@@ -33,8 +33,32 @@ public class SceneManager
         camera.Name = "Camera";
         missionRoot.AddChildObject(camera);
         camera.AddComponent<Camera>();
-        camera.Transform.SetLocalPosition(new Vector3(650, 500, 600));
+        camera.Transform.SetLocalPosition(new Vector3(200, 70, 200));
+
+        GameObject civilians = new GameObject();
+        civilians.Name = "Civilians";
+        missionRoot.AddChildObject(civilians);
+        for (int i = 0; i < 15; i++)
+        {
+#if _WINDOWS
+            civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
+#else
+            civilians.LoadPrefab("Prefabs/Civilian.xml");
+#endif
+        }
         
+        GameObject chairs = new GameObject();
+        chairs.Name = "Chairs";
+        missionRoot.AddChildObject(chairs);
+        for (int i = 0; i < 5; i++)
+        {
+#if _WINDOWS
+            chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
+#else
+            chairs.LoadPrefab("Prefabs/Chair.xml");
+#endif
+        }
+
         AddScene(missionScene);
     }
 
@@ -181,7 +205,7 @@ public class SceneManager
         {
             ImGui.Begin("Load scene");
             foreach (string path in Globals.AvailableScenes)
-            {
+            { 
 #if _WINDOWS
                 string name = path.Substring(path.LastIndexOf('\\') + 1);
 #else
