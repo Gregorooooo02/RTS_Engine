@@ -113,6 +113,7 @@ public class Game1 : Game
         //_sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
+        _sceneManager.AddScene(FileManager.PopulateScene("MissionScene"));
         // _sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));

@@ -104,16 +104,16 @@ public sealed class WaterBody
     {
         _vertices = new VertexPositionTexture[4];
         
-        _vertices[0].Position = new Vector3(x, _waterHeight, -y);
+        _vertices[0].Position = new Vector3(x, _waterHeight, y);
         _vertices[0].TextureCoordinate = new Vector2(0, 0);
         
-        _vertices[1].Position = new Vector3(x, _waterHeight, -(_waterSize + y));
+        _vertices[1].Position = new Vector3(x, _waterHeight, (_waterSize + y));
         _vertices[1].TextureCoordinate = new Vector2(0, 1);
         
-        _vertices[2].Position = new Vector3(_waterSize + x, _waterHeight, -y);
+        _vertices[2].Position = new Vector3(_waterSize + x, _waterHeight, y);
         _vertices[2].TextureCoordinate = new Vector2(1, 0);
         
-        _vertices[3].Position = new Vector3(_waterSize + x, _waterHeight, -(_waterSize + y));
+        _vertices[3].Position = new Vector3(_waterSize + x, _waterHeight, (_waterSize + y));
         _vertices[3].TextureCoordinate = new Vector2(1, 1);
     }
     

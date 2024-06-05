@@ -83,7 +83,7 @@ public class WorldRenderer : Component
     
     private void CreateChunk(int chunkX, int chunkY, int chunkWidth, int chunkHeight, float[,] heightData, Color[] heightMapColors, float globalMin, float globalMax)
     {
-        Vector3 chunkPosition = new Vector3(chunkX, 0, -chunkY);
+        Vector3 chunkPosition = new Vector3(chunkX, 0, chunkY);
         
         VertexMultitextured[] vertices = new VertexMultitextured[chunkWidth * chunkHeight];
         short[] indices = new short[(chunkWidth - 1) * (chunkHeight - 1) * 6];
@@ -227,7 +227,7 @@ public class WorldRenderer : Component
                     globalMaxHeight
                 );
                 
-                _waterBody = new WaterBody(x, y, _chunkSize, 5);
+                _waterBody = new WaterBody(x, y, _chunkSize - 1, 5);
                 _waterBodies.Add(_waterBody);
             }
         }
@@ -291,17 +291,6 @@ public class WorldRenderer : Component
                 MapNodes[i, j].Connections = neighborMask;
             }
         }
-
-        /*
-        for (int i = 0; i < MapNodes.GetLength(0); i++)
-        {
-            for (int j = 0; j < MapNodes.GetLength(1); j++)
-            {
-                Console.Write(Convert.ToString(MapNodes[i,j].Connections,2).ToCharArray().Count(c => c == '1') + " ");
-            }
-            Console.WriteLine("");
-        }
-        */
     }
 
     public override void Update()
@@ -338,7 +327,7 @@ public class WorldRenderer : Component
             Globals.TerrainEffect.Parameters["xTexture2"].SetValue(_rockTexture);
             Globals.TerrainEffect.Parameters["xTexture3"].SetValue(_snowTexture);
             
-            Vector3 lightDir = new Vector3(1.0f, -1.0f, -1.0f);
+            Vector3 lightDir = new Vector3(1.0f, 1.0f, -1.0f);
             lightDir.Normalize();
             Globals.TerrainEffect.Parameters["xLightDirection"].SetValue(lightDir);
             Globals.TerrainEffect.Parameters["xAmbient"].SetValue(0.1f);
@@ -369,8 +358,6 @@ public class WorldRenderer : Component
 
         GenerateVoronoiFeatures();
         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
-        
-        Globals.Renderer.WorldRenderer = this;
     }
     
     // Voronoi methods
@@ -523,6 +510,7 @@ public class WorldRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        Initialize();
     }
 
     public override void RemoveComponent()
