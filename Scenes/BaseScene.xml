@@ -1978,8 +1978,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>11,111113</x>
-                <y>11,111113</y>
+                <x>12</x>
+                <y>12</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -2063,8 +2063,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>172,22223</x>
-                <y>11,111113</y>
+                <x>12</x>
+                <y>93</y>
                 <z>0</z>
               </position>
               <rotation>
