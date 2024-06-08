@@ -442,6 +442,12 @@ public class PickingManager
                 //Using calculated k find intersection point between ray and tested height
                 Vector2 intersectionPoint = new Vector2(ray.Position.X + k * ray.Direction.X,
                     ray.Position.Z + k * ray.Direction.Z);
+                if (intersectionPoint.X < 0 ||
+                    intersectionPoint.X > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 ||
+                    intersectionPoint.Y < 0 || intersectionPoint.Y > Globals.Renderer.WorldRenderer.MapNodes.Length - 1)
+                {
+                    return null;
+                }
                 
                 //Calculate weighted average of height values in neighboring vertices
                 float avg = InterpolateWorldHeight(intersectionPoint);
