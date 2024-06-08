@@ -41,6 +41,16 @@ CreateShadowMap_VSOut ShadowMap_Instanced_VS(CreateShadowMap_VSIn input,float4x4
 }
 
 
+CreateShadowMap_VSOut SFVS(float3 inPos : POSITION)
+{
+    CreateShadowMap_VSOut Output = (CreateShadowMap_VSOut) 0;
+
+    Output.Position = mul(float4(inPos,1), mul(World, LightViewProj));
+    Output.Depth = Output.Position.zw;
+    
+    return Output;
+}
+
 float4 CreateShadowMap_PixelShader(CreateShadowMap_VSOut input) : COLOR
 {
     return float4(input.Depth.x / input.Depth.y, 1, 1, 1);
@@ -62,6 +72,15 @@ technique ShadowInstanced
     pass Pass0
     {
         VertexShader = compile VS_SHADERMODEL ShadowMap_Instanced_VS();
+        PixelShader = compile PS_SHADERMODEL CreateShadowMap_PixelShader();
+    }
+}
+
+technique TerrainShadow
+{
+    pass Pass0
+    {
+        VertexShader = compile VS_SHADERMODEL SFVS();
         PixelShader = compile PS_SHADERMODEL CreateShadowMap_PixelShader();
     }
 }

@@ -25,6 +25,9 @@ public class WorldRenderer : Component
             new VertexElement(sizeof(float) * 6, VertexElementFormat.Vector4, VertexElementUsage.TextureCoordinate, 0),
             new VertexElement(sizeof(float) * 10, VertexElementFormat.Vector4, VertexElementUsage.TextureCoordinate, 1)
         );
+
+        public static readonly VertexDeclaration ShadowDeclaration = new VertexDeclaration(
+            new VertexElement(0,VertexElementFormat.Vector3, VertexElementUsage.Position,0));
     }
     
     private struct Chunk
@@ -36,6 +39,8 @@ public class WorldRenderer : Component
         public int TerrainWidth;
         public int TerrainHeight;
         public Vector3 Position;
+
+        public VertexBuffer ShadowBuffer;
     }
     
     #region Pathfinding parameters
@@ -86,6 +91,7 @@ public class WorldRenderer : Component
         
         VertexMultitextured[] vertices = new VertexMultitextured[chunkWidth * chunkHeight];
         short[] indices = new short[(chunkWidth - 1) * (chunkHeight - 1) * 6];
+        Vector3[] positions = new Vector3[chunkWidth * chunkHeight];
         
         for (int x = 0; x < chunkWidth; x++)
         {
@@ -93,6 +99,7 @@ public class WorldRenderer : Component
             {
                 float heightValue = heightMapColors[(x + chunkX) + (y + chunkY) * heightData.GetLength(0)].R / 5.0f;
                 vertices[x + y * chunkWidth].Position = new Vector3(x + chunkX, heightValue, (y + chunkY));
+                positions[x + y * chunkWidth] = vertices[x + y * chunkWidth].Position;
             }
         }
         
@@ -165,6 +172,9 @@ public class WorldRenderer : Component
         
         IndexBuffer indexBuffer = new IndexBuffer(Globals.GraphicsDevice, typeof(short), indices.Length, BufferUsage.WriteOnly);
         indexBuffer.SetData(indices);
+
+        VertexBuffer shadowData = new VertexBuffer(Globals.GraphicsDevice, VertexMultitextured.ShadowDeclaration,positions.Length, BufferUsage.WriteOnly);
+        shadowData.SetData(positions);
         
         _chunks.Add(new Chunk
         {
@@ -174,7 +184,8 @@ public class WorldRenderer : Component
             IndexBuffer = indexBuffer,
             TerrainWidth = chunkWidth,
             TerrainHeight = chunkHeight,
-            Position = chunkPosition
+            Position = chunkPosition,
+            ShadowBuffer = shadowData
         });
     }
     
@@ -300,34 +311,49 @@ public class WorldRenderer : Component
     public void Draw()
     {
         if (!Active) return;
-        DrawChunk();
+        DrawChunks();
     }
 
-    public void DrawChunk()
+    public void DrawShadows(Effect shadowMapGenerator)
+    {
+        RasterizerState rs = new RasterizerState();
+        rs.CullMode = CullMode.None;
+        rs.FillMode = FillMode.Solid;
+        Globals.GraphicsDevice.RasterizerState = rs;
+        shadowMapGenerator.CurrentTechnique = shadowMapGenerator.Techniques["TerrainShadow"];
+        for (int i = 0; i < _chunks.Count; i++)
+        {
+            shadowMapGenerator.Parameters["World"].SetValue(ParentObject.Transform.ModelMatrix);
+            Globals.GraphicsDevice.SetVertexBuffer(_chunks[i].ShadowBuffer);
+            Globals.GraphicsDevice.Indices = _chunks[i].IndexBuffer;
+            foreach (EffectPass pass in shadowMapGenerator.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList,0,0, _chunks[i].Indices.Length / 3);
+            }
+        }
+    }
+    
+    public void DrawChunks()
     {
         RasterizerState rs = new RasterizerState();
         rs.CullMode = CullMode.None;
         rs.FillMode = FillMode.Solid;
         Globals.GraphicsDevice.RasterizerState = rs;
         
+        Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["ShadowFog"];
+        
+        Globals.TerrainEffect.Parameters["xView"].SetValue(Globals.View);
+        Globals.TerrainEffect.Parameters["xProjection"].SetValue(Globals.Projection);
+        
+        Globals.TerrainEffect.Parameters["xTexture0"].SetValue(_sandTexture);
+        Globals.TerrainEffect.Parameters["xTexture1"].SetValue(_grassTexture);
+        Globals.TerrainEffect.Parameters["xTexture2"].SetValue(_rockTexture);
+        Globals.TerrainEffect.Parameters["xTexture3"].SetValue(_snowTexture);
+        
         foreach (Chunk chunk in _chunks)
         {
-            Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["Multitextured"];
-            Globals.TerrainEffect.Parameters["xView"].SetValue(Globals.View);
-            Globals.TerrainEffect.Parameters["xProjection"].SetValue(Globals.Projection);
             Globals.TerrainEffect.Parameters["xWorld"].SetValue(ParentObject.Transform.ModelMatrix);
-            
-            Globals.TerrainEffect.Parameters["xTexture0"].SetValue(_sandTexture);
-            Globals.TerrainEffect.Parameters["xTexture1"].SetValue(_grassTexture);
-            Globals.TerrainEffect.Parameters["xTexture2"].SetValue(_rockTexture);
-            Globals.TerrainEffect.Parameters["xTexture3"].SetValue(_snowTexture);
-            
-            Vector3 lightDir = new Vector3(1.0f, 1.0f, -1.0f);
-            lightDir.Normalize();
-            Globals.TerrainEffect.Parameters["xLightDirection"].SetValue(lightDir);
-            Globals.TerrainEffect.Parameters["xAmbient"].SetValue(0.1f);
-            Globals.TerrainEffect.Parameters["xEnableLighting"].SetValue(true);
-            
             Globals.GraphicsDevice.SetVertexBuffer(chunk.VertexBuffer);
             Globals.GraphicsDevice.Indices = chunk.IndexBuffer;
             

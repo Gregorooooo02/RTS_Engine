@@ -37,7 +37,7 @@ public class SceneManager
         camera.Name = "Camera";
         missionRoot.AddChildObject(camera);
         camera.AddComponent<Camera>();
-        camera.Transform.SetLocalPosition(new Vector3(200, 70, 200));
+        camera.Transform.SetLocalPosition(new Vector3(200, 50, 200));
         Debug.WriteLine("Added Camera");
 
         GameObject civilians = new GameObject();

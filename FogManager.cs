@@ -95,11 +95,17 @@ public class FogManager
             Globals.GraphicsDevice.SetRenderTarget(null);
             Globals.MainEffect.Parameters["discovery"]?.SetValue(PermanentMaskTarget);
             Globals.MainEffect.Parameters["visibility"]?.SetValue(VisibilityMaskTarget);
+            
+            Globals.TerrainEffect.Parameters["discovery"]?.SetValue(PermanentMaskTarget);
+            Globals.TerrainEffect.Parameters["visibility"]?.SetValue(VisibilityMaskTarget);
         }
         else if(!FogActive)
         {
             Globals.MainEffect.Parameters["discovery"]?.SetValue(_blank);
             Globals.MainEffect.Parameters["visibility"]?.SetValue(_blank);
+            
+            Globals.TerrainEffect.Parameters["discovery"]?.SetValue(_blank);
+            Globals.TerrainEffect.Parameters["visibility"]?.SetValue(_blank);
         }
     }
     

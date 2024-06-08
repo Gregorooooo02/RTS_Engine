@@ -15,7 +15,7 @@ public class Renderer
     #endif
     
     //TODO: Clean up this class
-    public static int ShadowMapSize = 256;
+    public static int ShadowMapSize = 4096;
     private int currentMultiplier;
     
     private Effect _shadowMapGenerator;
@@ -73,9 +73,6 @@ public class Renderer
         // }
         //Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
         
-        //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
-        //TODO: In that case Renderer scene would be, visually, one frame behind game's logic but, if not changed, there might be
-        //TODO: some visual inaccuracies with frustum culling if camera moves too fast.
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
@@ -244,7 +241,13 @@ public class Renderer
 
     private void DrawWorld()
     {
-        WorldRenderer?.Draw();    
+        if (WorldRenderer != null)
+        {
+            Globals.TerrainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+            Globals.TerrainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
+            Globals.TerrainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
+            WorldRenderer.Draw();    
+        }
     }
     
     private void DrawShadows()
@@ -258,6 +261,7 @@ public class Renderer
         
         Globals.GraphicsDevice.SetRenderTarget(_shadowMapRenderTarget);
         _shadowMapGenerator.Parameters["LightViewProj"].SetValue(_lightViewProjection);
+        WorldRenderer?.DrawShadows(_shadowMapGenerator);
         _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["ShadowInstanced"];
         foreach (InstancedRendererController controller in InstancedRendererControllers)
         {
@@ -275,7 +279,7 @@ public class Renderer
         }
         Globals.GraphicsDevice.SetRenderTarget(null);
     }
-
+    
     private void DrawShadowMapInstanced(InstancedRendererController rendererController)
     {
         if(rendererController.CurrentIndex == 0 || !rendererController.Active) return;

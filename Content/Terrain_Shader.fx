@@ -1,3 +1,20 @@
+#if OPENGL
+	#define SV_POSITION POSITION
+	#define VS_SHADERMODEL vs_3_0
+	#define PS_SHADERMODEL ps_3_0
+#else
+	#define VS_SHADERMODEL vs_4_0_level_9_1
+	#define PS_SHADERMODEL ps_4_0_level_9_1
+#endif
+
+static const float PI = 3.14159265359;
+static const float3 dirLightDirection = float3(0.5, -1, 0.5);
+static const float3 dirLightColor = float3(1, 1, 0.6);
+static const float dirLightIntesity = 6.5;
+static const float ShadowMapSize = 4096;
+static const float fogScale = 1.0 / 4096.0;
+static const float DepthBias = 0.005;
+
 struct VertexToPixel
 {
     float4 Position   	: POSITION;    
@@ -16,6 +33,8 @@ float4x4 xView;
 float4x4 xProjection;
 float4x4 xWorld;
 
+matrix dirLightSpace;
+
 float3 xLightDirection;
 float xAmbient;
 bool xEnableLighting;
@@ -24,6 +43,18 @@ bool xShowNormals;
 float3 xCamPos;
 float3 xCamUp;
 float xPointSpriteSize;
+float gamma;
+
+//------- Additional effects' texture samlers -------- 
+
+Texture2D ShadowMap;
+sampler2D shadowMapSampler = sampler_state{Texture = <ShadowMap>;MinFilter = point;MagFilter = point;MipFilter = point;AddressU = clamp;AddressV = clamp;};
+
+Texture2D visibility;
+sampler2D FogVisibility = sampler_state{Texture = <visibility>;MinFilter = linear;MagFilter = linear;MipFilter = point;AddressU = clamp;AddressV = clamp;};
+
+Texture2D discovery;
+sampler2D FogDiscovery = sampler_state{Texture = <discovery>;MinFilter = linear;MagFilter = linear;MipFilter = point;AddressU = clamp;AddressV = clamp;};
 
 //------- Texture Samplers --------
 
@@ -303,7 +334,7 @@ struct MTPixelToFrame
     float4 Color : COLOR0;
 };
 
-MTVertexToPixel MultitexturedVS( float4 inPos : POSITION, float3 inNormal: NORMAL, float2 inTexCoords: TEXCOORD0, float4 inTexWeights: TEXCOORD1)
+MTVertexToPixel MultitexturedVS(float4 inPos : POSITION, float3 inNormal: NORMAL, float2 inTexCoords: TEXCOORD0, float4 inTexWeights: TEXCOORD1)
 {	
     MTVertexToPixel Output = (MTVertexToPixel)0;
     float4x4 preViewProjection = mul (xView, xProjection);
@@ -324,7 +355,7 @@ MTPixelToFrame MultitexturedPS(MTVertexToPixel PSIn)
     
     float lightingFactor = 1;
     if (xEnableLighting)
-        lightingFactor = dot(PSIn.Normal, PSIn.LightDirection);
+        lightingFactor = dot(PSIn.Normal, PSIn.LightDirection.xyz);
     
     Output.Color = tex2D(TextureSampler0, PSIn.TextureCoords) * PSIn.TextureWeights.x;
     Output.Color += tex2D(TextureSampler1, PSIn.TextureCoords) * PSIn.TextureWeights.y;
@@ -349,6 +380,7 @@ technique Multitextured
 #endif
     }
 }
+
 
 //------- Technique: WaterWaves --------
 float xWaveMapScale;
@@ -420,6 +452,136 @@ technique WaterWaves
 #else
         VertexShader = compile vs_1_1 WaterWavesVS();
         PixelShader  = compile ps_2_0 WaterWavesPS();
+#endif
+    }
+}
+
+//------- Technique: ShadowFog --------
+struct SFVertexToPixel
+{
+    float4 Position : POSITION;
+    float3 Normal : TEXCOORD0;
+    float2 TextureCoords : TEXCOORD1;
+    float4 TextureWeights : TEXCOORD2;
+    float3 WorldPosition : TEXCOORD3;
+};
+
+float CalcDirectionalShadowsSoftPCF(float lightDepth, float NdotL, float2 shadowCoords, int iSqrtSamples)
+{
+    float shadowTerm = 0;
+    
+    //float variableBias = clamp(0.0005 * tan(acos(NdotL)), 0.001, DepthBias);
+    float variableBias = max(0.005 * (1.0 - NdotL), 0.001);
+    
+    float radius = iSqrtSamples - 1;
+    
+    for (float y = -radius; y <= radius; y++)
+    {
+        for (float x = -radius; x <= radius; x++)
+        {
+            float2 offset = float2(x, y);
+            offset /= ShadowMapSize;
+            float2 SamplePoint = shadowCoords + offset;
+            float Depth = tex2D(shadowMapSampler, SamplePoint).r;
+            float sample1 = (lightDepth <= Depth + variableBias);
+
+            float xWeight = 1;
+            float yWeight = 1;
+            
+            if (x == -radius)
+                xWeight = 1 - frac(shadowCoords.x * ShadowMapSize);
+            else if (x == radius)
+                xWeight = frac(shadowCoords.x * ShadowMapSize);
+            
+            if (y == -radius)
+                xWeight = 1 - frac(shadowCoords.y * ShadowMapSize);
+            else if (y == radius)
+                xWeight = frac(shadowCoords.y * ShadowMapSize);
+            
+            shadowTerm += sample1 * xWeight * yWeight;
+        }
+
+    }
+    
+    shadowTerm /= (radius * radius * 4);
+    return shadowTerm;
+}
+
+float3 CalculateDirectionalLight(float3 worldPosition, float3 N)
+{
+    float3 L = normalize(dirLightDirection);
+    float NdotL = max(dot(N, L), 0.0);
+    float3 radiance = dirLightColor * dirLightIntesity;
+    float shadowContribution = 1.0;
+    
+    float4 lightPosition = mul(float4(worldPosition, 1), dirLightSpace);
+    float2 shadowTexCoord = mad(0.5, lightPosition.xy / lightPosition.w, float2(0.5, 0.5));
+    shadowTexCoord.y = 1.0 - shadowTexCoord.y;
+    float ourDepth = (lightPosition.z / lightPosition.w);
+    if (shadowTexCoord.x <= 1 && shadowTexCoord.y <= 1 && shadowTexCoord.x >= 0 && shadowTexCoord.y >= 0)
+    {
+        shadowContribution = CalcDirectionalShadowsSoftPCF(ourDepth, NdotL, shadowTexCoord, 3);
+    }
+    //return radiance * NdotL * shadowContribution;
+    //return shadowContribution;
+    //return radiance;
+    return NdotL * shadowContribution * radiance;
+}
+
+
+SFVertexToPixel SFVS(float4 inPos : POSITION, float3 inNormal : NORMAL, float2 inTexCoords : TEXCOORD0, float4 inTexWeights : TEXCOORD1)
+{
+    SFVertexToPixel Output = (SFVertexToPixel) 0;
+    float4x4 preViewProjection = mul(xView, xProjection);
+    float4x4 preWorldViewProjection = mul(xWorld, preViewProjection);
+    
+    Output.Position = mul(inPos, preWorldViewProjection);
+    Output.Normal = mul(normalize(inNormal), (float3x3) xWorld);
+    Output.TextureCoords = inTexCoords;
+    Output.TextureWeights = inTexWeights;
+    Output.WorldPosition = mul(inPos, xWorld).xyz;
+    
+    return Output;
+}
+
+
+float4 SFPS(SFVertexToPixel input) : COLOR
+{
+    float2 fogCoords = input.WorldPosition.xz * fogScale;
+    float fogValue = tex2D(FogDiscovery, fogCoords).r + tex2D(FogVisibility, fogCoords).r;
+    if (fogValue < 0.0001f)
+    {
+        return float4(0, 0, 0, 1);
+    }
+       
+    float3 albedo = pow(tex2D(TextureSampler0, input.TextureCoords) * input.TextureWeights.x,gamma).xyz;
+    albedo += pow(tex2D(TextureSampler1, input.TextureCoords) * input.TextureWeights.y, gamma).xyz;
+    albedo += pow(tex2D(TextureSampler2, input.TextureCoords) * input.TextureWeights.z, gamma).xyz;
+    albedo += pow(tex2D(TextureSampler3, input.TextureCoords) * input.TextureWeights.w, gamma).xyz;
+    
+    float3 Lo = CalculateDirectionalLight(input.WorldPosition, input.Normal) * albedo / PI;
+    
+    float3 ambient = 0.03 * albedo;
+    
+    float3 color = (ambient + Lo) * fogValue;
+    
+    color = color / (color + 1);
+    
+    color = pow(color, 1.0 / gamma);
+
+    return float4(color, 1.0);
+}
+
+technique ShadowFog
+{
+    pass Pass0
+    {
+#if SM4
+        VertexShader = compile vs_4_0_level_9_3 MultitexturedVS();
+        PixelShader  = compile ps_4_0_level_9_3 MultitexturedPS();
+#else
+        VertexShader = compile vs_3_0 SFVS();
+        PixelShader = compile ps_3_0 SFPS();
 #endif
     }
 }
