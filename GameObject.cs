@@ -222,8 +222,11 @@ public class GameObject
         builder.Append("</object>");
         return builder.ToString();
     }
-    
 
+    public void LoadPrefab(string name)
+    {
+        AddChildObject(FileManager.DeserializeScene(name));
+    }
 #if DEBUG
     private bool addingOpen = false;
     private bool savingPrefab = false;
@@ -269,12 +272,6 @@ public class GameObject
         prefab.Save(streamWriter);
         streamWriter.Close();
     }
-
-    public void LoadPrefab(string name)
-    {
-        AddChildObject(FileManager.DeserializeScene(name));
-    }
-
 
     public void DrawInspector()
     {

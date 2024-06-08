@@ -150,9 +150,7 @@ public class Puzzle : Component
         Active = true;
         ChangeActive(ParentObject,true);
         Globals.Renderer.CurrentActivePuzzle = this;
-#if DEBUG
         ChangePuzzleParameters();
-#endif
     }
 
     private void ChangeActive(GameObject gameObject,bool state)
@@ -184,9 +182,9 @@ public class Puzzle : Component
     public override void Initialize()
     {
         _puzzleTexture = AssetManager.DefaultSprite;
-#if DEBUG
+//#if DEBUG
         ChangePuzzleParameters();
-#endif
+//#endif
     }
 
     public override string ComponentToXmlString()
@@ -234,29 +232,27 @@ public class Puzzle : Component
         AssetManager.FreeSprite(_puzzleTexture);
     }
 
-    #if DEBUG
-    
     private void ChangePuzzleParameters()
     {
-        if(!Active) return;
+        if (!Active) return;
         _puzzlePieces.Clear();
-        
+
         if (_drawInMiddle)
         {
             int windowSize = _gridSize * _puzzlePieceSize + _rimSize * 2;
             int offsetX = (Globals.GraphicsDeviceManager.PreferredBackBufferWidth - windowSize) / 2;
             int offsetY = (Globals.GraphicsDeviceManager.PreferredBackBufferHeight - windowSize) / 2;
-            ParentObject.Transform.SetLocalPosition(new Vector3(offsetX,offsetY,0));
+            ParentObject.Transform.SetLocalPosition(new Vector3(offsetX, offsetY, 0));
         }
-        
+
         int offset = _puzzleTexture.Width / _gridSize;
         float depth = 0f;
-        float depthStep = 0.9f / (_gridSize *_gridSize);
+        float depthStep = 0.9f / (_gridSize * _gridSize);
         Random random = new Random();
-        
+
         _backgroundDest = new Rectangle((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y,
             _gridSize * _puzzlePieceSize + _rimSize * 2, _gridSize * _puzzlePieceSize + _rimSize * 2);
-        
+
         for (int i = 0; i < _gridSize; i++)
         {
             for (int j = 0; j < _gridSize; j++)
@@ -265,10 +261,10 @@ public class Puzzle : Component
                     (int)ParentObject.Transform.Pos.X + _backgroundDest.Width - _puzzlePieceSize - (_rimSize * 2));
                 int posY = random.Next((int)ParentObject.Transform.Pos.Y + _rimSize * 2,
                     (int)ParentObject.Transform.Pos.Y + _backgroundDest.Height - _puzzlePieceSize - (_rimSize * 2));
-                
+
                 _puzzlePieces.Add(new PuzzlePiece(_puzzleTexture,
-                    new Rectangle(offset * i,offset * j,offset,offset),
-                    new Point(posX,posY),
+                    new Rectangle(offset * i, offset * j, offset, offset),
+                    new Point(posX, posY),
                     _puzzlePieceSize,
                     depth,
                     i * _gridSize + j + 1,
@@ -277,9 +273,10 @@ public class Puzzle : Component
                 depth += depthStep;
             }
         }
-        _gridValues = new int[_gridSize,_gridSize];
+        _gridValues = new int[_gridSize, _gridSize];
     }
-    
+
+#if DEBUG
     private bool _switchingSprites = false;
     public override void Inspect()
     {
@@ -348,5 +345,5 @@ public class Puzzle : Component
             ImGui.End();
         }
     }
-    #endif
+#endif
 }

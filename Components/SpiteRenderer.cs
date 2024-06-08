@@ -124,7 +124,7 @@ public class SpiteRenderer : Component
             int.TryParse(element.Element("screenSizeX")?.Value, out int x) &&
             int.TryParse(element.Element("screenSizeY")?.Value, out int y)
                 ? new Point(x, y)
-                : new Point(1440, 900);
+                : new Point(1600, 900);
     }
 
     public override void RemoveComponent()

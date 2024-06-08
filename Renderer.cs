@@ -126,9 +126,12 @@ public class Renderer
         DrawAnimatedMeshes();
         DrawWorld();
 
-        Globals.SpriteBatch.Begin();
+        Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
         DrawSprites();
         DrawAnimatedSprites();
+        CurrentActivePuzzle?.Draw();
+        Globals.SpriteBatch.End();
+        Globals.SpriteBatch.Begin();
         DrawText();
         Globals.SpriteBatch.End();
 #endif
@@ -194,6 +197,14 @@ public class Renderer
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
         Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
         Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["Instancing"];
+        foreach (InstancedRendererController instanced in InstancedRendererControllers)
+        {
+            instanced.Draw();
+        }
+
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (MeshRenderer renderer in Meshes)
         {
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);

@@ -248,7 +248,7 @@ public class WorldRenderer : Component
                         }
                         catch (Exception)
                         {
-                            // ignored
+                            //ignored
                         }
                     }
                 }
@@ -266,8 +266,9 @@ public class WorldRenderer : Component
                 {
                     for (int l = -1; l < 2; l++)
                     {
-                        if(k == 0 && l == 0) continue;
-                        try
+                        if((k == 0 && l == 0)) continue;
+                        if ((i + k >= 0 && i + k < MapNodes.GetLength(0) && j + l >= 0 &&
+                             j + l < MapNodes.GetLength(1)))
                         {
                             //Calculate height difference between two points
                             var heightDifference = MathF.Abs(MapNodes[i + k, j + l].Height - MapNodes[i, j].Height);
@@ -279,10 +280,6 @@ public class WorldRenderer : Component
                             float angle = MathF.Atan(tanA) * 180.0f / MathF.PI;
                             //If the calculated angle is smaller than the maximum allowed then there is a connection between points
                             if (angle <= maxAngle) neighborMask += 1;
-                        }
-                        catch (Exception)
-                        {
-                            // ignored
                         }
                         if(k != 1 || l != 1)neighborMask <<= 1;
                     }
@@ -349,11 +346,11 @@ public class WorldRenderer : Component
     
     public override void Initialize()
     {
-        LoadTextures();
-        LoadHeightData(GenerateMap.noiseTexture);
-        
-        GenerateVoronoiFeatures();
-        Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+         LoadTextures();
+         LoadHeightData(GenerateMap.noiseTexture);
+
+         GenerateVoronoiFeatures();
+         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
     
     // Voronoi methods

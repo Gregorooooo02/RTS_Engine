@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -23,17 +24,21 @@ public class SceneManager
         Scene missionScene = new LoadedScene();
         
         missionScene.Name = "MissionScene";
+        Debug.WriteLine("Created scene");
         
         GameObject missionRoot = new GameObject();
         missionScene.SceneRoot = missionRoot;
+        Debug.WriteLine("Created scene root");
         missionRoot.Name = "Root";
         missionRoot.AddComponent<WorldRenderer>();
-        
+        Debug.WriteLine("Added World Renderer");
+
         GameObject camera = new GameObject();
         camera.Name = "Camera";
         missionRoot.AddChildObject(camera);
         camera.AddComponent<Camera>();
         camera.Transform.SetLocalPosition(new Vector3(200, 70, 200));
+        Debug.WriteLine("Added Camera");
 
         GameObject civilians = new GameObject();
         civilians.Name = "Civilians";
@@ -46,7 +51,8 @@ public class SceneManager
             civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
         }
-        
+        Debug.WriteLine("Added Civilians");
+
         GameObject chairs = new GameObject();
         chairs.Name = "Chairs";
         missionRoot.AddChildObject(chairs);
@@ -58,7 +64,7 @@ public class SceneManager
             chairs.LoadPrefab("Prefabs/Chair.xml");
 #endif
         }
-
+        Debug.WriteLine("Added units");
         AddScene(missionScene);
     }
 

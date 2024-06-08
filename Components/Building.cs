@@ -79,6 +79,7 @@ public class Building : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if (ImGui.CollapsingHeader("Building"))
@@ -88,4 +89,5 @@ public class Building : Component
             ImGui.SliderInt("Upgrade cost", ref UpgradeCost, 100, 500);
         }
     }
+#endif
 }

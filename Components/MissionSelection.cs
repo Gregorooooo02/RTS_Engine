@@ -54,6 +54,7 @@ public class MissionSelection : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if (ImGui.CollapsingHeader("Mission Selection"))
@@ -63,4 +64,5 @@ public class MissionSelection : Component
             ImGui.Text("Object responsible: " + ParentObject.Name);
         }
     }
+#endif
 }
