@@ -112,11 +112,11 @@ public class Puzzle : Component
             {
                 Point localOffset = new Point((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y);
                 Point localPos = _selectedPuzzlePiece.Position - localOffset;
-                int row = localPos.Y / _puzzlePieceSize;
-                int column = localPos.X / _puzzlePieceSize;
+                int row = (int)MathF.Round((float)localPos.Y / _puzzlePieceSize);
+                int column = (int)MathF.Round((float)localPos.X / _puzzlePieceSize);
                 if (localPos is { X: >= 0, Y: >= 0 } && row < _gridSize && column < _gridSize)
                 {
-                    Point snapPoint = new Point(column * _puzzlePieceSize + _rimSize, row * _puzzlePieceSize + _rimSize);
+                    Point snapPoint = new Point(column * _puzzlePieceSize + _rimSize + _innerRimSize * column, row * _puzzlePieceSize + _rimSize + _innerRimSize * row);
                     if (PointDist(localPos,snapPoint) <= _snappingDistance && _gridValues[row,column] == 0)
                     {
                         _selectedPuzzlePiece.Position = snapPoint + localOffset;
