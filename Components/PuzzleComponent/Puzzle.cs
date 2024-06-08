@@ -14,6 +14,10 @@ public class Puzzle : Component
     
     private Texture2D _puzzleTexture;
     private readonly List<PuzzlePiece> _puzzlePieces = new();
+
+    private List<Point> _backgroundTilesPositions = new();
+    private Point size;
+    private Color _tileColor = new(64,64,64,255);
     
     #region SelectedPiece
     private PuzzlePiece _selectedPuzzlePiece = null;
@@ -24,6 +28,7 @@ public class Puzzle : Component
     private int _puzzlePieceSize = 200;
     private int _rimSize = 3;
     private float _snappingDistance = 30.0f;
+    private int _innerRimSize = 1;
     #endregion
     
     private int[,] _gridValues;
@@ -32,13 +37,40 @@ public class Puzzle : Component
     private Rectangle _backgroundDest;
 
     private bool _drawInMiddle = false;
+    
+    private Point currentSize;
 
     public event Action PuzzleCompleted;
     
     public Puzzle(){}
     
+    private void Resize()
+    {
+        float ratio = Globals.GraphicsDeviceManager.PreferredBackBufferWidth / (float)currentSize.X;
+        ParentObject.Transform.SetLocalPosition(ParentObject.Transform.Pos * ratio);
+        _puzzlePieceSize = (int)(_puzzlePieceSize * ratio);
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
+        ChangePuzzleParameters();
+    }
+    
+    public void Draw()
+    {
+        if(!Active) return;
+        Globals.SpriteBatch.Draw(_background, _backgroundDest,null,Color.Black,0,Vector2.Zero,SpriteEffects.None,1);
+        for (int i = 0; i < _gridSize * _gridSize; i++)
+        {
+            Globals.SpriteBatch.Draw(_background,new Rectangle(_backgroundTilesPositions[i],size),null,_tileColor,0,Vector2.Zero,SpriteEffects.None,0.99f);
+        }
+        foreach (PuzzlePiece piece in _puzzlePieces)
+        {
+            piece.Draw();
+        }
+    }
+    
     public override void Update()
     {
+        if(currentSize.X != Globals.GraphicsDeviceManager.PreferredBackBufferWidth || currentSize.Y != Globals.GraphicsDeviceManager.PreferredBackBufferHeight) Resize();
         //Puzzle logic here
         if (Active)
         {
@@ -75,6 +107,7 @@ public class Puzzle : Component
                 _selectedPuzzlePiece.Position = InputManager.Instance.MousePosition + _selectionOffset;
             }
 
+            //Snapping
             if (action is { state: ActionState.RELEASED } && _selectedPuzzlePiece != null)
             {
                 Point localOffset = new Point((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y);
@@ -169,22 +202,12 @@ public class Puzzle : Component
         if(Globals.Renderer.CurrentActivePuzzle == this) Globals.Renderer.CurrentActivePuzzle = null;
     }
     
-    public void Draw()
-    {
-        if(!Active) return;
-        Globals.SpriteBatch.Draw(_background, _backgroundDest,null,Color.Black,0,Vector2.Zero,SpriteEffects.None,1);
-        foreach (PuzzlePiece piece in _puzzlePieces)
-        {
-            piece.Draw();
-        }
-    }
-
     public override void Initialize()
     {
         _puzzleTexture = AssetManager.DefaultSprite;
-//#if DEBUG
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
         ChangePuzzleParameters();
-//#endif
     }
 
     public override string ComponentToXmlString()
@@ -207,6 +230,9 @@ public class Puzzle : Component
         
         builder.Append("<snappingDist>" + _snappingDistance + "</snappingDist>");
         
+        builder.Append("<screenSizeX>" + currentSize.X + "</screenSizeX>");
+        builder.Append("<screenSizeY>" + currentSize.Y + "</screenSizeY>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -219,6 +245,12 @@ public class Puzzle : Component
         _puzzlePieceSize = int.TryParse(element.Element("pieceSize")?.Value, out int pieceSize) ? pieceSize : 200;
         _rimSize = int.TryParse(element.Element("rimSize")?.Value, out int rimSize) ? rimSize : 3;
         _snappingDistance = float.TryParse(element.Element("snappingDist")?.Value, out float snappingDist) ? snappingDist : 25.0f;
+        
+        currentSize =
+            int.TryParse(element.Element("screenSizeX")?.Value, out int x) &&
+            int.TryParse(element.Element("screenSizeY")?.Value, out int y)
+                ? new Point(x, y)
+                : new Point(1600, 900);
     }
 
     private void LoadSprite(string name)
@@ -236,23 +268,26 @@ public class Puzzle : Component
     {
         if (!Active) return;
         _puzzlePieces.Clear();
+        _backgroundTilesPositions.Clear();
 
         if (_drawInMiddle)
         {
-            int windowSize = _gridSize * _puzzlePieceSize + _rimSize * 2;
+            int windowSize = _gridSize * _puzzlePieceSize + _rimSize * 2 + _innerRimSize * (_gridSize - 1);
             int offsetX = (Globals.GraphicsDeviceManager.PreferredBackBufferWidth - windowSize) / 2;
             int offsetY = (Globals.GraphicsDeviceManager.PreferredBackBufferHeight - windowSize) / 2;
             ParentObject.Transform.SetLocalPosition(new Vector3(offsetX, offsetY, 0));
         }
 
+        size = new Point(_puzzlePieceSize);
+        
         int offset = _puzzleTexture.Width / _gridSize;
         float depth = 0f;
         float depthStep = 0.9f / (_gridSize * _gridSize);
         Random random = new Random();
 
         _backgroundDest = new Rectangle((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y,
-            _gridSize * _puzzlePieceSize + _rimSize * 2, _gridSize * _puzzlePieceSize + _rimSize * 2);
-
+            _gridSize * _puzzlePieceSize + _rimSize * 2 + _innerRimSize * (_gridSize - 1), _gridSize * _puzzlePieceSize + _rimSize * 2 + _innerRimSize * (_gridSize - 1));
+        
         for (int i = 0; i < _gridSize; i++)
         {
             for (int j = 0; j < _gridSize; j++)
@@ -271,6 +306,8 @@ public class Puzzle : Component
                     0.98f
                     ));
                 depth += depthStep;
+                
+                _backgroundTilesPositions.Add(new Point((int)ParentObject.Transform.Pos.X + (i * _puzzlePieceSize) + i * _innerRimSize + _rimSize,(int)ParentObject.Transform.Pos.Y + (j * _puzzlePieceSize) + j * _innerRimSize + _rimSize));
             }
         }
         _gridValues = new int[_gridSize, _gridSize];
