@@ -18,7 +18,7 @@ public class PlayerUnitData : AgentData
     public float MaxAttackRange = 2.5f;
 
     public float MinPointDistance = 0.5f;
-    public float RepathDelay = 2.0f;
+    public float RepathDelay = 0.5f;
 
     public Agent Target;
     
@@ -51,8 +51,14 @@ public class PlayerUnitData : AgentData
         builder.Append("<damage>" + Damage + "</damage>");
 
         builder.Append("<attackDelay>" + AttackDelay + "</attackDelay>");
+        
+        builder.Append("<minAttackRange>" + MinAttackRange + "</minAttackRange>");
+        
+        builder.Append("<maxAttackRange>" + MaxAttackRange + "</maxAttackRange>");
 
         builder.Append("<minPointDistance>" + MinPointDistance + "</minPointDistance>");
+        
+        builder.Append("<repathDelay>" + RepathDelay + "</repathDelay>");
         
         return builder.ToString();
     }
@@ -65,7 +71,10 @@ public class PlayerUnitData : AgentData
         WalkingSpeed = float.TryParse(element.Element("walkingSpeed")?.Value, out float walkingSpeed) ? walkingSpeed : 8.0f;
         Damage = float.TryParse(element.Element("damage")?.Value, out float damage) ? damage : 10.0f;
         AttackDelay = float.TryParse(element.Element("attackDelay")?.Value, out float attackDelay) ? attackDelay : 0.8f;
+        MinAttackRange = float.TryParse(element.Element("minAttackRange")?.Value, out float minAttackRange) ? minAttackRange : 1.5f;
+        MaxAttackRange = float.TryParse(element.Element("maxAttackRange")?.Value, out float maxAttackRange) ? maxAttackRange : 2.5f;
         MinPointDistance = float.TryParse(element.Element("minPointDistance")?.Value, out float minPointDistance) ? minPointDistance : 0.5f;
+        RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
     }
 
 #if DEBUG

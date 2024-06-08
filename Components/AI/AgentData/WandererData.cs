@@ -28,7 +28,7 @@ public class WandererData : AgentData
     
     public float FledDistance = 50.0f;
     public float FleeingDistance = 40.0f;
-    public float RepathDelay = 2.0f;
+    public float RepathDelay = 0.5f;
 
     public bool Alarmed = false;
 
@@ -105,7 +105,7 @@ public class WandererData : AgentData
 
         FledDistance = float.TryParse(element.Element("fledDistance")?.Value, out float fledDistance) ? fledDistance : 50.0f;
         FleeingDistance = float.TryParse(element.Element("fleeingDistance")?.Value, out float fleeingDistance) ? fleeingDistance : 40.0f;
-        RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 2.0f;
+        RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
     }
 
 #if DEBUG

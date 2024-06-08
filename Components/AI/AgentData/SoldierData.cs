@@ -33,7 +33,7 @@ public class SoldierData : AgentData
     public float MinAttackRange = 1.5f;
     public float MaxAttackRange = 2.5f;
     
-    public float RepathDelay = 2.0f;
+    public float RepathDelay = 0.5f;
     
     public float SightRange = 40.0f;
     public float SightAngle = 60.0f;
@@ -108,7 +108,7 @@ public class SoldierData : AgentData
         MinAttackRange = float.TryParse(element.Element("minAttackRange")?.Value, out float minAttackRange) ? minAttackRange : 1.5f;
         MaxAttackRange = float.TryParse(element.Element("maxAttackRange")?.Value, out float maxAttackRange) ? maxAttackRange : 2.5f;
         
-        RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 2.0f;
+        RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
         
         SightRange = float.TryParse(element.Element("sightRange")?.Value, out float sightRange) ? sightRange : 40.0f;
         SightAngle = float.TryParse(element.Element("sightAngle")?.Value, out float sightAngle) ? sightAngle : 60.0f;
