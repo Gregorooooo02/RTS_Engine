@@ -38,13 +38,21 @@ public class CivilianFlee : AgentState
         {
             Node end = null;
             int attempts = 0;
-            Vector2 offset = location - target;
-            offset.Normalize();
-            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, offset);
-            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -offset);
+            Vector2 direction = location - target;
+            direction.Normalize();
+            Vector2 currentOffset = direction * data.FleeingDistance;
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
+            Vector2 endPoint;
+            float angle = 0;
             do
             {
-                offset *= data.FleeingDistance;
+                if (angle != 0)
+                {
+                    currentOffset.X = MathF.Cos(angle) * direction.X - MathF.Sin(angle) * direction.Y;
+                    currentOffset.Y = MathF.Sin(angle) * direction.X + MathF.Cos(angle) * direction.Y;
+                    currentOffset *= data.FleeingDistance;
+                }
+                endPoint = Agent.GetFirstIntersectingGridPoint(location + currentOffset, -direction);
                 attempts++;
 
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle) && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState wander))
@@ -55,17 +63,24 @@ public class CivilianFlee : AgentState
                     data.Alarmed = false;
                     return idle;
                 }
-                _destination = location + offset;
+                _destination = location + currentOffset;
                 
                 //TODO: Try changing offset direction by 90 degrees if calculated point falls off the map
-                if((int)(location.X + offset.X) < 0 || (int)(location.Y + offset.Y) < 0 || (int)(location.X + offset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 || (int)(location.Y + offset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1) continue;
-                
-                Node start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
-                Node goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);
+                if ((int)(location.X + currentOffset.X) < 0 || (int)(location.Y + currentOffset.Y) < 0 ||
+                    (int)(location.X + currentOffset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 ||
+                    (int)(location.Y + currentOffset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1)
+                {
+                    angle *= -1;
+                    if (angle >= 0)
+                    {
+                        angle += 0.2617993878f;
+                    }
+                    continue;
+                }
+                Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+                Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
             
                 end = Pathfinding.CalculatePath(goal, start);
-                
-                
             } while (end is null);
             _points = Pathfinding.PathToQueueOfVectors(end);
             _points.Enqueue(_destination);
@@ -76,7 +91,7 @@ public class CivilianFlee : AgentState
         else
         {
             _timeSinceLastRepath += Globals.DeltaTime;
-            if (CivilianWander.Distance(_currentPoint, agent.Position) <= data.MinPointDistance)
+            if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
             {
                 _currentPoint = _points.Dequeue();
             }

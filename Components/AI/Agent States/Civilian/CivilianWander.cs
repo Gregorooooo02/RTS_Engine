@@ -44,7 +44,9 @@ public class CivilianWander : AgentState
     {
         float angle = Random.Next(360);
         angle *= (MathF.PI / 180.0f);
-        return new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+        Vector2 temp = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+        temp.Normalize();
+        return temp;
     }
 
     public static float Distance(Vector2 point, Vector3 position)
@@ -59,7 +61,7 @@ public class CivilianWander : AgentState
     
     public override AgentState UpdateState(Agent agent)
     {
-        Vector3 agentPosition = agent.ParentObject.Transform.ModelMatrix.Translation;
+        Vector2 agentPosition = new Vector2(agent.Position.X, agent.Position.Z);
         WandererData data = (WandererData)agent.AgentData;
         if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
         {
@@ -84,7 +86,10 @@ public class CivilianWander : AgentState
             int attempts = 0;
             do
             {
-                offset = RandomUnitVector2() * data.WanderingDistance;
+                offset = RandomUnitVector2();
+                Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(agentPosition, offset);
+                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(agentPosition + (offset * data.WanderingDistance), -offset);
+                offset *= data.WanderingDistance;
                 attempts++;
                 
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
@@ -94,22 +99,22 @@ public class CivilianWander : AgentState
                     return idle;
                 }
                 
-                if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Z + offset.Y) < 0 || (int)(agentPosition.X + offset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 || (int)(agentPosition.Z + offset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1) continue;
+                if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Y + offset.Y) < 0 || (int)(agentPosition.X + offset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 || (int)(agentPosition.Y + offset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1) continue;
                 
-                Node start = new Node(new Point((int)agentPosition.X, (int)agentPosition.Z), null, 1);
-                Node goal = new Node(new Point((int)(agentPosition.X + offset.X), (int)(agentPosition.Z + offset.Y)), null, 1);
+                Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+                Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
             
                 end = Pathfinding.CalculatePath(goal, start);
                 
             } while (end is null || end.CurrentCost > data.MaxWanderingDistance);
             _points = Pathfinding.PathToQueueOfVectors(end);
-            _points.Enqueue(new Vector2(agentPosition.X + offset.X,agentPosition.Z + offset.Y));
+            _points.Enqueue(new Vector2(agentPosition.X + offset.X,agentPosition.Y + offset.Y));
             _traversing = true;
             _currentPoint = _points.Dequeue();
         }
         else
         {
-            if (Distance(_currentPoint, agentPosition) <= data.MinPointDistance)
+            if (Vector2.Distance(_currentPoint,agentPosition) <= data.MinPointDistance)
             {
                 _currentPoint = _points.Dequeue();
             }
