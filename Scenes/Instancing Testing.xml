@@ -840,7 +840,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>Tartak/TARTACZEK</path>
+                    <path>tartak</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -874,7 +874,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>Env/Props/namiot (2)</path>
+                    <path>Env/props/namiot</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -916,7 +916,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>55</x>
+                    <x>36,9</x>
                     <y>0,3</y>
                     <z>55</z>
                   </position>
@@ -935,7 +935,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>Env/Props/ogniskonaked</path>
+                    <path>ognisko</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -954,9 +954,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>83,21097</x>
+            <x>85,68079</x>
             <y>50</y>
-            <z>73,25785</z>
+            <z>82,16804</z>
           </position>
           <rotation>
             <x>-60</x>
@@ -972,12 +972,15 @@
         <component>
           <type>Camera</type>
           <active>True</active>
-          <fovDegrees>45,614105</fovDegrees>
+          <fovDegrees>64,64235</fovDegrees>
           <zoomMin>25</zoomMin>
           <zoomMax>75</zoomMax>
           <lerpSpeed>3,5</lerpSpeed>
           <zoomSpeed>8</zoomSpeed>
           <cameraSpeed>20</cameraSpeed>
+          <keyboardControl>True</keyboardControl>
+          <mouseControl>True</mouseControl>
+          <scrollControl>True</scrollControl>
         </component>
         <component>
           <type>MeshRenderer</type>
@@ -986,6 +989,45 @@
             <path>defaultModel</path>
             <technique>PBR</technique>
           </model>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>NewObject</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>57,5</x>
+            <y>1</y>
+            <z>43,7</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>MeshRenderer</type>
+          <active>True</active>
+          <model>
+            <path>defaultModel</path>
+            <technique>PBR</technique>
+          </model>
+        </component>
+        <component>
+          <type>FogReveler</type>
+          <active>True</active>
+          <revealRadius>12</revealRadius>
         </component>
       </components>
       <childObjects></childObjects>

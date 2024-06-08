@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
@@ -16,8 +15,8 @@ public class FogManager
 
     #region MasksParameters
 
-    public int FogResolution = 2;
-    public readonly int TextureSize = 2048;
+    private const int FogResolution = 2;
+    private const int TextureSize = 2048;
 
     #endregion
     
@@ -30,8 +29,10 @@ public class FogManager
 
     #region RenderTargets
 
-    public readonly RenderTarget2D _permanentMaskTarget;
-    public readonly RenderTarget2D _visibilityMaskTarget;
+    public readonly RenderTarget2D PermanentMaskTarget = new(Globals.GraphicsDevice, TextureSize, TextureSize, false,
+        SurfaceFormat.Single, DepthFormat.Depth16,0,RenderTargetUsage.PreserveContents);
+    public readonly RenderTarget2D VisibilityMaskTarget = new(Globals.GraphicsDevice, TextureSize, TextureSize, false,
+        SurfaceFormat.Single, DepthFormat.Depth16,0,RenderTargetUsage.DiscardContents);
 
     #endregion
     
@@ -45,15 +46,7 @@ public class FogManager
     #endregion
     
     public readonly List<FogReveler> Revelers = new();
-    public bool Changed = false;
-    
-    public FogManager()
-    {
-        _permanentMaskTarget = new RenderTarget2D(Globals.GraphicsDevice, TextureSize, TextureSize, false,
-            SurfaceFormat.Single, DepthFormat.Depth16,0,RenderTargetUsage.PreserveContents);
-        _visibilityMaskTarget = new RenderTarget2D(Globals.GraphicsDevice, TextureSize, TextureSize, false,
-            SurfaceFormat.Single, DepthFormat.Depth16,0,RenderTargetUsage.DiscardContents);
-    }
+    public bool Changed;
 
     public Texture2D GetCircleTexture(int radius)
     {
@@ -78,7 +71,7 @@ public class FogManager
         if (Changed && FogActive)
         {
             Changed = false;
-            Globals.GraphicsDevice.SetRenderTarget(_permanentMaskTarget);
+            Globals.GraphicsDevice.SetRenderTarget(PermanentMaskTarget);
             Globals.SpriteBatch.Begin();
             foreach (FogReveler reveler in Revelers)
             {
@@ -91,7 +84,7 @@ public class FogManager
                 }
             }
             Globals.SpriteBatch.End();
-            Globals.GraphicsDevice.SetRenderTarget(_visibilityMaskTarget);
+            Globals.GraphicsDevice.SetRenderTarget(VisibilityMaskTarget);
             Globals.SpriteBatch.Begin();
             foreach (FogReveler reveler in Revelers)
             {
@@ -100,8 +93,8 @@ public class FogManager
             }
             Globals.SpriteBatch.End();
             Globals.GraphicsDevice.SetRenderTarget(null);
-            Globals.MainEffect.Parameters["discovery"]?.SetValue(_permanentMaskTarget);
-            Globals.MainEffect.Parameters["visibility"]?.SetValue(_visibilityMaskTarget);
+            Globals.MainEffect.Parameters["discovery"]?.SetValue(PermanentMaskTarget);
+            Globals.MainEffect.Parameters["visibility"]?.SetValue(VisibilityMaskTarget);
         }
         else if(!FogActive)
         {

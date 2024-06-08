@@ -10,7 +10,10 @@
 static const float PI = 3.14159265359;
 static const float3 dirLightDirection = float3(0.5,-1,0.5);
 static const float3 dirLightColor = float3(1, 1, 0.6);
-//static const float dirLightIntesity = 20;
+static const float dirLightIntesity = 6.5;
+static const float ShadowMapSize = 2048;
+static const float fogScale = 1.0 / 4096.0;
+static const float DepthBias = 0.005;
 
 
 cbuffer ModelParameters : register(b0)
@@ -31,10 +34,10 @@ cbuffer Globals : register(b1)
 };
 
 float gamma;
-float DepthBias;
-float ShadowMapSize;
-float dirLightIntesity;
-float fogScale;
+//float DepthBias;
+//float ShadowMapSize;
+//float dirLightIntesity;
+//float fogScale;
 
 //--------------------------------------------------------------
 //Textures and samplers

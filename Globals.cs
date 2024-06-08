@@ -65,14 +65,8 @@ namespace RTS_Engine
 
         public static Effect MainEffect;
         public static Effect TerrainEffect;
-
-        #region ShaderParameters
-
+        
         public static float Gamma = 2.2f;
-        public static float LightIntensity = 10;
-
-        #endregion
-
         #endregion
         
         #region CameraParameters
@@ -222,6 +216,5 @@ namespace RTS_Engine
         public static bool DrawExplored = false;
         public static bool DrawVisibility = false;
 #endif
-        public static int ShadowMapResolutionMultiplier = 3;
     }
 }

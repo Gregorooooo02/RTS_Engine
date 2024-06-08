@@ -71,7 +71,7 @@ public class Renderer
         // {
         //     bloom.BeginDraw();
         // }
-        Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
+        //Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
         
         //TODO: Maybe change Rendering to use parameters from one frame. Now View and Projection that are used are one frame newer then BoundingFrustum.
         //TODO: In that case Renderer scene would be, visually, one frame behind game's logic but, if not changed, there might be
@@ -80,7 +80,6 @@ public class Renderer
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
-        Globals.MainEffect.Parameters["dirLightIntesity"]?.SetValue(Globals.LightIntensity);
         
 #if DEBUG
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
@@ -101,8 +100,8 @@ public class Renderer
         }
         
         Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
-        if(Globals.DrawExplored)Globals.SpriteBatch.Draw(Globals.FogManager._permanentMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
-        if(Globals.DrawVisibility)Globals.SpriteBatch.Draw(Globals.FogManager._visibilityMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
+        if(Globals.DrawExplored)Globals.SpriteBatch.Draw(Globals.FogManager.PermanentMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
+        if(Globals.DrawVisibility)Globals.SpriteBatch.Draw(Globals.FogManager.VisibilityMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
         Globals.PickingManager.DrawSelectionBox();
         DrawSprites();
@@ -180,14 +179,6 @@ public class Renderer
         AnimatedMeshes.Clear();
         //Prepare camera frustum for next frame culling
         Globals.BoundingFrustum = new BoundingFrustum(Globals.View * Globals.Projection);
-        
-        if (currentMultiplier != Globals.ShadowMapResolutionMultiplier)
-        {
-            currentMultiplier = Globals.ShadowMapResolutionMultiplier;
-            ShadowMapSize = 256 * (int)Math.Pow(2, currentMultiplier);
-            _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
-                DepthFormat.Depth24);
-        }
     }
     
     private void DrawMeshes()
@@ -195,8 +186,8 @@ public class Renderer
 #if RELEASE
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
-        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        //Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
+        //Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
 
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["Instancing"];
         foreach (InstancedRendererController instanced in InstancedRendererControllers)
@@ -212,8 +203,8 @@ public class Renderer
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
-        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        //Globals.MainEffect.Parameters["DepthBias"]?.SetValue(0.005f);
+        //Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["Instancing"];
         foreach (InstancedRendererController instanced in InstancedRendererControllers)
@@ -233,8 +224,8 @@ public class Renderer
 #if RELEASE
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
-        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        //Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
+        //Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         foreach (MeshRenderer renderer in Meshes)
         {
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
