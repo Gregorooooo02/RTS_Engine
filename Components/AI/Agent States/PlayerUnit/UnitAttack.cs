@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.AgentData;
 
@@ -35,13 +36,13 @@ public class UnitAttack : AgentState
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
         Vector2 target = new Vector2(data.Target.Position.X, data.Target.Position.Z);
         float dist = Vector2.Distance(location, target);
-        
+        Vector2 direction = target - location;
+        direction.Normalize();
         if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
         {
             Node end = null;
             int attempts = 0;
-            Vector2 direction = target - location;
-            direction.Normalize();
+            
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
             Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
             do
@@ -102,21 +103,37 @@ public class UnitAttack : AgentState
             }
             else
             {
-                
-                if (_attackTimer >= data.AttackDelay)
+                float angle = CivilianWander.AngleDegrees(agent.Direction, direction);
+                if (MathF.Abs(angle) < 5.0f)
                 {
-                    //Successful attack
-                    _attackTimer = 0;
-                    if (data.Target.Type == Agent.AgentType.Soldier)
+                    if (_attackTimer >= data.AttackDelay)
                     {
-                        SoldierData soldierData = (SoldierData)data.Target.AgentData;
-                        if (!soldierData.Alarmed)
+                        //Successful attack
+                        _attackTimer = 0;
+                        if (data.Target.Type == Agent.AgentType.Soldier)
                         {
-                            soldierData.Awareness = soldierData.AwarenessThreshold * 2;
-                            soldierData.Target = agent;
+                            SoldierData soldierData = (SoldierData)data.Target.AgentData;
+                            if (!soldierData.Alarmed)
+                            {
+                                soldierData.Awareness = soldierData.AwarenessThreshold * 2;
+                                soldierData.Target = agent;
+                            }
                         }
+                        else
+                        {
+                            WandererData wandererData = (WandererData)data.Target.AgentData;
+                            if (!wandererData.Alarmed)
+                            {
+                                wandererData.Awareness = wandererData.AwarenessThreshold * 2;
+                                wandererData.Target = agent;
+                            }
+                        }
+                        data.Target.AgentData.DealDamage(data.Damage);
                     }
-                    data.Target.AgentData.DealDamage(data.Damage);
+                }
+                else
+                {
+                    agent.UpdateRotation(direction);
                 }
             }
         }

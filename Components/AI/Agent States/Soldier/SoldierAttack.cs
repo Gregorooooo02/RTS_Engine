@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.AgentData;
 
@@ -47,12 +48,12 @@ public class SoldierAttack : AgentState
         {
             _cooldownTimer = 0;
         }
+        Vector2 direction = target - location;
+        direction.Normalize();
         if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
         {
             Node end = null;
             int attempts = 0;
-            Vector2 direction = target - location;
-            direction.Normalize();
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
             Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
             do
@@ -114,13 +115,21 @@ public class SoldierAttack : AgentState
             }
             else
             {
-                if (_attackTimer >= data.AttackDelay)
+                float angle = CivilianWander.AngleDegrees(agent.Direction, direction);
+                if (MathF.Abs(angle) < 5.0f)
                 {
-                    //Successful attack
-                    PlayerUnitData playerUnitData = (PlayerUnitData)Target.AgentData;
-                    playerUnitData.Target ??= agent;
-                    _attackTimer = 0;
-                    Target.AgentData.DealDamage(data.Damage);
+                    if (_attackTimer >= data.AttackDelay)
+                    {
+                        //Successful attack
+                        PlayerUnitData playerUnitData = (PlayerUnitData)Target.AgentData;
+                        playerUnitData.Target ??= agent;
+                        _attackTimer = 0;
+                        Target.AgentData.DealDamage(data.Damage);
+                    }
+                }
+                else
+                {
+                    agent.UpdateRotation(direction);
                 }
             }
         }

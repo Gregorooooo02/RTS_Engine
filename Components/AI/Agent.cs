@@ -91,14 +91,20 @@ public class Agent : Component
         offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(agentPosition.X + offset.X, agentPosition.Z + offset.Z)) - agentPosition.Y + 2.0f;
         offset.Normalize();
         ParentObject.Transform.Move(offset * Globals.DeltaTime * speed);
-
+        
         Vector2 destinationVector = new Vector2(offset.X, offset.Z);
-        destinationVector.Normalize();
-        Direction = Vector2.Lerp(Direction,destinationVector, Globals.DeltaTime * TurnSpeed);
+        UpdateRotation(destinationVector);
+    }
+
+    public void UpdateRotation(Vector2 desiredDirection)
+    {
+        desiredDirection.Normalize();
+        Direction = Vector2.Lerp(Direction,desiredDirection, Globals.DeltaTime * TurnSpeed);
         
         float angle = CivilianWander.AngleDegrees(Vector2.UnitY, Direction);
         ParentObject.Transform.SetLocalRotationY(-angle);
     }
+    
 
     private void CheckFieldOfVision()
     {
@@ -107,7 +113,7 @@ public class Agent : Component
         {
             WandererData data = (WandererData)AgentData;
             if(data.Alarmed) return;
-            data.Target = null;
+            if(data.Awareness < data.AwarenessThreshold)data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
                 //Calculate offset vector from this civilian to player unit from the list
