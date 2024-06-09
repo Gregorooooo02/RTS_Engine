@@ -41,6 +41,8 @@ public class Agent : Component
 
     public LayerType AgentLayer = LayerType.ENEMY;
     public AgentType Type = AgentType.Civilian;
+
+    public MeshRenderer Renderer = null;
     
     public Agent(){}
     
@@ -48,6 +50,15 @@ public class Agent : Component
     {
         if(!Active)return;
         Position = ParentObject.Transform.ModelMatrix.Translation;
+        if (Renderer == null)
+        {
+            Renderer = ParentObject.GetComponent<MeshRenderer>();
+            if (Renderer == null)
+            {
+                Active = false;
+                return;
+            }
+        }
         if (!AgentData.Alive)
         {
             ParentObject.Active = false;

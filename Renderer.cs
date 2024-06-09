@@ -19,11 +19,14 @@ public class Renderer
     private int currentMultiplier;
     
     private Effect _shadowMapGenerator;
+    private Effect _outlineGenerator;
+    private Effect _postprocessMerge;
     private Matrix _lightViewProjection;
     
     //Render targets-----------------------------------
     private RenderTarget2D _sceneRenderTarget;
     private RenderTarget2D _shadowMapRenderTarget;
+    private RenderTarget2D _outlineTarget;
     
     //-------------------------------------------------
     
@@ -47,6 +50,8 @@ public class Renderer
         _sceneRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
         _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
             DepthFormat.Depth24);
+        _outlineTarget = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Color,
+            DepthFormat.Depth16);
 
 #if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
@@ -67,23 +72,20 @@ public class Renderer
     
     public void Render()
     {
-        // foreach (Bloom bloom in Blooms)
-        // {
-        //     bloom.BeginDraw();
-        // }
-        //Globals.MainEffect.Parameters["fogScale"]?.SetValue(1.0f / (Globals.FogManager.TextureSize * Globals.FogManager.FogResolution));
-        
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
-        
 #if DEBUG
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
         
+        //--------------------Render the shadow map--------------------
         if(Globals.DrawShadows) DrawShadows();
+        //-------------------------------------------------------------
         
+        //--------------------Render the scene into the render target--------------------
+        Globals.GraphicsDevice.SetRenderTarget(_sceneRenderTarget);
         Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         if (Globals.DrawMeshes)
         {
@@ -95,7 +97,16 @@ public class Renderer
         {
             PickingFrustum.Value.DrawFrustum();
         }
+        Globals.GraphicsDevice.SetRenderTarget(null);
+        //--------------------------------------------------------------------------------
         
+        //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
+        Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_postprocessMerge);
+        Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+        Globals.SpriteBatch.End();
+        //-----------------------------------------------------------------------------------------------------------
+        
+        //--------------------Draw sprites--------------------
         Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
         if(Globals.DrawExplored)Globals.SpriteBatch.Draw(Globals.FogManager.PermanentMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
         if(Globals.DrawVisibility)Globals.SpriteBatch.Draw(Globals.FogManager.VisibilityMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
@@ -105,31 +116,49 @@ public class Renderer
         DrawAnimatedSprites();
         CurrentActivePuzzle?.Draw();
         Globals.SpriteBatch.End();
+        //----------------------------------------------------
+        
+        //--------------------Draw text--------------------
         Globals.SpriteBatch.Begin();
         DrawText();
         Globals.SpriteBatch.End();
-        
-        // foreach (Bloom bloom in Blooms)
-        // {
-        //     bloom.Draw();
-        // }
-
+        //-------------------------------------------------
 #elif RELEASE
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
 
+        //--------------------Render the shadow map--------------------
         DrawShadows();
+        //-------------------------------------------------------------
+        
+        //--------------------Render the scene into the render target--------------------
+        Globals.GraphicsDevice.SetRenderTarget(_sceneRenderTarget);
+        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
         DrawMeshes();
         DrawAnimatedMeshes();
         DrawWorld();
+        Globals.GraphicsDevice.SetRenderTarget(null);
+        //--------------------------------------------------------------------------------
 
+        //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
+        Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_postprocessMerge);
+        Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+        Globals.SpriteBatch.End();
+        //-----------------------------------------------------------------------------------------------------------
+
+        //--------------------Draw sprites--------------------
         Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
+        Globals.PickingManager.DrawSelectionBox();
         DrawSprites();
         DrawAnimatedSprites();
         CurrentActivePuzzle?.Draw();
         Globals.SpriteBatch.End();
+        //----------------------------------------------------
+
+        //--------------------Draw text--------------------
         Globals.SpriteBatch.Begin();
         DrawText();
         Globals.SpriteBatch.End();
+        //-------------------------------------------------
 #endif
     }
     
