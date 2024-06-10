@@ -66,9 +66,9 @@ public class CivilianFlee : AgentState
                 _destination = location + currentOffset;
                 
                 //TODO: Try changing offset direction by 90 degrees if calculated point falls off the map
-                if ((int)(location.X + currentOffset.X) < 0 || (int)(location.Y + currentOffset.Y) < 0 ||
-                    (int)(location.X + currentOffset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 ||
-                    (int)(location.Y + currentOffset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1)
+                if ((int)(endPoint.X) < 0 || (int)(endPoint.Y) < 0 ||
+                    (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 ||
+                    (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1)
                 {
                     angle *= -1;
                     if (angle >= 0)

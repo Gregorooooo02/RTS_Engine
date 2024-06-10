@@ -5,6 +5,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using RTS_Engine.Components.AI;
+using RTS_Engine.Components.AI.AgentData;
 
 namespace RTS_Engine;
 
@@ -16,7 +18,10 @@ public class Renderer
     
     //TODO: Clean up this class
     public static int ShadowMapSize = 4096;
-    private int currentMultiplier;
+    public static int FloodPasses = 0;
+    private readonly float _floodThreshold = 35.0f;
+    private bool _target1 = false;
+    private bool _enemyTarget1 = false;
     
     private Effect _shadowMapGenerator;
     private Effect _outlineGenerator;
@@ -26,7 +31,10 @@ public class Renderer
     //Render targets-----------------------------------
     private RenderTarget2D _sceneRenderTarget;
     private RenderTarget2D _shadowMapRenderTarget;
-    private RenderTarget2D _outlineTarget;
+    private RenderTarget2D _outlineTargetAlly1;
+    private RenderTarget2D _outlineTargetAlly2;
+    private RenderTarget2D _outlineTargetEnemy1;
+    private RenderTarget2D _outlineTargetEnemy2;
     
     //-------------------------------------------------
     
@@ -50,11 +58,19 @@ public class Renderer
         _sceneRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
         _shadowMapRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, ShadowMapSize, ShadowMapSize, true, SurfaceFormat.Single,
             DepthFormat.Depth24);
-        _outlineTarget = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Color,
+        _outlineTargetAlly1 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+        _outlineTargetAlly2 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+        _outlineTargetEnemy1 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+        _outlineTargetEnemy2 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
             DepthFormat.Depth16);
 
 #if _WINDOWS
         _shadowMapGenerator = content.Load<Effect>("ShadowMaps");
+        _outlineGenerator = content.Load<Effect>("Outlines");
+        _postprocessMerge = content.Load<Effect>("MergeShader");
 #else
         byte[] bytecode = File.ReadAllBytes("Content/ShadowMaps");
         _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
@@ -65,18 +81,41 @@ public class Renderer
         Texts = new List<TextRenderer>();
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
         WorldRenderer = null;
+
+        _postprocessMerge.Parameters["AllyColor"].SetValue(new Color(0,100,0,255).ToVector4());
+        _postprocessMerge.Parameters["EnemyColor"].SetValue(new Color(100,0,0,255).ToVector4());
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
     }
+
+    private void Resize()
+    {
+        int width = Globals.GraphicsDevice.PresentationParameters.BackBufferWidth;
+        int height = Globals.GraphicsDevice.PresentationParameters.BackBufferHeight;
+        _sceneRenderTarget = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+        _outlineTargetAlly1 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+        _outlineTargetAlly2 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+        _outlineTargetEnemy1 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+        _outlineTargetEnemy2 = new RenderTarget2D(Globals.GraphicsDevice, width, height, false, SurfaceFormat.Bgr565,
+            DepthFormat.Depth16);
+    }
     
     public void Render()
     {
+        if (Globals.GraphicsDeviceManager.PreferredBackBufferWidth != _sceneRenderTarget.Width) Resize();
+        
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
 #if DEBUG
+        
+        RenderOutlines();
+        
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
         
@@ -101,13 +140,24 @@ public class Renderer
         //--------------------------------------------------------------------------------
         
         //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
-        Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_postprocessMerge);
-        Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+        if (Globals.AgentsManager.SelectedUnits.Count > 0)
+        {
+            _postprocessMerge.Parameters["AllyOutlineMask"].SetValue(_target1 ? _outlineTargetAlly2 : _outlineTargetAlly1);
+            _postprocessMerge.Parameters["EnemyOutlineMask"].SetValue(_enemyTarget1 ? _outlineTargetEnemy2 : _outlineTargetEnemy1);
+            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate,null,null,null,null,_postprocessMerge);
+            Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+        }
+        else
+        {
+            Globals.SpriteBatch.Begin();
+            Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+        }
         Globals.SpriteBatch.End();
         //-----------------------------------------------------------------------------------------------------------
         
         //--------------------Draw sprites--------------------
         Globals.SpriteBatch.Begin(SpriteSortMode.BackToFront);
+        if(Globals.ShowSelectedSilhouettes) Globals.SpriteBatch.Draw(_outlineTargetEnemy1, new Rectangle(0, 0, 600, 600), Color.White);
         if(Globals.DrawExplored)Globals.SpriteBatch.Draw(Globals.FogManager.PermanentMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
         if(Globals.DrawVisibility)Globals.SpriteBatch.Draw(Globals.FogManager.VisibilityMaskTarget, new Rectangle(0, 0, 600, 600), Color.White);
         if(Globals.ShowShadowMap)Globals.SpriteBatch.Draw(_shadowMapRenderTarget, new Rectangle(0, 0, 600, 600), Color.White);
@@ -160,6 +210,128 @@ public class Renderer
         Globals.SpriteBatch.End();
         //-------------------------------------------------
 #endif
+    }
+
+    private void RenderOutlines()
+    {
+        //Render outlines for selected player units
+        if (Globals.AgentsManager.SelectedUnits.Count > 0)
+        {
+            //FloodPasses = Globals.ZoomDegrees < _floodThreshold ? 0 : -1;
+            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly1);
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes"];
+            _outlineGenerator.Parameters["Projection"].SetValue(Globals.Projection);
+            _outlineGenerator.Parameters["View"].SetValue(Globals.View);
+            foreach (Agent agent in Globals.AgentsManager.SelectedUnits)
+            {
+                if (agent.Renderer != null)
+                {
+                    _outlineGenerator.Parameters["World"].SetValue(agent.ParentObject.Transform.ModelMatrix);
+                    foreach (ModelMesh mesh in agent.Renderer._model.Models[agent.Renderer._model.CurrentModelIndex].Meshes)
+                    {
+                        //foreach (ModelMeshPart part in mesh.MeshParts)
+                        for(int i = 0;i < mesh.MeshParts.Count;i++)
+                        {
+                            var part = mesh.MeshParts[i];
+                            if (part.PrimitiveCount <= 0) continue;
+                            _outlineGenerator.CurrentTechnique.Passes[0].Apply();
+                            Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                            Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                        }
+                    } 
+                }
+            }
+            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly2);
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["UVExtract"];
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+            Globals.SpriteBatch.Draw(_outlineTargetAlly1,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.End();
+            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly1);
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
+            _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1.Width, 1.0f / _outlineTargetAlly1.Height));
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+            Globals.SpriteBatch.Draw(_outlineTargetAlly2,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.End();
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["JumpFlood"];
+            _target1 = false;
+            for (int i = FloodPasses; i >= 0; i--)
+            {
+                _outlineGenerator.Parameters["StepWidth"]?.SetValue(MathF.Pow(2, i) + 0.2f);
+                if (_target1)
+                {
+                    _target1 = false;
+                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly1);
+                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+                    Globals.SpriteBatch.Draw(_outlineTargetAlly2,Vector2.Zero,Color.White);
+                    Globals.SpriteBatch.End();
+                }
+                else
+                {
+                    _target1 = true;
+                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly2);
+                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+                    Globals.SpriteBatch.Draw(_outlineTargetAlly1,Vector2.Zero,Color.White);
+                    Globals.SpriteBatch.End();
+                }
+            }
+            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes"];
+            foreach (Agent agent in Globals.AgentsManager.SelectedUnits)
+            {
+                PlayerUnitData data = (PlayerUnitData)agent.AgentData;
+                if (data.Target is { Renderer: not null })
+                {
+                    _outlineGenerator.Parameters["World"].SetValue(data.Target.ParentObject.Transform.ModelMatrix);
+                    foreach (ModelMesh mesh in data.Target.Renderer._model.Models[data.Target.Renderer._model.CurrentModelIndex].Meshes)
+                    {
+                        //foreach (ModelMeshPart part in mesh.MeshParts)
+                        for(int i = 0;i < mesh.MeshParts.Count;i++)
+                        {
+                            var part = mesh.MeshParts[i];
+                            if (part.PrimitiveCount <= 0) continue;
+                            _outlineGenerator.CurrentTechnique.Passes[0].Apply();
+                            Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                            Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                        }
+                    } 
+                }
+            }
+            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy2);
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["UVExtract"];
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+            Globals.SpriteBatch.Draw(_outlineTargetEnemy1,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.End();
+            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
+            _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1.Width, 1.0f / _outlineTargetAlly1.Height));
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+            Globals.SpriteBatch.Draw(_outlineTargetEnemy2,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.End();
+            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["JumpFlood"];
+            _enemyTarget1 = false;
+            for (int i = FloodPasses; i >= 0; i--)
+            {
+                _outlineGenerator.Parameters["StepWidth"]?.SetValue(MathF.Pow(2, i) + 0.2f);
+                if (_enemyTarget1)
+                {
+                    _enemyTarget1 = false;
+                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
+                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+                    Globals.SpriteBatch.Draw(_outlineTargetEnemy2,Vector2.Zero,Color.White);
+                    Globals.SpriteBatch.End();
+                }
+                else
+                {
+                    _enemyTarget1 = true;
+                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy2);
+                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
+                    Globals.SpriteBatch.Draw(_outlineTargetEnemy1,Vector2.Zero,Color.White);
+                    Globals.SpriteBatch.End();
+                }
+            }
+        }
     }
     
     private void DrawAnimatedSprites()

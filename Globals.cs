@@ -208,6 +208,7 @@ namespace RTS_Engine
         public static bool SceneSelectionVisible = true;
         public static bool CheatMenuVisible = true;
         public static bool ShowShadowMap = false;
+        public static bool ShowSelectedSilhouettes = false;
         public static bool DrawShadows = true;
         public static bool DrawMeshes = true;
         public static bool DebugCamera = true;
@@ -215,6 +216,8 @@ namespace RTS_Engine
         public static bool DrawSelectFrustum = false;
         public static bool DrawExplored = false;
         public static bool DrawVisibility = false;
+
+        public static int FloodPasses = 2;
 #endif
     }
 }

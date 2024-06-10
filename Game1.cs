@@ -224,6 +224,7 @@ public class Game1 : Game
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
+        ImGui.Checkbox("Show Selected Silhouettes", ref Globals.ShowSelectedSilhouettes);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);
         ImGui.Checkbox("Draw Shadows", ref Globals.DrawShadows);
         ImGui.Checkbox("Draw Selection Frustum", ref Globals.DrawSelectFrustum);
@@ -238,6 +239,7 @@ public class Game1 : Game
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
+        ImGui.InputInt("Flood passes", ref Renderer.FloodPasses);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         ImGui.Text("Average from " + _size +"x: " + Math.Round(currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
         
