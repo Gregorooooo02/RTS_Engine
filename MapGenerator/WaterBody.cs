@@ -87,8 +87,8 @@ public sealed class WaterBody
         
         Globals.TerrainEffect.Parameters["xWaveMapScale"].SetValue(_waveNormalScale);
         Globals.TerrainEffect.Parameters["xWaveMapOffset"].SetValue(_waveNormalOffset);
-        Globals.TerrainEffect.Parameters["xWaterColor"].SetValue(_waterColor);
-        Globals.TerrainEffect.Parameters["xWaveNormalMap"].SetValue(_waveMap);
+        Globals.TerrainEffect.Parameters["xWaterColor"]?.SetValue(_waterColor);
+        Globals.TerrainEffect.Parameters["xWaveNormalMap"]?.SetValue(_waveMap);
         
         Globals.GraphicsDevice.SetVertexBuffer(_vertexBuffer);
         Globals.GraphicsDevice.Indices = _indexBuffer;

@@ -427,18 +427,22 @@ WaterPixelToFrame WaterWavesPS(WaterVertexToPixel PSIn)
 {
     WaterPixelToFrame Output = (WaterPixelToFrame)0;
     
-    float3 normal = tex2D(TextureSamplerWave, PSIn.WaveMapCoords).xyz;
+    //float3 normal = tex2D(TextureSamplerWave, PSIn.WaveMapCoords).xyz;
 
-    normal = 2.0f * normal - 1.0f;
+    //normal = 2.0f * normal - 1.0f;
 
-    float3 blendedNormal = normalize(normal);
+    //float3 blendedNormal = normalize(normal);
+    
+    //float3 blendedNormal = normalize(float3(0, 0, 1));
 
-    float lightingFactor = 1;
-    if (xEnableLighting)
-        lightingFactor = dot(blendedNormal, -xLightDirection);
+    //float lightingFactor = dot(blendedNormal, normalize(dirLightDirection));
+    
+    //float lightingFactor = 0.8;
 
-    Output.Color = xWaterColor * saturate(lightingFactor + xAmbient);
-
+    //Output.Color = xWaterColor * saturate(lightingFactor + xAmbient);
+    
+    Output.Color = xWaterColor * saturate(0.8 + xAmbient);
+    
     return Output;
 }
 
