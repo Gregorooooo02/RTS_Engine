@@ -31,6 +31,10 @@ public class Agent : Component
     
     public float TurnSpeed = 2.0f;
 
+    public float SeparationDistance = 0.5f;
+
+    public float HeightOffset = 2.0f;
+
     public AgentData.AgentData AgentData;
 
     public Vector3 Position;
@@ -97,11 +101,46 @@ public class Agent : Component
 
     public void MoveToPoint(Vector2 point, float speed)
     {
-        Vector3 agentPosition = ParentObject.Transform.ModelMatrix.Translation;
-        Vector3 offset = new Vector3(point.X - agentPosition.X, 0, point.Y - agentPosition.Z);
-        offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(agentPosition.X + offset.X, agentPosition.Z + offset.Z)) - agentPosition.Y + 2.0f;
+        Vector3 offset = new Vector3(point.X - Position.X, 0, point.Y - Position.Z);
+        offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(Position.X + offset.X, Position.Z + offset.Z)) - Position.Y + HeightOffset;
         offset.Normalize();
         ParentObject.Transform.Move(offset * Globals.DeltaTime * speed);
+
+        
+        if (Type == AgentType.PlayerUnit)
+        {
+            foreach (Agent agent in Globals.AgentsManager.Units)
+            {
+                if(agent == this) continue;
+                Vector2 separationOffset = new Vector2(Position.X - agent.Position.X, Position.Z - agent.Position.Z);
+                float length = separationOffset.Length();
+                float sum = SeparationDistance + agent.SeparationDistance;
+                if (length < sum)
+                {
+                    //Colliding
+                    separationOffset.Normalize();
+                    float angle = CivilianWander.AngleDegrees(separationOffset, Direction);
+                    Console.WriteLine("Angle: " + angle);
+                    Vector2 add = new Vector2();
+                    if (MathF.Abs(angle) > 135)
+                    {
+                        float rotAngle = angle + (angle < 0 ? 120 : -120);
+                        rotAngle *= -1;
+                        Console.WriteLine("Rot: " + rotAngle);
+                        add.X = MathF.Cos(rotAngle) * separationOffset.X - MathF.Sin(rotAngle) * separationOffset.Y;
+                        add.Y = MathF.Sin(rotAngle) * separationOffset.X + MathF.Cos(rotAngle) * separationOffset.Y;
+                    }
+
+                    separationOffset += add;
+                    Vector3 move = new Vector3(separationOffset.X, 0 ,separationOffset.Y) * (sum - length);
+                    ParentObject.Transform.Move(move);
+                }
+            }
+        }
+        else
+        {
+            
+        }
         
         Vector2 destinationVector = new Vector2(offset.X, offset.Z);
         UpdateRotation(destinationVector);
@@ -321,6 +360,10 @@ public class Agent : Component
         
         builder.Append("<agentLayer>" + AgentLayer + "</agentLayer>");
         
+        builder.Append("<separationDistance>" + SeparationDistance + "</separationDistance>");
+        
+        builder.Append("<heightOffset>" + HeightOffset + "</heightOffset>");
+        
         builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
         
         builder.Append("</component>");
@@ -333,6 +376,8 @@ public class Agent : Component
         Active = element.Element("active")?.Value == "True";
         Type = (AgentType)Enum.Parse(typeof(AgentType), element.Element("agentType")?.Value);
         AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
+        SeparationDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 0.5f;
+        HeightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
         switch (Type)
         {
             case AgentType.Civilian:
@@ -384,6 +429,8 @@ public class Agent : Component
     {
         if(ImGui.CollapsingHeader("Agent"))
         {
+            ImGui.DragFloat("Separation distance", ref SeparationDistance);
+            ImGui.DragFloat("Height offset", ref HeightOffset);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
             ImGui.SameLine();

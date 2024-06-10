@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.AgentData;
 
@@ -9,6 +10,8 @@ public class UnitMove : AgentState
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
     private readonly int _maxAttempts = 10;
+
+    private float previousDistance;
     public override void Initialize(Agent agent)
     {
         
@@ -58,7 +61,8 @@ public class UnitMove : AgentState
         }
         else
         {
-            if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
+            float distance = Vector2.Distance(_currentPoint, location);
+            if (distance <= data.MinPointDistance || MathF.Abs(distance - previousDistance) < 0.01f)
             {
                 _currentPoint = _points.Dequeue();
             }
@@ -66,6 +70,7 @@ public class UnitMove : AgentState
             {
                 agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
             }
+            previousDistance = distance;
         }
         return this;
     }
