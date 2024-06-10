@@ -32,6 +32,7 @@
     <None Remove="AnimationImporters\**" />
     <None Remove="Animation\**" />
     <None Remove="VoronoiLib\**" />
+    <None Remove="AnimationPipeline\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
@@ -45,6 +46,7 @@
     <Compile Remove="AnimationImporters\**" />
     <Compile Remove="Animation\**" />
     <Compile Remove="VoronoiLib\**" />
+    <Compile Remove="AnimationPipeline\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="GraphicsImporters\**" />
@@ -52,23 +54,13 @@
     <EmbeddedResource Remove="AnimationImporters\**" />
     <EmbeddedResource Remove="Animation\**" />
     <EmbeddedResource Remove="VoronoiLib\**" />
+    <EmbeddedResource Remove="AnimationPipeline\**" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Prefabs\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Animation">
-      <HintPath>DLLS\Animation.dll</HintPath>
-    </Reference>
-    <Reference Include="AnimationImporters">
-      <HintPath>DLLS\AnimationImporters.dll</HintPath>
-    </Reference>
-    <Reference Include="Graphics">
-      <HintPath>DLLS\Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphicsImporters">
-      <HintPath>DLLS\GraphicsImporters.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="AnimationPipeline\AnimationPipeline.csproj" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

@@ -168,6 +168,7 @@ public class Puzzle : Component
     {
         Active = false;
         ChangeActive(ParentObject,false);
+        PuzzleCompleted = null;
         if(Globals.Renderer.CurrentActivePuzzle == this) Globals.Renderer.CurrentActivePuzzle = null;
     }
     

@@ -9,7 +9,6 @@ using ImGuiNET;
 using Microsoft.Xna.Framework.Input;
 using RTS_Engine.Components.AI;
 using Num = System.Numerics;
-using RTS.Animation;
 
 namespace RTS_Engine;
 

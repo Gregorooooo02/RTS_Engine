@@ -318,7 +318,7 @@ public class Renderer
     private void DrawShadowMap(AnimatedMeshRenderer renderer)
     {
         _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
-        foreach (ModelMesh mesh in renderer._model.Meshes)
+        foreach (ModelMesh mesh in renderer._skinnedModel.Model.Meshes)
         {
             foreach (var part in mesh.MeshParts)
             {
