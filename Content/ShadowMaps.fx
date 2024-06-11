@@ -10,9 +10,16 @@
 matrix LightViewProj;
 matrix World;
 
+cbuffer BoneTransforms : register(b0)
+{
+    matrix BoneTransforms[72];
+};
+
 struct CreateShadowMap_VSIn
 {
     float4 Position : POSITION0;
+    int4 BoneIndices : BLENDINDICES0;
+    float4 BoneWeights : BLENDWEIGHT0;
 };
 
 struct CreateShadowMap_VSOut
@@ -40,6 +47,21 @@ CreateShadowMap_VSOut ShadowMap_Instanced_VS(CreateShadowMap_VSIn input,float4x4
     return Out;
 }
 
+CreateShadowMap_VSOut ShadowMap_Skinned_VS(in CreateShadowMap_VSIn input)
+{
+    CreateShadowMap_VSOut Out = (CreateShadowMap_VSOut)0;
+    
+    float4 skinnedPosition = float4(0.0, 0.0, 0.0, 0.0);
+    for (int i = 0; i < 4; i++)
+    {
+        skinnedPosition += mul(input.Position, BoneTransforms[input.BoneIndices[i]]) * input.BoneWeights[i];
+    }
+    
+    Out.Position = mul(skinnedPosition, mul(World, LightViewProj));
+    Out.Depth = Out.Position.zw;
+    
+    return Out;
+}
 
 float4 CreateShadowMap_PixelShader(CreateShadowMap_VSOut input) : COLOR
 {
@@ -62,6 +84,16 @@ technique ShadowInstanced
     pass Pass0
     {
         VertexShader = compile VS_SHADERMODEL ShadowMap_Instanced_VS();
+        PixelShader = compile PS_SHADERMODEL CreateShadowMap_PixelShader();
+    }
+}
+
+//Technique for creating the shadow map for skinned objects
+technique ShadowSkinned
+{
+    pass Pass0
+    {
+        VertexShader = compile VS_SHADERMODEL ShadowMap_Skinned_VS();
         PixelShader = compile PS_SHADERMODEL CreateShadowMap_PixelShader();
     }
 }
