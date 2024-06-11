@@ -82,7 +82,7 @@ public class Renderer
         AnimatedSprites = new List<AnimatedSpriteRenderer>();
         WorldRenderer = null;
 
-        _postprocessMerge.Parameters["AllyColor"].SetValue(new Color(0,100,0,255).ToVector4());
+        _postprocessMerge.Parameters["AllyColor"].SetValue(new Color(255,255,255,255).ToVector4());
         _postprocessMerge.Parameters["EnemyColor"].SetValue(new Color(100,0,0,255).ToVector4());
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
@@ -467,20 +467,19 @@ public class Renderer
         Globals.GraphicsDevice.SetRenderTarget(_shadowMapRenderTarget);
         _shadowMapGenerator.Parameters["LightViewProj"].SetValue(_lightViewProjection);
         WorldRenderer?.DrawShadows(_shadowMapGenerator);
-        _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["ShadowInstanced"];
-        foreach (InstancedRendererController controller in InstancedRendererControllers)
-        {
-            DrawShadowMapInstanced(controller);
-        }
         _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["CreateShadowMap"];
         foreach (MeshRenderer renderer in Meshes)
         {
             DrawShadowMap(renderer);
         }
-
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
             DrawShadowMap(renderer);
+        }
+        _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["ShadowInstanced"];
+        foreach (InstancedRendererController controller in InstancedRendererControllers)
+        {
+            DrawShadowMapInstanced(controller);
         }
         Globals.GraphicsDevice.SetRenderTarget(null);
     }
