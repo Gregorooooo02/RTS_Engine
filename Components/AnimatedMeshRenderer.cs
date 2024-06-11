@@ -30,6 +30,7 @@ public class AnimatedMeshRenderer : Component
             {
                 IsVisible = true;
                 Globals.Renderer.AnimatedMeshes.Add(this);
+                _skinnedModel.UpdateClip();
                 _skinnedModel.AnimationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
             }
             else
@@ -106,55 +107,52 @@ public class AnimatedMeshRenderer : Component
             _skinnedModel.AnimationController.Speed = animationControllerSpeed;
 
             var activeAnimationClip = _skinnedModel.ActiveAnimationClip;
-            ImGui.SliderInt("Active animation clip", ref activeAnimationClip, 0, _skinnedModel.SkinnedModels[_skinnedModel.CurrentModelIndex].AnimationClips.Count - 1);
+            if (ImGui.SliderInt("Active animation clip", ref activeAnimationClip, 0,
+                    _skinnedModel.SkinnedModels[_skinnedModel.CurrentModelIndex].AnimationClips.Count - 1))
+                _skinnedModel.ChangedClip = true;
+            
             _skinnedModel.ActiveAnimationClip = activeAnimationClip;
-            
-            ImGui.Text("Translation interpolation: " + _skinnedModel.AnimationController.TranslationInterpolation);
-            if (ImGui.Button("None"))
+
+            if (ImGui.CollapsingHeader("Translation interpolation: " +
+                                       _skinnedModel.AnimationController.TranslationInterpolation))
             {
-                _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.None;
+                if (ImGui.Button("None"))
+                {
+                    _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.None;
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("Linear"))
+                {
+                    _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.Linear;
+                }
             }
-            ImGui.SameLine();
-            if (ImGui.Button("Linear"))
+
+            if (ImGui.CollapsingHeader("Orientation interpolation: " + 
+                                       _skinnedModel.AnimationController.OrientationInterpolation))
             {
-                _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.Linear;
+                if (ImGui.Button("None"))
+                {
+                    _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.None;
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("Linear"))
+                {
+                    _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.Linear;
+                }
             }
-            ImGui.SameLine();
-            if (ImGui.Button("Cubic"))
+
+            if (ImGui.CollapsingHeader("Scale interpolation: " + 
+                                       _skinnedModel.AnimationController.ScaleInterpolation))
             {
-                _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.Cubic;
-            }
-            
-            ImGui.Text("Orientation interpolation: " + _skinnedModel.AnimationController.OrientationInterpolation);
-            if (ImGui.Button("None"))
-            {
-                _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.None;
-            }
-            ImGui.SameLine();
-            if (ImGui.Button("Linear"))
-            {
-                _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.Linear;
-            }
-            ImGui.SameLine();
-            if (ImGui.Button("Cubic"))
-            {
-                _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.Cubic;
-            }
-            
-            ImGui.Text("Scale interpolation: " + _skinnedModel.AnimationController.ScaleInterpolation);
-            if (ImGui.Button("None"))
-            {
-                _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.None;
-            }
-            ImGui.SameLine();
-            if (ImGui.Button("Linear"))
-            {
-                _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.Linear;
-            }
-            ImGui.SameLine();
-            if (ImGui.Button("Cubic"))
-            {
-                _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.Cubic;
+                if (ImGui.Button("None"))
+                {
+                    _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.None;
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("Linear"))
+                {
+                    _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.Linear;
+                }
             }
 
             var animationControllerLoopEnabled = _skinnedModel.AnimationController.LoopEnabled;

@@ -24,6 +24,7 @@ public class AnimatedModelData
     public string ShaderTechniqueName;
     public List<float> _lodThresholds = new();
 
+    public bool ChangedClip;
     public bool IsMultiMesh;
     private bool _lodUsed;
     
@@ -102,6 +103,15 @@ public class AnimatedModelData
         }
     }
 
+    public void UpdateClip()
+    {
+        if (ChangedClip)
+        {
+            AnimationController.CrossFade(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip], TimeSpan.FromSeconds(0.5f));
+            ChangedClip = false;
+        }
+    }
+
     public void PassTextures(int mesh)
     {
         Globals.MainEffect.Parameters["albedo"]?.SetValue(Textures[CurrentModelIndex][mesh][0]);
@@ -123,7 +133,7 @@ public class AnimatedModelData
         AnimationController.OrientationInterpolation = InterpolationMode.Linear;
         AnimationController.ScaleInterpolation = InterpolationMode.Linear;
         
-        ActiveAnimationClip = 0;
+        ActiveAnimationClip = 1;
         AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
     }
 
