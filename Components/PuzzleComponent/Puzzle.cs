@@ -57,7 +57,7 @@ public class Puzzle : Component
     public void Draw()
     {
         if(!Active) return;
-        Globals.SpriteBatch.Draw(_background, _backgroundDest,null,Color.Black,0,Vector2.Zero,SpriteEffects.None,1);
+        Globals.SpriteBatch.Draw(_background, _backgroundDest,null,Color.Black,0,Vector2.Zero,SpriteEffects.None,0.995f);
         for (int i = 0; i < _gridSize * _gridSize; i++)
         {
             Globals.SpriteBatch.Draw(_background,new Rectangle(_backgroundTilesPositions[i],size),null,_tileColor,0,Vector2.Zero,SpriteEffects.None,0.99f);
@@ -281,8 +281,8 @@ public class Puzzle : Component
         size = new Point(_puzzlePieceSize);
         
         int offset = _puzzleTexture.Width / _gridSize;
-        float depth = 0f;
-        float depthStep = 0.9f / (_gridSize * _gridSize);
+        float depth = 0.1f;
+        float depthStep = 0.7f / (_gridSize * _gridSize);
         Random random = new Random();
 
         _backgroundDest = new Rectangle((int)ParentObject.Transform.Pos.X, (int)ParentObject.Transform.Pos.Y,
@@ -303,7 +303,7 @@ public class Puzzle : Component
                     _puzzlePieceSize,
                     depth,
                     i * _gridSize + j + 1,
-                    0.98f
+                    0.85f
                     ));
                 depth += depthStep;
                 

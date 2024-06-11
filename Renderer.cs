@@ -108,13 +108,15 @@ public class Renderer
     {
         if (Globals.GraphicsDeviceManager.PreferredBackBufferWidth != _sceneRenderTarget.Width) Resize();
         
+        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
+        
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
 #if DEBUG
         
-        RenderOutlines();
+        //RenderOutlines();
         
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
@@ -136,23 +138,25 @@ public class Renderer
         {
             PickingFrustum.Value.DrawFrustum();
         }
-        Globals.GraphicsDevice.SetRenderTarget(null);
         //--------------------------------------------------------------------------------
         
         //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
+        Globals.GraphicsDevice.SetRenderTarget(null);
         if (Globals.AgentsManager.SelectedUnits.Count > 0)
         {
             _postprocessMerge.Parameters["AllyOutlineMask"].SetValue(_target1 ? _outlineTargetAlly2 : _outlineTargetAlly1);
             _postprocessMerge.Parameters["EnemyOutlineMask"].SetValue(_enemyTarget1 ? _outlineTargetEnemy2 : _outlineTargetEnemy1);
             Globals.SpriteBatch.Begin(SpriteSortMode.Immediate,null,null,null,null,_postprocessMerge);
             Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.End();
         }
         else
         {
-            Globals.SpriteBatch.Begin();
+            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate);
             Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.End();
         }
-        Globals.SpriteBatch.End();
+        
         //-----------------------------------------------------------------------------------------------------------
         
         //--------------------Draw sprites--------------------

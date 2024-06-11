@@ -75,6 +75,7 @@ public class PuzzlePiece
     
     public void Draw()
     {
+        //Console.WriteLine(Snapped ? _snappedDepth : _depth);
         Globals.SpriteBatch.Draw(_puzzleTexture,_dest,_sourceRectangle,Color.White,0,Microsoft.Xna.Framework.Vector2.Zero, SpriteEffects.None,Snapped ? _snappedDepth : _depth);
     }
 }
