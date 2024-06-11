@@ -6,16 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Animation;
 using Animation.Controllers;
-using Assimp;
-using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 
 namespace RTS_Engine;
 
 public class AnimatedMeshRenderer : Component
 {
-    public SkinnedModel _skinnedModel {get; private set;}
-    private AnimationController _animationController {get; set;}
-    public int _activeAnimationClip {get; private set;}
+    public AnimatedModelData _skinnedModel {get; private set;}
     public bool IsVisible { get; private set; } = true;
     
     public AnimatedMeshRenderer(GameObject parentObject)
@@ -28,51 +24,29 @@ public class AnimatedMeshRenderer : Component
 
     public override void Update()
     {
-        Globals.Renderer.AnimatedMeshes.Add(this);
-        _animationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
+        if (Active)
+        {
+            if (_skinnedModel.IsInView(ParentObject.Transform.ModelMatrix))
+            {
+                IsVisible = true;
+                Globals.Renderer.AnimatedMeshes.Add(this);
+                _skinnedModel.AnimationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
+            }
+            else
+            {
+                IsVisible = false;
+            }
+        }
     }
 
     public void Draw(Matrix world)
     {
         if (!Active) return;
-
-        foreach (ModelMesh mesh in _skinnedModel.Model.Meshes)
-        {
-            foreach (SkinnedEffect effect in mesh.Effects)
-            {
-                effect.SetBoneTransforms(_animationController.SkinnedBoneTransforms);
-                effect.World = world;
-                effect.View = Globals.View;
-                effect.Projection = Globals.Projection;
-            }
-            mesh.Draw();
-        }
     }
 
     public override void Initialize()
     {
         _skinnedModel = AssetManager.DefaultAnimatedModel;
-        
-        foreach (ModelMesh mesh in _skinnedModel.Model.Meshes)
-        {
-            foreach (SkinnedEffect effect in mesh.Effects)
-            {
-                effect.EnableDefaultLighting();
-                effect.PreferPerPixelLighting = true;
-                effect.SpecularColor = new Vector3(0.25f);
-                effect.SpecularPower = 16;
-            }
-        }
-        
-        _animationController = new AnimationController(_skinnedModel.SkeletonBones);
-        _animationController.Speed = 0.5f;
-        
-        _animationController.TranslationInterpolation = InterpolationMode.Linear;
-        _animationController.OrientationInterpolation = InterpolationMode.Linear;
-        _animationController.ScaleInterpolation = InterpolationMode.Linear;
-        
-        _activeAnimationClip = 0;
-        _animationController.StartClip(_skinnedModel.AnimationClips.Values[_activeAnimationClip]);
     }
 
     public override string ComponentToXmlString()
@@ -97,7 +71,25 @@ public class AnimatedMeshRenderer : Component
 
     public override void RemoveComponent()
     {
+        Pickable pickable = ParentObject.GetComponent<Pickable>();
+        if (pickable != null && pickable.AnimatedRenderer == this)
+        {
+            ParentObject.RemoveComponent(pickable);
+        }
         
+        AssetManager.FreeAnimatedModel(_skinnedModel);
+        ParentObject.RemoveComponent(this);
+    }
+
+    public void LoadModel(string modelPath, string technique = "PBR")
+    {
+        _skinnedModel = AssetManager.GetAnimatedModel(modelPath);
+        _skinnedModel.ShaderTechniqueName = technique;
+    }
+
+    public SkinnedModel GetModel()
+    {
+        return _skinnedModel.SkinnedModels[_skinnedModel.CurrentModelIndex];
     }
 
 #if DEBUG
@@ -109,69 +101,69 @@ public class AnimatedMeshRenderer : Component
             ImGui.Checkbox("Animated Mesh Active", ref Active);
             ImGui.Text("Current animated mesh: " + _skinnedModel);
 
-            var animationControllerSpeed = _animationController.Speed;
+            var animationControllerSpeed = _skinnedModel.AnimationController.Speed;
             ImGui.DragFloat("Animation speed", ref animationControllerSpeed, 0.01f, 0.01f, 10f);
-            _animationController.Speed = animationControllerSpeed;
+            _skinnedModel.AnimationController.Speed = animationControllerSpeed;
 
-            var activeAnimationClip = _activeAnimationClip;
-            ImGui.SliderInt("Active animation clip", ref activeAnimationClip, 0, _skinnedModel.AnimationClips.Count - 1);
-            _activeAnimationClip = activeAnimationClip;
+            var activeAnimationClip = _skinnedModel.ActiveAnimationClip;
+            ImGui.SliderInt("Active animation clip", ref activeAnimationClip, 0, _skinnedModel.SkinnedModels[_skinnedModel.CurrentModelIndex].AnimationClips.Count - 1);
+            _skinnedModel.ActiveAnimationClip = activeAnimationClip;
             
-            ImGui.Text("Translation interpolation: " + _animationController.TranslationInterpolation);
+            ImGui.Text("Translation interpolation: " + _skinnedModel.AnimationController.TranslationInterpolation);
             if (ImGui.Button("None"))
             {
-                _animationController.TranslationInterpolation = InterpolationMode.None;
+                _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.None;
             }
             ImGui.SameLine();
             if (ImGui.Button("Linear"))
             {
-                _animationController.TranslationInterpolation = InterpolationMode.Linear;
+                _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.Linear;
             }
             ImGui.SameLine();
             if (ImGui.Button("Cubic"))
             {
-                _animationController.TranslationInterpolation = InterpolationMode.Cubic;
+                _skinnedModel.AnimationController.TranslationInterpolation = InterpolationMode.Cubic;
             }
             
-            ImGui.Text("Orientation interpolation: " + _animationController.OrientationInterpolation);
+            ImGui.Text("Orientation interpolation: " + _skinnedModel.AnimationController.OrientationInterpolation);
             if (ImGui.Button("None"))
             {
-                _animationController.OrientationInterpolation = InterpolationMode.None;
+                _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.None;
             }
             ImGui.SameLine();
             if (ImGui.Button("Linear"))
             {
-                _animationController.OrientationInterpolation = InterpolationMode.Linear;
+                _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.Linear;
             }
             ImGui.SameLine();
             if (ImGui.Button("Cubic"))
             {
-                _animationController.OrientationInterpolation = InterpolationMode.Cubic;
+                _skinnedModel.AnimationController.OrientationInterpolation = InterpolationMode.Cubic;
             }
             
-            ImGui.Text("Scale interpolation: " + _animationController.ScaleInterpolation);
+            ImGui.Text("Scale interpolation: " + _skinnedModel.AnimationController.ScaleInterpolation);
             if (ImGui.Button("None"))
             {
-                _animationController.ScaleInterpolation = InterpolationMode.None;
+                _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.None;
             }
             ImGui.SameLine();
             if (ImGui.Button("Linear"))
             {
-                _animationController.ScaleInterpolation = InterpolationMode.Linear;
+                _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.Linear;
             }
             ImGui.SameLine();
             if (ImGui.Button("Cubic"))
             {
-                _animationController.ScaleInterpolation = InterpolationMode.Cubic;
+                _skinnedModel.AnimationController.ScaleInterpolation = InterpolationMode.Cubic;
             }
 
-            var animationControllerLoopEnabled = _animationController.LoopEnabled;
+            var animationControllerLoopEnabled = _skinnedModel.AnimationController.LoopEnabled;
             ImGui.Checkbox("Loop enabled", ref animationControllerLoopEnabled);
-            _animationController.LoopEnabled = animationControllerLoopEnabled;
+            _skinnedModel.AnimationController.LoopEnabled = animationControllerLoopEnabled;
             
-            var animationControllerCrossfade = _animationController.CrossFading;
+            var animationControllerCrossfade = _skinnedModel.AnimationController.CrossFading;
             ImGui.Checkbox("Crossfade", ref animationControllerCrossfade);
-            _animationController.CrossFading = animationControllerCrossfade;
+            _skinnedModel.AnimationController.CrossFading = animationControllerCrossfade;
 
             if (animationControllerCrossfade)
             {

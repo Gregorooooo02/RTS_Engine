@@ -229,13 +229,15 @@ public class Renderer
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #elif DEBUG
-        // Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
-        // Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
-        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+        Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
+        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
+        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
-            renderer.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            renderer._skinnedModel.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif
     }
@@ -318,7 +320,7 @@ public class Renderer
     private void DrawShadowMap(AnimatedMeshRenderer renderer)
     {
         _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
-        foreach (ModelMesh mesh in renderer._skinnedModel.Model.Meshes)
+        foreach (ModelMesh mesh in renderer._skinnedModel.SkinnedModels[renderer._skinnedModel.CurrentModelIndex].Model.Meshes)
         {
             foreach (var part in mesh.MeshParts)
             {

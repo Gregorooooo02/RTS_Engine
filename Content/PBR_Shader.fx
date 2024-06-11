@@ -19,7 +19,6 @@ cbuffer ModelParameters : register(b0)
     float3x3 normalMatrix;
 };
 
-
 cbuffer Globals : register(b1)
 {
     matrix Projection;
@@ -28,6 +27,11 @@ cbuffer Globals : register(b1)
     matrix dirLightSpace;
     
     float3 viewPos;
+};
+
+cbuffer BoneTransforms : register(b2)
+{
+    matrix BoneTransforms[72];
 };
 
 float gamma;
@@ -108,6 +112,8 @@ struct VertexShaderInput
 	float4 Position : POSITION0;
     float3 Normal : NORMAL0;
     float2 TexCoords : TEXCOORD0;
+    int4 BoneIndices : BLENDINDICES0;
+    float4 BoneWeights : BLENDWEIGHT0;
 };
 
 struct InstanceData
@@ -294,6 +300,28 @@ VertexShaderOutput PBR_VS(in VertexShaderInput input)
     return output;
 }
 
+VertexShaderOutput PBR_Skinned_VS(in VertexShaderInput input)
+{
+    VertexShaderOutput output = (VertexShaderOutput) 0;
+    output.TexCoords = input.TexCoords;
+    
+    float4 skinnedPosition = float4(0.0, 0.0, 0.0, 0.0);
+    float3 skinnedNormal = float3(0.0, 0.0, 0.0);
+    
+    for (int i = 0; i < 4; i++)
+    {
+        skinnedPosition += mul(input.Position, BoneTransforms[input.BoneIndices[i]]) * input.BoneWeights[i];
+        skinnedNormal += mul(input.Normal, (float3x3)BoneTransforms[input.BoneIndices[i]]) * input.BoneWeights[i];
+    }
+    
+    output.WorldPosition = mul(skinnedPosition, World).xyz;
+    output.Normal = mul(normalize(skinnedNormal), normalMatrix);
+    
+    output.Position = mul(mul(float4(output.WorldPosition, 1), View), Projection);
+    
+    return output;
+}
+
 VertexShaderOutput PBR_Instanced_VS(VertexShaderInput input, InstanceData data)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
@@ -357,6 +385,15 @@ technique Instancing
     pass P0
     {
         VertexShader = compile VS_SHADERMODEL PBR_Instanced_VS();
+        PixelShader = compile PS_SHADERMODEL PBR_PS();
+    }
+}
+
+technique PBR_Skinned
+{
+    pass P0
+    {
+        VertexShader = compile VS_SHADERMODEL PBR_Skinned_VS();
         PixelShader = compile PS_SHADERMODEL PBR_PS();
     }
 }
