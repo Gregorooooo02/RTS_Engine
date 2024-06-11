@@ -99,13 +99,15 @@ public class Agent : Component
         _currentState = _currentState.UpdateState(this);
     }
 
-    public void MoveToPoint(Vector2 point, float speed)
+    public bool MoveToPoint(Vector2 point, float speed)
     {
+        bool skip = false;
         Vector3 offset = new Vector3(point.X - Position.X, 0, point.Y - Position.Z);
         offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(Position.X + offset.X, Position.Z + offset.Z)) - Position.Y + HeightOffset;
         offset.Normalize();
         ParentObject.Transform.Move(offset * Globals.DeltaTime * speed);
 
+        Vector2 destinationVector = new Vector2(offset.X, offset.Z);
         
         if (Type == AgentType.PlayerUnit)
         {
@@ -115,24 +117,29 @@ public class Agent : Component
                 Vector2 separationOffset = new Vector2(Position.X - agent.Position.X, Position.Z - agent.Position.Z);
                 float length = separationOffset.Length();
                 float sum = SeparationDistance + agent.SeparationDistance;
+                PlayerUnitData data = (PlayerUnitData)AgentData;
+                Vector2 otherToPoint = new Vector2(agent.Position.X - point.X, agent.Position.Z - point.Y);
+                if (otherToPoint.Length() < sum - data.MinPointDistance)
+                {
+                    //If destined point is inside other's exclusion area, skip this point
+                    skip = true;
+                }
                 if (length < sum)
                 {
                     //Colliding
                     separationOffset.Normalize();
-                    float angle = CivilianWander.AngleDegrees(separationOffset, Direction);
-                    Console.WriteLine("Angle: " + angle);
-                    Vector2 add = new Vector2();
-                    if (MathF.Abs(angle) > 135)
+                    float angle = CivilianWander.AngleDegrees(separationOffset, destinationVector);
+                    if (MathF.Abs(angle) > 150)
                     {
-                        float rotAngle = angle + (angle < 0 ? 120 : -120);
-                        rotAngle *= -1;
-                        Console.WriteLine("Rot: " + rotAngle);
-                        add.X = MathF.Cos(rotAngle) * separationOffset.X - MathF.Sin(rotAngle) * separationOffset.Y;
-                        add.Y = MathF.Sin(rotAngle) * separationOffset.X + MathF.Cos(rotAngle) * separationOffset.Y;
+                        Vector2 slideOffset;
+                        float rotAngle = angle > 0 ? -1 : 1;
+                        slideOffset.X = -rotAngle * destinationVector.Y;
+                        slideOffset.Y = rotAngle * destinationVector.X;
+                        slideOffset.Normalize();
+                        separationOffset += slideOffset * Globals.DeltaTime * 80;
+                        destinationVector += slideOffset;
                     }
-
-                    separationOffset += add;
-                    Vector3 move = new Vector3(separationOffset.X, 0 ,separationOffset.Y) * (sum - length);
+                    Vector3 move = new Vector3(separationOffset.X, 0 ,separationOffset.Y) * (sum  - length);
                     ParentObject.Transform.Move(move);
                 }
             }
@@ -142,8 +149,10 @@ public class Agent : Component
             
         }
         
-        Vector2 destinationVector = new Vector2(offset.X, offset.Z);
+        
         UpdateRotation(destinationVector);
+        
+        return skip;
     }
 
     public void UpdateRotation(Vector2 desiredDirection)

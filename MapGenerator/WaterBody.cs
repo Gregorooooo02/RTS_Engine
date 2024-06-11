@@ -39,7 +39,7 @@ public sealed class WaterBody
     private Vector4 _waterColor;
 
     // Constructor
-    public WaterBody(int x, int y, int width, int height)
+    public WaterBody(int x, int y, int width, float height)
     {
         _waterSize = width;
         _waterHeight = height;
@@ -70,20 +70,24 @@ public sealed class WaterBody
         
         // TODO: Change this to modify the world matrix and not all the vertices
         
-        for (int i = 0 ; i < _vertices.Length; i++)
-        {
-            _vertices[i].Position.Y = _waterHeight;
-        }
+        //for (int i = 0 ; i < _vertices.Length; i++)
+        //{
+        //    _vertices[i].Position.Y = _waterHeight;
+        //}
         
-        _vertexBuffer.SetData(_vertices);
+        
+        
+        //_vertexBuffer.SetData(_vertices);
     }
     
     public void Draw(Matrix world)
     {
+        
         Globals.TerrainEffect.CurrentTechnique = Globals.TerrainEffect.Techniques["WaterWaves"];
-        Globals.TerrainEffect.Parameters["xView"].SetValue(Globals.View);
-        Globals.TerrainEffect.Parameters["xProjection"].SetValue(Globals.Projection);
+        world.M42 = _waterHeight;
         Globals.TerrainEffect.Parameters["xWorld"].SetValue(world);
+        
+        
         
         Globals.TerrainEffect.Parameters["xWaveMapScale"].SetValue(_waveNormalScale);
         Globals.TerrainEffect.Parameters["xWaveMapOffset"].SetValue(_waveNormalOffset);

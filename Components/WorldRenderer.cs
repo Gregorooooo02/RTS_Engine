@@ -237,7 +237,7 @@ public class WorldRenderer : Component
                     globalMaxHeight
                 );
                 
-                _waterBody = new WaterBody(x, y, _chunkSize - 1, 5);
+                _waterBody = new WaterBody(x, y, _chunkSize - 1, 2.5f);
                 _waterBodies.Add(_waterBody);
             }
         }

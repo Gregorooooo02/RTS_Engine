@@ -9,7 +9,7 @@ namespace RTS_Engine.Components.AI;
 
 public static class Pathfinding
 {
-    public static int ClosedLimit = 50000;
+    public static int ClosedLimit = 20000;
     
     private static float Euclidan(Node n, Node goal)
     {

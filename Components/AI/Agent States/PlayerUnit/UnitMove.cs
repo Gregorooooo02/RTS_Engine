@@ -62,13 +62,16 @@ public class UnitMove : AgentState
         else
         {
             float distance = Vector2.Distance(_currentPoint, location);
-            if (distance <= data.MinPointDistance || MathF.Abs(distance - previousDistance) < 0.01f)
+            if (distance <= data.MinPointDistance /*|| MathF.Abs(distance - previousDistance) < 0.01f*/)
             {
                 _currentPoint = _points.Dequeue();
             }
             else
             {
-                agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
+                if (agent.MoveToPoint(_currentPoint, data.WalkingSpeed))
+                {
+                    _currentPoint = _points.Dequeue();
+                }
             }
             previousDistance = distance;
         }
