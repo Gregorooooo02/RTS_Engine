@@ -116,7 +116,7 @@ public class Renderer
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
 #if DEBUG
         
-        //RenderOutlines();
+        RenderOutlines();
         
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
