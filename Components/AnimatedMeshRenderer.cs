@@ -82,7 +82,7 @@ public class AnimatedMeshRenderer : Component
         ParentObject.RemoveComponent(this);
     }
 
-    public void LoadModel(string modelPath, string technique = "PBR")
+    public void LoadModel(string modelPath, string technique = "PBR_Skinned")
     {
         _skinnedModel = AssetManager.GetAnimatedModel(modelPath);
         _skinnedModel.ShaderTechniqueName = technique;
@@ -159,15 +159,6 @@ public class AnimatedMeshRenderer : Component
             ImGui.Checkbox("Loop enabled", ref animationControllerLoopEnabled);
             _skinnedModel.AnimationController.LoopEnabled = animationControllerLoopEnabled;
             
-            var animationControllerCrossfade = _skinnedModel.AnimationController.CrossFading;
-            ImGui.Checkbox("Crossfade", ref animationControllerCrossfade);
-            _skinnedModel.AnimationController.CrossFading = animationControllerCrossfade;
-
-            if (animationControllerCrossfade)
-            {
-                
-            }
-            
             if (ImGui.Button("Switch animated mesh"))
             {
                 _switchingModel = true;
@@ -185,7 +176,9 @@ public class AnimatedMeshRenderer : Component
                 {
                     if (ImGui.Button(n))
                     {
-                        
+                        AssetManager.FreeAnimatedModel(_skinnedModel);
+                        LoadModel(n);
+                        _switchingModel = false;
                     }
                 }
 
