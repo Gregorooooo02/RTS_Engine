@@ -42,19 +42,9 @@ public class CivilianFlee : AgentState
             direction.Normalize();
             Vector2 currentOffset = direction * data.FleeingDistance;
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
-            Vector2 endPoint;
             float angle = 0;
             do
             {
-                if (angle != 0)
-                {
-                    currentOffset.X = MathF.Cos(angle) * direction.X - MathF.Sin(angle) * direction.Y;
-                    currentOffset.Y = MathF.Sin(angle) * direction.X + MathF.Cos(angle) * direction.Y;
-                    currentOffset *= data.FleeingDistance;
-                }
-                endPoint = Agent.GetFirstIntersectingGridPoint(location + currentOffset, -direction);
-                attempts++;
-
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle) && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState wander))
                 {
                     //If flee attempts fails return to idle
@@ -63,20 +53,41 @@ public class CivilianFlee : AgentState
                     data.Alarmed = false;
                     return idle;
                 }
-                _destination = location + currentOffset;
-                
-                //TODO: Try changing offset direction by 90 degrees if calculated point falls off the map
-                if ((int)(endPoint.X) < 0 || (int)(endPoint.Y) < 0 ||
-                    (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 ||
-                    (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1)
+                if (angle != 0)
                 {
-                    angle *= -1;
-                    if (angle >= 0)
-                    {
-                        angle += 0.2617993878f;
-                    }
-                    continue;
+                    currentOffset.X = MathF.Cos(angle) * direction.X - MathF.Sin(angle) * direction.Y;
+                    currentOffset.Y = MathF.Sin(angle) * direction.X + MathF.Cos(angle) * direction.Y;
+                    currentOffset *= data.FleeingDistance;
                 }
+                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(location + currentOffset, -direction);
+                attempts++;
+                
+                _destination = location + currentOffset;
+
+                try
+                {
+                    if (((int)endPoint.X < 0 || (int)endPoint.Y < 0 ||
+                         (int)endPoint.X > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1 ||
+                         (int)endPoint.Y > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1) || Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y] == null)
+                    {
+                        angle *= -1;
+                        if (angle >= 0)
+                        {
+                            angle += 0.2617993878f;
+                        }
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Length: " + Globals.Renderer.WorldRenderer.MapNodes.Length);
+                    Console.WriteLine("Length in x: " + Globals.Renderer.WorldRenderer.MapNodes.GetLength(0));
+                    Console.WriteLine("Length in y: " + Globals.Renderer.WorldRenderer.MapNodes.GetLength(1));
+                    Console.WriteLine(Globals.Renderer.WorldRenderer.MapNodes.Length);
+                    Console.WriteLine(endPoint);
+                    throw;
+                }
+                
                 Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                 Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
             

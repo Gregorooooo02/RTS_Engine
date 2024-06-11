@@ -86,20 +86,26 @@ public class CivilianWander : AgentState
             int attempts = 0;
             do
             {
-                offset = RandomUnitVector2();
-                Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(agentPosition, offset);
-                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(agentPosition + (offset * data.WanderingDistance), -offset);
-                offset *= data.WanderingDistance;
-                attempts++;
-                
                 if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
                 {
                     _traversing = false;
                     ((CivilianIdle)idle).Caller = this;
                     return idle;
                 }
-                
-                if((int)agentPosition.X + offset.X < 0 || (int)(agentPosition.Y + offset.Y) < 0 || (int)(agentPosition.X + offset.X) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1 || (int)(agentPosition.Y + offset.Y) > Globals.Renderer.WorldRenderer.MapNodes.Length - 1) continue;
+                offset = RandomUnitVector2();
+                Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(agentPosition, offset);
+                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(agentPosition + (offset * data.WanderingDistance), -offset);
+                offset *= data.WanderingDistance;
+                attempts++;
+
+                if ((int)endPoint.X < 0
+                    || (int)(endPoint.Y) < 0
+                    || (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1
+                    || (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1
+                    || Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y] == null)
+                {
+                    continue;
+                }
                 
                 Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                 Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);

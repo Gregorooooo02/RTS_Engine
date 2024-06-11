@@ -9,9 +9,16 @@ namespace RTS_Engine.Components.AI;
 
 public static class Pathfinding
 {
+    public static int ClosedLimit = 50000;
+    
     private static float Euclidan(Node n, Node goal)
     {
         return new Vector2(n.Location.X - goal.Location.X, n.Location.Y - goal.Location.Y).Length();
+    }
+
+    private static float Manhattan(Node n, Node goal)
+    {
+        return MathF.Abs(n.Location.X - goal.Location.X) + MathF.Abs(n.Location.Y - goal.Location.Y);
     }
     
     private static List<Node> GetNeighbors(Node n)
@@ -60,6 +67,7 @@ public static class Pathfinding
         open.Enqueue(start,0);
         while (open.Count > 0)
         {
+            if (explored.Count > ClosedLimit) return null;
             var v = open.Dequeue();
             if (!explored.Contains(v))
             {
@@ -70,7 +78,7 @@ public static class Pathfinding
                 {
                     if (!explored.Contains(n))
                     {
-                        open.Enqueue(n,n.CurrentCost + Euclidan(n,goal));
+                        open.Enqueue(n,n.CurrentCost + Manhattan(n,goal));
                     }
                 }
             }
