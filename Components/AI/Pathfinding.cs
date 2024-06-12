@@ -9,7 +9,7 @@ namespace RTS_Engine.Components.AI;
 
 public static class Pathfinding
 {
-    public static int ClosedLimit = 20000;
+    public static int ClosedLimit = 5000;
     
     private static float Euclidan(Node n, Node goal)
     {
@@ -21,7 +21,7 @@ public static class Pathfinding
         return MathF.Abs(n.Location.X - goal.Location.X) + MathF.Abs(n.Location.Y - goal.Location.Y);
     }
     
-    private static List<Node> GetNeighbors(Node n)
+    private static List<Node> GetNeighbors(Node n, bool isAlly, int id)
     {
         if (Globals.Renderer.WorldRenderer is null) throw new NoTerrainException("There isn't any terrain to pick the nodes from!");
         List<Node> output = new();
@@ -32,12 +32,18 @@ public static class Pathfinding
             for (int j = 1; j >= -1; j--)
             {
                 if(i == 0 && j == 0) continue;
-                if((nodeConnections & 1) > 0)
+                if (
+                    (nodeConnections & 1) > 0 && 
+                    ((
+                         isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantID == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantID == 0)) 
+                     ||(!isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].EnemyOccupantID == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].EnemyOccupantID == 0))))
+                {
                     output.Add(
                         new Node(
                             new Point(n.Location.X + i, n.Location.Y + j), 
                             n, 
                             Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].NodeCost));
+                }
                 nodeConnections >>= 1;
             }
         }
@@ -59,7 +65,7 @@ public static class Pathfinding
         }
     }
     
-    public static Node CalculatePath(Node goal, Node start)
+    public static Node CalculatePath(Node goal, Node start, bool isAlly = true, int id = 1)
     {
         NodeComparer comparer = new NodeComparer();
         PriorityQueue<Node, float> open = new PriorityQueue<Node, float>();
@@ -73,7 +79,7 @@ public static class Pathfinding
             {
                 if (comparer.Equals(v,goal)) return v;
                 explored.Add(v);
-                var neighbors = GetNeighbors(v);
+                var neighbors = GetNeighbors(v, isAlly, id);
                 foreach (Node n in neighbors)
                 {
                     if (!explored.Contains(n))
@@ -123,5 +129,4 @@ public static class Pathfinding
     {
         return new Queue<Vector2>(PathToListOfVectors(node));
     }
-
 }

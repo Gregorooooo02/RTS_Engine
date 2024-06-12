@@ -63,7 +63,7 @@ public class UnitAttack : AgentState
                     start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                     goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                     
-                    end = Pathfinding.CalculatePath(goal, start);
+                    end = Pathfinding.CalculatePath(goal, start,true,agent.ID);
                 }
                 else if (dist < data.MinAttackRange)
                 {

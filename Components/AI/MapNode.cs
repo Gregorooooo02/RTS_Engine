@@ -11,6 +11,9 @@ public class MapNode
     public float Height;
 
     public byte Connections;
+    
+    public int AllyOccupantID = 0;
+    public int EnemyOccupantID = 0;
 
     public MapNode(Point location,float height, float nodeCost = 1.0f)
     {
