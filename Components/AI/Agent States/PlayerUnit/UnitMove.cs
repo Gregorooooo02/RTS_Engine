@@ -15,7 +15,6 @@ public class UnitMove : AgentState
     private bool _pathingScheduled = false;
     private bool _pathingCompleted = false;
     private bool _pathCompleted = false;
-    private bool _onTrack = false;
     private bool _repath = false;
     
     public override void Initialize(Agent agent)
@@ -51,7 +50,6 @@ public class UnitMove : AgentState
             _points = Pathfinding.PathToQueueOfVectors(end);
             _points.Enqueue(data.Destination);
             _currentPoint = _points.Dequeue();
-            _onTrack = true;
         }
         
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
@@ -83,7 +81,6 @@ public class UnitMove : AgentState
                 else
                 {
                     _pathCompleted = true;
-                    _onTrack = false;
                 }
             }
             else

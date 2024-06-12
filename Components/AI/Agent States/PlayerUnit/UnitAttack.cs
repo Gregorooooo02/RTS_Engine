@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.AgentData;
 
@@ -9,6 +10,13 @@ public class UnitAttack : AgentState
 {
     private float _attackTimer;
     private float _timeSinceLastRepath = 10;
+    
+    Node end = null;
+    
+    private bool _pathingScheduled = false;
+    private bool _pathingCompleted = false;
+    private bool _pathCompleted = false;
+    private bool _repath = false;
     
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
@@ -22,6 +30,7 @@ public class UnitAttack : AgentState
     public override AgentState UpdateState(Agent agent)
     {
         PlayerUnitData data = (PlayerUnitData)agent.AgentData;
+        /*
         if (data.MovementScheduled && agent.AgentStates.TryGetValue(Agent.State.Move,out AgentState move))
         {
             data.Target = null;
@@ -137,6 +146,143 @@ public class UnitAttack : AgentState
                 }
             }
         }
+        */
+        if (data.MovementScheduled && agent.AgentStates.TryGetValue(Agent.State.Move,out AgentState move))
+        {
+            data.Target = null;
+            return move;
+        }
+        if ((data.Target == null || !data.Target.AgentData.Alive) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
+        {
+            //TODO: Implement retargeting here
+            data.Target = null;
+            return idle;
+        }
+        
+        if (_pathingCompleted && _pathingScheduled)
+        {
+            //When pathing completes
+            _pathingScheduled = false;
+            _pathingCompleted = false;
+            _pathCompleted = false;
+            if (end == null && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState change))
+            {
+                data.Target = null;
+                return change;
+            }
+            _points = Pathfinding.PathToQueueOfVectors(end);
+            _points.Enqueue(data.Destination);
+            _currentPoint = _points.Dequeue();
+            _timeSinceLastRepath = 0;
+        }
+        
+        Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
+        Vector2 target = new Vector2(data.Target.Position.X, data.Target.Position.Z);
+        float dist = Vector2.Distance(location, target);
+        Vector2 direction = target - location;
+        direction.Normalize();
+        if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0 || _repath) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
+        {
+            _repath = false;
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
+            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
+            Node start;
+            Node goal;
+            if (dist > data.MaxAttackRange)
+            {
+                //If it's to far, walk to target
+                start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+                goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
+                
+                Task.Factory.StartNew(() =>
+                { 
+                    end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
+                    _pathingCompleted = true;
+                });
+                _pathingScheduled = true;
+            }
+            else if (dist < data.MinAttackRange)
+            {
+                //If it's to close, walk away from target
+                float awayDist = ((data.MaxAttackRange + data.MinAttackRange) / 2.0f) - dist;
+                Vector2 offset = new Vector2(location.X - target.X, location.Y - target.Y);
+                offset.Normalize();
+                offset *= awayDist;
+                
+                start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
+                goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);
+                
+                Task.Factory.StartNew(() =>
+                { 
+                    end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
+                    _pathingCompleted = true;
+                });
+                _pathingScheduled = true;
+            }
+        }
+        
+        if (_points != null && !_pathCompleted && !_pathingScheduled)
+        {
+            _timeSinceLastRepath += Globals.DeltaTime;
+            _attackTimer += Globals.DeltaTime;
+            if (dist > data.MaxAttackRange || dist < data.MinAttackRange)
+            {
+                if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
+                {
+                    if(_points.Count > 0)_currentPoint = _points.Dequeue();
+                    else
+                    {
+                        _pathCompleted = true;
+                    }
+                }
+                else
+                {
+                    agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
+                    if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantID !=
+                        agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantID != 0)
+                    {
+                        //Repath
+                        _repath = true;
+                    }
+                }
+            }
+            else
+            {
+                float angle = CivilianWander.AngleDegrees(agent.Direction, direction);
+                if (MathF.Abs(angle) < 5.0f)
+                {
+                    if (_attackTimer >= data.AttackDelay)
+                    {
+                        //Successful attack
+                        _attackTimer = 0;
+                        if (data.Target.Type == Agent.AgentType.Soldier)
+                        {
+                            SoldierData soldierData = (SoldierData)data.Target.AgentData;
+                            if (!soldierData.Alarmed)
+                            {
+                                soldierData.Awareness = soldierData.AwarenessThreshold * 2;
+                                soldierData.Target = agent;
+                            }
+                        }
+                        else
+                        {
+                            WandererData wandererData = (WandererData)data.Target.AgentData;
+                            if (!wandererData.Alarmed)
+                            {
+                                wandererData.Awareness = wandererData.AwarenessThreshold * 2;
+                                wandererData.Target = agent;
+                            }
+                        }
+                        data.Target.AgentData.DealDamage(data.Damage);
+                    }
+                }
+                else
+                {
+                    agent.UpdateRotation(direction);
+                }
+            }
+        }
+        
         return this;
     }
 }

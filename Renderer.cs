@@ -16,10 +16,8 @@ public class Renderer
     private Texture2D _blank;
     #endif
     
-    //TODO: Clean up this class
-    public static int ShadowMapSize = 4096;
-    public static int FloodPasses = 0;
-    private readonly float _floodThreshold = 35.0f;
+    private static readonly int ShadowMapSize = 4096;
+    public static int FloodPasses = -1;
     private bool _target1 = false;
     private bool _enemyTarget1 = false;
     
