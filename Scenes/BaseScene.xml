@@ -854,7 +854,6 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Building</pickableType>
-                  <pickableType>Building</pickableType>
                 </component>
               </components>
               <childObjects>
@@ -923,6 +922,8 @@
                       <pieceSize>200</pieceSize>
                       <rimSize>3</rimSize>
                       <snappingDist>30</snappingDist>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects>
@@ -1053,7 +1054,6 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Building</pickableType>
-                  <pickableType>Building</pickableType>
                 </component>
                 <component>
                   <type>Building</type>
@@ -1128,6 +1128,8 @@
                       <pieceSize>200</pieceSize>
                       <rimSize>3</rimSize>
                       <snappingDist>30</snappingDist>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects>
@@ -1250,7 +1252,6 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Building</pickableType>
-                  <pickableType>Building</pickableType>
                 </component>
                 <component>
                   <type>MeshRenderer</type>
@@ -1333,6 +1334,8 @@
                       <pieceSize>150</pieceSize>
                       <rimSize>3</rimSize>
                       <snappingDist>30</snappingDist>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects>
@@ -1489,7 +1492,6 @@
                 <component>
                   <type>Pickable</type>
                   <active>True</active>
-                  <pickableType>MissionSelect</pickableType>
                   <pickableType>MissionSelect</pickableType>
                 </component>
                 <component>

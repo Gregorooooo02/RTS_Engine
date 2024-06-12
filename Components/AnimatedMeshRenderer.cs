@@ -73,7 +73,7 @@ public class AnimatedMeshRenderer : Component
     public override void RemoveComponent()
     {
         Pickable pickable = ParentObject.GetComponent<Pickable>();
-        if (pickable != null && pickable.AnimatedRenderer == this)
+        if (pickable != null)
         {
             ParentObject.RemoveComponent(pickable);
         }

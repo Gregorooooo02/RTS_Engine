@@ -17,9 +17,7 @@ public class Pickable : Component
     }
     
     public MeshRenderer Renderer = null;
-
-    public AnimatedMeshRenderer AnimatedRenderer = null;
-
+    
     public PickableType Type;
     
     public override void Update()
@@ -29,13 +27,6 @@ public class Pickable : Component
             if (Renderer != null)
             {
                 if (Renderer.IsVisible && Renderer.Active)
-                {
-                    Globals.PickingManager.Pickables.Add(this);
-                }
-            }
-            else if (AnimatedRenderer != null)
-            {
-                if (AnimatedRenderer.IsVisible && AnimatedRenderer.Active)
                 {
                     Globals.PickingManager.Pickables.Add(this);
                 }
@@ -50,7 +41,7 @@ public class Pickable : Component
     public override void Initialize()
     {
         Renderer = ParentObject.GetComponent<MeshRenderer>();
-        if (Renderer == null || AnimatedRenderer == null)
+        if (Renderer == null)
         {
             Active = false;
         }

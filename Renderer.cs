@@ -74,6 +74,12 @@ public class Renderer
 #else
         byte[] bytecode = File.ReadAllBytes("Content/ShadowMaps");
         _shadowMapGenerator = new Effect(Globals.GraphicsDevice, bytecode);
+        
+        bytecode = File.ReadAllBytes("Content/Outlines");
+        _outlineGenerator = new Effect(Globals.GraphicsDevice, bytecode);
+        
+        bytecode = File.ReadAllBytes("Content/MergeShader");
+        _postprocessMerge = new Effect(Globals.GraphicsDevice, bytecode);
 #endif
         Meshes = new List<MeshRenderer>();
         AnimatedMeshes = new List<AnimatedMeshRenderer>();
@@ -405,8 +411,8 @@ public class Renderer
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        //Globals.MainEffect.Parameters["DepthBias"]?.SetValue(0.005f);
-        //Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        // Globals.MainEffect.Parameters["DepthBias"]?.SetValue(0.005f);
+        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["Instancing"];
         foreach (InstancedRendererController instanced in InstancedRendererControllers)
@@ -435,8 +441,8 @@ public class Renderer
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
-        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
+        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
