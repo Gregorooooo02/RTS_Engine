@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Animation;
 
 namespace RTS_Engine;
 
@@ -67,11 +68,12 @@ public class AssetManager
     private ContentManager _content;
 
     private readonly List<ModelPointer> _models;
+    private readonly List<AnimatedModelPointer> _animatedModels;
     private readonly List<SpriteData> _sprites;
     private readonly List<FontData> _fonts;
 
     public static ModelData DefaultModel {get; private set;}
-    public static Model DefaultAnimatedModel { get; private set; }
+    public static AnimatedModelData DefaultAnimatedModel { get; private set; }
     public static List<Texture2D> DefaultTextureMaps { get; private set; }
     public static Texture2D DefaultSprite{get; private set;}
     public static Texture2D DefaultAnimatedSprite{get; private set;}
@@ -95,6 +97,17 @@ public class AssetManager
         public ModelPointer(ContentManager manager, string modelPath)
         {
             ModelData = new ModelData(manager, modelPath);
+        }
+    }
+
+    private class AnimatedModelPointer
+    {
+        public readonly AnimatedModelData AnimatedModelData;
+        public int Uses;
+
+        public AnimatedModelPointer(ContentManager manager, string modelPath)
+        {
+            AnimatedModelData = new AnimatedModelData(manager, modelPath);
         }
     }
     
@@ -133,6 +146,7 @@ public class AssetManager
     {
         this._content = content;
         _models = new List<ModelPointer>();
+        _animatedModels = new List<AnimatedModelPointer>();
         _sprites = new List<SpriteData>();
         _fonts = new List<FontData>();
         
@@ -144,7 +158,9 @@ public class AssetManager
         LoadNames();
 #endif
         DefaultModel = new ModelData(this._content,"defaultModel");
-        DefaultAnimatedModel = this._content.Load<Model>("minion/minion");
+        DefaultTextureMaps = DefaultModel.Textures[0][0];
+        
+        DefaultAnimatedModel = new AnimatedModelData(this._content, "minion");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
@@ -170,8 +186,6 @@ public class AssetManager
         DefaultSkybox = this._content.Load<TextureCube>("TerrainTextures/SkyBox");
 
         DefaultFont = this._content.Load<SpriteFont>("defaultFont");
-
-        DefaultTextureMaps = DefaultModel.Textures[0][0];
         
         BloomExtractEffect = this._content.Load<Effect>("BloomExtract");
         BloomCombineEffect = this._content.Load<Effect>("BloomCombine");
@@ -189,6 +203,19 @@ public class AssetManager
         }
         temp.Uses++;
         return temp.ModelData;
+    }
+
+    public static AnimatedModelData GetAnimatedModel(string modelPath)
+    {
+        AnimatedModelPointer temp = _instance._animatedModels.Find(x => x.AnimatedModelData.ModelPath == modelPath);
+        if (temp == null)
+        {
+            _instance._animatedModels.Add(new AnimatedModelPointer(_instance._content, modelPath));
+            _instance._animatedModels.Last().Uses++;
+            return _instance._animatedModels.Last().AnimatedModelData;
+        }
+        temp.Uses++;
+        return temp.AnimatedModelData;
     }
 
     public static Texture2D GetSprite(string name)
@@ -228,6 +255,18 @@ public class AssetManager
         if (pointer.Uses == 0)
         {
             _instance._models.Remove(pointer);
+        }
+    }
+
+    public static void FreeAnimatedModel(AnimatedModelData animatedModel)
+    {
+        AnimatedModelPointer pointer = _instance._animatedModels.Find(x => x.AnimatedModelData == animatedModel);
+        if (pointer == null) return;
+
+        pointer.Uses--;
+        if (pointer.Uses == 0)
+        {
+            _instance._animatedModels.Remove(pointer);
         }
     }
 

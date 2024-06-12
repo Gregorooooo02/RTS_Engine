@@ -433,13 +433,15 @@ public class Renderer
             renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #elif DEBUG
-        // Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
-        // Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
-        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+        Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
+        Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
+        Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
-            renderer.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            renderer._skinnedModel.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif
     }
@@ -472,6 +474,8 @@ public class Renderer
         {
             DrawShadowMap(renderer);
         }
+        
+        _shadowMapGenerator.CurrentTechnique = _shadowMapGenerator.Techniques["ShadowSkinned"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
             DrawShadowMap(renderer);
@@ -513,7 +517,7 @@ public class Renderer
         foreach (ModelMesh mesh in renderer._model.Models[renderer._model.CurrentModelIndex].Meshes)
         {
             //foreach (ModelMeshPart part in mesh.MeshParts)
-            for(int i = 0;i < mesh.MeshParts.Count;i++)
+            for (int i = 0;i < mesh.MeshParts.Count;i++)
             {
                 var part = mesh.MeshParts[i];
                 if (part.PrimitiveCount <= 0) continue;
@@ -528,7 +532,8 @@ public class Renderer
     private void DrawShadowMap(AnimatedMeshRenderer renderer)
     {
         _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
-        foreach (ModelMesh mesh in renderer._model.Meshes)
+        _shadowMapGenerator.Parameters["BoneTransforms"].SetValue(renderer._skinnedModel.AnimationController.SkinnedBoneTransforms);
+        foreach (ModelMesh mesh in renderer._skinnedModel.SkinnedModels[renderer._skinnedModel.CurrentModelIndex].Model.Meshes)
         {
             foreach (var part in mesh.MeshParts)
             {

@@ -19,7 +19,10 @@ public class Building : Component
 
     public void OnClick()
     {
-        CheckAndActivatePuzzle();
+        if (GameManager.PuzzleNumber - PuzzleCost >= 0)
+        {
+            CheckAndActivatePuzzle();
+        }
     }
 
     public override void Initialize()
