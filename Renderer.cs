@@ -89,7 +89,7 @@ public class Renderer
         WorldRenderer = null;
 
         _postprocessMerge.Parameters["AllyColor"].SetValue(new Color(255,255,255,255).ToVector4());
-        _postprocessMerge.Parameters["EnemyColor"].SetValue(new Color(100,0,0,255).ToVector4());
+        _postprocessMerge.Parameters["EnemyColor"].SetValue(new Color(255,0,0,255).ToVector4());
 #if DEBUG
         _blank = content.Load<Texture2D>("blank");
 #endif
