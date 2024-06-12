@@ -17,10 +17,24 @@
         <z>0</z>
       </rotation>
       <scale>
-        <x>1</x>
-        <y>1</y>
-        <z>1</z>
+        <x>0,99999994</x>
+        <y>0,99999994</y>
+        <z>0,99999994</z>
       </scale>
+    </component>
+    <component>
+      <type>SpiteRenderer</type>
+      <active>False</active>
+      <useLocal>True</useLocal>
+      <sprite>smile</sprite>
+      <color>
+        <r>255</r>
+        <g>255</g>
+        <b>255</b>
+        <a>255</a>
+      </color>
+      <screenSizeX>1600</screenSizeX>
+      <screenSizeY>900</screenSizeY>
     </component>
   </components>
   <childObjects>
@@ -32,9 +46,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>12</x>
-            <y>12</y>
-            <z>0</z>
+            <x>11,999999</x>
+            <y>11,999999</y>
+            <z>0,2</z>
           </position>
           <rotation>
             <x>0</x>
@@ -42,9 +56,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,8333334</x>
-            <y>0,8333334</y>
-            <z>1,1111109</z>
+            <x>0,8333333</x>
+            <y>0,8333333</y>
+            <z>1,1111108</z>
           </scale>
         </component>
         <component>
@@ -73,7 +87,7 @@
               <position>
                 <x>73</x>
                 <y>20</y>
-                <z>0</z>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -117,9 +131,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>12</x>
-            <y>93</y>
-            <z>0</z>
+            <x>11,999999</x>
+            <y>92,99999</y>
+            <z>0,2</z>
           </position>
           <rotation>
             <x>0</x>
@@ -127,9 +141,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,8333334</x>
-            <y>0,8333334</y>
-            <z>1,1111109</z>
+            <x>0,8333333</x>
+            <y>0,8333333</y>
+            <z>1,1111108</z>
           </scale>
         </component>
         <component>
@@ -158,7 +172,7 @@
               <position>
                 <x>75</x>
                 <y>20</y>
-                <z>0</z>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -202,9 +216,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>1539,9999</x>
-            <y>839,99994</y>
-            <z>0</z>
+            <x>1539,9998</x>
+            <y>839,9999</y>
+            <z>0,2</z>
           </position>
           <rotation>
             <x>0</x>
@@ -212,9 +226,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,8333334</x>
-            <y>0,8333334</y>
-            <z>1,1111109</z>
+            <x>0,8333333</x>
+            <y>0,8333333</y>
+            <z>1,1111108</z>
           </scale>
         </component>
         <component>
@@ -249,7 +263,7 @@
               <position>
                 <x>553</x>
                 <y>333,33334</y>
-                <z>0</z>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -288,7 +302,7 @@
                   <position>
                     <x>700</x>
                     <y>422,22223</y>
-                    <z>0</z>
+                    <z>0,2</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -330,7 +344,7 @@
                   <position>
                     <x>595</x>
                     <y>515</y>
-                    <z>0</z>
+                    <z>0,2</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -423,7 +437,7 @@
                   <position>
                     <x>825</x>
                     <y>515</y>
-                    <z>0</z>
+                    <z>0,2</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -513,9 +527,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>350</x>
-            <y>32</y>
-            <z>0</z>
+            <x>349,99997</x>
+            <y>31,999998</y>
+            <z>0,2</z>
           </position>
           <rotation>
             <x>0</x>
@@ -523,9 +537,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,8</x>
-            <y>1</y>
-            <z>1</z>
+            <x>0,79999995</x>
+            <y>0,99999994</y>
+            <z>0,99999994</z>
           </scale>
         </component>
         <component>
@@ -552,9 +566,9 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
+                <x>350</x>
+                <y>31,999998</y>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -562,15 +576,15 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,79999995</x>
+                <y>0,99999994</y>
+                <z>0,99999994</z>
               </scale>
             </component>
             <component>
               <type>SpiteRenderer</type>
               <active>True</active>
-              <useLocal>False</useLocal>
+              <useLocal>True</useLocal>
               <sprite>UI/alarmMeter</sprite>
               <color>
                 <r>255</r>
@@ -594,9 +608,9 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>1340</x>
-            <y>32</y>
-            <z>0</z>
+            <x>1270</x>
+            <y>31,999998</y>
+            <z>0,3</z>
           </position>
           <rotation>
             <x>0</x>
@@ -604,9 +618,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>1</x>
+            <x>1,3</x>
             <y>1</y>
-            <z>1</z>
+            <z>0,99999994</z>
           </scale>
         </component>
         <component>
@@ -633,9 +647,9 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1360</x>
-                <y>60</y>
-                <z>0</z>
+                <x>1290</x>
+                <y>59,999996</y>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -643,9 +657,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,99999994</x>
+                <y>0,99999994</y>
+                <z>0,99999994</z>
               </scale>
             </component>
             <component>
@@ -662,6 +676,15 @@
               <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
+            <component>
+              <type>Task</type>
+              <active>True</active>
+              <goal>5</goal>
+              <rewardType>Meat</rewardType>
+              <reward>100</reward>
+              <description>Kill 5 civilians </description>
+              <target>Civilian</target>
+            </component>
           </components>
           <childObjects>
             <object>
@@ -672,8 +695,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1400</x>
-                    <y>60</y>
+                    <x>1330</x>
+                    <y>59,999996</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -682,16 +705,16 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>0,99999994</x>
+                    <y>0,99999994</y>
+                    <z>0,99999994</z>
                   </scale>
                 </component>
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Kill 5 civilians</contents>
+                  <contents>Kill 5 civilians  (0/5)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>
@@ -716,9 +739,9 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1360</x>
-                <y>120</y>
-                <z>0</z>
+                <x>1290</x>
+                <y>119,99999</y>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -726,9 +749,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,99999994</x>
+                <y>0,99999994</y>
+                <z>0,99999994</z>
               </scale>
             </component>
             <component>
@@ -745,6 +768,15 @@
               <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
+            <component>
+              <type>Task</type>
+              <active>True</active>
+              <goal>5</goal>
+              <rewardType>Meat</rewardType>
+              <reward>100</reward>
+              <description>Kill 5 soldiers </description>
+              <target>Soldier</target>
+            </component>
           </components>
           <childObjects>
             <object>
@@ -755,8 +787,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1400</x>
-                    <y>120</y>
+                    <x>1330</x>
+                    <y>119,99999</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -765,16 +797,16 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>0,99999994</x>
+                    <y>0,99999994</y>
+                    <z>0,99999994</z>
                   </scale>
                 </component>
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Kill 5 soldiers</contents>
+                  <contents>Kill 5 soldiers  (0/5)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>
@@ -799,9 +831,9 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1360</x>
-                <y>180</y>
-                <z>0</z>
+                <x>1290</x>
+                <y>179,99998</y>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -809,9 +841,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,99999994</x>
+                <y>0,99999994</y>
+                <z>0,99999994</z>
               </scale>
             </component>
             <component>
@@ -828,6 +860,15 @@
               <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
+            <component>
+              <type>Task</type>
+              <active>True</active>
+              <goal>3</goal>
+              <rewardType>Puzzle</rewardType>
+              <reward>9</reward>
+              <description>Destroy 3 buildings </description>
+              <target>EnemyBuilding</target>
+            </component>
           </components>
           <childObjects>
             <object>
@@ -838,8 +879,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1400</x>
-                    <y>180</y>
+                    <x>1330</x>
+                    <y>179,99998</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -848,16 +889,16 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>0,99999994</x>
+                    <y>0,99999994</y>
+                    <z>0,99999994</z>
                   </scale>
                 </component>
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Destroy 3 buildings</contents>
+                  <contents>Destroy 3 buildings  (0/3)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>
@@ -885,8 +926,8 @@
           <active>True</active>
           <position>
             <x>250</x>
-            <y>725</y>
-            <z>0</z>
+            <y>724,99994</y>
+            <z>0,2</z>
           </position>
           <rotation>
             <x>0</x>
@@ -894,9 +935,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
+            <x>0,99999994</x>
+            <y>0,99999994</y>
+            <z>0,99999994</z>
           </scale>
         </component>
         <component>

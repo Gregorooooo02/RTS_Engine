@@ -39,6 +39,12 @@ public class SceneManager
         camera.AddComponent<Camera>();
         camera.Transform.SetLocalPosition(new Vector3(200, 50, 200));
         Debug.WriteLine("Added Camera");
+        
+#if _WINDOWS
+        missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+#else
+        missionRoot.LoadPrefab("Prefabs/UI.xml");
+#endif
 
         GameObject civilians = new GameObject();
         civilians.Name = "Civilians";
@@ -90,7 +96,13 @@ public class SceneManager
         
         if (InputManager.Instance.GetAction(GameAction.CREATE_MISSION)?.state == ActionState.RELEASED)
         {
+            Globals.PickingManager.SinglePickingActive = true;
+            Globals.PickingManager.BoxPickingActive = true;
+            Globals.PickingManager.GroundPickingActive = true;
+            Globals.PickingManager.EnemyPickingActive = true;
             CreateMissionScene();
+            ChangeScene(2);
+            Globals.AgentsManager.Initialize();
         }
     }
 

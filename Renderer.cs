@@ -18,7 +18,7 @@ public class Renderer
     
     //TODO: Clean up this class
     public static int ShadowMapSize = 4096;
-    public static int FloodPasses = 0;
+    public static int FloodPasses = -1;
     private readonly float _floodThreshold = 35.0f;
     private bool _target1 = false;
     private bool _enemyTarget1 = false;

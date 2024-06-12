@@ -84,6 +84,52 @@ public class SpiteRenderer : Component
             Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
     }
 
+    public void SelectAndDeselect(GameAction action)
+    {
+        string currentSpriteName = Sprite.Name;
+        string newSpriteName;
+
+        if (action == GameAction.SELECT)
+        {
+            if (!currentSpriteName.EndsWith("Selected"))
+            {
+                newSpriteName = currentSpriteName.Replace("Normal", "Selected");
+                LoadSprite(newSpriteName);
+            }
+        }
+        else if (action == GameAction.DESELECT)
+        {
+            if (currentSpriteName.EndsWith("Selected"))
+            {
+                newSpriteName = currentSpriteName.Replace("Selected", "Normal");
+                LoadSprite(newSpriteName);
+            }
+        }
+    }
+    
+    public void CompleteAndIncomplete(GameAction action)
+    {
+        string currentSpriteName = Sprite.Name;
+        string newSpriteName;
+
+        if (action == GameAction.COMPLETE)
+        {
+            if (!currentSpriteName.EndsWith("Complete"))
+            {
+                newSpriteName = currentSpriteName.Replace("Incomplete", "Complete");
+                LoadSprite(newSpriteName);
+            }
+        }
+        else if (action == GameAction.INCOMPLETE)
+        {
+            if (currentSpriteName.EndsWith("Complete"))
+            {
+                newSpriteName = currentSpriteName.Replace("Complete", "Incomplete");
+                LoadSprite(newSpriteName);
+            }
+        }
+    }
+
     public override string ComponentToXmlString()
     {
         StringBuilder builder = new StringBuilder();

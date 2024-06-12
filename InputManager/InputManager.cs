@@ -32,6 +32,10 @@ public enum GameAction
     RESIZE_FULLSCREEN,
     RESIZE_WINDOWED,
     CTRL,
+    SELECT,
+    DESELECT,
+    COMPLETE,
+    INCOMPLETE
 }
 
 public class InputManager

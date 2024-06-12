@@ -8,6 +8,8 @@ public class AgentData
 {
     public float Hp;
     public float MaxHp;
+    
+    public float HpAsPercentage => Hp / MaxHp;
 
     public bool Alive = true;
     
@@ -54,6 +56,7 @@ public class AgentData
     public virtual void Inspect()
     {
         ImGui.DragFloat("Max HP", ref MaxHp);
+        ImGui.DragFloat("HP", ref Hp);
         ImGui.Text("Current Hp: " + Hp);
         ImGui.SameLine();
         if (ImGui.Button("Heal"))

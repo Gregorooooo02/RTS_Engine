@@ -79,6 +79,8 @@ public class Puzzle : Component
             {
                 DeactivatePuzzle();
                 Globals.PickingManager.PlayerBuildingPickingActive = true;
+                Globals.PickingManager.PlayerMissionSelectPickingActive = true;
+                
                 return;
             }
             MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);

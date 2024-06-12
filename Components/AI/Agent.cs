@@ -16,6 +16,7 @@ public class Agent : Component
     {
         Civilian,
         Soldier,
+        EnemyBuilding,
         PlayerUnit
     }
     
@@ -46,6 +47,11 @@ public class Agent : Component
     public LayerType AgentLayer = LayerType.ENEMY;
     public AgentType Type = AgentType.Civilian;
 
+    public GameObject UiObject = null;
+    public GameObject HealthBar = null;
+    public GameObject HealthBarBackground = null;
+    public GameObject Icon = null;
+    
     public MeshRenderer Renderer = null;
     
     public Agent(){}
@@ -63,6 +69,14 @@ public class Agent : Component
                 return;
             }
         }
+        
+        UiObject = ParentObject.FindGameObjectByName("UI");
+        Icon = UiObject?.FindGameObjectByName("Icon");
+        HealthBarBackground = UiObject?.FindGameObjectByName("HP");
+        HealthBar = HealthBarBackground?.Children[0];
+        
+        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage);
+
         if (!AgentData.Alive)
         {
             ParentObject.Active = false;
@@ -70,6 +84,19 @@ public class Agent : Component
             {
                 case LayerType.ENEMY:
                     Globals.AgentsManager.Enemies.Remove(this);
+
+                    switch (Type)
+                    {
+                        case AgentType.Civilian:
+                            Globals.AgentsManager.ClappedCivilians.Add(this);
+                            break;
+                        case AgentType.Soldier:
+                            Globals.AgentsManager.ClappedSoldiers.Add(this);
+                            break;
+                        case AgentType.EnemyBuilding:
+                            Globals.AgentsManager.ClappedBuildings.Add(this);
+                            break;
+                    }
                     break;
                 case LayerType.PLAYER:
                     Globals.AgentsManager.Units.Remove(this);
@@ -93,7 +120,7 @@ public class Agent : Component
             Console.WriteLine("No terrain found. Disabling agent");
         }
     }
-
+    
     private void UpdateState()
     {
         _currentState = _currentState.UpdateState(this);
