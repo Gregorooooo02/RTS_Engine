@@ -63,6 +63,7 @@ public class SceneManager
             chairs.Children.Last().Transform.Move(new Vector3(0,0,2 * i));
 #else
             chairs.LoadPrefab("Prefabs/Chair.xml");
+            chairs.Children.Last().Transform.Move(new Vector3(0,0,2 * i));
 #endif
         }
         Debug.WriteLine("Added units");
