@@ -126,6 +126,7 @@ public class Camera : Component
         int x = 0, y = 0;
         if(InputManager.Instance.IsActive(GameAction.FORWARD)){
             x += 1;
+            
         }
         if (InputManager.Instance.IsActive(GameAction.BACKWARD))
         {

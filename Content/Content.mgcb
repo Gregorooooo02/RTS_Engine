@@ -17,6 +17,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin amogusDrip.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:amogusDrip.mp3
+
 #begin archer/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -181,6 +187,12 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:basicPlane/basicPlane.fbx
+
+#begin bassPulse.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:bassPulse.wav
 
 #begin black_texture.png
 /importer:TextureImporter
@@ -803,7 +815,7 @@
 /processorParam:TextureFormat=Color
 /build:Dude/upBodyS.tga
 
-#begin Env/props/namiot/1/albedo.png
+#begin Env/Props/namiot/1/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1859,6 +1871,12 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:snowman_animated.fbx
+
+#begin SoundFX/testBeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundFX/testBeat.wav
 
 #begin sprite.jpg
 /importer:TextureImporter

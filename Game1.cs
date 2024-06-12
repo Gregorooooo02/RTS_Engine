@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using RTS_Engine.Components.AI;
 using Num = System.Numerics;
@@ -69,6 +70,9 @@ public class Game1 : Game
     {
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _sceneManager = new SceneManager();
+        // SoundEffectInstance sound = AudioManager.CreateSoundInstance("SoundFX/testBeat");
+        // AudioManager.Loop(sound);
+        // sound.Play();
 
 #if DEBUG
         _imGuiRenderer = new ImGuiRenderer(this);

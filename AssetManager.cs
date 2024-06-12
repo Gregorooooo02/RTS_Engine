@@ -4,8 +4,10 @@ using System;
 using System.IO;
 #endif
 using System.Linq;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace RTS_Engine;
 
@@ -69,6 +71,7 @@ public class AssetManager
     private readonly List<ModelPointer> _models;
     private readonly List<SpriteData> _sprites;
     private readonly List<FontData> _fonts;
+    private readonly List<SongPointer> _sounds;
 
     public static ModelData DefaultModel {get; private set;}
     public static Model DefaultAnimatedModel { get; private set; }
@@ -86,6 +89,9 @@ public class AssetManager
     public static Effect BloomExtractEffect { get; private set; }
     public static Effect BloomCombineEffect { get; private set; }
     public static Effect GaussianBlurEffect { get; private set; }
+    
+    public static SoundEffect DefaultAmbientMusic { get; private set; }
+    public static Song DefaultSong {get; private set;}
 
     private class ModelPointer
     {
@@ -95,6 +101,17 @@ public class AssetManager
         public ModelPointer(ContentManager manager, string modelPath)
         {
             ModelData = new ModelData(manager, modelPath);
+        }
+    }
+    
+    private class SongPointer
+    {
+        public readonly SongData SongData;
+        public int Uses;
+
+        public SongPointer(ContentManager manager, string modelPath)
+        {
+            SongData = new SongData(manager, modelPath);
         }
     }
     
@@ -122,6 +139,7 @@ public class AssetManager
             Font = font;
             Name = name;
         }
+        
     }
     
     public static void Initialize(ContentManager content)
@@ -135,6 +153,7 @@ public class AssetManager
         _models = new List<ModelPointer>();
         _sprites = new List<SpriteData>();
         _fonts = new List<FontData>();
+        _sounds = new List<SongPointer>();
         
 #if DEBUG
         ModelPaths = new List<string>();
@@ -144,10 +163,14 @@ public class AssetManager
         LoadNames();
 #endif
         DefaultModel = new ModelData(this._content,"defaultModel");
+        // DefaultSong = new SongData(this._content,"amogusDrip");
         DefaultAnimatedModel = this._content.Load<Model>("minion/minion");
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
+        // DefaultAmbientMusic = this._content.Load<SoundEffect>("amogusDrip");
+        DefaultSong = _content.Load<Song>("amogusDrip");
+        // MediaPlayer.Play(DefaultSong);
         //DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
         
         //DefaultHeightMaps = new List<Texture2D>
@@ -178,6 +201,18 @@ public class AssetManager
         GaussianBlurEffect = this._content.Load<Effect>("GaussianBlur");
     }
 
+    // public static SongData GetSong(string soundPath)
+    // {
+    //     SongPointer temp = _instance._sounds.Find(x => x.SongData.SongPath == soundPath);
+    //     if (temp == null)
+    //     {
+    //         _instance._sounds.Add(new SongPointer(_instance._content, soundPath));
+    //         _instance._sounds.Last().Uses++;
+    //         return _instance._sounds.Last().SongData;
+    //     }
+    //     temp.Uses++;
+    //     return temp.SongData;
+    // }
     public static ModelData GetModel(string modelPath)
     {
         ModelPointer temp = _instance._models.Find(x => x.ModelData.ModelPath == modelPath);
