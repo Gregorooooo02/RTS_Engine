@@ -33,12 +33,7 @@ public class Pickable : Component
                     Globals.PickingManager.Pickables.Add(this);
                 }
             }
-            else
-            {
-                Initialize();
-            }
-            
-            if (AnimatedRenderer != null)
+            else if (AnimatedRenderer != null)
             {
                 if (AnimatedRenderer.IsVisible && AnimatedRenderer.Active)
                 {
