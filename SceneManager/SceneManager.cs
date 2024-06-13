@@ -128,11 +128,10 @@ public class SceneManager
         }
     }
 
-    private void RemoveScene(int index)
+    public void RemoveScene(int index)
     {
         GameObject.ClearObject(_scenes[index].SceneRoot);
-        _scenes.RemoveAt(sceneToClose);
-        confirmationWindowOpen = false;
+        _scenes.RemoveAt(index);
     }
     
 #if DEBUG
@@ -204,7 +203,7 @@ public class SceneManager
             {
                 _scenes[sceneToClose].SaveToFile();
                 if (CurrentScene == _scenes[sceneToClose]) CurrentScene = _scenes[0];
-                _scenes.RemoveAt(sceneToClose);
+                RemoveScene(sceneToClose);
                 confirmationWindowOpen = false;
             }
             ImGui.SameLine();

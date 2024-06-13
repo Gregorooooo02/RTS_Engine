@@ -390,7 +390,11 @@ public class Renderer
     {
         if (WorldRenderer != null)
         {
+#if DEBUG
             Globals.TerrainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+#elif RELEASE
+            Globals.TerrainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
+#endif
             Globals.TerrainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
             Globals.TerrainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
             WorldRenderer.Draw();    
