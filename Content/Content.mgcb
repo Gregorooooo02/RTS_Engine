@@ -1875,7 +1875,7 @@
 #begin SoundFX/testBeat.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
-/processorParam:Quality=Best
+/processorParam:Quality=Medium
 /build:SoundFX/testBeat.wav
 
 #begin sprite.jpg

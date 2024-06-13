@@ -168,7 +168,7 @@ public class AssetManager
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
-        // DefaultAmbientMusic = this._content.Load<SoundEffect>("amogusDrip");
+        DefaultAmbientMusic = this._content.Load<SoundEffect>("SoundFX/testBeat");
         DefaultSong = _content.Load<Song>("amogusDrip");
         // MediaPlayer.Play(DefaultSong);
         //DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
