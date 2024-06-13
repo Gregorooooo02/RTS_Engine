@@ -7,11 +7,6 @@
 	#define PS_SHADERMODEL ps_4_0_level_9_1
 #endif
 
-#define SNORM16_MAX_FLOAT_MINUS_EPSILON ((float)(32768-2) / (float)(32768-1))
-#define FLOOD_ENCODE_OFFSET float2(1.0, SNORM16_MAX_FLOAT_MINUS_EPSILON)
-#define FLOOD_ENCODE_SCALE float2(2.0, 1.0 + SNORM16_MAX_FLOAT_MINUS_EPSILON)
-
-
 //static const float4 black = float3(0, 0, 0);
 
 matrix World;
@@ -105,7 +100,7 @@ float4 InitPS(SpriteShaderInput input) : COLOR
     
     float sobel = sqrt(dir.x * dir.x + dir.y * dir.y);
        
-    return sobel > 0.15 ? originalColor : 0;
+    return sobel > 0.15 ? originalColor : float4(0,0,0,1);
 }
 
 technique Init

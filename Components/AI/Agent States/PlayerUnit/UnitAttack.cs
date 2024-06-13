@@ -258,7 +258,7 @@ public class UnitAttack : AgentState
                 {
                     if (_points.Count < 4 && end != null)
                     {
-                        int id = Globals.Renderer.WorldRenderer.MapNodes[end.Location.X, end.Location.Y].AllyOccupantID;
+                        int id = Globals.Renderer.WorldRenderer.MapNodes[end.Location.X, end.Location.Y].AllyOccupantId;
                         if (id != agent.ID && id != 0)
                         {
                             _repath = true;
@@ -274,8 +274,8 @@ public class UnitAttack : AgentState
                 else
                 {
                     agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
-                    if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantID !=
-                        agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantID != 0)
+                    if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId !=
+                        agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
                     {
                         //Repath
                         _repath = true;

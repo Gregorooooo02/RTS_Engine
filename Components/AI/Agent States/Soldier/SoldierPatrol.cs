@@ -113,7 +113,7 @@ public class SoldierPatrol : AgentState
 
                 UpdateIndex();
                 
-                end = Pathfinding.CalculatePath(goal, start);
+                end = Pathfinding.CalculatePath(goal, start,false);
                 
             } while (end is null);
             _points = Pathfinding.PathToQueueOfVectors(end);

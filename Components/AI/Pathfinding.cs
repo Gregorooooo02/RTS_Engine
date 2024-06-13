@@ -35,8 +35,8 @@ public static class Pathfinding
                 if (
                     (nodeConnections & 1) > 0 && 
                     ((
-                         isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantID == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantID == 0)) 
-                     ||(!isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].EnemyOccupantID == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].EnemyOccupantID == 0))))
+                         isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == 0)) 
+                     || !isAlly))
                 {
                     output.Add(
                         new Node(
@@ -152,7 +152,7 @@ public static class Pathfinding
             {
                 //The point falls within the terrain
                 //Check for occupancy
-                int occupantId = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ].AllyOccupantID;
+                int occupantId = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ].AllyOccupantId;
                 if (occupantId == 0 || occupantId == id)
                 {
                     return new Point(xDown + offsetX, zDown + offsetZ);

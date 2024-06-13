@@ -91,7 +91,7 @@ public class CivilianFlee : AgentState
                 Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                 Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
             
-                end = Pathfinding.CalculatePath(goal, start);
+                end = Pathfinding.CalculatePath(goal, start,false);
             } while (end is null);
             _points = Pathfinding.PathToQueueOfVectors(end);
             _points.Enqueue(_destination);

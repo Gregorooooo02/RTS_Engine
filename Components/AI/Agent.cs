@@ -58,7 +58,7 @@ public class Agent : Component
     
     public override void Update()
     {
-        if(!Active)return;
+        if(!Active || Globals.IsPaused)return;
         Position = ParentObject.Transform.ModelMatrix.Translation;
         if (Renderer == null)
         {
@@ -111,36 +111,16 @@ public class Agent : Component
             {
                 if (clear)
                 {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantID == ID)
+                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == ID)
                     {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantID = 0;
+                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = 0;
                     }
                 }
                 else
                 {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantID == 0)
+                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == 0)
                     {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantID = ID;
-                    }
-                }
-            }
-        }
-        else
-        {
-            foreach (Point location in OccupiedNodes)
-            {
-                if (clear)
-                {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].EnemyOccupantID == ID)
-                    {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].EnemyOccupantID = 0;
-                    }
-                }
-                else
-                {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].EnemyOccupantID == 0)
-                    {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].EnemyOccupantID = ID;
+                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = ID;
                     }
                 }
             }

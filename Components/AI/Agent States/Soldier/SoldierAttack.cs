@@ -88,7 +88,7 @@ public class SoldierAttack : AgentState
                     start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                     goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);
                     
-                    end = Pathfinding.CalculatePath(goal, start);
+                    end = Pathfinding.CalculatePath(goal, start ,false);
                 }
                 
             } while (end is null);

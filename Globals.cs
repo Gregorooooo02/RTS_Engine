@@ -23,7 +23,6 @@ namespace RTS_Engine
     {
         NOTSET,
         WINDOWED,
-        WINDOWED_FULLSCREEN,
         FULLSCREEN
     }
     
@@ -57,7 +56,7 @@ namespace RTS_Engine
 
 #if DEBUG
             Solid = new RasterizerState() { FillMode = FillMode.Solid };
-            WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame };
+            WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame};
 #endif
         }
         
@@ -106,7 +105,6 @@ namespace RTS_Engine
         public static VertexDeclaration ShadowInstanceDeclaration;
         #endregion
         
-        public static bool HitUI = false;
         
         public static void Update(GameTime gameTime)
         {
@@ -118,7 +116,6 @@ namespace RTS_Engine
             if(InputManager.Instance.GetAction(GameAction.RESIZE_FULLSCREEN)?.state == ActionState.RELEASED) ChangeScreenSize(ScreenSize.FULLSCREEN);
             if(InputManager.Instance.GetAction(GameAction.RESIZE_WINDOWED)?.state == ActionState.RELEASED) ChangeScreenSize(ScreenSize.WINDOWED);
             
-            HitUI = false;
         }
         
         private static List<Type> GetAllComponents()
@@ -129,13 +126,13 @@ namespace RTS_Engine
             return assembly.GetTypes().Where(x => baseType.IsAssignableFrom(x) && x != baseType && x != transform).ToList();
         }
 
-        private static ScreenSize currentSize;
+        private static ScreenSize _currentSize;
         public static void ChangeScreenSize(ScreenSize newSize)
         {
-            if (currentSize != newSize)
+            if (_currentSize != newSize)
             {
-                currentSize = newSize;
-                switch (currentSize)
+                _currentSize = newSize;
+                switch (_currentSize)
                 {
                     case ScreenSize.WINDOWED:
                     {
@@ -143,13 +140,6 @@ namespace RTS_Engine
                         GraphicsDeviceManager.PreferredBackBufferHeight = 900;
                         GraphicsDeviceManager.IsFullScreen = false;
                         break;
-                    }
-                    case ScreenSize.WINDOWED_FULLSCREEN:
-                    {
-                        GraphicsDeviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                        GraphicsDeviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                        GraphicsDeviceManager.IsFullScreen = false;
-                        break; 
                     }
                     
                     case ScreenSize.FULLSCREEN:
@@ -216,8 +206,6 @@ namespace RTS_Engine
         public static bool DrawSelectFrustum = false;
         public static bool DrawExplored = false;
         public static bool DrawVisibility = false;
-
-        public static int FloodPasses = 2;
 #endif
     }
 }
