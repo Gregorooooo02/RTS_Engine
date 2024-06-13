@@ -91,7 +91,7 @@ public class AssetManager
     public static Effect GaussianBlurEffect { get; private set; }
     
     public static SoundEffect DefaultAmbientMusic { get; private set; }
-    public static Song DefaultSong {get; private set;}
+    public static SoundEffect DefaultSong {get; private set;}
 
     private class ModelPointer
     {
@@ -168,8 +168,8 @@ public class AssetManager
         DefaultSprite = this._content.Load<Texture2D>("smile");
         DefaultAnimatedSprite = this._content.Load<Texture2D>("coin");
         DefaultHeightMap = this._content.Load<Texture2D>("heightmap");
-        DefaultAmbientMusic = this._content.Load<SoundEffect>("SoundFX/testBeat");
-        DefaultSong = _content.Load<Song>("amogusDrip");
+        DefaultAmbientMusic = this._content.Load<SoundEffect>("gameOver");
+        DefaultSong = _content.Load<SoundEffect>("amogusDrip");
         // MediaPlayer.Play(DefaultSong);
         //DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
         

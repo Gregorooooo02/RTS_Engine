@@ -34,7 +34,6 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
-    private AudioManager _audioManager;
     private bool isFullscreen = false;
     
     KeyboardState lastKeyboardState = new KeyboardState();
@@ -50,6 +49,7 @@ public class Game1 : Game
         Globals.GraphicsDeviceManager = _graphics;
 #if DEBUG
         _measurements = new double[_size];
+#endif
 #endif
         
         if (isFullscreen)
@@ -71,10 +71,7 @@ public class Game1 : Game
     {
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _sceneManager = new SceneManager();
-        _audioManager = new AudioManager();
-        // SoundEffectInstance sound = AudioManager.CreateSoundInstance("SoundFX/testBeat");
-        // AudioManager.Loop(sound);
-        // sound.Play();
+        
 
 #if DEBUG
         _imGuiRenderer = new ImGuiRenderer(this);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -12,22 +13,24 @@ public class AudioManager
    
     public static SoundEffect _soundEffect = AssetManager.DefaultAmbientMusic;
     public static SoundEffectInstance _soundEffectInstance = _soundEffect.CreateInstance();
-    public AudioListener _listener = new AudioListener();
+    public AudioListener listener = new AudioListener();
+    public List<GameObject> GOEmitters = new List<GameObject>();
 
 
-    public AudioManager()
+    public AudioManager(AudioListener listener, List<GameObject> GOEmitters)
     {
-        _listener.Position = new Vector3(0, 0, 0);  
+        this.listener = listener;
+        this.GOEmitters = GOEmitters;
     }
-    
-    public static void Play(string path)
+     
+    public static void Apply3D()
     {
         
     }
     
     public static void PlayAmbient1()
     {
-        MediaPlayer.Play(AssetManager.DefaultSong);
+        // MediaPlayer.Play(AssetManager.DefaultSong);
     }
     
     //TODO: Zmiana muzyki w tle w zaleznosci od sceny (tytul, glosnosc)

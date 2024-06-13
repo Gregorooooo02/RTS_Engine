@@ -19,7 +19,7 @@
 
 #begin amogusDrip.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:amogusDrip.mp3
 
@@ -1319,6 +1319,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/titleFont.spritefont
+
+#begin gameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:gameOver.wav
 
 #begin GaussianBlur.fx
 /importer:EffectImporter
