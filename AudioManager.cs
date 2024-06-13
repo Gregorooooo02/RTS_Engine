@@ -13,14 +13,13 @@ public class AudioManager
    
     public static SoundEffect _soundEffect = AssetManager.DefaultAmbientMusic;
     public static SoundEffectInstance _soundEffectInstance = _soundEffect.CreateInstance();
-    public AudioListener listener = new AudioListener();
-    public List<GameObject> GOEmitters = new List<GameObject>();
+    public AudioListener Listener = new AudioListener();
+    public List<AudioEmitter> Emitters = new List<AudioEmitter>();
 
 
-    public AudioManager(AudioListener listener, List<GameObject> GOEmitters)
+    public AudioManager()
     {
-        this.listener = listener;
-        this.GOEmitters = GOEmitters;
+       
     }
      
     public static void Apply3D()

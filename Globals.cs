@@ -91,6 +91,7 @@ namespace RTS_Engine
         public static PickingManager PickingManager;
         public static ContentManager Content;
         public static AgentsManager AgentsManager;
+        public static AudioManager AudioManager;
 
         #endregion
 

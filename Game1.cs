@@ -50,7 +50,7 @@ public class Game1 : Game
 #if DEBUG
         _measurements = new double[_size];
 #endif
-#endif
+
         
         if (isFullscreen)
         {

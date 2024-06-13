@@ -15,6 +15,7 @@ public class Emitter : Component
     {
         Active = true;
         AudioEmitter = new AudioEmitter();
+        Globals.AudioManager.Emitters.Add(AudioEmitter);
     }
     
     public Emitter(){}
