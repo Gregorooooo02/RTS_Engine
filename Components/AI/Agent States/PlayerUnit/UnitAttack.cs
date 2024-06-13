@@ -160,28 +160,32 @@ public class UnitAttack : AgentState
             return idle;
         }
         
+        Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
+        Vector2 target = new Vector2(data.Target.Position.X, data.Target.Position.Z);
+        float dist = Vector2.Distance(location, target);
+        Vector2 direction = target - location;
+        direction.Normalize();
+        
         if (_pathingCompleted && _pathingScheduled)
         {
             //When pathing completes
             _pathingScheduled = false;
             _pathingCompleted = false;
             _pathCompleted = false;
-            if (end == null && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState change))
+            if (end == null)
             {
-                data.Target = null;
-                return change;
+                _repath = true;
+                _SearchNearby = true;
             }
-            _points = Pathfinding.PathToQueueOfVectors(end);
-            _points.Enqueue(data.Destination);
-            _currentPoint = _points.Dequeue();
-            _timeSinceLastRepath = 0;
+            else
+            {
+                _points = Pathfinding.PathToQueueOfVectors(end);
+                _points.Enqueue(target);
+                _currentPoint = _points.Dequeue();
+                _timeSinceLastRepath = 0;
+            }
         }
         
-        Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
-        Vector2 target = new Vector2(data.Target.Position.X, data.Target.Position.Z);
-        float dist = Vector2.Distance(location, target);
-        Vector2 direction = target - location;
-        direction.Normalize();
         if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0 || _repath) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
         {
             _repath = false;
@@ -190,17 +194,29 @@ public class UnitAttack : AgentState
             Node goal;
             if (dist > data.MaxAttackRange)
             {
+                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
                 //If it's too far, walk to target
-                Vector2 endPoint;
                 if (_SearchNearby)
                 {
                     _SearchNearby = false;
-                    endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
-                    goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
+                    Point? newPoint = Pathfinding.GetFirstNearbyFreePoint(target, agent.ID);
+                    if (newPoint.HasValue)
+                    {
+                        Console.WriteLine("Repathing to: " + newPoint.Value + " Previously pathed to: " + endPoint);
+                        goal = new Node(newPoint.Value, null, 1);
+                    }
+                    else if(agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState exit))
+                    {
+                        return exit;
+                    }
+                    else
+                    {
+                        return this;
+                    }
                 }
                 else
                 {
-                    endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
+                    
                     goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                 }
                 start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
@@ -240,7 +256,7 @@ public class UnitAttack : AgentState
             {
                 if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
                 {
-                    if (_points.Count == 2 )
+                    if (_points.Count < 4 && end != null)
                     {
                         int id = Globals.Renderer.WorldRenderer.MapNodes[end.Location.X, end.Location.Y].AllyOccupantID;
                         if (id != agent.ID && id != 0)

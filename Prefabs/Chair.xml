@@ -45,7 +45,7 @@
         <maxHp>100</maxHp>
         <alive>True</alive>
         <presence>5</presence>
-        <walkingSpeed>8</walkingSpeed>
+        <walkingSpeed>14</walkingSpeed>
         <damage>10</damage>
         <attackDelay>0,8</attackDelay>
         <minPointDistance>0,5</minPointDistance>

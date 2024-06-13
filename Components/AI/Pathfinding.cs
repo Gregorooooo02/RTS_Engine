@@ -130,20 +130,80 @@ public static class Pathfinding
         return new Queue<Vector2>(PathToListOfVectors(node));
     }
 
-    public static Point? GetNearbyFreePoint(Vector2 location, int radius)
+    public static Point? GetFirstNearbyFreePoint(Vector2 location, int id)
     {
         //Calculate indexes of vertices between which the provided location is
         int xDown = (int)MathF.Floor(location.X);
-        int xUp = xDown + 1;
         int zDown = (int)MathF.Floor(location.Y);
-        int zUp = zDown + 1;
 
-        for (int i = 0; i < radius * 2; i++)
+        int xBoundary = Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1;
+        int zBoundary = Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1;
+        
+        int currentDirectionIterations = 0;
+        int currentIterationLimit = 1;
+        bool changeLimit = false;
+        int direction = 0;
+        int offsetX = 0, offsetZ = 0;
+        int iterations = 0;
+        while (iterations < 16) 
         {
-            for (int j = 0; j < radius * 2; j++)
+            if (xDown + offsetX > 0 && xDown + offsetX < xBoundary && zDown + offsetZ > 0 &&
+                zDown + offsetZ < zBoundary)
             {
-                int tempX = xDown + i;
+                //The point falls within the terrain
+                //Check for occupancy
+                int occupantId = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ].AllyOccupantID;
+                if (occupantId == 0 || occupantId == id)
+                {
+                    return new Point(xDown + offsetX, zDown + offsetZ);
+                }
             }
+            if (currentIterationLimit == currentDirectionIterations)
+            {
+                currentDirectionIterations = 0;
+                if (direction == 3)
+                {
+                    direction = 0;
+                }
+                else
+                {
+                    direction++;
+                }
+                if (changeLimit)
+                {
+                    changeLimit = false;
+                    currentIterationLimit++;
+                }
+                else
+                {
+                    changeLimit = true;
+                }
+            }
+            switch (direction)
+            {
+                case 0:
+                {
+                    offsetX++;
+                    break;
+                }
+                case 1:
+                {
+                    offsetZ++;
+                    break;
+                }
+                case 2:
+                {
+                    offsetX--;
+                    break;
+                }
+                case 3:
+                {
+                    offsetZ--;
+                    break;
+                }
+            }
+            currentDirectionIterations++;
+            iterations++;
         }
         return null;
     }

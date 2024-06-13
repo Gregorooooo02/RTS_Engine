@@ -410,7 +410,7 @@ public class Agent : Component
         Active = element.Element("active")?.Value == "True";
         Type = (AgentType)Enum.Parse(typeof(AgentType), element.Element("agentType")?.Value);
         AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
-        _occupyDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 0.5f;
+        _occupyDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 1.0f;
         _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
         switch (Type)
         {
