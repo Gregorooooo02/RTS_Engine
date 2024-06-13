@@ -110,7 +110,7 @@ public class GameObject
         gameObject.Parent = null; 
     }
 
-    private void ClearObject(GameObject gameObject)
+    public static void ClearObject(GameObject gameObject)
     {
         for (int i = gameObject.Children.Count - 1; i >= 0 ; i--)
         {

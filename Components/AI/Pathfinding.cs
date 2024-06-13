@@ -129,4 +129,22 @@ public static class Pathfinding
     {
         return new Queue<Vector2>(PathToListOfVectors(node));
     }
+
+    public static Point? GetNearbyFreePoint(Vector2 location, int radius)
+    {
+        //Calculate indexes of vertices between which the provided location is
+        int xDown = (int)MathF.Floor(location.X);
+        int xUp = xDown + 1;
+        int zDown = (int)MathF.Floor(location.Y);
+        int zUp = zDown + 1;
+
+        for (int i = 0; i < radius * 2; i++)
+        {
+            for (int j = 0; j < radius * 2; j++)
+            {
+                int tempX = xDown + i;
+            }
+        }
+        return null;
+    }
 }

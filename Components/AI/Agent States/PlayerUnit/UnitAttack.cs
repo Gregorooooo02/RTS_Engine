@@ -17,6 +17,7 @@ public class UnitAttack : AgentState
     private bool _pathingCompleted = false;
     private bool _pathCompleted = false;
     private bool _repath = false;
+    private bool _SearchNearby = false;
     
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
@@ -185,14 +186,24 @@ public class UnitAttack : AgentState
         {
             _repath = false;
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
-            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
             Node start;
             Node goal;
             if (dist > data.MaxAttackRange)
             {
-                //If it's to far, walk to target
+                //If it's too far, walk to target
+                Vector2 endPoint;
+                if (_SearchNearby)
+                {
+                    _SearchNearby = false;
+                    endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
+                    goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
+                }
+                else
+                {
+                    endPoint = Agent.GetFirstIntersectingGridPoint(target, -direction);
+                    goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
+                }
                 start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
-                goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                 
                 Task.Factory.StartNew(() =>
                 { 
@@ -229,6 +240,15 @@ public class UnitAttack : AgentState
             {
                 if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
                 {
+                    if (_points.Count == 2 )
+                    {
+                        int id = Globals.Renderer.WorldRenderer.MapNodes[end.Location.X, end.Location.Y].AllyOccupantID;
+                        if (id != agent.ID && id != 0)
+                        {
+                            _repath = true;
+                            _SearchNearby = true;
+                        }
+                    }
                     if(_points.Count > 0)_currentPoint = _points.Dequeue();
                     else
                     {

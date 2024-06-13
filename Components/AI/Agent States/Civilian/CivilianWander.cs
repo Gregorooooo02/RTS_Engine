@@ -98,10 +98,10 @@ public class CivilianWander : AgentState
                 offset *= data.WanderingDistance;
                 attempts++;
 
-                if ((int)endPoint.X < 0
-                    || (int)(endPoint.Y) < 0
-                    || (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1
-                    || (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1
+                if ((int)endPoint.X < 1
+                    || (int)(endPoint.Y) < 1
+                    || (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 2
+                    || (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 2
                     || Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y] == null)
                 {
                     continue;

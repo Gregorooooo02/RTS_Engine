@@ -156,22 +156,11 @@ public class Agent : Component
         
         int topY = (int)MathF.Ceiling(Position.Z - _occupyDistance);
         int bottomY = (int)(Position.Z + _occupyDistance);
-
-        /*
-        Console.WriteLine("Moved!");
-        Console.WriteLine("Distance: " + _occupyDistance);
-        Console.WriteLine("Position x: " + Position.X);
-        Console.WriteLine("Position z: " + Position.Z);
-        Console.WriteLine("Left: " + MathF.Ceiling(Position.X - _occupyDistance));
-        Console.WriteLine("Right:" + (int)(Position.X + _occupyDistance));
-        Console.WriteLine("Top: " + MathF.Ceiling(Position.Z - _occupyDistance));
-        Console.WriteLine("Bottom: " + (int)(Position.Z + _occupyDistance));
-        */
+        
         for (int i = leftX; i <= rightX; i++)
         {
             for (int j = topY; j <= bottomY; j++)
             {
-                //Console.WriteLine(new Point(i,j));
                 OccupiedNodes.Add(new Point(i,j));
             }
         }
