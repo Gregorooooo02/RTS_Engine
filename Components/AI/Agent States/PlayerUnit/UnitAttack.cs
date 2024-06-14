@@ -309,6 +309,7 @@ public class UnitAttack : AgentState
                                 wandererData.Target = agent;
                             }
                         }
+                        //Globals.AgentsManager.ProjectileManager.AddProjectile(ProjectileManager.ProjectileType.Arrow,data.Target,25.0f,1.0f, data.Damage, agent.Position);
                         data.Target.AgentData.DealDamage(data.Damage);
                     }
                 }

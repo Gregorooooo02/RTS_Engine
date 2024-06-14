@@ -112,6 +112,7 @@ public class GameObject
 
     public static void ClearObject(GameObject gameObject)
     {
+        gameObject.Parent.Children.Remove(gameObject);
         for (int i = gameObject.Children.Count - 1; i >= 0 ; i--)
         {
             ClearObject(gameObject.Children[i]);
@@ -120,6 +121,7 @@ public class GameObject
         {
             gameObject._components[i].RemoveComponent();
         }
+        gameObject.Transform = null;
     }
     
     private void SetChildrenInactive(GameObject parent)
@@ -227,6 +229,12 @@ public class GameObject
     {
         AddChildObject(FileManager.DeserializeScene(name));
     }
+
+    public static GameObject GetPrefab(string name)
+    {
+        return FileManager.DeserializeScene(name);
+    }
+    
 #if DEBUG
     private bool addingOpen = false;
     private bool savingPrefab = false;

@@ -114,6 +114,8 @@ public sealed class Game1 : Game
 #if DEBUG
         if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
 #endif
+        Globals.AgentsManager.ProjectileManager.UpdateProjectiles();
+        
         _sceneManager.CurrentScene.Update(gameTime);
         
         Globals.FogManager.UpdateFog();
