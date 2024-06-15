@@ -63,29 +63,17 @@ public class CivilianFlee : AgentState
                 attempts++;
                 
                 _destination = location + currentOffset;
-
-                try
+                
+                if (((int)endPoint.X < 1 || (int)endPoint.Y < 1 ||
+                     (int)endPoint.X > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 2 ||
+                     (int)endPoint.Y > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 2) || !Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y].Available)
                 {
-                    if (((int)endPoint.X < 1 || (int)endPoint.Y < 1 ||
-                         (int)endPoint.X > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 2 ||
-                         (int)endPoint.Y > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 2) || !Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y].Available)
+                    angle *= -1;
+                    if (angle >= 0)
                     {
-                        angle *= -1;
-                        if (angle >= 0)
-                        {
-                            angle += 0.2617993878f;
-                        }
-                        continue;
+                        angle += 0.2617993878f;
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Length: " + Globals.Renderer.WorldRenderer.MapNodes.Length);
-                    Console.WriteLine("Length in x: " + Globals.Renderer.WorldRenderer.MapNodes.GetLength(0));
-                    Console.WriteLine("Length in y: " + Globals.Renderer.WorldRenderer.MapNodes.GetLength(1));
-                    Console.WriteLine(Globals.Renderer.WorldRenderer.MapNodes.Length);
-                    Console.WriteLine(endPoint);
-                    throw;
+                    continue;
                 }
                 
                 Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
@@ -96,7 +84,6 @@ public class CivilianFlee : AgentState
             _points = Pathfinding.PathToQueueOfVectors(end);
             _points.Enqueue(_destination);
             _currentPoint = _points.Dequeue();
-            //Console.WriteLine(_currentPoint);
             _timeSinceLastRepath = 0;
         }
         else

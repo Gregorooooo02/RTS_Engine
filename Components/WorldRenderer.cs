@@ -59,6 +59,8 @@ public class WorldRenderer : Component
     private Texture2D _grassTexture;
     private Texture2D _rockTexture;
     private Texture2D _snowTexture;
+
+    public readonly float MaxWaterLevel = 5.2f;
     
     private readonly List<Chunk> _chunks = new List<Chunk>();
     private readonly int _chunkSize = 128;
@@ -264,6 +266,7 @@ public class WorldRenderer : Component
                     }
                 }
                 MapNodes[i,j] = new MapNode(new Point(i, j),nodeHeight / (NodeFrequency * NodeFrequency));
+                if (MapNodes[i, j].Height <= MaxWaterLevel) MapNodes[i, j].Available = false;
             }
         }
         //Create connection between the nodes
@@ -281,6 +284,7 @@ public class WorldRenderer : Component
                         if ((i + k >= 0 && i + k < MapNodes.GetLength(0) && j + l >= 0 &&
                              j + l < MapNodes.GetLength(1)))
                         {
+                            if(!MapNodes[i + k, j + l].Available) continue;
                             //Calculate height difference between two points
                             var heightDifference = MathF.Abs(MapNodes[i + k, j + l].Height - MapNodes[i, j].Height);
                             //Calculate offset vector between the point in XZ space
@@ -298,6 +302,8 @@ public class WorldRenderer : Component
                 MapNodes[i, j].Connections = neighborMask;
             }
         }
+        
+        
     }
 
     public override void Update()

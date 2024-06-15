@@ -212,14 +212,37 @@ public class SoldierAttack : AgentState
             }
             else if (dist < data.MinAttackRange)
             {
-                //If it's to close, walk away from target
+                bool validPoint = false;
+                //If it's too close, walk away from target
                 float awayDist = ((data.MaxAttackRange + data.MinAttackRange) / 2.0f) - dist;
-                Vector2 offset = new Vector2(location.X - target.X, location.Y - target.Y);
-                offset.Normalize();
-                offset *= awayDist;
-                
+                Vector2 originalOffset = new Vector2(location.X - target.X, location.Y - target.Y);
+                originalOffset.Normalize();
+                Vector2 currentOffset;
+                Vector2 endPoint;
+                float angle = 0;
+                do
+                {
+                    currentOffset.X = MathF.Cos(angle) * originalOffset.X - MathF.Sin(angle) * originalOffset.Y;
+                    currentOffset.Y = MathF.Sin(angle) * originalOffset.X + MathF.Cos(angle) * originalOffset.Y;
+                    endPoint = Agent.GetFirstIntersectingGridPoint(location + currentOffset * awayDist, -originalOffset);
+                    if (((int)endPoint.X < 1 || (int)endPoint.Y < 1 ||
+                         (int)endPoint.X > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 2 ||
+                         (int)endPoint.Y > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 2) || !Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y].Available)
+                    {
+                        angle *= -1;
+                        if (angle >= 0)
+                        {
+                            angle += 0.2617993878f;
+                        }
+                    }
+                    else
+                    {
+                        validPoint = true;
+                    }
+                } while (!validPoint);
+                    
                 start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
-                goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);
+                goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                 
                 Task.Factory.StartNew(() =>
                 { 
