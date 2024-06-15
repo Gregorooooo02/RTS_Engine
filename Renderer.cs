@@ -358,7 +358,7 @@ public class Renderer
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (MeshRenderer renderer in Meshes)
         {
-            renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            if(renderer.ParentObject.Transform != null)renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif
     }
@@ -455,7 +455,15 @@ public class Renderer
     
     private void DrawShadowMap(MeshRenderer renderer)
     {
-        _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
+        try
+        {
+            _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Missing projectile error occured!");
+            return;
+        }
         foreach (ModelMesh mesh in renderer._model.Models[renderer._model.CurrentModelIndex].Meshes)
         {
             //foreach (ModelMeshPart part in mesh.MeshParts)

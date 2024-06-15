@@ -75,7 +75,7 @@ public class Projectile : Component
             ImGui.Text("Projectile alive: " + !Delete);
             ImGui.Text("Projectile target: " + _target.ParentObject.Name);
             ImGui.Text("Speed: " + _speed);
-            ImGui.Text("Damage: " + -_damage);
+            ImGui.Text("Damage: " + _damage);
             ImGui.Text("Hit distance: " + _hitDistance);
         }   
     }
