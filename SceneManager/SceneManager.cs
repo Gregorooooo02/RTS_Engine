@@ -31,13 +31,16 @@ public class SceneManager
         Debug.WriteLine("Created scene root");
         missionRoot.Name = "Root";
         missionRoot.AddComponent<WorldRenderer>();
+
+        var currentWorld = missionRoot.GetComponent<WorldRenderer>();
+        
         Debug.WriteLine("Added World Renderer");
 
         GameObject camera = new GameObject();
         camera.Name = "Camera";
         missionRoot.AddChildObject(camera);
         camera.AddComponent<Camera>();
-        camera.Transform.SetLocalPosition(new Vector3(200, 50, 200));
+        camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
         Debug.WriteLine("Added Camera");
         
 #if _WINDOWS
@@ -69,7 +72,12 @@ public class SceneManager
 #else
             chairs.LoadPrefab("Prefabs/Chair.xml");
 #endif
-            chairs.Children.Last().Transform.Move(new Vector3(0,0,2 * i));
+            
+            Vector3 chairPos = chairs.Children.Last().Transform.Pos;
+            Vector2 posXZ = new(chairPos.X, chairPos.Z + 2 * i);
+            
+            var height = PickingManager.InterpolateWorldHeight(posXZ, currentWorld);
+            chairs.Children.Last().Transform.Move(new Vector3(0, height,2 * i));
         }
         
         Debug.WriteLine("Added units");
@@ -91,6 +99,11 @@ public class SceneManager
             if (InputManager.Instance.GetAction(sceneChangeActions[i])?.state == ActionState.RELEASED)
             {
                 ChangeScene(i);
+                Globals.AgentsManager.Units.Clear();
+                Globals.PickingManager.SinglePickingActive = false;
+                Globals.PickingManager.BoxPickingActive = false;
+                Globals.PickingManager.GroundPickingActive = false;
+                Globals.PickingManager.EnemyPickingActive = false;
             }
         }
         

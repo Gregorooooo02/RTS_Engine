@@ -7,6 +7,7 @@ namespace RTS_Engine;
 
 public enum GameAction
 {
+    NONE,
     FORWARD,
     BACKWARD,
     LEFT,
@@ -35,7 +36,9 @@ public enum GameAction
     SELECT,
     DESELECT,
     COMPLETE,
-    INCOMPLETE
+    INCOMPLETE,
+    GAME_OVER,
+    WIN
 }
 
 public class InputManager

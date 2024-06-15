@@ -24,7 +24,6 @@ public class AgentsManager
 
     public void Initialize()
     {
-        Console.WriteLine(Units.Count);
         // Initialize the UI for all units with the offset
         for (int i = 0; i < Units.Count; i++)
         {
@@ -32,6 +31,8 @@ public class AgentsManager
             var icon = uiObject?.FindGameObjectByName("Icon");
             var healthBar = uiObject?.FindGameObjectByName("HP");
             var healthStatus = healthBar?.Children[0];
+            
+            if (icon == null || healthBar == null || healthStatus == null) continue;
             
             icon?.Transform.SetLocalPosition(icon.Transform.Pos + UiOffset * i);
             healthBar?.Transform.SetLocalPosition(healthBar.Transform.Pos + BackgroundOffset + UiOffset * i);

@@ -487,6 +487,29 @@ public class PickingManager
                 height3 * weightX + height3 * (1 - weightZ) +
                 height4 * weightX + height4 * weightZ) / 4.0f;
     }
-    
-    
+
+    public static float InterpolateWorldHeight(Vector2 location, WorldRenderer world)
+    {
+        //Calculate indexes of vertices between which the provided location is
+        int xDown = (int)MathF.Floor(location.X);
+        int xUp = xDown + 1;
+        int zDown = (int)MathF.Floor(location.Y);
+        int zUp = zDown + 1;
+
+        //Calculate weights for vertices
+        float weightX = location.X % 1;
+        float weightZ = location.Y % 1;
+            
+        //Prepare height data from selected vertices
+        float height1 = world.HeightData[xDown, zDown];
+        float height2 = world.HeightData[xDown, zUp];
+        float height3 = world.HeightData[xUp, zDown];
+        float height4 = world.HeightData[xUp, zUp];
+
+        //Calculate weighted average of height values in selected vertices.
+        return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
+                height2 * (1 - weightX) + height2 * weightZ + 
+                height3 * weightX + height3 * (1 - weightZ) +
+                height4 * weightX + height4 * weightZ) / 4.0f;
+    }
 }

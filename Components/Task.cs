@@ -19,6 +19,9 @@ public class Task : Component
     
     public RewardType Type;
     public int Reward;
+
+    public RewardType Type2;
+    public int Reward2;
     
     public string TaskDescription = "New Task";
     
@@ -75,6 +78,15 @@ public class Task : Component
             {
                 GameManager.AddMeat(Reward);
             }
+            
+            if (Type2 == RewardType.Puzzle)
+            {
+                GameManager.AddPuzzle(Reward2);
+            } 
+            else if (Type2 == RewardType.Meat)
+            {
+                GameManager.AddMeat(Reward2);
+            }
         } 
         else if (Progress < Goal)
         {
@@ -87,7 +99,9 @@ public class Task : Component
     {
         Goal = 5;
         Type = RewardType.Meat;
+        Type2 = RewardType.Puzzle;
         Reward = 100;
+        Reward2 = 9;
         Target = Agent.AgentType.Civilian;
     }
 
@@ -107,6 +121,10 @@ public class Task : Component
         
         builder.Append("<reward>" + Reward +"</reward>");
         
+        builder.Append("<rewardType2>" + Type2 + "</rewardType2>");
+        
+        builder.Append("<reward2>" + Reward2 +"</reward2>");
+        
         builder.Append("<description>" + TaskDescription +"</description>");
         
         builder.Append("<target>" + Target +"</target>");
@@ -120,7 +138,10 @@ public class Task : Component
     {
         Active = element.Element("active")?.Value == "True";
         Goal = int.TryParse(element.Element("goal")?.Value, out int goalValue) ? goalValue : 5;
+        Type = Enum.TryParse(element.Element("rewardType")?.Value, out RewardType rewardType) ? rewardType : RewardType.Meat;
         Reward = int.TryParse(element.Element("reward")?.Value, out int rewardValue) ? rewardValue : 100;
+        Type2 = Enum.TryParse(element.Element("rewardType2")?.Value, out RewardType rewardType2) ? rewardType2 : RewardType.Puzzle;
+        Reward2 = int.TryParse(element.Element("reward2")?.Value, out int rewardValue2) ? rewardValue2 : 9;
         TaskDescription = element.Element("description")?.Value;
         Target = (Agent.AgentType) Enum.Parse(typeof(Agent.AgentType), element.Element("target").Value);
     }
@@ -139,17 +160,29 @@ public class Task : Component
             ImGui.DragInt("Goal", ref Goal);
             
             ImGui.Separator();
-            ImGui.Text("Reward Type: " + Type);
-            if (ImGui.Button("Meat"))
+            ImGui.Text("Reward1 Type: " + Type);
+            if (ImGui.Button("Meat1"))
             {
                 Type = RewardType.Meat;
             }
             ImGui.SameLine();
-            if (ImGui.Button("Puzzle"))
+            if (ImGui.Button("Puzzle1"))
             {
                 Type = RewardType.Puzzle;
             }
-            ImGui.DragInt("Reward", ref Reward);
+            ImGui.DragInt("Reward1", ref Reward);
+            
+            ImGui.Text("Reward2 Type: " + Type2);
+            if (ImGui.Button("Meat2"))
+            {
+                Type2 = RewardType.Meat;
+            }
+            ImGui.SameLine();
+            if (ImGui.Button("Puzzle2"))
+            {
+                Type2 = RewardType.Puzzle;
+            }
+            ImGui.DragInt("Reward2", ref Reward2);
             
             ImGui.Separator();
             ImGui.Text("Target: " + Target);
