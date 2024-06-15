@@ -269,6 +269,13 @@ public class WorldRenderer : Component
                 if (MapNodes[i, j].Height <= MaxWaterLevel) MapNodes[i, j].Available = false;
             }
         }
+        
+        //TODO: Move the invocation below, so it's executed after all changes to MapNodes array has been made. Mainly it should be executed after static terrain features are placed in mission.
+        CalculatePathfindingGridConnections();
+    }
+
+    public void CalculatePathfindingGridConnections()
+    {
         //Create connection between the nodes
         for (int i = 0; i < MapNodes.GetLength(0); i++)
         {
@@ -302,8 +309,6 @@ public class WorldRenderer : Component
                 MapNodes[i, j].Connections = neighborMask;
             }
         }
-        
-        
     }
 
     public override void Update()
