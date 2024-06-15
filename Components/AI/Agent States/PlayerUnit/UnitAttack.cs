@@ -78,6 +78,8 @@ public class UnitAttack : AgentState
             if (dist > data.MaxAttackRange)
             {
                 Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(target - data.Target.AttackingRadius * direction, -direction);
+                if (!Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X, (int)endPoint.Y].Available)
+                    _SearchNearby = true;
                 //If it's too far, walk to target
                 if (_SearchNearby)
                 {
@@ -98,7 +100,6 @@ public class UnitAttack : AgentState
                 }
                 else
                 {
-                    
                     goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                 }
                 start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);

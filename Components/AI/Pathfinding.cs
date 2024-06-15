@@ -130,7 +130,7 @@ public static class Pathfinding
         return new Queue<Vector2>(PathToListOfVectors(node));
     }
 
-    public static Point? GetFirstNearbyFreePoint(Vector2 location, int id)
+    public static Point? GetFirstNearbyFreePoint(Vector2 location, int id, int pointLimit = 16)
     {
         //Calculate indexes of vertices between which the provided location is
         int xDown = (int)MathF.Floor(location.X);
@@ -145,7 +145,7 @@ public static class Pathfinding
         int direction = 0;
         int offsetX = 0, offsetZ = 0;
         int iterations = 0;
-        while (iterations < 16) 
+        while (iterations < pointLimit) 
         {
             if (xDown + offsetX > 0 && xDown + offsetX < xBoundary && zDown + offsetZ > 0 &&
                 zDown + offsetZ < zBoundary)
@@ -153,7 +153,7 @@ public static class Pathfinding
                 //The point falls within the terrain
                 //Check for occupancy
                 MapNode node = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ];
-                if (node != null && (node.AllyOccupantId == 0 || node.AllyOccupantId == id))
+                if (node.Available && (node.AllyOccupantId == 0 || node.AllyOccupantId == id))
                 {
                     return new Point(xDown + offsetX, zDown + offsetZ);
                 }
