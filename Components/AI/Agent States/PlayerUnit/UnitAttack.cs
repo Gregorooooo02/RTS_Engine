@@ -19,7 +19,8 @@ public class UnitAttack : AgentState
     private bool _repath = false;
     private bool _SearchNearby = false;
     private bool _attacking = false;
-    
+
+    private Vector2 finalPoint;
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
     
@@ -63,7 +64,7 @@ public class UnitAttack : AgentState
             else
             {
                 _points = Pathfinding.PathToQueueOfVectors(end);
-                _points.Enqueue(target);
+                _points.Enqueue(finalPoint);
                 _currentPoint = _points.Dequeue();
                 _timeSinceLastRepath = 0;
             }
@@ -107,6 +108,7 @@ public class UnitAttack : AgentState
                 Task.Factory.StartNew(() =>
                 { 
                     end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
+                    finalPoint = target;
                     _pathingCompleted = true;
                 });
                 _pathingScheduled = true;
@@ -114,17 +116,20 @@ public class UnitAttack : AgentState
             else if (dist < data.MinAttackRange)
             {
                 //If it's to close, walk away from target
-                float awayDist = ((data.MaxAttackRange + data.MinAttackRange) / 2.0f) - dist;
+                float awayDist = data.MaxAttackRange;
                 Vector2 offset = new Vector2(location.X - target.X, location.Y - target.Y);
                 offset.Normalize();
                 offset *= awayDist;
                 
+                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(location + offset, -direction);
+                
                 start = new Node(new Point((int)location.X, (int)location.Y), null, 1);
-                goal = new Node(new Point((int)(location.X + offset.X), (int)(location.Y + offset.Y)), null, 1);
+                goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
                 
                 Task.Factory.StartNew(() =>
                 { 
                     end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
+                    finalPoint = location + offset;
                     _pathingCompleted = true;
                 });
                 _pathingScheduled = true;

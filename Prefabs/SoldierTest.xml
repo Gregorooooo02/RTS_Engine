@@ -32,13 +32,13 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>27,515354</x>
-            <y>2,985349</y>
-            <z>50,99999</z>
+            <x>96,07713</x>
+            <y>10,732866</y>
+            <z>108,00001</z>
           </position>
           <rotation>
             <x>0</x>
-            <y>89,57932</y>
+            <y>89,64054</y>
             <z>0</z>
           </rotation>
           <scale>
@@ -64,7 +64,7 @@
         <component>
           <type>Agent</type>
           <active>True</active>
-          <agentType>Civilian</agentType>
+          <agentType>Soldier</agentType>
           <agentLayer>ENEMY</agentLayer>
           <separationDistance>5,75</separationDistance>
           <heightOffset>2</heightOffset>
@@ -72,23 +72,29 @@
             <hp>100</hp>
             <maxHp>100</maxHp>
             <alive>True</alive>
+            <pathId>PatrolPath</pathId>
+            <patrollingType>Circle</patrollingType>
             <awareness>0</awareness>
             <awarenessThreshold>100</awarenessThreshold>
             <awarenessDecay>0,1</awarenessDecay>
+            <minPointDistance>0,3</minPointDistance>
+            <patrollingSpeed>7</patrollingSpeed>
+            <attackingWalkingSpeed>9</attackingWalkingSpeed>
+            <maxIdleTime>5</maxIdleTime>
+            <minIdleTime>2</minIdleTime>
+            <damage>10</damage>
+            <attackDelay>0,8</attackDelay>
+            <minAttackRange>1,5</minAttackRange>
+            <maxAttackRange>2,5</maxAttackRange>
+            <repathDelay>0,5</repathDelay>
             <sightRange>40</sightRange>
             <sightAngle>60</sightAngle>
             <sightHeight>4</sightHeight>
             <minPresenceMultiplier>0,2</minPresenceMultiplier>
-            <wanderingSpeed>5</wanderingSpeed>
-            <fleeingSpeed>7</fleeingSpeed>
-            <maxIdleTime>5</maxIdleTime>
-            <minIdleTime>2</minIdleTime>
-            <maxWanderingDistance>50</maxWanderingDistance>
-            <wanderingDistance>25</wanderingDistance>
-            <minPointDistance>0,5</minPointDistance>
-            <fledDistance>50</fledDistance>
-            <fleeingDistance>40</fleeingDistance>
-            <repathDelay>0,5</repathDelay>
+            <isRanged>False</isRanged>
+            <projectileSpeed>25</projectileSpeed>
+            <projectileMinDistance>1</projectileMinDistance>
+            <projectileType>Arrow</projectileType>
           </agentData>
         </component>
       </components>

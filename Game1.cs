@@ -182,6 +182,7 @@ public sealed class Game1 : Game
         ImGui.Checkbox("Draw Visibility", ref Globals.DrawVisibility);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
+        ImGui.Checkbox("Pause active", ref Globals.IsPaused);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
