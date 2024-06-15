@@ -14,7 +14,7 @@ public class SoldierData : AgentData
         GoBack
     }
     
-    public string PathId;
+    public string PathId = "";
     public PatrolType PatrollingType;
     
     public float Awareness = 0;

@@ -202,7 +202,7 @@ public class Agent : Component
                         foreach (Point point in points)
                         {
                             MapNode node = Globals.Renderer.WorldRenderer.MapNodes[point.X, point.Y];
-                            if (node == null || (node.Height - Position.Y) > data.SightHeight)
+                            if (!node.Available || (node.Height - Position.Y) > data.SightHeight)
                             {
                                 //if null then node doesn't exist there implying an obstacle
                                 //if second condition passes then it means that there is a significant enough incline in terrain to obstruct line of sight
