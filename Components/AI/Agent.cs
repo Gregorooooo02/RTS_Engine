@@ -50,9 +50,11 @@ public class Agent : Component
 
     public MeshRenderer Renderer = null;
 
-    public List<Point> OccupiedNodes = new();
+    private readonly List<Point> _occupiedNodes = new();
 
     public int ID;
+
+    public float AttackingRadius = 1.0f;
     
     public Agent(){}
     
@@ -107,7 +109,7 @@ public class Agent : Component
     {
         if (Type == AgentType.PlayerUnit)
         {
-            foreach (Point location in OccupiedNodes)
+            foreach (Point location in _occupiedNodes)
             {
                 if (clear)
                 {
@@ -130,7 +132,7 @@ public class Agent : Component
     private void UpdateOccupied()
     {
         ChangeNodes(true);
-        OccupiedNodes.Clear();
+        _occupiedNodes.Clear();
         int leftX = (int)MathF.Ceiling(Position.X - _occupyDistance);
         int rightX = (int)(Position.X + _occupyDistance);
         
@@ -141,7 +143,7 @@ public class Agent : Component
         {
             for (int j = topY; j <= bottomY; j++)
             {
-                OccupiedNodes.Add(new Point(i,j));
+                _occupiedNodes.Add(new Point(i,j));
             }
         }
     }

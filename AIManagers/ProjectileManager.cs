@@ -18,23 +18,23 @@ public class ProjectileManager
     
     public void AddProjectile(ProjectileType type, Agent target, float speed, float minDist, float dmg, Vector3 startingPos)
     {
-        GameObject newProjectile = null;
+        GameObject newProjectile = new GameObject();
+        MeshRenderer meshRenderer = new MeshRenderer(newProjectile);
         switch (type)
         {
             case ProjectileType.Arrow:
-                newProjectile = GameObject.GetPrefab(Globals.MainPath + "/Prefabs/Arrow.xml");
+                meshRenderer.LoadModel("");
                 break;
             case ProjectileType.Fireball:
-                newProjectile = GameObject.GetPrefab(Globals.MainPath + "/Prefabs/Fireball.xml");
+                meshRenderer.LoadModel("");
                 break;
         }
-        if (newProjectile != null)
-        {
-            Projectile projectile = new Projectile(newProjectile, target, speed, dmg, minDist, startingPos);
-            ActiveProjectiles.Add(projectile);
-            newProjectile.AddComponent(projectile);
-            _queuedProjectiles.Enqueue(newProjectile);
-        }
+        newProjectile.AddComponent(meshRenderer);
+        Projectile projectile = new Projectile(newProjectile, target, speed, dmg, minDist, startingPos);
+        ActiveProjectiles.Add(projectile);
+        newProjectile.AddComponent(projectile);
+        _queuedProjectiles.Enqueue(newProjectile);
+        
     }
 
     public void UpdateProjectiles()

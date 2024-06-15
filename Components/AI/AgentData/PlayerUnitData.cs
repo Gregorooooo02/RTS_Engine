@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -19,6 +20,11 @@ public class PlayerUnitData : AgentData
 
     public float MinPointDistance = 0.5f;
     public float RepathDelay = 0.5f;
+
+    public bool IsRanged = false;
+    public float ProjectileSpeed = 25.0f;
+    public float ProjectileMinDistance = 1.0f;
+    public ProjectileManager.ProjectileType ProjectileType;
 
     public Agent Target;
     
@@ -60,6 +66,14 @@ public class PlayerUnitData : AgentData
         
         builder.Append("<repathDelay>" + RepathDelay + "</repathDelay>");
         
+        builder.Append("<isRanged>" + IsRanged + "</isRanged>");
+        
+        builder.Append("<projectileSpeed>" + ProjectileSpeed + "</projectileSpeed>");
+        
+        builder.Append("<projectileMinDistance>" + ProjectileMinDistance + "</projectileMinDistance>");
+        
+        builder.Append("<projectileType>" + ProjectileType + "</projectileType>");
+        
         return builder.ToString();
     }
 
@@ -75,9 +89,14 @@ public class PlayerUnitData : AgentData
         MaxAttackRange = float.TryParse(element.Element("maxAttackRange")?.Value, out float maxAttackRange) ? maxAttackRange : 2.5f;
         MinPointDistance = float.TryParse(element.Element("minPointDistance")?.Value, out float minPointDistance) ? minPointDistance : 0.5f;
         RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
+        IsRanged = element.Element("isRanged")?.Value == "True";
+        ProjectileSpeed = float.TryParse(element.Element("projectileSpeed")?.Value, out float projectileSpeed) ? projectileSpeed : 25.0f;
+        ProjectileMinDistance = float.TryParse(element.Element("projectileMinDistance")?.Value, out float projectileMinDistance) ? projectileMinDistance : 1.0f;
+        ProjectileType = Enum.TryParse(typeof(ProjectileManager.ProjectileType), element.Element("projectileType")?.Value,out var projectileType) ? (ProjectileManager.ProjectileType)projectileType : ProjectileManager.ProjectileType.Arrow;
     }
 
 #if DEBUG
+    private bool changeProjectileType = false;
     public override void Inspect()
     {
         base.Inspect();
@@ -93,6 +112,35 @@ public class PlayerUnitData : AgentData
         ImGui.DragFloat("Min point distance", ref MinPointDistance);
         ImGui.Separator();
         ImGui.DragFloat("Repath delay", ref RepathDelay,0.1f,0.3f,10);
+        ImGui.Separator();
+        ImGui.Checkbox("Is ranged?", ref IsRanged);
+        ImGui.DragFloat("Projectile speed", ref ProjectileSpeed,0.1f, 1, 40);
+        ImGui.DragFloat("Projectile min distance", ref ProjectileMinDistance,0.05f, 0.1f, 10);
+        ImGui.Text("Current projectile type: " + ProjectileType);
+        ImGui.SameLine();
+        if (ImGui.Button("Change projectile type"))
+        {
+            changeProjectileType = true;
+        }
+
+        if (changeProjectileType)
+        {
+            ImGui.Begin("Changing projectile type");
+            var values = Enum.GetValues(typeof(ProjectileManager.ProjectileType));
+            foreach (ProjectileManager.ProjectileType type in values)
+            {
+                if (ImGui.Button(type.ToString()))
+                {
+                    ProjectileType = type;
+                    changeProjectileType = false;
+                }
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                changeProjectileType = false;
+            }
+            ImGui.End();
+        }
     }
 #endif
 }

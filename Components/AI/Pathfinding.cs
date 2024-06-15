@@ -152,8 +152,8 @@ public static class Pathfinding
             {
                 //The point falls within the terrain
                 //Check for occupancy
-                int occupantId = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ].AllyOccupantId;
-                if (occupantId == 0 || occupantId == id)
+                MapNode node = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ];
+                if (node != null && (node.AllyOccupantId == 0 || node.AllyOccupantId == id))
                 {
                     return new Point(xDown + offsetX, zDown + offsetZ);
                 }
