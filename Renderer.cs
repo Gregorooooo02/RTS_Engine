@@ -114,7 +114,7 @@ public class Renderer
     {
         if (Globals.GraphicsDeviceManager.PreferredBackBufferWidth != _sceneRenderTarget.Width) Resize();
         
-        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
+        // Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(0,0,0,255), 1.0f,0);
         
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
@@ -133,7 +133,7 @@ public class Renderer
         
         //--------------------Render the scene into the render target--------------------
         Globals.GraphicsDevice.SetRenderTarget(_sceneRenderTarget);
-        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
+        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(0,0,0,255), 1.0f,0);
         if (Globals.DrawMeshes)
         {
             DrawMeshes();

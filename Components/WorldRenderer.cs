@@ -47,7 +47,7 @@ public class WorldRenderer : Component
 
     public MapNode[,] MapNodes;
     public int NodeFrequency = 1;
-    private float maxAngle = 30.0f;
+    private float maxAngle = 25.0f;
     
     #endregion
 
@@ -106,12 +106,19 @@ public class WorldRenderer : Component
                 float heightValue = smoothedHeightData[x, y] * HeightScale;
                 
                 // Making the ground taller, to the sand is lower than the grass
-                if (heightValue > 6.0f)
+                if (heightValue < 6.0f)
                 {
-                    heightValue += 3.0f;
+                    heightValue /= 1.0f + MathF.Log(6.0f / heightValue);
+                }
+
+                if (heightValue > 30.0f)
+                {
+                    // heightValue *= heightValue / 30.0f;
+                    heightValue *= 1.0f + MathF.Log(heightValue / 30.0f);
                 }
                 
                 vertices[x + y * chunkWidth].Position = new Vector3(x + chunkX, heightValue, (y + chunkY));
+                FinalHeightData[x + chunkX, y + chunkY] = vertices[x + y * chunkWidth].Position.Y;
                 positions[x + y * chunkWidth] = vertices[x + y * chunkWidth].Position;
             }
         }
@@ -251,7 +258,7 @@ public class WorldRenderer : Component
                     globalMaxHeight
                 );
                 
-                _waterBody = new WaterBody(x, y, _chunkSize - 1, 2.5f);
+                _waterBody = new WaterBody(x, y, _chunkSize - 1, 3.0f);
                 _waterBodies.Add(_waterBody);
             }
         }
@@ -341,7 +348,6 @@ public class WorldRenderer : Component
                 }
                 
                 smoothedData[x, y] = total / count;
-                FinalHeightData[x + chunkX, y + chunkY] = smoothedData[x, y] * HeightScale + 3.0f;
             }
         }
         

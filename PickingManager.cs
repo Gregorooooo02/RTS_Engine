@@ -476,10 +476,10 @@ public class PickingManager
         float weightZ = location.Y % 1;
             
         //Prepare height data from selected vertices
-        float height1 = Globals.Renderer.WorldRenderer.HeightData[xDown, zDown];
-        float height2 = Globals.Renderer.WorldRenderer.HeightData[xDown, zUp];
-        float height3 = Globals.Renderer.WorldRenderer.HeightData[xUp, zDown];
-        float height4 = Globals.Renderer.WorldRenderer.HeightData[xUp, zUp];
+        float height1 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zDown].Height;
+        float height2 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zUp].Height;
+        float height3 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zDown].Height;
+        float height4 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zUp].Height;
 
         //Calculate weighted average of height values in selected vertices.
         return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
@@ -501,10 +501,10 @@ public class PickingManager
         float weightZ = location.Y % 1;
             
         //Prepare height data from selected vertices
-        float height1 = world.HeightData[xDown, zDown];
-        float height2 = world.HeightData[xDown, zUp];
-        float height3 = world.HeightData[xUp, zDown];
-        float height4 = world.HeightData[xUp, zUp];
+        float height1 = world.MapNodes[xDown, zDown].Height;
+        float height2 = world.MapNodes[xDown, zUp].Height;
+        float height3 = world.MapNodes[xUp, zDown].Height;
+        float height4 = world.MapNodes[xUp, zUp].Height;
 
         //Calculate weighted average of height values in selected vertices.
         return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
