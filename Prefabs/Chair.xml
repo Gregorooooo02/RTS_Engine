@@ -40,7 +40,7 @@
       <active>True</active>
       <agentType>PlayerUnit</agentType>
       <agentLayer>PLAYER</agentLayer>
-      <separationDistance>0,5</separationDistance>
+      <separationDistance>1</separationDistance>
       <heightOffset>2</heightOffset>
       <agentData>
         <hp>100</hp>
