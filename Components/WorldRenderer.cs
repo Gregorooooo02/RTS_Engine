@@ -108,7 +108,7 @@ public class WorldRenderer : Component
                 // Making the ground taller, to the sand is lower than the grass
                 if (heightValue < 6.0f)
                 {
-                    heightValue /= 1.0f + MathF.Log(6.0f / heightValue);
+                    heightValue /= 1.2f + MathF.Log(6.0f / heightValue);
                 }
 
                 if (heightValue > 30.0f)
@@ -257,11 +257,11 @@ public class WorldRenderer : Component
                     globalMinHeight,
                     globalMaxHeight
                 );
-                
-                _waterBody = new WaterBody(x, y, _chunkSize - 1, 3.0f);
-                _waterBodies.Add(_waterBody);
             }
         }
+        
+        _waterBody = new WaterBody(0, 0, _terrainWidth, 3.25f);
+        
         MapNodes = new MapNode[_terrainWidth / NodeFrequency, _terrainHeight / NodeFrequency];
 
         //Setup map nodes
