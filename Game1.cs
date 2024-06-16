@@ -168,6 +168,7 @@ public sealed class Game1 : Game
         ImGui.Checkbox("Hierarchy", ref Globals.HierarchyVisible);
         ImGui.Checkbox("Inspector",ref Globals.InspectorVisible);
         ImGui.Checkbox("Scene Selection", ref Globals.SceneSelectionVisible);
+        ImGui.Checkbox("Cheat Menu", ref Globals.CheatMenuVisible);
         ImGui.Checkbox("Show Shadow Map", ref Globals.ShowShadowMap);
         ImGui.Checkbox("Show Selected Silhouettes", ref Globals.ShowSelectedSilhouettes);
         ImGui.Checkbox("Draw Meshes", ref Globals.DrawMeshes);

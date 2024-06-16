@@ -47,11 +47,14 @@ public class WorldRenderer : Component
 
     public MapNode[,] MapNodes;
     public int NodeFrequency = 1;
-    private float maxAngle = 30.0f;
+    private float maxAngle = 25.0f;
     
     #endregion
+
+    public float[,] FinalHeightData;
     
     public float[,] HeightData;
+    public readonly float HeightScale = 1.5f;
     private int _terrainWidth;
     private int _terrainHeight;
     
@@ -95,12 +98,29 @@ public class WorldRenderer : Component
         short[] indices = new short[(chunkWidth - 1) * (chunkHeight - 1) * 6];
         Vector3[] positions = new Vector3[chunkWidth * chunkHeight];
         
+        // Smooth the height data
+        float[,] smoothedHeightData = SmoothHeightData(heightData, chunkX, chunkY, chunkWidth, chunkHeight);
+        
         for (int x = 0; x < chunkWidth; x++)
         {
             for (int y = 0; y < chunkHeight; y++)
             {
-                float heightValue = heightMapColors[(x + chunkX) + (y + chunkY) * heightData.GetLength(0)].R / 5.0f;
+                float heightValue = smoothedHeightData[x, y] * HeightScale;
+                
+                // Making the ground taller, to the sand is lower than the grass
+                if (heightValue < 6.0f)
+                {
+                    heightValue /= 1.2f + MathF.Log(6.0f / heightValue);
+                }
+
+                if (heightValue > 30.0f)
+                {
+                    // heightValue *= heightValue / 30.0f;
+                    heightValue *= 1.0f + MathF.Log(heightValue / 30.0f);
+                }
+                
                 vertices[x + y * chunkWidth].Position = new Vector3(x + chunkX, heightValue, (y + chunkY));
+                FinalHeightData[x + chunkX, y + chunkY] = vertices[x + y * chunkWidth].Position.Y;
                 positions[x + y * chunkWidth] = vertices[x + y * chunkWidth].Position;
             }
         }
@@ -200,6 +220,7 @@ public class WorldRenderer : Component
         heightmap.GetData(heightMapColors);
         
         HeightData = new float[_terrainWidth, _terrainHeight];
+        FinalHeightData = new float[_terrainWidth, _terrainHeight];
         
         float globalMinHeight = float.MaxValue;
         float globalMaxHeight = float.MinValue;
@@ -238,11 +259,11 @@ public class WorldRenderer : Component
                     globalMinHeight,
                     globalMaxHeight
                 );
-                
-                _waterBody = new WaterBody(x, y, _chunkSize - 1, 2.5f);
-                _waterBodies.Add(_waterBody);
             }
         }
+        
+        _waterBody = new WaterBody(0, 0, _terrainWidth, 3.25f);
+        
         MapNodes = new MapNode[_terrainWidth / NodeFrequency, _terrainHeight / NodeFrequency];
 
         //Setup map nodes
@@ -257,7 +278,7 @@ public class WorldRenderer : Component
                     {
                         try
                         {
-                            nodeHeight += HeightData[i * NodeFrequency + k, j * NodeFrequency + l];
+                            nodeHeight += FinalHeightData[i * NodeFrequency + k, j * NodeFrequency + l];
                         }
                         catch (Exception)
                         {
@@ -309,6 +330,39 @@ public class WorldRenderer : Component
                 MapNodes[i, j].Connections = neighborMask;
             }
         }
+    }
+
+    private float[,] SmoothHeightData(float[,] heightData, int chunkX, int chunkY, int chunkWidth, int chunkHeight)
+    {
+        float[,] smoothedData = new float[chunkWidth, chunkHeight];
+
+        for (int x = 0; x < chunkWidth; x++)
+        {
+            for (int y = 0; y < chunkHeight; y++)
+            {
+                float total = 0;
+                int count = 0;
+                
+                for (int offsetX = -1; offsetX <= 1; offsetX++)
+                {
+                    for (int offsetY = -1; offsetY <= 1; offsetY++)
+                    {
+                        int newX = x + chunkX + offsetX;
+                        int newY = y + chunkY + offsetY;
+                        
+                        if (newX >= 0 && newX < heightData.GetLength(0) && newY >= 0 && newY < heightData.GetLength(1))
+                        {
+                            total += heightData[newX, newY];
+                            count++;
+                        }
+                    }
+                }
+                
+                smoothedData[x, y] = total / count;
+            }
+        }
+        
+        return smoothedData;
     }
 
     public override void Update()
@@ -387,7 +441,7 @@ public class WorldRenderer : Component
          LoadHeightData(GenerateMap.noiseTexture);
 
          GenerateVoronoiFeatures();
-         Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+         // Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
     
     // Voronoi methods
@@ -467,27 +521,54 @@ public class WorldRenderer : Component
         this.ParentObject.AddChildObject(trees);
         trees.AddComponent<InstancedRendererController>();
         trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+
+        float minDistance = 5.0f;
+        int maxAttempts = 10;
+        List<Vector3> placedTrees = new();
         
         foreach (var kvp in voronoiRegions)
         {
             var site = kvp.Key;
             var region = kvp.Value;
             
-            // Place a feature in the center of the region
-            Vector3 position = CalculateCentroid(region);
-            if (random.NextDouble() > 0.5)
+            // Try to place multiple trees in the region
+            int treeCount = random.Next(10, 20);
+
+            for (int i = 0; i < treeCount; i++)
             {
-                if (HeightData[(int)position.X, (int)position.Z] > 6.0f
-                    && HeightData[(int)position.X, (int)position.Z] < 25.0f)
+                bool treePlaced = false;
+                for (int attempt = 0; attempt < maxAttempts; attempt++)
                 {
-                    PlaceTree(trees, position);
+                    Vector2 randomPoint = region[random.Next(region.Count)];
+                    Vector3 position = new Vector3(randomPoint.X, HeightData[(int)randomPoint.X, (int)randomPoint.Y] + 15, randomPoint.Y);
+
+                    if (IsPositionValid(placedTrees, position, minDistance))
+                    {
+                        if (HeightData[(int)position.X, (int)position.Z] > 6.0f
+                            && HeightData[(int)position.X, (int)position.Z] < 20.0f)
+                        {
+                            PlaceTree(trees, position);
+                            placedTrees.Add(position);
+                            treePlaced = true;
+                            break;
+                        }        
+                    }
                 }
             }
-            else
+        }
+    }
+    
+    private bool IsPositionValid(List<Vector3> placedTrees, Vector3 newPosition, float minDistance)
+    {
+        foreach (var tree in placedTrees)
+        {
+            if (Vector3.Distance(tree, newPosition) < minDistance)
             {
-                // Place a rock
+                return false;
             }
         }
+        
+        return true;
     }
     
     private Vector3 CalculateCentroid(List<Vector2> region)

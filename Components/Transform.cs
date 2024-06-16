@@ -56,6 +56,12 @@ public class Transform : Component
         Pos = newPosition;
         _isDirty = true;
     }
+    
+    public void SetLocalPositionX(float x)
+    {
+        Pos = new Vector3(x, Pos.Y, Pos.Z);
+        _isDirty = true;
+    }
 
     public void Move(Vector3 offset)
     {
@@ -78,6 +84,12 @@ public class Transform : Component
     public void SetLocalScale(Vector3 newScale)
     {
         Scl = newScale;
+        _isDirty = true;
+    }
+    
+    public void SetLocalScaleX(float newScale)
+    {
+        Scl = new Vector3(newScale, Scl.Y, Scl.Z);
         _isDirty = true;
     }
 

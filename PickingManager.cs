@@ -476,10 +476,10 @@ public class PickingManager
         float weightZ = location.Y % 1;
             
         //Prepare height data from selected vertices
-        float height1 = Globals.Renderer.WorldRenderer.HeightData[xDown, zDown];
-        float height2 = Globals.Renderer.WorldRenderer.HeightData[xDown, zUp];
-        float height3 = Globals.Renderer.WorldRenderer.HeightData[xUp, zDown];
-        float height4 = Globals.Renderer.WorldRenderer.HeightData[xUp, zUp];
+        float height1 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zDown].Height;
+        float height2 = Globals.Renderer.WorldRenderer.MapNodes[xDown, zUp].Height;
+        float height3 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zDown].Height;
+        float height4 = Globals.Renderer.WorldRenderer.MapNodes[xUp, zUp].Height;
 
         //Calculate weighted average of height values in selected vertices.
         return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
@@ -487,6 +487,29 @@ public class PickingManager
                 height3 * weightX + height3 * (1 - weightZ) +
                 height4 * weightX + height4 * weightZ) / 4.0f;
     }
-    
-    
+
+    public static float InterpolateWorldHeight(Vector2 location, WorldRenderer world)
+    {
+        //Calculate indexes of vertices between which the provided location is
+        int xDown = (int)MathF.Floor(location.X);
+        int xUp = xDown + 1;
+        int zDown = (int)MathF.Floor(location.Y);
+        int zUp = zDown + 1;
+
+        //Calculate weights for vertices
+        float weightX = location.X % 1;
+        float weightZ = location.Y % 1;
+            
+        //Prepare height data from selected vertices
+        float height1 = world.MapNodes[xDown, zDown].Height;
+        float height2 = world.MapNodes[xDown, zUp].Height;
+        float height3 = world.MapNodes[xUp, zDown].Height;
+        float height4 = world.MapNodes[xUp, zUp].Height;
+
+        //Calculate weighted average of height values in selected vertices.
+        return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
+                height2 * (1 - weightX) + height2 * weightZ + 
+                height3 * weightX + height3 * (1 - weightZ) +
+                height4 * weightX + height4 * weightZ) / 4.0f;
+    }
 }

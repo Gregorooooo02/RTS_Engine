@@ -42,11 +42,13 @@ public class Building : Component
                 ParentObject.FindGameObjectByName("Building").Active = true;
                 ParentObject.RemoveFirstComponentOfType<MeshRenderer>();
                 Globals.PickingManager.PlayerBuildingPickingActive = true;
+                Globals.PickingManager.PlayerMissionSelectPickingActive = true;
                 
                 GameManager.RemovePuzzle(PuzzleCost);
             };
             
             Globals.PickingManager.PlayerBuildingPickingActive = false;
+            Globals.PickingManager.PlayerMissionSelectPickingActive = false;
             puzzle.ActivatePuzzle();
         }
     }

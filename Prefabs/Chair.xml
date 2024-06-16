@@ -7,13 +7,13 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>85,997444</x>
-        <y>10,596219</y>
-        <z>87,60664</z>
+        <x>83,08158</x>
+        <y>2</y>
+        <z>142,53291</z>
       </position>
       <rotation>
         <x>0</x>
-        <y>18,292273</y>
+        <y>-1,5043162</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -40,6 +40,8 @@
       <active>True</active>
       <agentType>PlayerUnit</agentType>
       <agentLayer>PLAYER</agentLayer>
+      <separationDistance>0,5</separationDistance>
+      <heightOffset>2</heightOffset>
       <agentData>
         <hp>100</hp>
         <maxHp>100</maxHp>
@@ -48,9 +50,175 @@
         <walkingSpeed>14</walkingSpeed>
         <damage>10</damage>
         <attackDelay>0,8</attackDelay>
+        <minAttackRange>1,5</minAttackRange>
+        <maxAttackRange>2,5</maxAttackRange>
         <minPointDistance>0,5</minPointDistance>
+        <repathDelay>0,5</repathDelay>
       </agentData>
     </component>
   </components>
-  <childObjects></childObjects>
+  <childObjects>
+    <object>
+      <name>UI</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>200</x>
+            <y>760</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>SpiteRenderer</type>
+          <active>False</active>
+          <useLocal>True</useLocal>
+          <sprite>smile</sprite>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+      </components>
+      <childObjects>
+        <object>
+          <name>HP</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>272</x>
+                <y>740</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>UI/minionBar</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>CurrentHP</name>
+              <active>True</active>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>272</x>
+                    <y>740</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/minionHP</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>255</g>
+                    <b>255</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Icon</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>275</x>
+                <y>770</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>UI/Units/chairNormal</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+      </childObjects>
+    </object>
+  </childObjects>
 </rootObject>

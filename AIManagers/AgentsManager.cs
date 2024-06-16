@@ -14,8 +14,33 @@ public class AgentsManager
     public List<Agent> Units = new();
     public List<Agent> Enemies = new();
 
+    public List<Agent> ClappedCivilians = new();
+    public List<Agent> ClappedSoldiers = new();
+    public List<Agent> ClappedBuildings = new();
+    
     public List<Agent> SelectedUnits = new();
+    
+    public Vector3 UiOffset = new(90.0f, 0.0f, 0.0f);
+    public Vector3 BackgroundOffset = new(0.0f, 0.0f, 0.1f);
 
+    public void Initialize()
+    {
+        // Initialize the UI for all units with the offset
+        for (int i = 0; i < Units.Count; i++)
+        {
+            var uiObject = Units[i].ParentObject.FindGameObjectByName("UI");
+            var icon = uiObject?.FindGameObjectByName("Icon");
+            var healthBar = uiObject?.FindGameObjectByName("HP");
+            var healthStatus = healthBar?.Children[0];
+            
+            if (icon == null || healthBar == null || healthStatus == null) continue;
+            
+            icon?.Transform.SetLocalPosition(icon.Transform.Pos + UiOffset * i);
+            healthBar?.Transform.SetLocalPosition(healthBar.Transform.Pos + BackgroundOffset + UiOffset * i);
+            healthStatus?.Transform.SetLocalPosition(healthStatus.Transform.Pos + UiOffset * i);
+        }
+    }
+    
     public void CheckForOrders()
     {
         //Probe for unit selection
@@ -23,13 +48,21 @@ public class AgentsManager
         //If unit picking attempt happened and CTRL key was not pressed then clear selected units list
         if(Globals.PickingManager.PickedUnits && !InputManager.Instance.IsActive(GameAction.CTRL))
         { 
+            foreach (Agent selectedUnit in SelectedUnits)
+            {
+                selectedUnit.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(GameAction.DESELECT);
+            }
             SelectedUnits.Clear();
         }
         //Then add all selected units to list
         foreach (Pickable unit in units)
         {
             Agent temp = unit.ParentObject.GetComponent<Agent>();
-            if(temp != null) SelectedUnits.Add(temp);
+            if (temp != null)
+            {
+                temp.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(GameAction.SELECT);
+                SelectedUnits.Add(temp);
+            }
         }
 
         Pickable selectedEnemy = Globals.PickingManager.PickEnemy();

@@ -7,6 +7,7 @@ namespace RTS_Engine;
 
 public enum GameAction
 {
+    NONE,
     FORWARD,
     BACKWARD,
     LEFT,
@@ -32,6 +33,12 @@ public enum GameAction
     RESIZE_FULLSCREEN,
     RESIZE_WINDOWED,
     CTRL,
+    SELECT,
+    DESELECT,
+    COMPLETE,
+    INCOMPLETE,
+    GAME_OVER,
+    WIN
 }
 
 public class InputManager
