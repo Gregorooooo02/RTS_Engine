@@ -519,9 +519,14 @@ public class WorldRenderer : Component
         GameObject trees = new GameObject();
         trees.Name = "Trees";
         
+        GameObject rocks = new GameObject();
+        
         this.ParentObject.AddChildObject(trees);
         trees.AddComponent<InstancedRendererController>();
         trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+        
+        this.ParentObject.AddChildObject(rocks);
+        rocks.AddComponent<InstancedRendererController>(); 
 
         float minDistance = 5.0f;
         int maxAttempts = 10;
@@ -534,27 +539,47 @@ public class WorldRenderer : Component
             
             // Try to place multiple trees in the region
             int treeCount = random.Next(10, 20);
-
-            for (int i = 0; i < treeCount; i++)
+            
+            // Randomly decide if we want to place trees, rocks or villages
+            if (random.NextDouble() > 0.5)
             {
-                bool treePlaced = false;
-                for (int attempt = 0; attempt < maxAttempts; attempt++)
+                // Place trees
+                for (int i = 0; i < treeCount; i++)
                 {
-                    Vector2 randomPoint = region[random.Next(region.Count)];
-                    Vector3 position = new Vector3(randomPoint.X, HeightData[(int)randomPoint.X, (int)randomPoint.Y] + 15, randomPoint.Y);
-
-                    if (IsPositionValid(placedTrees, position, minDistance))
+                    bool treePlaced = false;
+                    for (int attempt = 0; attempt < maxAttempts; attempt++)
                     {
-                        if (HeightData[(int)position.X, (int)position.Z] > 6.0f
-                            && HeightData[(int)position.X, (int)position.Z] < 20.0f)
+                        Vector2 randomPoint = region[random.Next(region.Count)];
+                        Vector3 position = new Vector3(randomPoint.X,
+                            FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+
+                        if (IsPositionValid(placedTrees, position, minDistance))
                         {
-                            PlaceTree(trees, position);
-                            placedTrees.Add(position);
-                            treePlaced = true;
-                            break;
-                        }        
+                            if (HeightData[(int)position.X, (int)position.Z] > 6.0f
+                                && HeightData[(int)position.X, (int)position.Z] < 20.0f)
+                            {
+                                PlaceTree(trees, position);
+                                placedTrees.Add(position);
+                                treePlaced = true;
+                                break;
+                            }
+                        }
                     }
                 }
+            }
+            else if (random.NextDouble() > 0.5)
+            {
+                // // Place a village
+                // Vector3 position = CalculateCentroid(region);
+                // GameObject village = new GameObject();
+                // village.Name = "Village";
+                // this.ParentObject.AddChildObject(village);
+                // village.Transform.SetLocalPosition(position);
+                // village.AddComponent<Village>();
+            }
+            else
+            {
+                
             }
         }
     }
@@ -591,11 +616,20 @@ public class WorldRenderer : Component
     
     private void PlaceTree(GameObject root, Vector3 position)
     {
+        Random random = new Random();
+        
         GameObject tree = new GameObject();
         tree.Name = "Tree";
         root.AddChildObject(tree);
         tree.AddComponent<InstancedRendererUnit>();
         tree.Transform.SetLocalPosition(position);
+        
+        float randomRotation = (float)(random.NextDouble() * 360.0f);
+        tree.Transform.SetLocalRotationY(randomRotation);
+        
+        // Make a random scale for the tree between 0.9 and 1.25
+        float randomScaleY = (float)(random.NextDouble() * 0.35f + 0.9f);
+        tree.Transform.SetLocalScale(new Vector3(1, randomScaleY, 1));
     }
 
     public override string ComponentToXmlString()
