@@ -9,7 +9,7 @@ namespace RTS_Engine.Components.AI;
 
 public static class Pathfinding
 {
-    public static int ClosedLimit = 20000;
+    public static int ClosedLimit = 5000;
     
     private static float Euclidan(Node n, Node goal)
     {
@@ -21,7 +21,7 @@ public static class Pathfinding
         return MathF.Abs(n.Location.X - goal.Location.X) + MathF.Abs(n.Location.Y - goal.Location.Y);
     }
     
-    private static List<Node> GetNeighbors(Node n)
+    private static List<Node> GetNeighbors(Node n, bool isAlly, int id)
     {
         if (Globals.Renderer.WorldRenderer is null) throw new NoTerrainException("There isn't any terrain to pick the nodes from!");
         List<Node> output = new();
@@ -32,12 +32,18 @@ public static class Pathfinding
             for (int j = 1; j >= -1; j--)
             {
                 if(i == 0 && j == 0) continue;
-                if((nodeConnections & 1) > 0)
+                if (
+                    (nodeConnections & 1) > 0 && 
+                    ((
+                         isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == 0)) 
+                     || !isAlly))
+                {
                     output.Add(
                         new Node(
                             new Point(n.Location.X + i, n.Location.Y + j), 
                             n, 
                             Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].NodeCost));
+                }
                 nodeConnections >>= 1;
             }
         }
@@ -59,7 +65,7 @@ public static class Pathfinding
         }
     }
     
-    public static Node CalculatePath(Node goal, Node start)
+    public static Node CalculatePath(Node goal, Node start, bool isAlly = true, int id = 1)
     {
         NodeComparer comparer = new NodeComparer();
         PriorityQueue<Node, float> open = new PriorityQueue<Node, float>();
@@ -73,7 +79,7 @@ public static class Pathfinding
             {
                 if (comparer.Equals(v,goal)) return v;
                 explored.Add(v);
-                var neighbors = GetNeighbors(v);
+                var neighbors = GetNeighbors(v, isAlly, id);
                 foreach (Node n in neighbors)
                 {
                     if (!explored.Contains(n))
@@ -124,4 +130,81 @@ public static class Pathfinding
         return new Queue<Vector2>(PathToListOfVectors(node));
     }
 
+    public static Point? GetFirstNearbyFreePoint(Vector2 location, int id, int pointLimit = 16)
+    {
+        //Calculate indexes of vertices between which the provided location is
+        int xDown = (int)MathF.Floor(location.X);
+        int zDown = (int)MathF.Floor(location.Y);
+
+        int xBoundary = Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1;
+        int zBoundary = Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1;
+        
+        int currentDirectionIterations = 0;
+        int currentIterationLimit = 1;
+        bool changeLimit = false;
+        int direction = 0;
+        int offsetX = 0, offsetZ = 0;
+        int iterations = 0;
+        while (iterations < pointLimit) 
+        {
+            if (xDown + offsetX > 0 && xDown + offsetX < xBoundary && zDown + offsetZ > 0 &&
+                zDown + offsetZ < zBoundary)
+            {
+                //The point falls within the terrain
+                //Check for occupancy
+                MapNode node = Globals.Renderer.WorldRenderer.MapNodes[xDown + offsetX, zDown + offsetZ];
+                if (node.Available && (node.AllyOccupantId == 0 || node.AllyOccupantId == id))
+                {
+                    return new Point(xDown + offsetX, zDown + offsetZ);
+                }
+            }
+            if (currentIterationLimit == currentDirectionIterations)
+            {
+                currentDirectionIterations = 0;
+                if (direction == 3)
+                {
+                    direction = 0;
+                }
+                else
+                {
+                    direction++;
+                }
+                if (changeLimit)
+                {
+                    changeLimit = false;
+                    currentIterationLimit++;
+                }
+                else
+                {
+                    changeLimit = true;
+                }
+            }
+            switch (direction)
+            {
+                case 0:
+                {
+                    offsetX++;
+                    break;
+                }
+                case 1:
+                {
+                    offsetZ++;
+                    break;
+                }
+                case 2:
+                {
+                    offsetX--;
+                    break;
+                }
+                case 3:
+                {
+                    offsetZ--;
+                    break;
+                }
+            }
+            currentDirectionIterations++;
+            iterations++;
+        }
+        return null;
+    }
 }

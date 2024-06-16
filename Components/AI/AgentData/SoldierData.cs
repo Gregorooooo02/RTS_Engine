@@ -14,7 +14,7 @@ public class SoldierData : AgentData
         GoBack
     }
     
-    public string PathId;
+    public string PathId = "";
     public PatrolType PatrollingType;
     
     public float Awareness = 0;
@@ -42,6 +42,11 @@ public class SoldierData : AgentData
 
     public float TimeToCoolDown = 10.0f;
     public float MinDistanceToCoolDown = 50.0f;
+    
+    public bool IsRanged = false;
+    public float ProjectileSpeed = 25.0f;
+    public float ProjectileMinDistance = 1.0f;
+    public ProjectileManager.ProjectileType ProjectileType;
 
     public bool Alarmed = false;
     
@@ -81,6 +86,11 @@ public class SoldierData : AgentData
         builder.Append("<sightAngle>" + SightAngle + "</sightAngle>");
         builder.Append("<sightHeight>" + SightHeight + "</sightHeight>");
         builder.Append("<minPresenceMultiplier>" + MinPresenceMultiplier + "</minPresenceMultiplier>");
+                
+        builder.Append("<isRanged>" + IsRanged + "</isRanged>");
+        builder.Append("<projectileSpeed>" + ProjectileSpeed + "</projectileSpeed>");
+        builder.Append("<projectileMinDistance>" + ProjectileMinDistance + "</projectileMinDistance>");
+        builder.Append("<projectileType>" + ProjectileType + "</projectileType>");
 
         return builder.ToString();
     }
@@ -114,10 +124,17 @@ public class SoldierData : AgentData
         SightAngle = float.TryParse(element.Element("sightAngle")?.Value, out float sightAngle) ? sightAngle : 60.0f;
         SightHeight = float.TryParse(element.Element("sightHeight")?.Value, out float sightHeight) ? sightHeight : 4.0f;
         MinPresenceMultiplier = float.TryParse(element.Element("minPresenceMultiplier")?.Value, out float minPresenceMultiplier) ? minPresenceMultiplier : 0.2f;
+        
+        IsRanged = element.Element("isRanged")?.Value == "True";
+        ProjectileSpeed = float.TryParse(element.Element("projectileSpeed")?.Value, out float projectileSpeed) ? projectileSpeed : 25.0f;
+        ProjectileMinDistance = float.TryParse(element.Element("projectileMinDistance")?.Value, out float projectileMinDistance) ? projectileMinDistance : 1.0f;
+        ProjectileType = Enum.TryParse(typeof(ProjectileManager.ProjectileType), element.Element("projectileType")?.Value,out var projectileType) ? (ProjectileManager.ProjectileType)projectileType : ProjectileManager.ProjectileType.Arrow;
+
     }
     
 #if DEBUG
     private bool _changePatrolType = false;
+    private bool changeProjectileType = false;
     public override void Inspect()
     {
         base.Inspect();
@@ -151,6 +168,16 @@ public class SoldierData : AgentData
         ImGui.DragFloat("Min presence multiplier", ref MinPresenceMultiplier,0.01f,0,0.99f);
         ImGui.Separator();
         ImGui.DragFloat("Repath delay", ref RepathDelay,0.1f,0.3f,10);
+        ImGui.Separator();
+        ImGui.Checkbox("Is ranged?", ref IsRanged);
+        ImGui.DragFloat("Projectile speed", ref ProjectileSpeed,0.1f, 1, 40);
+        ImGui.DragFloat("Projectile min distance", ref ProjectileMinDistance,0.05f, 0.1f, 10);
+        ImGui.Text("Current projectile type: " + ProjectileType);
+        ImGui.SameLine();
+        if (ImGui.Button("Change projectile type"))
+        {
+            changeProjectileType = true;
+        }
         
         if (_changePatrolType)
         {
@@ -167,6 +194,25 @@ public class SoldierData : AgentData
             if (ImGui.Button("Cancel"))
             {
                 _changePatrolType = false;
+            }
+            ImGui.End();
+        }
+        
+        if (changeProjectileType)
+        {
+            ImGui.Begin("Changing projectile type");
+            var values = Enum.GetValues(typeof(ProjectileManager.ProjectileType));
+            foreach (ProjectileManager.ProjectileType type in values)
+            {
+                if (ImGui.Button(type.ToString()))
+                {
+                    ProjectileType = type;
+                    changeProjectileType = false;
+                }
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                changeProjectileType = false;
             }
             ImGui.End();
         }

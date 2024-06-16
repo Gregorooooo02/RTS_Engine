@@ -9,6 +9,7 @@ namespace RTS_Engine;
 public class AgentsManager
 {
     public readonly PatrolPathManager PatrolManager = new();
+    public readonly ProjectileManager ProjectileManager = new();
     
     public List<Agent> Units = new();
     public List<Agent> Enemies = new();

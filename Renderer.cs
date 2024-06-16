@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,24 +11,20 @@ namespace RTS_Engine;
 public class Renderer
 {
     #if DEBUG
-    private Texture2D _blank;
+    private readonly Texture2D _blank;
     #endif
     
-    //TODO: Clean up this class
-    public static int ShadowMapSize = 4096;
-    public static int FloodPasses = 0;
-    private readonly float _floodThreshold = 35.0f;
-    private bool _target1 = false;
-    private bool _enemyTarget1 = false;
+    private static readonly int ShadowMapSize = 4096;
+    private readonly List<Agent> _drawnEnemies = new();
     
-    private Effect _shadowMapGenerator;
-    private Effect _outlineGenerator;
-    private Effect _postprocessMerge;
+    private readonly Effect _shadowMapGenerator;
+    private readonly Effect _outlineGenerator;
+    private readonly Effect _postprocessMerge;
     private Matrix _lightViewProjection;
     
     //Render targets-----------------------------------
     private RenderTarget2D _sceneRenderTarget;
-    private RenderTarget2D _shadowMapRenderTarget;
+    private readonly RenderTarget2D _shadowMapRenderTarget;
     private RenderTarget2D _outlineTargetAlly1;
     private RenderTarget2D _outlineTargetAlly2;
     private RenderTarget2D _outlineTargetEnemy1;
@@ -39,12 +33,12 @@ public class Renderer
     //-------------------------------------------------
     
     //Things to render in current frame
-    public List<MeshRenderer> Meshes;
-    public List<AnimatedMeshRenderer> AnimatedMeshes;
-    public List<SpiteRenderer> Sprites;
-    public List<TextRenderer> Texts;
-    public List<AnimatedSpriteRenderer> AnimatedSprites;
-    public List<InstancedRendererController> InstancedRendererControllers = new();
+    public readonly List<MeshRenderer> Meshes;
+    public readonly List<AnimatedMeshRenderer> AnimatedMeshes;
+    public readonly List<SpiteRenderer> Sprites;
+    public readonly List<TextRenderer> Texts;
+    public readonly List<AnimatedSpriteRenderer> AnimatedSprites;
+    public readonly List<InstancedRendererController> InstancedRendererControllers = new();
     public WorldRenderer WorldRenderer;
     public Puzzle CurrentActivePuzzle;
 
@@ -122,8 +116,6 @@ public class Renderer
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
 #if DEBUG
         
-        RenderOutlines();
-        
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
         Globals.GraphicsDevice.RasterizerState = Globals.DrawWireframe ? Globals.WireFrame : Globals.Solid;
         
@@ -146,23 +138,24 @@ public class Renderer
         }
         //--------------------------------------------------------------------------------
         
+        RenderOutlines();
+        
         //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
         Globals.GraphicsDevice.SetRenderTarget(null);
         if (Globals.AgentsManager.SelectedUnits.Count > 0)
         {
-            _postprocessMerge.Parameters["AllyOutlineMask"].SetValue(_target1 ? _outlineTargetAlly2 : _outlineTargetAlly1);
-            _postprocessMerge.Parameters["EnemyOutlineMask"].SetValue(_enemyTarget1 ? _outlineTargetEnemy2 : _outlineTargetEnemy1);
-            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate,null,null,null,null,_postprocessMerge);
+            _postprocessMerge.Parameters["AllyOutlineMask"].SetValue(_outlineTargetAlly2);
+            _postprocessMerge.Parameters["EnemyOutlineMask"].SetValue(_outlineTargetEnemy2);
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_postprocessMerge);
             Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
         }
         else
         {
-            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate);
+            Globals.SpriteBatch.Begin();
             Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
         }
-        
         //-----------------------------------------------------------------------------------------------------------
         
         //--------------------Draw sprites--------------------
@@ -253,45 +246,21 @@ public class Renderer
                 }
             }
             Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly2);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["UVExtract"];
-            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-            Globals.SpriteBatch.Draw(_outlineTargetAlly1,Vector2.Zero,Color.White);
-            Globals.SpriteBatch.End();
-            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly1);
             _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
             _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1.Width, 1.0f / _outlineTargetAlly1.Height));
             Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-            Globals.SpriteBatch.Draw(_outlineTargetAlly2,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.Draw(_outlineTargetAlly1,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["JumpFlood"];
-            _target1 = false;
-            for (int i = FloodPasses; i >= 0; i--)
-            {
-                _outlineGenerator.Parameters["StepWidth"]?.SetValue(MathF.Pow(2, i) + 0.2f);
-                if (_target1)
-                {
-                    _target1 = false;
-                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly1);
-                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-                    Globals.SpriteBatch.Draw(_outlineTargetAlly2,Vector2.Zero,Color.White);
-                    Globals.SpriteBatch.End();
-                }
-                else
-                {
-                    _target1 = true;
-                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly2);
-                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-                    Globals.SpriteBatch.Draw(_outlineTargetAlly1,Vector2.Zero,Color.White);
-                    Globals.SpriteBatch.End();
-                }
-            }
+            
             Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
             _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes"];
+            _drawnEnemies.Clear();
             foreach (Agent agent in Globals.AgentsManager.SelectedUnits)
             {
                 PlayerUnitData data = (PlayerUnitData)agent.AgentData;
-                if (data.Target is { Renderer: not null })
+                if (data.Target is { Renderer: not null } && !_drawnEnemies.Contains(data.Target))
                 {
+                    _drawnEnemies.Add(data.Target);
                     _outlineGenerator.Parameters["World"].SetValue(data.Target.ParentObject.Transform.ModelMatrix);
                     foreach (ModelMesh mesh in data.Target.Renderer._model.Models[data.Target.Renderer._model.CurrentModelIndex].Meshes)
                     {
@@ -309,38 +278,11 @@ public class Renderer
                 }
             }
             Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy2);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["UVExtract"];
-            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-            Globals.SpriteBatch.Draw(_outlineTargetEnemy1,Vector2.Zero,Color.White);
-            Globals.SpriteBatch.End();
-            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
             _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
             _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1.Width, 1.0f / _outlineTargetAlly1.Height));
             Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-            Globals.SpriteBatch.Draw(_outlineTargetEnemy2,Vector2.Zero,Color.White);
+            Globals.SpriteBatch.Draw(_outlineTargetEnemy1,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["JumpFlood"];
-            _enemyTarget1 = false;
-            for (int i = FloodPasses; i >= 0; i--)
-            {
-                _outlineGenerator.Parameters["StepWidth"]?.SetValue(MathF.Pow(2, i) + 0.2f);
-                if (_enemyTarget1)
-                {
-                    _enemyTarget1 = false;
-                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
-                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-                    Globals.SpriteBatch.Draw(_outlineTargetEnemy2,Vector2.Zero,Color.White);
-                    Globals.SpriteBatch.End();
-                }
-                else
-                {
-                    _enemyTarget1 = true;
-                    Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy2);
-                    Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-                    Globals.SpriteBatch.Draw(_outlineTargetEnemy1,Vector2.Zero,Color.White);
-                    Globals.SpriteBatch.End();
-                }
-            }
         }
     }
     
@@ -422,7 +364,7 @@ public class Renderer
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (MeshRenderer renderer in Meshes)
         {
-            renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            if(renderer.ParentObject.Transform != null)renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif
     }
@@ -456,7 +398,11 @@ public class Renderer
     {
         if (WorldRenderer != null)
         {
+#if DEBUG
             Globals.TerrainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
+#elif RELEASE
+            Globals.TerrainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
+#endif
             Globals.TerrainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
             Globals.TerrainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
             WorldRenderer.Draw();    
@@ -519,7 +465,15 @@ public class Renderer
     
     private void DrawShadowMap(MeshRenderer renderer)
     {
-        _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
+        try
+        {
+            _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Missing projectile error occured!");
+            return;
+        }
         foreach (ModelMesh mesh in renderer._model.Models[renderer._model.CurrentModelIndex].Meshes)
         {
             //foreach (ModelMeshPart part in mesh.MeshParts)

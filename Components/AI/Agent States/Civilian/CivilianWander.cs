@@ -98,10 +98,10 @@ public class CivilianWander : AgentState
                 offset *= data.WanderingDistance;
                 attempts++;
 
-                if ((int)endPoint.X < 0
-                    || (int)(endPoint.Y) < 0
-                    || (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1
-                    || (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1
+                if ((int)endPoint.X < 1
+                    || (int)(endPoint.Y) < 1
+                    || (int)(endPoint.X) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 2
+                    || (int)(endPoint.Y) > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 2
                     || Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y] == null)
                 {
                     continue;
@@ -110,7 +110,7 @@ public class CivilianWander : AgentState
                 Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
                 Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
             
-                end = Pathfinding.CalculatePath(goal, start);
+                end = Pathfinding.CalculatePath(goal, start ,false);
                 
             } while (end is null || end.CurrentCost > data.MaxWanderingDistance);
             _points = Pathfinding.PathToQueueOfVectors(end);

@@ -17,7 +17,7 @@ public class ModelData
     public string ModelPath;
     public BoundingSphere BoundingSphere;
     public string ShaderTechniqueName;
-    private List<float> _lodThresholds = new();
+    private readonly List<float> _lodThresholds = new();
     
     public bool IsMultiMesh;
     private bool _lodUsed;

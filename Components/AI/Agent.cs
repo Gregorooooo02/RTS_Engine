@@ -12,6 +12,8 @@ namespace RTS_Engine.Components.AI;
 
 public class Agent : Component
 {
+    private static int CurrentID = 1;
+    
     public enum AgentType
     {
         Civilian,
@@ -28,12 +30,12 @@ public class Agent : Component
         Wander,
         Move
     }
-    
-    public float TurnSpeed = 2.0f;
 
-    public float SeparationDistance = 0.5f;
+    private float _turnSpeed = 2.0f;
 
-    public float HeightOffset = 2.0f;
+    private float _occupyDistance = 5.75f;
+
+    private float _heightOffset = 2.0f;
 
     public AgentData.AgentData AgentData;
 
@@ -47,12 +49,18 @@ public class Agent : Component
     public AgentType Type = AgentType.Civilian;
 
     public MeshRenderer Renderer = null;
+
+    private readonly List<Point> _occupiedNodes = new();
+
+    public int ID;
+
+    public float AttackingRadius = 1.0f;
     
     public Agent(){}
     
     public override void Update()
     {
-        if(!Active)return;
+        if(!Active || Globals.IsPaused)return;
         Position = ParentObject.Transform.ModelMatrix.Translation;
         if (Renderer == null)
         {
@@ -85,80 +93,77 @@ public class Agent : Component
         
         try
         {
-            UpdateState();
+            _currentState = _currentState.UpdateState(this);
         }
         catch (NoTerrainException e)
         {
             Active = false;
             Console.WriteLine("No terrain found. Disabling agent");
         }
+        
+        //Occupy nodes
+        ChangeNodes(false);
     }
 
-    private void UpdateState()
+    private void ChangeNodes(bool clear)
     {
-        _currentState = _currentState.UpdateState(this);
+        if (Type == AgentType.PlayerUnit)
+        {
+            foreach (Point location in _occupiedNodes)
+            {
+                if (clear)
+                {
+                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == ID)
+                    {
+                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = 0;
+                    }
+                }
+                else
+                {
+                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == 0)
+                    {
+                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = ID;
+                    }
+                }
+            }
+        }
     }
 
-    public bool MoveToPoint(Vector2 point, float speed)
+    private void UpdateOccupied()
     {
-        bool skip = false;
+        ChangeNodes(true);
+        _occupiedNodes.Clear();
+        int leftX = (int)MathF.Ceiling(Position.X - _occupyDistance);
+        int rightX = (int)(Position.X + _occupyDistance);
+        
+        int topY = (int)MathF.Ceiling(Position.Z - _occupyDistance);
+        int bottomY = (int)(Position.Z + _occupyDistance);
+        
+        for (int i = leftX; i <= rightX; i++)
+        {
+            for (int j = topY; j <= bottomY; j++)
+            {
+                _occupiedNodes.Add(new Point(i,j));
+            }
+        }
+    }
+    
+    public void MoveToPoint(Vector2 point, float speed)
+    {
+        if (Type == AgentType.PlayerUnit) UpdateOccupied();
         Vector3 offset = new Vector3(point.X - Position.X, 0, point.Y - Position.Z);
-        offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(Position.X + offset.X, Position.Z + offset.Z)) - Position.Y + HeightOffset;
+        offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(Position.X + offset.X, Position.Z + offset.Z)) - Position.Y + _heightOffset;
         offset.Normalize();
         ParentObject.Transform.Move(offset * Globals.DeltaTime * speed);
 
         Vector2 destinationVector = new Vector2(offset.X, offset.Z);
-        
-        if (Type == AgentType.PlayerUnit)
-        {
-            foreach (Agent agent in Globals.AgentsManager.Units)
-            {
-                if(agent == this) continue;
-                Vector2 separationOffset = new Vector2(Position.X - agent.Position.X, Position.Z - agent.Position.Z);
-                float length = separationOffset.Length();
-                float sum = SeparationDistance + agent.SeparationDistance;
-                PlayerUnitData data = (PlayerUnitData)AgentData;
-                Vector2 otherToPoint = new Vector2(agent.Position.X - point.X, agent.Position.Z - point.Y);
-                if (otherToPoint.Length() < sum - data.MinPointDistance)
-                {
-                    //If destined point is inside other's exclusion area, skip this point
-                    skip = true;
-                }
-                if (length < sum)
-                {
-                    //Colliding
-                    separationOffset.Normalize();
-                    float angle = CivilianWander.AngleDegrees(separationOffset, destinationVector);
-                    if (MathF.Abs(angle) > 150)
-                    {
-                        Vector2 slideOffset;
-                        float rotAngle = angle > 0 ? -1 : 1;
-                        slideOffset.X = -rotAngle * destinationVector.Y;
-                        slideOffset.Y = rotAngle * destinationVector.X;
-                        slideOffset.Normalize();
-                        separationOffset += slideOffset * Globals.DeltaTime * 80;
-                        destinationVector += slideOffset;
-                    }
-                    Vector3 move = new Vector3(separationOffset.X, 0 ,separationOffset.Y) * (sum  - length);
-                    ParentObject.Transform.Move(move);
-                }
-            }
-        }
-        else
-        {
-            
-        }
-        
-        
         UpdateRotation(destinationVector);
-        
-        return skip;
     }
 
     public void UpdateRotation(Vector2 desiredDirection)
     {
         desiredDirection.Normalize();
-        Direction = Vector2.Lerp(Direction,desiredDirection, Globals.DeltaTime * TurnSpeed);
+        Direction = Vector2.Lerp(Direction,desiredDirection, Globals.DeltaTime * _turnSpeed);
         
         float angle = CivilianWander.AngleDegrees(Vector2.UnitY, Direction);
         ParentObject.Transform.SetLocalRotationY(-angle);
@@ -175,6 +180,7 @@ public class Agent : Component
             if(data.Awareness < data.AwarenessThreshold)data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
+                if(!t.AgentData.Alive || !t.ParentObject.Active) continue;
                 //Calculate offset vector from this civilian to player unit from the list
                 offset = new Vector2(t.Position.X - Position.X, t.Position.Z - Position.Z);
                 float length = offset.Length();
@@ -197,7 +203,7 @@ public class Agent : Component
                         foreach (Point point in points)
                         {
                             MapNode node = Globals.Renderer.WorldRenderer.MapNodes[point.X, point.Y];
-                            if (node == null || (node.Height - Position.Y) > data.SightHeight)
+                            if (!node.Available || (node.Height - Position.Y) > data.SightHeight)
                             {
                                 //if null then node doesn't exist there implying an obstacle
                                 //if second condition passes then it means that there is a significant enough incline in terrain to obstruct line of sight
@@ -223,6 +229,7 @@ public class Agent : Component
             if(data.Awareness < data.AwarenessThreshold)data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
+                if(!t.AgentData.Alive || !t.ParentObject.Active) continue;
                 //Calculate offset vector from this civilian to player unit from the list
                 offset = new Vector2(t.Position.X - Position.X, t.Position.Z - Position.Z);
                 float length = offset.Length();
@@ -353,6 +360,8 @@ public class Agent : Component
         AgentData = new WandererData();
         _currentState = ((WandererData)AgentData).EntryState;
         _currentState.Initialize(this);
+        ID = CurrentID;
+        CurrentID++;
     }
 
     public override string ComponentToXmlString()
@@ -369,9 +378,9 @@ public class Agent : Component
         
         builder.Append("<agentLayer>" + AgentLayer + "</agentLayer>");
         
-        builder.Append("<separationDistance>" + SeparationDistance + "</separationDistance>");
+        builder.Append("<separationDistance>" + _occupyDistance + "</separationDistance>");
         
-        builder.Append("<heightOffset>" + HeightOffset + "</heightOffset>");
+        builder.Append("<heightOffset>" + _heightOffset + "</heightOffset>");
         
         builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
         
@@ -385,8 +394,8 @@ public class Agent : Component
         Active = element.Element("active")?.Value == "True";
         Type = (AgentType)Enum.Parse(typeof(AgentType), element.Element("agentType")?.Value);
         AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
-        SeparationDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 0.5f;
-        HeightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
+        _occupyDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 1.0f;
+        _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
         switch (Type)
         {
             case AgentType.Civilian:
@@ -416,6 +425,8 @@ public class Agent : Component
                 Globals.AgentsManager.Units.Add(this);
                 break;
         }
+        ID = CurrentID;
+        CurrentID++;
     }
 
     public override void RemoveComponent()
@@ -438,8 +449,9 @@ public class Agent : Component
     {
         if(ImGui.CollapsingHeader("Agent"))
         {
-            ImGui.DragFloat("Separation distance", ref SeparationDistance);
-            ImGui.DragFloat("Height offset", ref HeightOffset);
+            ImGui.Text("Agent ID: " + ID);
+            ImGui.DragFloat("Occupancy distance", ref _occupyDistance);
+            ImGui.DragFloat("Height offset", ref _heightOffset);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
             ImGui.SameLine();
@@ -464,7 +476,7 @@ public class Agent : Component
                 _changingBehavior = true;
             }
 
-            ImGui.DragFloat("Turn speed", ref TurnSpeed);
+            ImGui.DragFloat("Turn speed", ref _turnSpeed);
             AgentData.Inspect();
             if (ImGui.Button("Remove component"))
             {

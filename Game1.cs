@@ -1,38 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
-using Microsoft.Xna.Framework.Input;
-using RTS_Engine.Components.AI;
 using Num = System.Numerics;
 
 namespace RTS_Engine;
 
-public class Game1 : Game
+public sealed class Game1 : Game
 {
 #if DEBUG
-    private int _size = 60;
-    private readonly Stopwatch _performanceTimer = new Stopwatch();
-    private double[] _measurements;
-    private int _shiftHead = 0;
-    private double currentAvg;
+    private readonly int _size = 60;
+    private readonly Stopwatch _performanceTimer = new();
+    private readonly double[] _measurements;
+    private int _shiftHead;
+    private double _currentAvg;
     
     private ImGuiRenderer _imGuiRenderer;
-    private Num.Vector3 _position = new Num.Vector3(0,0,10);
+    private readonly Num.Vector3 _position = new(0,0,10);
     private SceneCamera _sceneCamera;
-    
-    Queue<Point> points;
-    private Point CurrentPoint;
 #endif
     
-    private GraphicsDeviceManager _graphics;
+    private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
-    private bool isFullscreen = false;
+    private bool _startInFullscreen = false;
     
     public Game1()
     {
@@ -42,15 +34,8 @@ public class Game1 : Game
 #if DEBUG
         _measurements = new double[_size];
 #endif
-        
-        if (isFullscreen)
-        {
-            Globals.ChangeScreenSize(ScreenSize.FULLSCREEN);
-        }
-        else
-        {
-            Globals.ChangeScreenSize(ScreenSize.WINDOWED);
-        }
+
+        Globals.ChangeScreenSize(_startInFullscreen ? ScreenSize.FULLSCREEN : ScreenSize.WINDOWED);
         //IsFixedTimeStep = false;
         //_graphics.SynchronizeWithVerticalRetrace = false;
         
@@ -86,8 +71,10 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
 #if DEBUG
-        _sceneCamera = new SceneCamera(_graphics.GraphicsDevice);
-        _sceneCamera.Position = _position;
+        _sceneCamera = new SceneCamera(_graphics.GraphicsDevice)
+        {
+            Position = _position
+        };
 #endif
 
         Globals.SpriteBatch = _spriteBatch;
@@ -127,6 +114,8 @@ public class Game1 : Game
 #if DEBUG
         if(Globals.DebugCamera)_sceneCamera.Update(gameTime);
 #endif
+        Globals.AgentsManager.ProjectileManager.UpdateProjectiles();
+        
         _sceneManager.CurrentScene.Update(gameTime);
         
         Globals.FogManager.UpdateFog();
@@ -135,49 +124,6 @@ public class Game1 : Game
         
         Globals.PickingManager.CheckForBuildingSelection();
         Globals.PickingManager.CheckForMissionSelection();
-
-        //foreach (Agent unit in Globals.AgentsManager.SelectedUnits)
-        //{
-            //Console.WriteLine(unit.ParentObject.Name);
-        //}
-        
-        /*
-        try
-        {
-            Transform transform = _sceneManager.CurrentScene.SceneRoot.Children[2].Transform;
-            if (InputManager.Instance.GetMouseAction(GameAction.RMB)?.state == ActionState.RELEASED)
-            {
-                Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
-                if (point.HasValue)
-                {
-                    Console.WriteLine(point.Value);
-                    Node start = new Node(new Point((int)transform._pos.X, (int)transform._pos.Z), null, 1);
-                    Node goal = new Node(new Point((int)point.Value.X, (int)point.Value.Z), null, 1);
-                    
-                    points = RTS_Engine.Components.AI.Pathfinding.PathToQueueOfPoints(RTS_Engine.Components.AI.Pathfinding.CalculatePath(goal,start));
-                    CurrentPoint = points.Dequeue();
-                }
-            }
-
-            if (points is not null)
-            {
-                MapNode node = Globals.Renderer.WorldRenderer.MapNodes[CurrentPoint.X, CurrentPoint.Y];
-                Vector3 offset = new Vector3(node.Location.X - transform._pos.X, node.Height - transform._pos.Y,
-                    node.Location.Y - transform._pos.Z);
-                
-                if (offset.Length() <= 0.1f  && points.Count > 0)
-                {
-                    CurrentPoint = points.Dequeue();
-                }
-                offset.Normalize();
-                transform.Move(offset * 10.0f * Globals.DeltaTime);
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-        */
         
         Globals.PickingManager.Pickables.Clear();
         base.Update(gameTime);
@@ -194,7 +140,7 @@ public class Game1 : Game
         Globals.Renderer.PrepareForNextFrame();
 #if DEBUG
         _measurements[_shiftHead] = (_performanceTimer.ElapsedTicks / (double)Stopwatch.Frequency) * 1000.0;
-        if (_shiftHead == _size - 1) currentAvg = AvgFromLastSec();
+        if (_shiftHead == _size - 1) _currentAvg = AvgFromLastSec();
         _shiftHead++;
         if (_shiftHead == _size) _shiftHead = 0;
         _performanceTimer.Reset();
@@ -211,11 +157,11 @@ public class Game1 : Game
         }
         return sum / _size;
     }
-    
-    protected virtual void ImGuiLayout()
+
+    private void ImGuiLayout()
     {
 
-        ImGui.Checkbox("Fullscreen", ref isFullscreen);
+        ImGui.Checkbox("Fullscreen", ref _startInFullscreen);
         ImGui.Separator();
 		ImGui.Checkbox("Wireframe", ref Globals.DrawWireframe);
 		ImGui.Separator();
@@ -236,11 +182,11 @@ public class Game1 : Game
         ImGui.Checkbox("Draw Visibility", ref Globals.DrawVisibility);
         ImGui.Separator();
         ImGui.Checkbox("Debug camera", ref Globals.DebugCamera);
+        ImGui.Checkbox("Pause active", ref Globals.IsPaused);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
-        ImGui.InputInt("Flood passes", ref Renderer.FloodPasses);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
-        ImGui.Text("Average from " + _size +"x: " + Math.Round(currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
+        ImGui.Text("Average from " + _size +"x: " + Math.Round(_currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
         
         
         if (Globals.HierarchyVisible)

@@ -54,7 +54,6 @@ public class Button : Component
                             && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
                         {
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
-                            Globals.HitUI = true;
                             
                             if (_buttonAction == GameAction.TOGGLE_ACTIVE)
                             {

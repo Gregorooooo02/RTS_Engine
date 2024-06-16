@@ -113,8 +113,14 @@ public class SoldierPatrol : AgentState
 
                 UpdateIndex();
                 
-                end = Pathfinding.CalculatePath(goal, start);
-                
+                end = Pathfinding.CalculatePath(goal, start,false);
+                attempts++;
+                if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
+                {
+                    _traversing = false;
+                    return idle;
+                }
+
             } while (end is null);
             _points = Pathfinding.PathToQueueOfVectors(end);
             _points.Enqueue(new Vector2(_patrolPoints[_currentPatrolPointIndex].X,_patrolPoints[_currentPatrolPointIndex].Y));
