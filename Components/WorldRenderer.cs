@@ -263,6 +263,7 @@ public class WorldRenderer : Component
         }
         
         _waterBody = new WaterBody(0, 0, _terrainWidth, 3.25f);
+        _waterBodies.Add(_waterBody);
         
         MapNodes = new MapNode[_terrainWidth / NodeFrequency, _terrainHeight / NodeFrequency];
 
