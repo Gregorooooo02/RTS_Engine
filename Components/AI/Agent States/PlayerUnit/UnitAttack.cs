@@ -70,7 +70,7 @@ public class UnitAttack : AgentState
             }
         }
         
-        if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0 || _repath) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
+        if (!_pathingScheduled && (_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0 || _repath) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
         {
             _repath = false;
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
