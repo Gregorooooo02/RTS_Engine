@@ -78,13 +78,6 @@ public class Agent : Component
             }
         }
         
-        UiObject = ParentObject.FindGameObjectByName("UI");
-        Icon = UiObject?.FindGameObjectByName("Icon");
-        HealthBarBackground = UiObject?.FindGameObjectByName("HP");
-        HealthBar = HealthBarBackground?.Children[0];
-        
-        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage);
-
         if (!AgentData.Alive)
         {
             ParentObject.Active = false;
@@ -112,6 +105,13 @@ public class Agent : Component
             }
             return;
         }
+        
+        UiObject = ParentObject.FindGameObjectByName("UI");
+        Icon = UiObject?.FindGameObjectByName("Icon");
+        HealthBarBackground = UiObject?.FindGameObjectByName("HP");
+        HealthBar = HealthBarBackground?.Children[0];
+        
+        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage * Globals.Ratio);
         
         if (AgentLayer == LayerType.ENEMY)
         {

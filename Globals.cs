@@ -127,6 +127,8 @@ namespace RTS_Engine
         }
 
         private static ScreenSize _currentSize;
+
+        public static float Ratio = 1.0f;
         public static void ChangeScreenSize(ScreenSize newSize)
         {
             if (_currentSize != newSize)
@@ -139,6 +141,7 @@ namespace RTS_Engine
                         GraphicsDeviceManager.PreferredBackBufferWidth = 1600;
                         GraphicsDeviceManager.PreferredBackBufferHeight = 900;
                         GraphicsDeviceManager.IsFullScreen = false;
+                        Ratio = 1.0f;
                         break;
                     }
                     
@@ -147,6 +150,7 @@ namespace RTS_Engine
                         GraphicsDeviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                         GraphicsDeviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                         GraphicsDeviceManager.IsFullScreen = true;
+                        Ratio = GraphicsDeviceManager.PreferredBackBufferWidth / 1600.0f;
                         break;
                     }
                 }
