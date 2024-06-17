@@ -151,6 +151,7 @@ public class Task : Component
         ParentObject.RemoveComponent(this);
     }
 
+#if DEBUG
     public override void Inspect()
     {
         if (ImGui.CollapsingHeader("Task"))
@@ -202,4 +203,5 @@ public class Task : Component
             }
         }
     }
+#endif
 }

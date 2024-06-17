@@ -83,7 +83,7 @@ public class Camera : Component
         _zoomSpeed = float.TryParse(element.Element("zoomSpeed")?.Value, out float zoomSpeed) ? zoomSpeed : 8.0f;
         _cameraSpeed = float.TryParse(element.Element("cameraSpeed")?.Value, out float cameraSpeed) ? cameraSpeed : 20.0f;
         _aboveGroundOffset = float.TryParse(element.Element("aboveGroundOffset")?.Value, out float aboveGroundOffset) ? aboveGroundOffset : 20.0f;
-        _heightLerpSpeed = float.TryParse(element.Element("heightLerpSpeed")?.Value, out float heightLerpSpeed) ? heightLerpSpeed : 0.2f;
+        _heightLerpSpeed = float.TryParse(element.Element("heightLerpSpeed")?.Value, out float heightLerpSpeed) ? heightLerpSpeed : 6.0f;
         _keyboardControl = element.Element("keyboardControl")?.Value == "True";
         _mouseControl = element.Element("mouseControl")?.Value == "True";
         _scrollControl = element.Element("scrollControl")?.Value == "True";

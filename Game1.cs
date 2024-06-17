@@ -99,6 +99,7 @@ public sealed class Game1 : Game
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
         _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
+        _sceneManager.AddScene(FileManager.PopulateScene("Loading Scene"));
 #endif
     }
 

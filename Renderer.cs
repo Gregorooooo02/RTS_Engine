@@ -108,9 +108,7 @@ public class Renderer
     public void Render()
     {
         if (Globals.GraphicsDeviceManager.PreferredBackBufferWidth != _sceneRenderTarget.Width) Resize();
-        
-        // Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(0,0,0,255), 1.0f,0);
-        
+
         Globals.MainEffect.Parameters["View"]?.SetValue(Globals.View);
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
@@ -193,10 +191,24 @@ public class Renderer
         Globals.GraphicsDevice.SetRenderTarget(null);
         //--------------------------------------------------------------------------------
 
+        RenderOutlines();
+
         //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
-        Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_postprocessMerge);
-        Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
-        Globals.SpriteBatch.End();
+        Globals.GraphicsDevice.SetRenderTarget(null);
+        if (Globals.AgentsManager.SelectedUnits.Count > 0)
+        {
+            _postprocessMerge.Parameters["AllyOutlineMask"].SetValue(_outlineTargetAlly2);
+            _postprocessMerge.Parameters["EnemyOutlineMask"].SetValue(_outlineTargetEnemy2);
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, _postprocessMerge);
+            Globals.SpriteBatch.Draw(_sceneRenderTarget, Vector2.Zero, Color.White);
+            Globals.SpriteBatch.End();
+        }
+        else
+        {
+            Globals.SpriteBatch.Begin();
+            Globals.SpriteBatch.Draw(_sceneRenderTarget, Vector2.Zero, Color.White);
+            Globals.SpriteBatch.End();
+        }
         //-----------------------------------------------------------------------------------------------------------
 
         //--------------------Draw sprites--------------------
