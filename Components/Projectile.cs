@@ -2,6 +2,7 @@
 using ImGuiNET;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI;
+using RTS_Engine.Components.AI.Agent_States;
 using RTS_Engine.Exceptions;
 
 namespace RTS_Engine;
@@ -17,7 +18,7 @@ public class Projectile : Component
 
     private readonly Agent _target = null;
 
-
+    private Vector2 _direction = Vector2.UnitX;
     public Projectile(GameObject parentObject,Agent target ,float flySpeed, float dmg, float hitDistance, Vector3 startingPos)
     {
         ParentObject = parentObject;
@@ -42,6 +43,9 @@ public class Projectile : Component
             }
             direction.Normalize();
             ParentObject.Transform.Move(direction * Globals.DeltaTime * _speed);
+            
+            float angle = CivilianWander.AngleDegrees(Vector2.UnitY, new Vector2(direction.X,direction.Z));
+            ParentObject.Transform.SetLocalRotationY(-angle);
         }
     }
     

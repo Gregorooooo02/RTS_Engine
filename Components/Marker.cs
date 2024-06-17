@@ -9,13 +9,11 @@ public class Marker : Component
 {
     private bool _markerActive = false;
 
-    private float currentTime = 0;
-    private float maxTime = 2.0f;
+    private float _currentTime = 0;
+    private float _maxTime = 2.0f;
 
-    private float yOffset = 2.0f;
-
-    private Vector3 restingPosition = new Vector3(0,100000,0);
-
+    private float _yOffset = 2.0f;
+    
     private MeshRenderer _meshRenderer = null;
     
     public override void Update()
@@ -23,8 +21,8 @@ public class Marker : Component
         Globals.AgentsManager.Marker = this;
         if (_markerActive)
         {
-            currentTime += Globals.DeltaTime;
-            if (currentTime >= maxTime)
+            _currentTime += Globals.DeltaTime;
+            if (_currentTime >= _maxTime)
             {
                 _markerActive = false;
                 ParentObject.Active = false;
@@ -37,9 +35,9 @@ public class Marker : Component
         _meshRenderer ??= ParentObject.GetComponent<MeshRenderer>();
         _markerActive = true;
         ParentObject.Transform.SetLocalPosition(position);
-        ParentObject.Transform.Move(new Vector3(0,yOffset,0));
+        ParentObject.Transform.Move(new Vector3(0,_yOffset,0));
         ParentObject.Active = true;
-        currentTime = 0;
+        _currentTime = 0;
     }
     
     public override void Initialize()
@@ -57,9 +55,9 @@ public class Marker : Component
         
         builder.Append("<active>" + Active +"</active>");
         
-        builder.Append("<maxTime>" + maxTime + "</maxTime>");
+        builder.Append("<maxTime>" + _maxTime + "</maxTime>");
         
-        builder.Append("<yOffset>" + yOffset + "</yOffset>");
+        builder.Append("<yOffset>" + _yOffset + "</yOffset>");
         
         builder.Append("</component>");
         
@@ -69,8 +67,8 @@ public class Marker : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
-        maxTime = float.TryParse(element.Element("maxTime")?.Value, out float time) ? time : 1.5f;
-        yOffset = float.TryParse(element.Element("yOffset")?.Value, out float y) ? y : 2.0f;
+        _maxTime = float.TryParse(element.Element("maxTime")?.Value, out float time) ? time : 1.5f;
+        _yOffset = float.TryParse(element.Element("yOffset")?.Value, out float y) ? y : 2.0f;
     }
 
     public override void RemoveComponent()
@@ -84,8 +82,8 @@ public class Marker : Component
         if (ImGui.CollapsingHeader("Marker"))
         {
             ImGui.Checkbox("Marker active", ref Active);
-            ImGui.DragFloat("Active time", ref maxTime);
-            ImGui.DragFloat("Height offset", ref yOffset);
+            ImGui.DragFloat("Active time", ref _maxTime);
+            ImGui.DragFloat("Height offset", ref _yOffset);
         }
     }
 #endif
