@@ -19,6 +19,8 @@ public class BuildingData : AgentData
         return builder.ToString();
     }
 
+    public BuildingData() : base(100){}
+    
     public override void Deserialize(XElement element)
     {
         base.Deserialize(element);
