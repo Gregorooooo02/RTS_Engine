@@ -14,8 +14,6 @@ public class Marker : Component
 
     private float _yOffset = 2.0f;
     
-    private MeshRenderer _meshRenderer = null;
-    
     public override void Update()
     {
         Globals.AgentsManager.Marker = this;
@@ -32,7 +30,6 @@ public class Marker : Component
 
     public void PlaceMarker(Vector3 position)
     {
-        _meshRenderer ??= ParentObject.GetComponent<MeshRenderer>();
         _markerActive = true;
         ParentObject.Transform.SetLocalPosition(position);
         ParentObject.Transform.Move(new Vector3(0,_yOffset,0));
