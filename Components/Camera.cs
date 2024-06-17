@@ -25,7 +25,7 @@ public class Camera : Component
 
     private float _aboveGroundOffset = 20.0f;
     private float currentHeight = -10f;
-    private float _heightLerpSpeed = 0.2f;
+    private float _heightLerpSpeed = 6.5f;
     
     private bool _keyboardControl = true;
     private bool _mouseControl = true;
