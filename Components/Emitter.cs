@@ -9,8 +9,29 @@ namespace RTS_Engine;
 
 public class Emitter : Component
 {
+    
+    // public enum UnitType
+    // {
+    //     Knight,
+    //     Civillian,
+    //     Chandelier,
+    //     Chair,
+    //     Umulung
+    // }
+    //
+    // public enum SoundType
+    // {
+    //     Idle,
+    //     Death,
+    //     Attack,
+    //     Hit,
+    //     Move,
+    //     Fight
+    // }
 
     public AudioEmitter AudioEmitter;
+    public static SoundEffect sound;
+    public SoundEffectInstance soundEffectInstance = sound.CreateInstance();
     public override void Initialize()
     {
         Active = true;
@@ -19,10 +40,23 @@ public class Emitter : Component
     }
     
     public Emitter(){}
-    
+
+    // public void PlaySound(SoundType sound)
+    // {
+    //     sound switch
+    //     {
+    //         // SoundType.Idle => Globals.AudioManager.
+    //         // SoundType.Death => Globals.AudioManager.
+    //         // SoundType.Attack => Globals.AudioManager.
+    //         // SoundType.Hit => Globals.AudioManager.
+    //         // SoundType.Move => Globals.AudioManager.
+    //         // SoundType.Fight => Globals.AudioManager.soundEffectInstance.Play()
+    //         _ => throw new ArgumentOutOfRangeException(nameof(sound), sound, null)
+    //     };
+    // }
     public override void Update()
     {
-        AudioEmitter.Position = ParentObject.Transform.Pos; 
+        soundEffectInstance.Apply3D(AudioEmitter, AudioListener);
     }
     
     public override string ComponentToXmlString()
@@ -34,8 +68,6 @@ public class Emitter : Component
         builder.Append("<type>Emitter</type>");
         
         builder.Append("<active>" + Active + "</active>");
-        
-        builder.Append("<position>" + AudioEmitter.Position + "</position>");
         
         builder.Append("</component>");
         return builder.ToString();
@@ -54,24 +86,10 @@ public class Emitter : Component
             {
                 ParentObject.RemoveComponent(this);
             }
-            // if (ImGui.Button("Play sound"))
-            // {
-            //      listener.Position = new Vector3(0, 0, 0);
-            //     
-            //     _soundEffectInstance.Play();
-            // }
-            
-            // if (ImGui.Button("Move Listener"))
-            // {
-            //     listener.Position =  new Vector3(listener.Position.X - 10.0f, 0, 0);
-            //     
-            //
-            // }
             
             System.Numerics.Vector3 pos = AudioEmitter.Position.ToNumerics();
             if (ImGui.DragFloat3("Position", ref pos,0.1f))
             {
-                
                 AudioEmitter.Position = pos;
             }
             
