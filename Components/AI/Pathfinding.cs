@@ -34,9 +34,9 @@ public static class Pathfinding
                 if(i == 0 && j == 0) continue;
                 if (
                     (nodeConnections & 1) > 0 && 
-                    ((
+                    (((
                          isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == 0)) 
-                     || !isAlly))
+                     || !isAlly)) && Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].Available)
                 {
                     output.Add(
                         new Node(

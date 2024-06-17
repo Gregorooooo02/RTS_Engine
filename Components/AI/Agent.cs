@@ -96,6 +96,7 @@ public class Agent : Component
                             break;
                         case AgentType.EnemyBuilding:
                             Globals.AgentsManager.ClappedBuildings.Add(this);
+                            ChangeNodes(true);
                             break;
                     }
                     break;
@@ -127,8 +128,8 @@ public class Agent : Component
             Active = false;
             Console.WriteLine("No terrain found. Disabling agent");
         }
-        
-        //Occupy nodes
+
+        if(Type == AgentType.EnemyBuilding && _occupiedNodes.Count == 0)UpdateOccupied();
         ChangeNodes(false);
     }
 
@@ -154,11 +155,17 @@ public class Agent : Component
                 }
             }
         }
+        else if(Type == AgentType.EnemyBuilding)
+        {
+            foreach (Point location in _occupiedNodes)
+            {
+                Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].Available = clear;
+            }
+        }
     }
 
     private void UpdateOccupied()
     {
-        ChangeNodes(true);
         _occupiedNodes.Clear();
         int leftX = (int)MathF.Ceiling(Position.X - _occupyDistance);
         int rightX = (int)(Position.X + _occupyDistance);
@@ -177,7 +184,11 @@ public class Agent : Component
     
     public void MoveToPoint(Vector2 point, float speed)
     {
-        if (Type == AgentType.PlayerUnit) UpdateOccupied();
+        if (Type == AgentType.PlayerUnit)
+        {
+            ChangeNodes(true);
+            UpdateOccupied();
+        }
         Vector3 offset = new Vector3(point.X - Position.X, 0, point.Y - Position.Z);
         offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(Position.X + offset.X, Position.Z + offset.Z)) - Position.Y + _heightOffset;
         offset.Normalize();
