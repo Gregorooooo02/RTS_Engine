@@ -192,7 +192,7 @@ public class UnitAttack : AgentState
                                 soldierData.Target = agent;
                             }
                         }
-                        else
+                        else if(data.Target.Type == Agent.AgentType.Civilian)
                         {
                             WandererData wandererData = (WandererData)data.Target.AgentData;
                             if (!wandererData.Alarmed)

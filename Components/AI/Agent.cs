@@ -407,6 +407,8 @@ public class Agent : Component
         
         builder.Append("<separationDistance>" + _occupyDistance + "</separationDistance>");
         
+        builder.Append("<attackingRadius>" + AttackingRadius + "</attackingRadius>");
+        
         builder.Append("<heightOffset>" + _heightOffset + "</heightOffset>");
         
         builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
@@ -423,6 +425,7 @@ public class Agent : Component
         AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
         _occupyDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 1.0f;
         _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
+        AttackingRadius = float.TryParse(element.Element("attackingRadius")?.Value, out float radius) ? radius : 1.0f;
         switch (Type)
         {
             case AgentType.Civilian:
@@ -439,6 +442,11 @@ public class Agent : Component
                 AgentData = new PlayerUnitData();
                 AgentData.Deserialize(element.Element("agentData"));
                 _currentState = ((PlayerUnitData)AgentData).EntryState;
+                break;
+            case AgentType.EnemyBuilding:
+                AgentData = new BuildingData();
+                AgentData.Deserialize(element.Element("agentData"));
+                _currentState = ((BuildingData)AgentData).EntryState;
                 break;
         }
         
@@ -478,6 +486,7 @@ public class Agent : Component
         {
             ImGui.Text("Agent ID: " + ID);
             ImGui.DragFloat("Occupancy distance", ref _occupyDistance);
+            ImGui.DragFloat("Attacking distance", ref AttackingRadius);
             ImGui.DragFloat("Height offset", ref _heightOffset);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
@@ -539,6 +548,10 @@ public class Agent : Component
                         case AgentType.PlayerUnit:
                             AgentData = new PlayerUnitData();
                             _currentState = ((PlayerUnitData)AgentData).EntryState;
+                            break;
+                        case AgentType.EnemyBuilding:
+                            AgentData = new BuildingData();
+                            _currentState = ((BuildingData)AgentData).EntryState;
                             break;
                     }
                     AgentStates.Clear();
