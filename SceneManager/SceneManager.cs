@@ -45,6 +45,7 @@ public class SceneManager
             camera.Name = "Camera";
             missionRoot.AddChildObject(camera);
             camera.AddComponent<Camera>();
+            camera.GetComponent<Camera>().IsWorldCamera = true;
             camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
             Console.WriteLine("Added Camera");
             
