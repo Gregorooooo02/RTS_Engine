@@ -70,6 +70,8 @@ public class WorldRenderer : Component
     
     private WaterBody _waterBody;
     private List<WaterBody> _waterBodies = new List<WaterBody>();
+
+    private Color[] _scannedHeightData;
     
     // Voronoi stuff
     private Dictionary<Vector2, List<Vector2>> _voronoiRegions;
@@ -213,12 +215,6 @@ public class WorldRenderer : Component
     
     public void LoadHeightData(Texture2D heightmap)
     {
-        _terrainWidth = heightmap.Width;
-        _terrainHeight = heightmap.Height;
-        
-        Color[] heightMapColors = new Color[_terrainWidth * _terrainHeight];
-        heightmap.GetData(heightMapColors);
-        
         HeightData = new float[_terrainWidth, _terrainHeight];
         FinalHeightData = new float[_terrainWidth, _terrainHeight];
         
@@ -229,7 +225,7 @@ public class WorldRenderer : Component
         {
             for (int y = 0; y < _terrainHeight; y++)
             {
-                HeightData[x, y] = heightMapColors[x + y * _terrainWidth].R / 5.0f;
+                HeightData[x, y] = _scannedHeightData[x + y * _terrainWidth].R / 5.0f;
                 
                 if (HeightData[x, y] < globalMinHeight)
                 {
@@ -255,7 +251,7 @@ public class WorldRenderer : Component
                     chunkWidth,
                     chunkHeight,
                     HeightData,
-                    heightMapColors,
+                    _scannedHeightData,
                     globalMinHeight,
                     globalMaxHeight
                 );
@@ -438,11 +434,24 @@ public class WorldRenderer : Component
     
     public override void Initialize()
     {
-         LoadTextures();
-         LoadHeightData(GenerateMap.noiseTexture);
+         ScanHeightDataFromTexture(GenerateMap.noiseTexture);
+    }
 
-         GenerateVoronoiFeatures();
-         // Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+    public void GenerateWorld()
+    {
+        LoadTextures();
+        LoadHeightData(GenerateMap.noiseTexture);
+        GenerateVoronoiFeatures();
+        // Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+    }
+    
+    private void ScanHeightDataFromTexture(Texture2D heightmap)
+    {
+        _terrainWidth = heightmap.Width;
+        _terrainHeight = heightmap.Height;
+        
+        _scannedHeightData = new Color[_terrainWidth * _terrainHeight];
+        heightmap.GetData(_scannedHeightData);
     }
     
     // Voronoi methods
