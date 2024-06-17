@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -60,6 +61,9 @@ namespace RTS_Engine
             WireFrame = new RasterizerState() { FillMode = FillMode.WireFrame };
 #endif
         }
+        
+        //Audio
+        public static AudioListener Listener = new AudioListener();
         
         #region Shaders
 

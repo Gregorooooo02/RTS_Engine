@@ -13,6 +13,7 @@ public class Listener : Component
     {
         Active = true;
         AudioListener = new AudioListener();
+        Globals.Listener = AudioListener;
     }
     
     public Listener(){}
@@ -20,6 +21,7 @@ public class Listener : Component
     public override void Update()
     {
         AudioListener.Position = ParentObject.Transform.Pos;
+        Globals.Listener = AudioListener;
     }
     
     public override string ComponentToXmlString()

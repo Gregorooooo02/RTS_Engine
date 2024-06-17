@@ -30,33 +30,27 @@ public class Emitter : Component
     // }
 
     public AudioEmitter AudioEmitter;
-    public static SoundEffect sound;
-    public SoundEffectInstance soundEffectInstance = sound.CreateInstance();
+    public AudioListener Listener;
+    public static SoundEffect Sound;
+    public SoundEffectInstance SoundEffectInstance = Sound.CreateInstance();
     public override void Initialize()
     {
         Active = true;
         AudioEmitter = new AudioEmitter();
         Globals.AudioManager.Emitters.Add(AudioEmitter);
+        Listener = Globals.Listener;
     }
     
     public Emitter(){}
 
-    // public void PlaySound(SoundType sound)
-    // {
-    //     sound switch
-    //     {
-    //         // SoundType.Idle => Globals.AudioManager.
-    //         // SoundType.Death => Globals.AudioManager.
-    //         // SoundType.Attack => Globals.AudioManager.
-    //         // SoundType.Hit => Globals.AudioManager.
-    //         // SoundType.Move => Globals.AudioManager.
-    //         // SoundType.Fight => Globals.AudioManager.soundEffectInstance.Play()
-    //         _ => throw new ArgumentOutOfRangeException(nameof(sound), sound, null)
-    //     };
-    // }
+    public void PlaySound()
+    {
+        SoundEffectInstance.Play();
+    }
     public override void Update()
     {
-        soundEffectInstance.Apply3D(AudioEmitter, AudioListener);
+        Listener = Globals.Listener;
+        SoundEffectInstance.Apply3D(Listener, AudioEmitter);
     }
     
     public override string ComponentToXmlString()
