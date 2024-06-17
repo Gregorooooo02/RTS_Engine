@@ -145,13 +145,13 @@ public class Renderer
         {
             _postprocessMerge.Parameters["AllyOutlineMask"].SetValue(_outlineTargetAlly2);
             _postprocessMerge.Parameters["EnemyOutlineMask"].SetValue(_outlineTargetEnemy2);
-            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_postprocessMerge);
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied,null,null,null,_postprocessMerge);
             Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
         }
         else
         {
-            Globals.SpriteBatch.Begin();
+            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
             Globals.SpriteBatch.Draw(_sceneRenderTarget,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
         }
