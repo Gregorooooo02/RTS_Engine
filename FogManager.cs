@@ -70,7 +70,7 @@ public class FogManager
     {
         if (Changed && FogActive)
         {
-            Changed = false;
+            //Changed = true;
             Globals.GraphicsDevice.SetRenderTarget(PermanentMaskTarget);
             Globals.SpriteBatch.Begin();
             foreach (FogReveler reveler in Revelers)
