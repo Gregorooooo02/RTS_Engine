@@ -7,6 +7,8 @@ public static class GameManager
 {
     public static int MeatNumber;
     public static int PuzzleNumber;
+    public static float CurrentAwareness = 0;
+    public static float AwarenessLimit = 100.0f;
 
     private static GameAction _status = GameAction.NONE;
 
@@ -72,6 +74,8 @@ public static class GameManager
         ImGui.Begin("Cheat Menu");
         ImGui.DragInt("Meat Number", ref MeatNumber);
         ImGui.DragInt("Puzzle Number", ref PuzzleNumber);
+        ImGui.DragFloat("Current awareness", ref CurrentAwareness);
+        ImGui.DragFloat("Maximum awareness", ref AwarenessLimit);
         ImGui.End();
     }
 }
