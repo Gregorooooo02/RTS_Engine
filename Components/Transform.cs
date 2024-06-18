@@ -75,6 +75,12 @@ public class Transform : Component
         _isDirty = true;
     }
     
+    public void SetLocalPositionY(float newHeight)
+    {
+        Pos = new Vector3(Pos.X, newHeight, Pos.Z); 
+        _isDirty = true;
+    }
+    
     public void SetLocalRotation(Vector3 newRotation)
     {
         Rot = newRotation;

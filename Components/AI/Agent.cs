@@ -78,13 +78,6 @@ public class Agent : Component
             }
         }
         
-        UiObject = ParentObject.FindGameObjectByName("UI");
-        Icon = UiObject?.FindGameObjectByName("Icon");
-        HealthBarBackground = UiObject?.FindGameObjectByName("HP");
-        HealthBar = HealthBarBackground?.Children[0];
-        
-        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage);
-
         if (!AgentData.Alive)
         {
             ParentObject.Active = false;
@@ -103,6 +96,7 @@ public class Agent : Component
                             break;
                         case AgentType.EnemyBuilding:
                             Globals.AgentsManager.ClappedBuildings.Add(this);
+                            ChangeNodes(true);
                             break;
                     }
                     break;
@@ -112,6 +106,13 @@ public class Agent : Component
             }
             return;
         }
+        
+        UiObject = ParentObject.FindGameObjectByName("UI");
+        Icon = UiObject?.FindGameObjectByName("Icon");
+        HealthBarBackground = UiObject?.FindGameObjectByName("HP");
+        HealthBar = HealthBarBackground?.Children[0];
+        
+        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage * Globals.Ratio);
         
         if (AgentLayer == LayerType.ENEMY)
         {
@@ -127,8 +128,8 @@ public class Agent : Component
             Active = false;
             Console.WriteLine("No terrain found. Disabling agent");
         }
-        
-        //Occupy nodes
+
+        if(Type == AgentType.EnemyBuilding && _occupiedNodes.Count == 0)UpdateOccupied();
         ChangeNodes(false);
     }
 
@@ -154,11 +155,17 @@ public class Agent : Component
                 }
             }
         }
+        else if(Type == AgentType.EnemyBuilding)
+        {
+            foreach (Point location in _occupiedNodes)
+            {
+                Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].Available = clear;
+            }
+        }
     }
 
     private void UpdateOccupied()
     {
-        ChangeNodes(true);
         _occupiedNodes.Clear();
         int leftX = (int)MathF.Ceiling(Position.X - _occupyDistance);
         int rightX = (int)(Position.X + _occupyDistance);
@@ -177,7 +184,11 @@ public class Agent : Component
     
     public void MoveToPoint(Vector2 point, float speed)
     {
-        if (Type == AgentType.PlayerUnit) UpdateOccupied();
+        if (Type == AgentType.PlayerUnit)
+        {
+            ChangeNodes(true);
+            UpdateOccupied();
+        }
         Vector3 offset = new Vector3(point.X - Position.X, 0, point.Y - Position.Z);
         offset.Y = PickingManager.InterpolateWorldHeight(new Vector2(Position.X + offset.X, Position.Z + offset.Z)) - Position.Y + _heightOffset;
         offset.Normalize();
@@ -407,6 +418,8 @@ public class Agent : Component
         
         builder.Append("<separationDistance>" + _occupyDistance + "</separationDistance>");
         
+        builder.Append("<attackingRadius>" + AttackingRadius + "</attackingRadius>");
+        
         builder.Append("<heightOffset>" + _heightOffset + "</heightOffset>");
         
         builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
@@ -423,6 +436,7 @@ public class Agent : Component
         AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
         _occupyDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 1.0f;
         _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
+        AttackingRadius = float.TryParse(element.Element("attackingRadius")?.Value, out float radius) ? radius : 1.0f;
         switch (Type)
         {
             case AgentType.Civilian:
@@ -439,6 +453,11 @@ public class Agent : Component
                 AgentData = new PlayerUnitData();
                 AgentData.Deserialize(element.Element("agentData"));
                 _currentState = ((PlayerUnitData)AgentData).EntryState;
+                break;
+            case AgentType.EnemyBuilding:
+                AgentData = new BuildingData();
+                AgentData.Deserialize(element.Element("agentData"));
+                _currentState = ((BuildingData)AgentData).EntryState;
                 break;
         }
         
@@ -478,6 +497,7 @@ public class Agent : Component
         {
             ImGui.Text("Agent ID: " + ID);
             ImGui.DragFloat("Occupancy distance", ref _occupyDistance);
+            ImGui.DragFloat("Attacking distance", ref AttackingRadius);
             ImGui.DragFloat("Height offset", ref _heightOffset);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
@@ -539,6 +559,10 @@ public class Agent : Component
                         case AgentType.PlayerUnit:
                             AgentData = new PlayerUnitData();
                             _currentState = ((PlayerUnitData)AgentData).EntryState;
+                            break;
+                        case AgentType.EnemyBuilding:
+                            AgentData = new BuildingData();
+                            _currentState = ((BuildingData)AgentData).EntryState;
                             break;
                     }
                     AgentStates.Clear();

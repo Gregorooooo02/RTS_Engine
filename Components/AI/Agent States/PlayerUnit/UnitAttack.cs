@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI.AgentData;
 
@@ -70,7 +69,7 @@ public class UnitAttack : AgentState
             }
         }
         
-        if ((_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0 || _repath) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
+        if (!_pathingScheduled && (_timeSinceLastRepath >= data.RepathDelay || _points.Count == 0 || _repath) && (dist > data.MaxAttackRange || dist < data.MinAttackRange))
         {
             _repath = false;
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
@@ -192,7 +191,7 @@ public class UnitAttack : AgentState
                                 soldierData.Target = agent;
                             }
                         }
-                        else
+                        else if(data.Target.Type == Agent.AgentType.Civilian)
                         {
                             WandererData wandererData = (WandererData)data.Target.AgentData;
                             if (!wandererData.Alarmed)

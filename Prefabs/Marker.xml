@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>Marker</name>
+  <active>True</active>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>71,931435</x>
+        <y>10000,00</y>
+        <z>316,5448</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </scale>
+    </component>
+    <component>
+      <type>MeshRenderer</type>
+      <active>True</active>
+      <model>
+        <path>defaultModel</path>
+        <technique>PBR</technique>
+      </model>
+    </component>
+    <component>
+      <type>Marker</type>
+      <active>True</active>
+      <maxTime>1</maxTime>
+      <yOffset>4</yOffset>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>

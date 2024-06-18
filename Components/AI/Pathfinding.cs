@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Exceptions;
 
@@ -32,17 +30,14 @@ public static class Pathfinding
             for (int j = 1; j >= -1; j--)
             {
                 if(i == 0 && j == 0) continue;
-                if (
-                    (nodeConnections & 1) > 0 && 
-                    ((
-                         isAlly && (Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == id || Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].AllyOccupantId == 0)) 
-                     || !isAlly))
+                if (n.Location.X + i >= 0 && n.Location.X + i < Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) &&
+                    n.Location.Y + j >= 0 && n.Location.Y + j < Globals.Renderer.WorldRenderer.MapNodes.GetLength(1))
                 {
-                    output.Add(
-                        new Node(
-                            new Point(n.Location.X + i, n.Location.Y + j), 
-                            n, 
-                            Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].NodeCost));
+                    MapNode node = Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j];
+                    if ((nodeConnections & 1) > 0 && (((isAlly && (node.AllyOccupantId == id || node.AllyOccupantId == 0)) || !isAlly) && node.Available))
+                    {
+                        output.Add(new Node(new Point(n.Location.X + i, n.Location.Y + j), n,Globals.Renderer.WorldRenderer.MapNodes[n.Location.X + i, n.Location.Y + j].NodeCost));
+                    }
                 }
                 nodeConnections >>= 1;
             }

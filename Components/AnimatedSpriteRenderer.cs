@@ -18,6 +18,7 @@ public class AnimatedSpriteRenderer : Component
     private float _frameTimeLeft;
     private bool _isAnimationActive = true;
 
+    private Point currentSize;
     public int Frames { get; private set; } = 6;
     public float FrameTime { get; private set;} = 0.1f;
 
@@ -36,6 +37,8 @@ public class AnimatedSpriteRenderer : Component
             return;
         }
 
+        if(currentSize.X != Globals.GraphicsDeviceManager.PreferredBackBufferWidth || currentSize.Y != Globals.GraphicsDeviceManager.PreferredBackBufferHeight) Resize();
+        
         _frameTimeLeft -= Globals.DeltaTime;
 
         if (_frameTimeLeft <= 0) 
@@ -47,6 +50,7 @@ public class AnimatedSpriteRenderer : Component
 
     public void Draw()
     {
+        if(!Active) return;
         Globals.SpriteBatch?.Draw(SpriteSheet,
             new Rectangle(
                 (int)ParentObject.Transform.Pos.X,
@@ -76,6 +80,14 @@ public class AnimatedSpriteRenderer : Component
         Globals.Renderer.AnimatedSprites.Add(this);
     }
 
+    private void Resize()
+    {
+        float ratio = Globals.GraphicsDeviceManager.PreferredBackBufferWidth / (float)currentSize.X;
+        ParentObject.Transform.SetLocalPosition(ParentObject.Transform.Pos * ratio);
+        ParentObject.Transform.SetLocalScale(ParentObject.Transform.Scl * ratio);
+        currentSize = new Point(Globals.GraphicsDeviceManager.PreferredBackBufferWidth,
+            Globals.GraphicsDeviceManager.PreferredBackBufferHeight);
+    }
     private void Init()
     {
         _frames = Frames;
@@ -116,6 +128,9 @@ public class AnimatedSpriteRenderer : Component
 
         builder.Append("<isAnimationActive>" + _isAnimationActive + "</isAnimationActive>");
         
+        builder.Append("<screenSizeX>" + currentSize.X + "</screenSizeX>");
+        builder.Append("<screenSizeY>" + currentSize.Y + "</screenSizeY>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -133,6 +148,12 @@ public class AnimatedSpriteRenderer : Component
         Color = new Color(int.Parse(color.Element("r").Value),int.Parse(color.Element("g").Value),int.Parse(color.Element("b").Value),int.Parse(color.Element("a").Value));
         
         _isAnimationActive = element.Element("isAnimationActive")?.Value == "True";
+        
+        currentSize =
+            int.TryParse(element.Element("screenSizeX")?.Value, out int x) &&
+            int.TryParse(element.Element("screenSizeY")?.Value, out int y)
+                ? new Point(x, y)
+                : new Point(1600, 900);
     }
 
     public override void RemoveComponent()
@@ -187,10 +208,11 @@ public class AnimatedSpriteRenderer : Component
     }
 
 #if DEBUG
+    private bool _switchingSprites = false;
     public override void Inspect()
     {
         if (ImGui.CollapsingHeader("Animated Sprite Renderer"))
-        {   
+        {
             System.Numerics.Vector4 temp = Color.ToVector4().ToNumerics();
             ImGui.Checkbox("Sprite active", ref Active);
             ImGui.SameLine();
@@ -199,18 +221,43 @@ public class AnimatedSpriteRenderer : Component
             {
                 SetFrames(_frames);
             }
+
             if (ImGui.DragFloat("Frame time", ref _frameTime, 0.1f, 0.1f, 10.0f))
             {
                 SetFrameTime(_frameTime);
             }
+
             if (ImGui.ColorEdit4("Sprite Color", ref temp))
             {
                 Color = new Color(temp);
+            }
+
+            if (ImGui.Button("Switch sprite"))
+            {
+                _switchingSprites = true;
             }
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
             }
+        }
+        if (_switchingSprites)
+        {
+            ImGui.Begin("Switching sprites");
+            foreach (string n in AssetManager.SpriteNames)
+            {
+                if (ImGui.Button(n))
+                {
+                    AssetManager.FreeSprite(SpriteSheet);
+                    SpriteSheet = AssetManager.GetSprite(n);
+                    _switchingSprites = false;
+                }
+            }
+            if (ImGui.Button("Cancel selection"))
+            {
+                _switchingSprites = false;
+            }
+            ImGui.End();
         }
     }
 #endif

@@ -112,7 +112,7 @@ public class GameObject
 
     public static void ClearObject(GameObject gameObject)
     {
-        gameObject.Parent.Children.Remove(gameObject);
+        gameObject.Parent?.Children.Remove(gameObject);
         for (int i = gameObject.Children.Count - 1; i >= 0 ; i--)
         {
             ClearObject(gameObject.Children[i]);

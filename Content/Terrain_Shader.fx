@@ -383,26 +383,13 @@ technique Multitextured
 
 
 //------- Technique: WaterWaves --------
-float xWaveMapScale;
-float2 xWaveMapOffset;
 float4 xWaterColor;
-
-Texture xWaveNormalMap;
-sampler TextureSamplerWave = sampler_state
-{
-    texture = <xWaveNormalMap>;
-    magfilter = LINEAR;
-    minfilter = LINEAR;
-    mipfilter = LINEAR;
-    AddressU = wrap;
-    AddressV = wrap;
-};
 
 struct WaterVertexToPixel
 {
     float4 Position    : POSITION;
     float2 TextureCoords : TEXCOORD0;
-    float2 WaveMapCoords : TEXCOORD1;
+    float3 WorldPosition : TEXCOORD1;
 };
 
 struct WaterPixelToFrame
@@ -418,7 +405,7 @@ WaterVertexToPixel WaterWavesVS( float4 inPos : POSITION, float2 inTexCoords: TE
 
     Output.Position = mul(inPos, preWorldViewProjection);
     Output.TextureCoords = inTexCoords;
-    Output.WaveMapCoords = inTexCoords * xWaveMapScale + xWaveMapOffset;
+    Output.WorldPosition = mul(inPos, xWorld).xyz;
 
     return Output;
 }
@@ -427,22 +414,17 @@ WaterPixelToFrame WaterWavesPS(WaterVertexToPixel PSIn)
 {
     WaterPixelToFrame Output = (WaterPixelToFrame)0;
     
-    //float3 normal = tex2D(TextureSamplerWave, PSIn.WaveMapCoords).xyz;
-
-    //normal = 2.0f * normal - 1.0f;
-
-    //float3 blendedNormal = normalize(normal);
-    
-    //float3 blendedNormal = normalize(float3(0, 0, 1));
-
-    //float lightingFactor = dot(blendedNormal, normalize(dirLightDirection));
-    
-    //float lightingFactor = 0.8;
-
-    //Output.Color = xWaterColor * saturate(lightingFactor + xAmbient);
-    
-    Output.Color = xWaterColor * saturate(0.8 + xAmbient);
-    
+    float2 fogCoords = PSIn.WorldPosition.xz * fogScale;
+    float fogValue = tex2D(FogDiscovery, fogCoords).r + tex2D(FogVisibility, fogCoords).r;
+    if (fogValue < 0.0001f)
+    {
+        Output.Color = float4(0, 0, 0, 1);
+    }
+    else
+    {
+        Output.Color = xWaterColor * saturate(0.8 + xAmbient);
+        Output.Color.xyz *= fogValue;
+    }
     return Output;
 }
 

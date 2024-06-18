@@ -23,6 +23,8 @@ public class AgentsManager
     public Vector3 UiOffset = new(90.0f, 0.0f, 0.0f);
     public Vector3 BackgroundOffset = new(0.0f, 0.0f, 0.1f);
 
+    public Marker Marker = null;
+
     public void Initialize()
     {
         // Initialize the UI for all units with the offset
@@ -72,6 +74,7 @@ public class AgentsManager
             Vector3? point = Globals.PickingManager.PickGround(InputManager.Instance.MousePosition, 0.1f);
             if (point.HasValue)
             {
+                Marker?.PlaceMarker(point.Value);
                 Vector2 dest = new Vector2(point.Value.X,point.Value.Z);
                 //TODO: Pass order 'move to point' to all selected units
                 foreach (Agent selectedUnit in SelectedUnits)

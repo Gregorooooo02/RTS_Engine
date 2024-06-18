@@ -30,6 +30,7 @@ public class AnimatedMeshRenderer : Component
             {
                 IsVisible = true;
                 Globals.Renderer.AnimatedMeshes.Add(this);
+                if (Globals.IsPaused) return;
                 _skinnedModel.UpdateClip();
                 _skinnedModel.AnimationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
             }

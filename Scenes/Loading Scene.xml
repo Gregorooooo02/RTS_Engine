@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>NewObject</name>
+  <active>True</active>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>280,9</x>
+        <y>235,3</y>
+        <z>0</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </scale>
+    </component>
+    <component>
+      <type>AnimatedSpriteRenderer</type>
+      <active>True</active>
+      <spriteSheet>Loading</spriteSheet>
+      <frames>3</frames>
+      <frameTime>0,6</frameTime>
+      <color>
+        <r>255</r>
+        <g>255</g>
+        <b>255</b>
+        <a>255</a>
+      </color>
+      <isAnimationActive>True</isAnimationActive>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>
