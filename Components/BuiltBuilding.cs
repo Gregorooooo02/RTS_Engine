@@ -26,8 +26,6 @@ public class BuiltBuilding : Component
             Globals.PickingManager.PlayerBuildingPickingActive = true;
             Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
             Globals.PickingManager.PlayerMissionSelectPickingActive = true;
-            Globals.PickingManager.PlayerBuildingUiBuiltActive = true;
-            Globals.PickingManager.PlayerBuildingUiActive = true;
             
             _cancelButton.GetComponent<Button>().IsPressed = false;
         }
@@ -80,8 +78,6 @@ public class BuiltBuilding : Component
             Globals.PickingManager.PlayerBuildingPickingActive = false;
             Globals.PickingManager.PlayerBuildingBuiltPickingActive = false;
             Globals.PickingManager.PlayerMissionSelectPickingActive = false;
-            Globals.PickingManager.PlayerBuildingUiBuiltActive = false;
-            Globals.PickingManager.PlayerBuildingUiActive = false;
         }
     }
 

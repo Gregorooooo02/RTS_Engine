@@ -26,6 +26,7 @@ public class Building : Component
         if (_cancelButton.GetComponent<Button>().IsPressed)
         {
             Globals.PickingManager.PlayerBuildingPickingActive = true;
+            Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
             Globals.PickingManager.PlayerMissionSelectPickingActive = true;
             
             _cancelButton.GetComponent<Button>().IsPressed = false;
@@ -73,11 +74,20 @@ public class Building : Component
         {
             _puzzle.GetComponent<Puzzle>().PuzzleCompleted += () =>
             {
-                ParentObject.FindGameObjectByName("Building").Active = true;
+                var building = ParentObject.FindGameObjectByName("Building");
+                building.Active = true;
+
+                foreach (var child in building.Children)
+                {
+                    child.Active = false;
+                }
+                
                 ParentObject.GetComponent<Pickable>().Active = false;
                 ParentObject.RemoveFirstComponentOfType<MeshRenderer>();
                 Globals.PickingManager.PlayerBuildingUiActive = true;
                 Globals.PickingManager.PlayerBuildingPickingActive = true;
+                Globals.PickingManager.PlayerBuildingUiBuiltActive = true;
+                Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
                 Globals.PickingManager.PlayerMissionSelectPickingActive = true;
                 
                 GameManager.RemovePuzzle(PuzzleCost);
@@ -86,6 +96,8 @@ public class Building : Component
             _ui.Active = false;
             Globals.PickingManager.PlayerBuildingUiActive = false;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
+            Globals.PickingManager.PlayerBuildingUiBuiltActive = false;
+            Globals.PickingManager.PlayerBuildingBuiltPickingActive = false;
             Globals.PickingManager.PlayerMissionSelectPickingActive = false;
             _puzzle.GetComponent<Puzzle>().ActivatePuzzle();
         }
@@ -101,6 +113,7 @@ public class Building : Component
         {
             _ui.Active = true;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
+            Globals.PickingManager.PlayerBuildingUiBuiltActive = false;
             Globals.PickingManager.PlayerMissionSelectPickingActive = false;
         }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
   <name>UI_Built</name>
-  <active>False</active>
+  <active>True</active>
   <components>
     <component>
       <type>Transform</type>
@@ -40,7 +40,7 @@
   <childObjects>
     <object>
       <name>Text</name>
-      <active>False</active>
+      <active>True</active>
       <components>
         <component>
           <type>Transform</type>
@@ -81,7 +81,7 @@
       <childObjects>
         <object>
           <name>Info</name>
-          <active>False</active>
+          <active>True</active>
           <components>
             <component>
               <type>Transform</type>
@@ -125,7 +125,7 @@
     </object>
     <object>
       <name>Sprite</name>
-      <active>False</active>
+      <active>True</active>
       <components>
         <component>
           <type>Transform</type>
@@ -165,7 +165,7 @@
     </object>
     <object>
       <name>Upgrade_Button</name>
-      <active>False</active>
+      <active>True</active>
       <components>
         <component>
           <type>Transform</type>
@@ -209,7 +209,7 @@
       <childObjects>
         <object>
           <name>Text</name>
-          <active>False</active>
+          <active>True</active>
           <components>
             <component>
               <type>Transform</type>
@@ -253,7 +253,7 @@
     </object>
     <object>
       <name>Cancel_Button</name>
-      <active>False</active>
+      <active>True</active>
       <components>
         <component>
           <type>Transform</type>
@@ -297,7 +297,7 @@
       <childObjects>
         <object>
           <name>Text</name>
-          <active>False</active>
+          <active>True</active>
           <components>
             <component>
               <type>Transform</type>
@@ -341,7 +341,7 @@
     </object>
     <object>
       <name>Cost</name>
-      <active>False</active>
+      <active>True</active>
       <components>
         <component>
           <type>Transform</type>
@@ -380,13 +380,13 @@
       <childObjects>
         <object>
           <name>Text</name>
-          <active>False</active>
+          <active>True</active>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>965</x>
+                <x>977</x>
                 <y>420</y>
                 <z>0</z>
               </position>
@@ -405,7 +405,7 @@
               <type>TextRenderer</type>
               <active>True</active>
               <useLocal>True</useLocal>
-              <contents>Cost 9</contents>
+              <contents>100</contents>
               <font>defaultFont</font>
               <color>
                 <r>255</r>

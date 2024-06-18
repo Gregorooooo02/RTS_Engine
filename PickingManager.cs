@@ -290,7 +290,7 @@ public class PickingManager
     public Pickable PickBuiltBuilding()
     {
         PickedBuiltBuilding = false;
-        if (!PlayerBuildingPickingActive) return null;
+        if (!PlayerBuildingBuiltPickingActive) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED })
         {
@@ -303,7 +303,7 @@ public class PickingManager
                 
                 foreach (Pickable entity in Pickables)
                 {
-                    if(entity.Type != Pickable.PickableType.Building) continue;
+                    if(entity.Type != Pickable.PickableType.BuildingBuilt) continue;
                     BoundingSphere sphere =
                         entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
                     float? dist = sphere.Intersects(ray.Value);
@@ -377,6 +377,7 @@ public class PickingManager
         if (pickedBuilding is { Type : Pickable.PickableType.BuildingBuilt })
         {
             BuiltBuilding temp = pickedBuilding.ParentObject.GetComponent<BuiltBuilding>();
+            Console.WriteLine("I was picked!");
             temp?.OnClick();
         }
     }

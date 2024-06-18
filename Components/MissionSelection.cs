@@ -26,6 +26,7 @@ public class MissionSelection : Component
         {
             missionWindow.Active = true;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
+            Globals.PickingManager.PlayerBuildingBuiltPickingActive = false;
         }
     }
     

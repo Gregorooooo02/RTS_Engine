@@ -72,6 +72,7 @@ public class Button : Component
                             {
                                 ParentObject.ToggleParentActiveState();
                                 Globals.PickingManager.PlayerBuildingPickingActive = true;
+                                Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
                             }
                             
                             if (_buttonAction == GameAction.CONFIRM)
