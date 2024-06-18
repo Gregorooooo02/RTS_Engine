@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -23,7 +24,7 @@ public class SceneManager
     {
         GameObject missionRoot = new GameObject();
         missionRoot.AddComponent<WorldRenderer>();
-        
+
         ChangeScene(2);
 
         System.Threading.Tasks.Task.Factory.StartNew(() =>
@@ -34,12 +35,12 @@ public class SceneManager
             missionScene.SceneRoot = missionRoot;
             Console.WriteLine("Created scene root");
             missionRoot.Name = "Root";
-            
+
             var currentWorld = missionRoot.GetComponent<WorldRenderer>();
-            
+
             currentWorld.GenerateWorld();
             Console.WriteLine("Created World");
-            
+
             GameObject camera = new GameObject();
             camera.Name = "Camera";
             missionRoot.AddChildObject(camera);
@@ -47,17 +48,17 @@ public class SceneManager
             camera.GetComponent<Camera>().IsWorldCamera = true;
             camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
             Console.WriteLine("Added Camera");
-            
+
 #if _WINDOWS
             missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
             missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
-            
+
 #if _WINDOWS
                 missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
 #else
-                missionRoot.LoadPrefab("Prefabs/Marker.xml");
+            missionRoot.LoadPrefab("Prefabs/Marker.xml");
 #endif
             GameObject civilians = new GameObject();
             civilians.Name = "Civilians";
@@ -70,8 +71,9 @@ public class SceneManager
                 civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
             }
+
             Console.WriteLine("Added Civilians");
-            
+
             GameObject chairs = new()
             {
                 Name = "Chairs"
@@ -84,23 +86,24 @@ public class SceneManager
 #else
                 chairs.LoadPrefab("Prefabs/Chair.xml");
 #endif
-            
+
                 Vector3 chairPos = chairs.Children.Last().Transform.Pos;
                 Vector2 posXZ = new(chairPos.X, chairPos.Z + 2 * i);
-            
+
                 var height = PickingManager.InterpolateWorldHeight(posXZ, currentWorld);
-                chairs.Children.Last().Transform.Move(new Vector3(0, height,2 * i));
+                chairs.Children.Last().Transform.Move(new Vector3(0, height, 2 * i));
             }
-        
-        Debug.WriteLine("Added units");
-        AddScene(missionScene);
-        
-        Globals.PickingManager.SinglePickingActive = true;
-        Globals.PickingManager.BoxPickingActive = true;
-        Globals.PickingManager.GroundPickingActive = true;
-        Globals.PickingManager.EnemyPickingActive = true;
-        ChangeScene(_scenes.Count - 1);
-        Globals.AgentsManager.Initialize();
+
+            Debug.WriteLine("Added units");
+            AddScene(missionScene);
+
+            Globals.PickingManager.SinglePickingActive = true;
+            Globals.PickingManager.BoxPickingActive = true;
+            Globals.PickingManager.GroundPickingActive = true;
+            Globals.PickingManager.EnemyPickingActive = true;
+            ChangeScene(_scenes.Count - 1);
+            Globals.AgentsManager.Initialize();
+        });
     }
 
     public void AddScene(Scene scene)
