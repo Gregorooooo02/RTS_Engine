@@ -113,6 +113,7 @@ public class Renderer
         Globals.MainEffect.Parameters["Projection"]?.SetValue(Globals.Projection);
         Globals.MainEffect.Parameters["viewPos"]?.SetValue(Globals.ViewPos);
         Globals.MainEffect.Parameters["gamma"]?.SetValue(Globals.Gamma);
+        Globals.MainEffect.Parameters["applyFog"]?.SetValue(true);
 #if DEBUG
         
         Globals.GraphicsDevice.DepthStencilState = new DepthStencilState{DepthBufferEnable = true};
@@ -377,6 +378,7 @@ public class Renderer
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (MeshRenderer renderer in Meshes)
         {
+            Globals.MainEffect.Parameters["applyFog"]?.SetValue(renderer.ApplyFog);
             if(renderer.ParentObject.Transform != null)renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif
@@ -402,6 +404,7 @@ public class Renderer
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
+            Globals.MainEffect.Parameters["applyFog"]?.SetValue(renderer.ApplyFog);
             renderer._skinnedModel.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #endif

@@ -11,6 +11,8 @@ public class MeshRenderer : Component
     public ModelData _model {get; private set;}
     public bool IsVisible { get; private set; } = false;
 
+    public bool ApplyFog = true;
+
     public MeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
@@ -61,6 +63,8 @@ public class MeshRenderer : Component
         
         builder.Append("<active>" + Active +"</active>");
         
+        builder.Append("<applyFog>" + ApplyFog +"</applyFog>");
+        
         builder.Append("<model>" + _model.Serialize() +"</model>");
         
         builder.Append("</component>");
@@ -70,6 +74,7 @@ public class MeshRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        ApplyFog = !bool.TryParse(element.Element("applyFog")?.Value, out bool fog) || fog;
         XElement model = element.Element("model");
         if (model?.Element("path") == null) 
         {
@@ -79,7 +84,6 @@ public class MeshRenderer : Component
         {
             LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
         }
-        
     }
 
     public override void RemoveComponent()
@@ -118,6 +122,7 @@ public class MeshRenderer : Component
         if(ImGui.CollapsingHeader("Mesh Renderer"))
         {
             ImGui.Checkbox("Mesh active", ref Active);
+            ImGui.Checkbox("Apply fog", ref ApplyFog);
             ImGui.Text("Current mesh: " + _model.ModelPath);
             ImGui.Text("Current technique: " + _model.ShaderTechniqueName);
             ImGui.InputInt("Current model", ref _model.CurrentModelIndex);

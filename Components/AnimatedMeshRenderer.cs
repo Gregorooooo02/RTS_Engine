@@ -14,6 +14,9 @@ public class AnimatedMeshRenderer : Component
     public AnimatedModelData _skinnedModel {get; private set;}
     public bool IsVisible { get; private set; } = true;
     
+    //TODO: Add serialization, deserialization and Inspect checkbox for boolean below
+    public bool ApplyFog = true;
+    
     public AnimatedMeshRenderer(GameObject parentObject)
     {
         ParentObject = parentObject;
