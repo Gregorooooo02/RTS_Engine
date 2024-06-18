@@ -80,6 +80,7 @@ public class Puzzle : Component
                 DeactivatePuzzle();
                 Globals.PickingManager.PlayerBuildingPickingActive = true;
                 Globals.PickingManager.PlayerMissionSelectPickingActive = true;
+                Globals.PickingManager.PlayerBuildingUiActive = true;
                 
                 return;
             }

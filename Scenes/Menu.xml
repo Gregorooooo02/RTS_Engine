@@ -32,8 +32,8 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>30</x>
-            <y>60</y>
+            <x>33,333336</x>
+            <y>66,66667</y>
             <z>0</z>
           </position>
           <rotation>
@@ -42,9 +42,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>1</x>
-            <y>1</y>
-            <z>1</z>
+            <x>1,1111112</x>
+            <y>1,1111112</y>
+            <z>1,1111112</z>
           </scale>
         </component>
         <component>
@@ -59,7 +59,7 @@
             <b>255</b>
             <a>255</a>
           </color>
-          <screenSizeX>1440</screenSizeX>
+          <screenSizeX>1600</screenSizeX>
           <screenSizeY>900</screenSizeY>
           <selectedVariables></selectedVariables>
         </component>
@@ -100,7 +100,7 @@
               <active>True</active>
               <position>
                 <x>0</x>
-                <y>400</y>
+                <y>444,44446</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -109,9 +109,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1,2</x>
-                <y>0,3</y>
-                <z>1</z>
+                <x>1,3333335</x>
+                <y>0,33333337</y>
+                <z>1,1111112</z>
               </scale>
             </component>
             <component>
@@ -125,7 +125,7 @@
                 <b>0</b>
                 <a>0</a>
               </color>
-              <screenSizeX>1440</screenSizeX>
+              <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
             <component>
@@ -143,8 +143,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>30</x>
-                    <y>412</y>
+                    <x>33,333336</x>
+                    <y>457,7778</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -153,9 +153,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>1,1111112</x>
+                    <y>1,1111112</y>
+                    <z>1,1111112</z>
                   </scale>
                 </component>
                 <component>
@@ -170,7 +170,7 @@
                     <b>255</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeX>1600</screenSizeX>
                   <screenSizeY>900</screenSizeY>
                   <selectedVariables></selectedVariables>
                 </component>
@@ -188,7 +188,7 @@
               <active>True</active>
               <position>
                 <x>0</x>
-                <y>500</y>
+                <y>555,5556</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -197,9 +197,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1,2</x>
-                <y>0,3</y>
-                <z>1</z>
+                <x>1,3333335</x>
+                <y>0,33333337</y>
+                <z>1,1111112</z>
               </scale>
             </component>
             <component>
@@ -213,7 +213,7 @@
                 <b>0</b>
                 <a>0</a>
               </color>
-              <screenSizeX>1440</screenSizeX>
+              <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
           </components>
@@ -226,8 +226,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>30</x>
-                    <y>512</y>
+                    <x>33,333336</x>
+                    <y>568,8889</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -236,9 +236,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>1,1111112</x>
+                    <y>1,1111112</y>
+                    <z>1,1111112</z>
                   </scale>
                 </component>
                 <component>
@@ -253,7 +253,7 @@
                     <b>255</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeX>1600</screenSizeX>
                   <screenSizeY>900</screenSizeY>
                   <selectedVariables></selectedVariables>
                 </component>
@@ -271,7 +271,7 @@
               <active>True</active>
               <position>
                 <x>0</x>
-                <y>600</y>
+                <y>666,6667</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -280,9 +280,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1,2</x>
-                <y>0,3</y>
-                <z>1</z>
+                <x>1,3333335</x>
+                <y>0,33333337</y>
+                <z>1,1111112</z>
               </scale>
             </component>
             <component>
@@ -296,7 +296,7 @@
                 <b>0</b>
                 <a>0</a>
               </color>
-              <screenSizeX>1440</screenSizeX>
+              <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
             <component>
@@ -314,8 +314,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>30</x>
-                    <y>612</y>
+                    <x>33,333336</x>
+                    <y>680,00006</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -324,9 +324,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>1,1111112</x>
+                    <y>1,1111112</y>
+                    <z>1,1111112</z>
                   </scale>
                 </component>
                 <component>
@@ -341,7 +341,7 @@
                     <b>255</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeX>1600</screenSizeX>
                   <screenSizeY>900</screenSizeY>
                   <selectedVariables></selectedVariables>
                 </component>
@@ -955,6 +955,74 @@
               <active>True</active>
               <model>
                 <path>ognisko</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Barrel</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>-9,7</x>
+                <y>-6,9</y>
+                <z>-30</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>Env/barrel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Barrel</name>
+          <active>True</active>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>-12,5</x>
+                <y>-6,9</y>
+                <z>-32,9</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <model>
+                <path>Env/barrel</path>
                 <technique>PBR</technique>
               </model>
             </component>

@@ -125,6 +125,7 @@ public sealed class Game1 : Game
         Globals.AgentsManager.CheckForOrders();
         
         Globals.PickingManager.CheckForBuildingSelection();
+        Globals.PickingManager.CheckForBuiltBuildingSelection();
         Globals.PickingManager.CheckForMissionSelection();
         
         Globals.PickingManager.Pickables.Clear();
