@@ -129,6 +129,8 @@ public class MeshRenderer : Component
             {
                 RemoveComponent();
             }
+            
+          
 
             if (_switchingModel)
             {

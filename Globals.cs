@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -60,6 +61,9 @@ namespace RTS_Engine
 #endif
         }
         
+        //Audio
+        public static AudioListener Listener = new AudioListener();
+        
         #region Shaders
 
         public static Effect MainEffect;
@@ -84,6 +88,7 @@ namespace RTS_Engine
         public static PickingManager PickingManager;
         public static ContentManager Content;
         public static AgentsManager AgentsManager;
+        public static AudioManager AudioManager;
 
         #endregion
 

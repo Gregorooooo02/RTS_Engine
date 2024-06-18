@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace RTS_Engine;
 
@@ -13,6 +15,9 @@ public class BaseScene : Scene
     {
         Name = "BaseScene";
         SceneRoot = new GameObject();
+        
+        
+
     }
 
     public override void Update(GameTime gameTime)

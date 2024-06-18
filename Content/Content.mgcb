@@ -15,6 +15,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin amogusDrip.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:amogusDrip.mp3
+
 #begin archer/albedo.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -179,6 +185,12 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:basicPlane/basicPlane.fbx
+
+#begin bassPulse.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:bassPulse.wav
 
 #begin black_texture.png
 /importer:TextureImporter
@@ -1111,6 +1123,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/titleFont.spritefont
 
+#begin gameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:gameOver.wav
+
 #begin GaussianBlur.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -1704,6 +1722,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:smile.png
+
+#begin SoundFX/testBeat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Medium
+/build:SoundFX/testBeat.wav
 
 #begin sprite.jpg
 /importer:TextureImporter

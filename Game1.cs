@@ -48,6 +48,7 @@ public sealed class Game1 : Game
     {
         Globals.GraphicsDevice = _graphics.GraphicsDevice;
         _sceneManager = new SceneManager();
+        
 
 #if DEBUG
         _imGuiRenderer = new ImGuiRenderer(this);
