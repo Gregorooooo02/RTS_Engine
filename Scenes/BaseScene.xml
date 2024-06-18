@@ -840,8 +840,6 @@
                   <type>Building</type>
                   <active>True</active>
                   <puzzleCost>9</puzzleCost>
-                  <upgradeCost>100</upgradeCost>
-                  <level>1</level>
                 </component>
                 <component>
                   <type>Pickable</type>
@@ -893,6 +891,12 @@
                       <type>Pickable</type>
                       <active>True</active>
                       <pickableType>BuildingBuilt</pickableType>
+                    </component>
+                    <component>
+                      <type>BuiltBuilding</type>
+                      <active>True</active>
+                      <meatCost>100</meatCost>
+                      <level>1</level>
                     </component>
                   </components>
                   <childObjects>
@@ -1237,7 +1241,7 @@
                           </childObjects>
                         </object>
                         <object>
-                          <name>Cost_Meat</name>
+                          <name>Cost</name>
                           <active>False</active>
                           <components>
                             <component>
@@ -2546,8 +2550,6 @@
                   <type>Building</type>
                   <active>True</active>
                   <puzzleCost>16</puzzleCost>
-                  <upgradeCost>100</upgradeCost>
-                  <level>1</level>
                 </component>
               </components>
               <childObjects>

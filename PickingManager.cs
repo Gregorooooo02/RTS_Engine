@@ -28,6 +28,7 @@ public class PickingManager
     public bool PickedUnits = false;
     public bool PickedEnemy = false;
     public bool PickedBuilding = false;
+    public bool PickedBuiltBuilding = false;
     public bool PickedMissionSelect = false;
     
     #region Visual Parameters
@@ -253,11 +254,47 @@ public class PickingManager
     public Pickable PickBuilding()
     {
         PickedBuilding = false;
-        if (!PlayerBuildingPickingActive || !PlayerBuildingBuiltPickingActive) return null;
+        if (!PlayerBuildingPickingActive) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED })
         {
             PickedBuilding = true;
+            Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
+            if (ray.HasValue)
+            {
+                float minDist = 10000.0f;
+                Pickable candidate = null;
+                
+                foreach (Pickable entity in Pickables)
+                {
+                    if(entity.Type != Pickable.PickableType.Building) continue;
+                    BoundingSphere sphere =
+                        entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                    float? dist = sphere.Intersects(ray.Value);
+                     
+                    if (dist.HasValue)
+                    {
+                        if ((IncludeZeroDist && dist.Value < minDist) || (!IncludeZeroDist && dist.Value < minDist && dist.Value > 0))
+                        {
+                            minDist = dist.Value;
+                            candidate = entity;
+                        }
+                    }
+                }
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    public Pickable PickBuiltBuilding()
+    {
+        PickedBuiltBuilding = false;
+        if (!PlayerBuildingPickingActive) return null;
+        MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
+        if (action is { state: ActionState.RELEASED })
+        {
+            PickedBuiltBuilding = true;
             Ray? ray = CalculateMouseRay(InputManager.Instance.MousePosition);
             if (ray.HasValue)
             {
@@ -335,12 +372,12 @@ public class PickingManager
 
     public void CheckForBuiltBuildingSelection()
     {
-        Pickable pickedBuilding = Globals.PickingManager.PickBuilding();
+        Pickable pickedBuilding = Globals.PickingManager.PickBuiltBuilding();
 
         if (pickedBuilding is { Type : Pickable.PickableType.BuildingBuilt })
         {
-            Building temp = pickedBuilding.ParentObject.Parent.GetComponent<Building>();
-            temp?.OnClickBuilt();
+            BuiltBuilding temp = pickedBuilding.ParentObject.GetComponent<BuiltBuilding>();
+            temp?.OnClick();
         }
     }
     

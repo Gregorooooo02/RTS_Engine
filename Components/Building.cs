@@ -17,11 +17,6 @@ public class Building : Component
     private GameObject _cancelButton;
     private GameObject _costText;
 
-    private GameObject _uiBuilt;
-    private GameObject _upgradeButton;
-    private GameObject _cancelUpgradeButton;
-    private GameObject _costTextBuilt;
-
     public override void Update()
     {
         if (!Active) return;
@@ -62,11 +57,6 @@ public class Building : Component
     public void OnClick()
     {
         ActivateUi();
-    }
-
-    public void OnClickBuilt()
-    {
-        ActivateUiBuilt();
     }
 
     public override void Initialize()
@@ -112,21 +102,6 @@ public class Building : Component
             _ui.Active = true;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
             Globals.PickingManager.PlayerMissionSelectPickingActive = false;
-        }
-    }
-    
-    private void ActivateUiBuilt()
-    {
-        _uiBuilt = ParentObject.FindGameObjectByName("UI_Built");
-        _upgradeButton = _uiBuilt.FindGameObjectByName("Upgrade_Button");
-        _cancelUpgradeButton = _uiBuilt.FindGameObjectByName("Cancel__Button");
-        
-        if (Globals.PickingManager.PlayerBuildingUiBuiltActive)
-        {
-            _uiBuilt.Active = true;
-            Globals.PickingManager.PlayerBuildingPickingActive = false;
-            Globals.PickingManager.PlayerMissionSelectPickingActive = false;
-            Globals.PickingManager.PlayerBuildingUiBuiltActive = false;
         }
     }
 

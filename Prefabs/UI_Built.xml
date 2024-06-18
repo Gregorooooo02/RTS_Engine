@@ -340,7 +340,7 @@
       </childObjects>
     </object>
     <object>
-      <name>Cost_Meat</name>
+      <name>Cost</name>
       <active>False</active>
       <components>
         <component>
