@@ -60,6 +60,8 @@ public class AnimatedMeshRenderer : Component
         builder.Append("<type>AnimatedMeshRenderer</type>");
         
         builder.Append("<active>" + Active + "</active>");
+
+        builder.Append("<animatedModel>" + _skinnedModel.Serialize() + "</animatedModel>");
         
         builder.Append("</component>");
         
@@ -68,7 +70,17 @@ public class AnimatedMeshRenderer : Component
 
     public override void Deserialize(XElement element)
     {
-        
+        Active = element.Element("active")?.Value == "True";
+        XElement model = element.Element("animatedModel");
+        if (model?.Element("path") == null)
+        {
+            LoadModel(model?.Value);
+        }
+        else
+        {
+            LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
+        }
+        _skinnedModel.Deserialize(element);
     }
 
     public override void RemoveComponent()

@@ -7,34 +7,42 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>71,931435</x>
-        <y>10000,00</y>
-        <z>316,5448</z>
+        <x>0</x>
+        <y>1000000</y>
+        <z>0</z>
       </position>
       <rotation>
-        <x>0</x>
+        <x>-45</x>
         <y>0</y>
         <z>0</z>
       </rotation>
       <scale>
-        <x>1</x>
-        <y>1</y>
-        <z>1</z>
+        <x>0,01</x>
+        <y>0,01</y>
+        <z>0,01</z>
       </scale>
-    </component>
-    <component>
-      <type>MeshRenderer</type>
-      <active>True</active>
-      <model>
-        <path>defaultModel</path>
-        <technique>PBR</technique>
-      </model>
     </component>
     <component>
       <type>Marker</type>
       <active>True</active>
       <maxTime>1</maxTime>
       <yOffset>4</yOffset>
+    </component>
+    <component>
+      <type>AnimatedMeshRenderer</type>
+      <active>True</active>
+      <animatedModel>
+        <path>marker</path>
+        <technique>PBR_Skinned</technique>
+        <animationController>
+          <speed>0,5</speed>
+          <currentClip>0</currentClip>
+          <translationInterpolation>Linear</translationInterpolation>
+          <orientationInterpolation>Linear</orientationInterpolation>
+          <scaleInterpolation>Linear</scaleInterpolation>
+          <loop>True</loop>
+        </animationController>
+      </animatedModel>
     </component>
   </components>
   <childObjects></childObjects>

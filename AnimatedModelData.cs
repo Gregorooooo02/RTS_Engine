@@ -133,6 +133,8 @@ public class AnimatedModelData
         AnimationController.OrientationInterpolation = InterpolationMode.Linear;
         AnimationController.ScaleInterpolation = InterpolationMode.Linear;
         
+        AnimationController.LoopEnabled = true;
+        
         ActiveAnimationClip = 0;
         AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
     }
@@ -384,7 +386,28 @@ public class AnimatedModelData
         
         builder.Append("<path>" + ModelPath + "</path>");
         builder.Append("<technique>" + ShaderTechniqueName + "</technique>");
+
+        builder.Append("<animationController>");
+        
+        builder.Append("<speed>" + AnimationController.Speed + "</speed>");
+        builder.Append("<currentClip>" + ActiveAnimationClip + "</currentClip>");
+        builder.Append("<translationInterpolation>" + AnimationController.TranslationInterpolation + "</translationInterpolation>");
+        builder.Append("<orientationInterpolation>" + AnimationController.OrientationInterpolation + "</orientationInterpolation>");
+        builder.Append("<scaleInterpolation>" + AnimationController.ScaleInterpolation + "</scaleInterpolation>");
+        builder.Append("<loop>" + AnimationController.LoopEnabled + "</loop>");
+        
+        builder.Append("</animationController>");
         
         return builder.ToString();
+    }
+
+    public void Deserialize(XElement element)
+    {
+        AnimationController.Speed = float.TryParse(element.Element("speed")?.Value, out float speed) ? speed : 0.5f;
+        ActiveAnimationClip = int.TryParse(element.Element("currentClip")?.Value, out int clip) ? clip : 0;
+        AnimationController.TranslationInterpolation = Enum.TryParse(element.Element("translationInterpolation")?.Value, out InterpolationMode mode) ? mode : InterpolationMode.Linear;
+        AnimationController.OrientationInterpolation = Enum.TryParse(element.Element("orientationInterpolation")?.Value, out InterpolationMode mode2) ? mode2 : InterpolationMode.Linear;
+        AnimationController.ScaleInterpolation = Enum.TryParse(element.Element("scaleInterpolation")?.Value, out InterpolationMode mode3) ? mode3 : InterpolationMode.Linear;
+        AnimationController.LoopEnabled = element.Element("loop")?.Value == "True";
     }
 }
