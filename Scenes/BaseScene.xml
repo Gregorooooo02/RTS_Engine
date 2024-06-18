@@ -843,14 +843,22 @@
                 </component>
                 <component>
                   <type>Pickable</type>
-                  <active>False</active>
+                  <active>True</active>
                   <pickableType>Building</pickableType>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>sand</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects>
                 <object>
                   <name>Building</name>
-                  <active>True</active>
+                  <active>False</active>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -887,7 +895,7 @@
                     <component>
                       <type>BuiltBuilding</type>
                       <active>True</active>
-                      <meatCost>100</meatCost>
+                      <meatCost>0</meatCost>
                       <level>1</level>
                     </component>
                   </components>
@@ -1131,8 +1139,8 @@
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>0</g>
-                                    <b>0</b>
+                                    <g>255</g>
+                                    <b>255</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -1298,12 +1306,12 @@
                                   <type>TextRenderer</type>
                                   <active>True</active>
                                   <useLocal>True</useLocal>
-                                  <contents>100</contents>
+                                  <contents>0</contents>
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>0</g>
-                                    <b>0</b>
+                                    <g>255</g>
+                                    <b>255</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -1684,8 +1692,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -1855,8 +1863,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -1896,14 +1904,6 @@
                   </scale>
                 </component>
                 <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <model>
-                    <path>sand</path>
-                    <technique>PBR</technique>
-                  </model>
-                </component>
-                <component>
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Building</pickableType>
@@ -1912,6 +1912,14 @@
                   <type>Building</type>
                   <active>True</active>
                   <puzzleCost>9</puzzleCost>
+                </component>
+                <component>
+                  <type>MeshRenderer</type>
+                  <active>True</active>
+                  <model>
+                    <path>sand</path>
+                    <technique>PBR</technique>
+                  </model>
                 </component>
               </components>
               <childObjects>
@@ -1952,11 +1960,16 @@
                       <meatCost>100</meatCost>
                       <level>1</level>
                     </component>
+                    <component>
+                      <type>Pickable</type>
+                      <active>True</active>
+                      <pickableType>BuildingBuilt</pickableType>
+                    </component>
                   </components>
                   <childObjects>
                     <object>
                       <name>UI_Built</name>
-                      <active>True</active>
+                      <active>False</active>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1995,7 +2008,7 @@
                       <childObjects>
                         <object>
                           <name>Text</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2020,7 +2033,7 @@
                               <type>TextRenderer</type>
                               <active>True</active>
                               <useLocal>True</useLocal>
-                              <contents>Sawmill</contents>
+                              <contents>Spike buff</contents>
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
@@ -2036,7 +2049,7 @@
                           <childObjects>
                             <object>
                               <name>Info</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2061,7 +2074,7 @@
                                   <type>TextRenderer</type>
                                   <active>True</active>
                                   <useLocal>True</useLocal>
-                                  <contents>Basic building in your base.</contents>
+                                  <contents>Increase damage of all units.</contents>
                                   <font>Fonts/lightFont</font>
                                   <color>
                                     <r>255</r>
@@ -2080,7 +2093,7 @@
                         </object>
                         <object>
                           <name>Sprite</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2105,7 +2118,7 @@
                               <type>SpiteRenderer</type>
                               <active>True</active>
                               <useLocal>True</useLocal>
-                              <sprite>UI/Structures/sawmill</sprite>
+                              <sprite>UI/Structures/dmgPerk</sprite>
                               <color>
                                 <r>255</r>
                                 <g>255</g>
@@ -2120,7 +2133,7 @@
                         </object>
                         <object>
                           <name>Upgrade_Button</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2164,7 +2177,7 @@
                           <childObjects>
                             <object>
                               <name>Text</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2193,8 +2206,8 @@
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>0</g>
-                                    <b>0</b>
+                                    <g>255</g>
+                                    <b>255</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -2208,7 +2221,7 @@
                         </object>
                         <object>
                           <name>Cancel_Button</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2252,7 +2265,7 @@
                           <childObjects>
                             <object>
                               <name>Text</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2296,7 +2309,7 @@
                         </object>
                         <object>
                           <name>Cost</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2335,7 +2348,7 @@
                           <childObjects>
                             <object>
                               <name>Text</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2364,8 +2377,8 @@
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>0</g>
-                                    <b>0</b>
+                                    <g>255</g>
+                                    <b>255</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -2746,8 +2759,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -2917,8 +2930,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -3014,11 +3027,16 @@
                       <meatCost>100</meatCost>
                       <level>1</level>
                     </component>
+                    <component>
+                      <type>Pickable</type>
+                      <active>True</active>
+                      <pickableType>BuildingBuilt</pickableType>
+                    </component>
                   </components>
                   <childObjects>
                     <object>
                       <name>UI_Built</name>
-                      <active>True</active>
+                      <active>False</active>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3057,7 +3075,7 @@
                       <childObjects>
                         <object>
                           <name>Text</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3098,7 +3116,7 @@
                           <childObjects>
                             <object>
                               <name>Info</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3142,7 +3160,7 @@
                         </object>
                         <object>
                           <name>Sprite</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3182,7 +3200,7 @@
                         </object>
                         <object>
                           <name>Upgrade_Button</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3226,7 +3244,7 @@
                           <childObjects>
                             <object>
                               <name>Text</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3270,7 +3288,7 @@
                         </object>
                         <object>
                           <name>Cancel_Button</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3314,7 +3332,7 @@
                           <childObjects>
                             <object>
                               <name>Text</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3358,7 +3376,7 @@
                         </object>
                         <object>
                           <name>Cost</name>
-                          <active>True</active>
+                          <active>False</active>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3397,7 +3415,7 @@
                           <childObjects>
                             <object>
                               <name>Text</name>
-                              <active>True</active>
+                              <active>False</active>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -4603,7 +4621,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>False</useLocal>
-                  <contents>0</contents>
+                  <contents>236</contents>
                   <font>defaultFont</font>
                   <color>
                     <r>255</r>
@@ -4688,7 +4706,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>False</useLocal>
-                  <contents>24</contents>
+                  <contents>7</contents>
                   <font>defaultFont</font>
                   <color>
                     <r>255</r>
@@ -4760,8 +4778,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>460</x>
-                    <y>300</y>
+                    <x>511,11115</x>
+                    <y>333,33334</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -4770,9 +4788,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,75</x>
-                    <y>0,75</y>
-                    <z>1</z>
+                    <x>0,8333334</x>
+                    <y>0,8333334</y>
+                    <z>1,1111112</z>
                   </scale>
                 </component>
                 <component>
@@ -4786,7 +4804,7 @@
                     <b>255</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeX>1600</screenSizeX>
                   <screenSizeY>900</screenSizeY>
                 </component>
               </components>
@@ -4799,8 +4817,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>540</x>
-                        <y>380</y>
+                        <x>600</x>
+                        <y>422,22223</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -4809,9 +4827,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,75</x>
-                        <y>0,75</y>
-                        <z>1</z>
+                        <x>0,8333334</x>
+                        <y>0,8333334</y>
+                        <z>1,1111112</z>
                       </scale>
                     </component>
                     <component>
@@ -4826,7 +4844,7 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1440</screenSizeX>
+                      <screenSizeX>1600</screenSizeX>
                       <screenSizeY>900</screenSizeY>
                       <selectedVariables></selectedVariables>
                     </component>
@@ -4841,8 +4859,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>515</x>
-                        <y>480</y>
+                        <x>572,2222</x>
+                        <y>533,3334</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -4851,9 +4869,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,75</x>
-                        <y>0,75</y>
-                        <z>1</z>
+                        <x>0,8333334</x>
+                        <y>0,8333334</y>
+                        <z>1,1111112</z>
                       </scale>
                     </component>
                     <component>
@@ -4867,7 +4885,7 @@
                         <b>185</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1440</screenSizeX>
+                      <screenSizeX>1600</screenSizeX>
                       <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
@@ -4890,8 +4908,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>560</x>
-                            <y>485</y>
+                            <x>622,2222</x>
+                            <y>538,8889</y>
                             <z>0</z>
                           </position>
                           <rotation>
@@ -4900,9 +4918,9 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,75</x>
-                            <y>0,75</y>
-                            <z>1</z>
+                            <x>0,8333334</x>
+                            <y>0,8333334</y>
+                            <z>1,1111112</z>
                           </scale>
                         </component>
                         <component>
@@ -4917,7 +4935,7 @@
                             <b>255</b>
                             <a>255</a>
                           </color>
-                          <screenSizeX>1440</screenSizeX>
+                          <screenSizeX>1600</screenSizeX>
                           <screenSizeY>900</screenSizeY>
                           <selectedVariables></selectedVariables>
                         </component>
@@ -4934,8 +4952,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>765</x>
-                        <y>480</y>
+                        <x>850,00006</x>
+                        <y>533,3334</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -4944,9 +4962,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,75</x>
-                        <y>0,75</y>
-                        <z>1</z>
+                        <x>0,8333334</x>
+                        <y>0,8333334</y>
+                        <z>1,1111112</z>
                       </scale>
                     </component>
                     <component>
@@ -4960,7 +4978,7 @@
                         <b>185</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1440</screenSizeX>
+                      <screenSizeX>1600</screenSizeX>
                       <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
@@ -4978,8 +4996,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>820</x>
-                            <y>485</y>
+                            <x>911,11115</x>
+                            <y>538,8889</y>
                             <z>0</z>
                           </position>
                           <rotation>
@@ -4988,9 +5006,9 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,75</x>
-                            <y>0,75</y>
-                            <z>1</z>
+                            <x>0,8333334</x>
+                            <y>0,8333334</y>
+                            <z>1,1111112</z>
                           </scale>
                         </component>
                         <component>
@@ -5005,7 +5023,7 @@
                             <b>255</b>
                             <a>255</a>
                           </color>
-                          <screenSizeX>1440</screenSizeX>
+                          <screenSizeX>1600</screenSizeX>
                           <screenSizeY>900</screenSizeY>
                           <selectedVariables></selectedVariables>
                         </component>
