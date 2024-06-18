@@ -18,6 +18,7 @@ public class Pickable : Component
     }
     
     public MeshRenderer Renderer = null;
+    public AnimatedMeshRenderer AnimatedRenderer = null;
     
     public PickableType Type;
     
@@ -32,6 +33,13 @@ public class Pickable : Component
                     Globals.PickingManager.Pickables.Add(this);
                 }
             }
+            else if (AnimatedRenderer != null)
+            {
+                if (AnimatedRenderer.IsVisible && AnimatedRenderer.Active)
+                {
+                    Globals.PickingManager.Pickables.Add(this);
+                }
+            }
             else
             {
                 Initialize();
@@ -42,7 +50,9 @@ public class Pickable : Component
     public override void Initialize()
     {
         Renderer = ParentObject.GetComponent<MeshRenderer>();
-        if (Renderer == null)
+        AnimatedRenderer = ParentObject.GetComponent<AnimatedMeshRenderer>();
+        
+        if (Renderer == null && AnimatedRenderer == null)
         {
             Active = false;
         }
@@ -83,6 +93,7 @@ public class Pickable : Component
         {
             ImGui.Checkbox("Pickable active", ref Active);
             ImGui.Text("Linked with MeshRenderer from object: " + Renderer?.ParentObject.Name);
+            ImGui.Text("Linked with AnimatedMeshRenderer from object: " + AnimatedRenderer?.ParentObject.Name);
             ImGui.Text("Selected type: " + Type);
             if (ImGui.Button("Change type"))
             {

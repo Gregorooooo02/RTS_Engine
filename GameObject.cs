@@ -312,7 +312,7 @@ public class GameObject
             loadPrefab = true;
         }
         ImGui.Text("");
-        Transform.Inspect();
+        Transform?.Inspect();
         for(int i = _components.Count  - 1;i >= 0;i--)
         {
             _components[i].Inspect();

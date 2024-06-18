@@ -80,7 +80,8 @@ public class AnimatedMeshRenderer : Component
         {
             LoadModel(model?.Element("path")?.Value, model?.Element("technique")?.Value);
         }
-        _skinnedModel.Deserialize(element);
+        
+        _skinnedModel.Deserialize(element.Element("animatedModel"));
     }
 
     public override void RemoveComponent()

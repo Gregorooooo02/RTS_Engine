@@ -52,7 +52,7 @@ public class AgentsManager
         { 
             foreach (Agent selectedUnit in SelectedUnits)
             {
-                selectedUnit.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(GameAction.DESELECT);
+                selectedUnit?.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(GameAction.DESELECT);
             }
             SelectedUnits.Clear();
         }

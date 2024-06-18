@@ -165,8 +165,18 @@ public class PickingManager
                  foreach (Pickable entity in Pickables)
                  {
                      if(entity.Type != Pickable.PickableType.Unit) continue;
-                     BoundingSphere sphere =
-                         entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                     BoundingSphere sphere = default;
+                     if (entity.Renderer != null)
+                     {
+                         sphere =
+                             entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);                         
+                     }
+                     else if (entity.AnimatedRenderer != null)
+                     {
+                         sphere =
+                             entity.AnimatedRenderer._skinnedModel.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                     }
+                     
                      float? dist = sphere.Intersects(ray.Value);
                      
                      if (dist.HasValue)
@@ -190,9 +200,19 @@ public class PickingManager
             {
                 foreach (Pickable entity in Pickables)
                 {
-                    if (entity.Type == Pickable.PickableType.Unit && frustum.Value.Intersects(entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix)))
+                    if (entity.Renderer != null)
                     {
-                        picked.Add(entity); 
+                        if (entity.Type == Pickable.PickableType.Unit && frustum.Value.Intersects(entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix)))
+                        {
+                            picked.Add(entity); 
+                        }    
+                    }
+                    else if (entity.AnimatedRenderer != null)
+                    {
+                        if (entity.Type == Pickable.PickableType.Unit && entity.AnimatedRenderer != null && frustum.Value.Intersects(entity.AnimatedRenderer._skinnedModel.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix)))
+                        {
+                            picked.Add(entity);
+                        }    
                     }
                 }
                 Globals.Renderer.PickingFrustum = frustum;

@@ -21,7 +21,7 @@ public class Camera : Component
     private float _cameraSpeed = 20.0f;
 
     private const float NearPlane = 0.5f;
-    private const float FarPlane = 2000.0f;
+    private const float FarPlane = 200000.0f;
 
     private float _aboveGroundOffset = 40.0f;
     private float currentHeight = -10f;

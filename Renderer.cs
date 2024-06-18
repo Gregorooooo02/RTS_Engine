@@ -504,7 +504,7 @@ public class Renderer
 
     private void DrawShadowMap(AnimatedMeshRenderer renderer)
     {
-        _shadowMapGenerator.Parameters["World"].SetValue(renderer.ParentObject.Transform.ModelMatrix);
+        _shadowMapGenerator.Parameters["World"].SetValue(Matrix.Identity);
         _shadowMapGenerator.Parameters["BoneTransforms"].SetValue(renderer._skinnedModel.AnimationController.SkinnedBoneTransforms);
         foreach (ModelMesh mesh in renderer._skinnedModel.SkinnedModels[renderer._skinnedModel.CurrentModelIndex].Model.Meshes)
         {

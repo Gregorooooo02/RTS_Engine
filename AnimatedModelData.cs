@@ -76,7 +76,7 @@ public class AnimatedModelData
         
         if (!IsMultiMesh) PassTextures(0);
         
-        Globals.MainEffect.Parameters["World"]?.SetValue(world);
+        Globals.MainEffect.Parameters["World"]?.SetValue(Matrix.Identity);
         Matrix temp = Matrix.Transpose(Matrix.Invert(world));
         Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
         Globals.MainEffect.Parameters["BoneTransforms"]?.SetValue(AnimationController.SkinnedBoneTransforms);
@@ -386,17 +386,15 @@ public class AnimatedModelData
         
         builder.Append("<path>" + ModelPath + "</path>");
         builder.Append("<technique>" + ShaderTechniqueName + "</technique>");
-
-        builder.Append("<animationController>");
         
         builder.Append("<speed>" + AnimationController.Speed + "</speed>");
         builder.Append("<currentClip>" + ActiveAnimationClip + "</currentClip>");
+        
         builder.Append("<translationInterpolation>" + AnimationController.TranslationInterpolation + "</translationInterpolation>");
         builder.Append("<orientationInterpolation>" + AnimationController.OrientationInterpolation + "</orientationInterpolation>");
         builder.Append("<scaleInterpolation>" + AnimationController.ScaleInterpolation + "</scaleInterpolation>");
-        builder.Append("<loop>" + AnimationController.LoopEnabled + "</loop>");
         
-        builder.Append("</animationController>");
+        builder.Append("<loop>" + AnimationController.LoopEnabled + "</loop>");
         
         return builder.ToString();
     }

@@ -79,12 +79,12 @@ public class SceneManager
                 Name = "Chairs"
             };
             missionRoot.AddChildObject(chairs);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1; i++)
             {
 #if _WINDOWS
                 chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
 #else
-                chairs.LoadPrefab("Prefabs/Chair.xml");
+                chairs.LoadPrefab("Prefabs/Minion.xml");
 #endif
 
                 Vector3 chairPos = chairs.Children.Last().Transform.Pos;

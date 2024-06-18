@@ -42,6 +42,7 @@ public class Agent : Component
 
     public Vector3 Position;
     public Vector2 Direction = Vector2.UnitX;
+    public float DirectionOffset = 0.0f;
     
     private AgentState _currentState;
     public Dictionary<State, AgentState> AgentStates = new();
@@ -55,6 +56,8 @@ public class Agent : Component
     public GameObject Icon = null;
     
     public MeshRenderer Renderer = null;
+    public AnimatedMeshRenderer AnimatedRenderer = null;
+    public int ActiveClip = 0;
 
     private readonly List<Point> _occupiedNodes = new();
 
@@ -68,16 +71,22 @@ public class Agent : Component
     {
         if(!Active || Globals.IsPaused)return;
         Position = ParentObject.Transform.ModelMatrix.Translation;
-        if (Renderer == null)
+        if (Renderer == null || AnimatedRenderer == null)
         {
             Renderer = ParentObject.GetComponent<MeshRenderer>();
-            if (Renderer == null)
+            AnimatedRenderer = ParentObject.GetComponent<AnimatedMeshRenderer>();
+            if (Renderer == null && AnimatedRenderer == null)
             {
                 Active = false;
                 return;
             }
         }
-        
+
+        if (AnimatedRenderer != null)
+        {
+            ActiveClip = AnimatedRenderer._skinnedModel.ActiveAnimationClip;
+        }
+
         if (!AgentData.Alive)
         {
             ParentObject.Active = false;
@@ -204,7 +213,7 @@ public class Agent : Component
         Direction = Vector2.Lerp(Direction,desiredDirection, Globals.DeltaTime * _turnSpeed);
         
         float angle = CivilianWander.AngleDegrees(Vector2.UnitY, Direction);
-        ParentObject.Transform.SetLocalRotationY(-angle);
+        ParentObject.Transform.SetLocalRotationY(-angle + DirectionOffset);
     }
     
 
@@ -422,6 +431,8 @@ public class Agent : Component
         
         builder.Append("<heightOffset>" + _heightOffset + "</heightOffset>");
         
+        builder.Append("<directionOffset>" + DirectionOffset + "</directionOffset>");
+        
         builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
         
         builder.Append("</component>");
@@ -436,6 +447,7 @@ public class Agent : Component
         AgentLayer = (LayerType)Enum.Parse(typeof(LayerType), element.Element("agentLayer")?.Value);
         _occupyDistance = float.TryParse(element.Element("separationDistance")?.Value, out float sep) ? sep : 1.0f;
         _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
+        DirectionOffset = float.TryParse(element.Element("directionOffset")?.Value, out float dir) ? dir : 0.0f;
         AttackingRadius = float.TryParse(element.Element("attackingRadius")?.Value, out float radius) ? radius : 1.0f;
         switch (Type)
         {
@@ -499,6 +511,7 @@ public class Agent : Component
             ImGui.DragFloat("Occupancy distance", ref _occupyDistance);
             ImGui.DragFloat("Attacking distance", ref AttackingRadius);
             ImGui.DragFloat("Height offset", ref _heightOffset);
+            ImGui.DragFloat("Direction offset", ref DirectionOffset, -180.0f, 180.0f);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
             ImGui.SameLine();

@@ -10,8 +10,8 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:../AnimationPipeline/bin/Debug/net6.0/AnimationPipeline.dll
 /reference:../AnimationPipeline/bin/Debug/net6.0/Animation.dll
+/reference:../AnimationPipeline/bin/Debug/net6.0/AnimationPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
