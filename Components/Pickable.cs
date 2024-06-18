@@ -13,6 +13,7 @@ public class Pickable : Component
         Unit,
         EnemyBuilding,
         Building,
+        BuildingBuilt,
         MissionSelect
     }
     

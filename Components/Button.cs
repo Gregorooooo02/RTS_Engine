@@ -17,6 +17,8 @@ public class Button : Component
     private Vector3 _scale = new();
 
     public string GameObjectName = "Root";
+
+    public bool IsPressed = false;
     
     public override void Update()
     {
@@ -54,6 +56,7 @@ public class Button : Component
                             && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
                         {
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
+                            IsPressed = true;
                             
                             if (_buttonAction == GameAction.TOGGLE_ACTIVE)
                             {
@@ -82,6 +85,10 @@ public class Button : Component
                                 _buttonAction = GameAction.CONFIRM;
                             }
                         }
+                    }
+                    else
+                    {
+                        IsPressed = false;
                     }
                 }
             }

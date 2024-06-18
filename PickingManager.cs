@@ -13,8 +13,14 @@ public class PickingManager
     public bool EnemyPickingActive = false;
     public bool GroundPickingActive = false;
     
-    public bool PlayerBuildingPickingActive = true;
     public bool PlayerMissionSelectPickingActive = true;
+    
+    public bool PlayerBuildingPickingActive = true;
+    public bool PlayerBuildingUiActive = true;
+    
+    public bool PlayerBuildingBuiltPickingActive = true;
+    public bool PlayerBuildingUiBuiltActive = true;
+    
     public readonly List<Pickable> Pickables = new();
     public bool IncludeZeroDist = false;
     private const int HoldThreshold = 5;
@@ -247,7 +253,7 @@ public class PickingManager
     public Pickable PickBuilding()
     {
         PickedBuilding = false;
-        if (!PlayerBuildingPickingActive) return null;
+        if (!PlayerBuildingPickingActive || !PlayerBuildingBuiltPickingActive) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED })
         {
@@ -324,6 +330,17 @@ public class PickingManager
         {
             Building temp = pickedBuilding.ParentObject.GetComponent<Building>();
             temp?.OnClick();
+        }
+    }
+
+    public void CheckForBuiltBuildingSelection()
+    {
+        Pickable pickedBuilding = Globals.PickingManager.PickBuilding();
+
+        if (pickedBuilding is { Type : Pickable.PickableType.BuildingBuilt })
+        {
+            Building temp = pickedBuilding.ParentObject.Parent.GetComponent<Building>();
+            temp?.OnClickBuilt();
         }
     }
     

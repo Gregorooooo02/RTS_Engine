@@ -133,7 +133,7 @@ public class AnimatedModelData
         AnimationController.OrientationInterpolation = InterpolationMode.Linear;
         AnimationController.ScaleInterpolation = InterpolationMode.Linear;
         
-        ActiveAnimationClip = 1;
+        ActiveAnimationClip = 0;
         AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
     }
 

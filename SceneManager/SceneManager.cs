@@ -82,6 +82,13 @@ public class SceneManager
         
         Debug.WriteLine("Added units");
         AddScene(missionScene);
+        
+        Globals.PickingManager.SinglePickingActive = true;
+        Globals.PickingManager.BoxPickingActive = true;
+        Globals.PickingManager.GroundPickingActive = true;
+        Globals.PickingManager.EnemyPickingActive = true;
+        ChangeScene(2);
+        Globals.AgentsManager.Initialize();
     }
 
     public void AddScene(Scene scene)
@@ -109,13 +116,7 @@ public class SceneManager
         
         if (InputManager.Instance.GetAction(GameAction.CREATE_MISSION)?.state == ActionState.RELEASED)
         {
-            Globals.PickingManager.SinglePickingActive = true;
-            Globals.PickingManager.BoxPickingActive = true;
-            Globals.PickingManager.GroundPickingActive = true;
-            Globals.PickingManager.EnemyPickingActive = true;
             CreateMissionScene();
-            ChangeScene(2);
-            Globals.AgentsManager.Initialize();
         }
     }
 
