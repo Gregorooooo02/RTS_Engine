@@ -822,7 +822,7 @@
                   <active>True</active>
                   <position>
                     <x>57</x>
-                    <y>0,1</y>
+                    <y>0,8</y>
                     <z>23,3</z>
                   </position>
                   <rotation>
@@ -831,9 +831,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>2</x>
-                    <y>2</y>
-                    <z>2</z>
+                    <x>0,25</x>
+                    <y>0,25</y>
+                    <z>0,25</z>
                   </scale>
                 </component>
                 <component>
@@ -850,7 +850,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>sand</path>
+                    <path>Env/piaskow</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -864,9 +864,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>2,4</x>
-                        <y>0,1</y>
-                        <z>-2,6</z>
+                        <x>24,4</x>
+                        <y>-3,3</y>
+                        <z>-12,1</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -874,9 +874,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,5</x>
-                        <y>0,5</y>
-                        <z>0,5</z>
+                        <x>4</x>
+                        <y>4</y>
+                        <z>4</z>
                       </scale>
                     </component>
                     <component>
@@ -4518,6 +4518,8 @@
           <keyboardControl>False</keyboardControl>
           <mouseControl>False</mouseControl>
           <scrollControl>False</scrollControl>
+          <aboveGroundOffset>20</aboveGroundOffset>
+          <heightLerpSpeed>6</heightLerpSpeed>
         </component>
         <component>
           <type>MeshRenderer</type>
@@ -4621,7 +4623,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>False</useLocal>
-                  <contents>236</contents>
+                  <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
                     <r>255</r>
@@ -4706,7 +4708,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>False</useLocal>
-                  <contents>7</contents>
+                  <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
                     <r>255</r>
