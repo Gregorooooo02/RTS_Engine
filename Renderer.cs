@@ -15,7 +15,7 @@ public class Renderer
     private readonly Texture2D _blank;
     #endif
     
-    private static readonly int ShadowMapSize = 4096;
+    private static readonly int ShadowMapSize = 8192;
     private readonly List<Agent> _drawnEnemies = new();
     
     private readonly Effect _shadowMapGenerator;
@@ -424,9 +424,10 @@ public class Renderer
     
     private void DrawShadows()
     {
+        
         float sqrtZoom = MathF.Sqrt(Globals.ZoomDegrees);
         float offset = -sqrtZoom * Globals.ZoomDegrees * 0.2f - 45;
-        float size = sqrtZoom * Globals.ZoomDegrees * 0.62f;
+        float size = sqrtZoom * Globals.ZoomDegrees * 0.77f + 50;
         Vector3 lightPos = Globals.ViewPos + new Vector3(offset, 15, offset);
         _lightViewProjection = Matrix.CreateLookAt(lightPos, lightPos + new Vector3(0.5f,-1.0f,0.5f), Vector3.Up) *
                                Matrix.CreateOrthographic(size, size, 50.0f, 500 + Globals.ZoomDegrees * 10.5f);
