@@ -1842,7 +1842,7 @@
 /processorParam:BakeMeshTransforms=True
 /processorParam:GenerateTangentFrame=False
 /processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=1
+/processorParam:ModelScale=0.001
 /build:marker/marker.fbx
 
 #begin marker/metalness.png
@@ -2150,18 +2150,6 @@
 /processorParam:TextureFormat=Color
 /build:peasant/albedo.png
 
-#begin peasant/albedo.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:peasant/albedo.png
-
 #begin peasant/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2173,30 +2161,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:peasant/ao.png
-
-#begin peasant/ao.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:peasant/ao.png
-
-#begin peasant/normal.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:peasant/normal.png
 
 #begin peasant/normal.png
 /importer:TextureImporter
@@ -2228,18 +2192,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:peasant/peasant.fbx
-
-#begin peasant/roughness.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:peasant/roughness.png
 
 #begin peasant/roughness.png
 /importer:TextureImporter

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
   <name>Marker</name>
-  <active>False</active>
+  <active>True</active>
   <components>
     <component>
       <type>Transform</type>
@@ -12,14 +12,14 @@
         <z>0</z>
       </position>
       <rotation>
-        <x>-45</x>
+        <x>-90</x>
         <y>0</y>
         <z>0</z>
       </rotation>
       <scale>
-        <x>0,01</x>
-        <y>0,01</y>
-        <z>0,01</z>
+        <x>0,1</x>
+        <y>0,1</y>
+        <z>0,1</z>
       </scale>
     </component>
     <component>
