@@ -18,6 +18,7 @@ public class AnimatedModelData
     public readonly List<SkinnedModel> SkinnedModels = new();
     public AnimationController AnimationController;
     public int ActiveAnimationClip;
+    public int PreviousAnimationClip;
     
     public string ModelPath;
     public BoundingSphere BoundingSphere;
@@ -107,7 +108,7 @@ public class AnimatedModelData
     {
         if (ChangedClip)
         {
-            AnimationController.CrossFade(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip], TimeSpan.FromSeconds(0.5f));
+            AnimationController.CrossFade(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip], TimeSpan.FromSeconds(0.1f));
             ChangedClip = false;
         }
     }
@@ -135,8 +136,16 @@ public class AnimatedModelData
         
         AnimationController.LoopEnabled = true;
         
-        ActiveAnimationClip = 0;
-        AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
+        if (SkinnedModels[CurrentModelIndex].AnimationClips.Count > 4)
+        {
+            ActiveAnimationClip = 2;
+            AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
+        }
+        else
+        {
+            ActiveAnimationClip = 0;
+            AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);    
+        }
     }
 
     private void CalculateBoundingSphere()

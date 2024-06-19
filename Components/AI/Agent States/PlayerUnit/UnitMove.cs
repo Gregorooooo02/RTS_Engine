@@ -27,12 +27,16 @@ public class UnitMove : AgentState
         PlayerUnitData data = (PlayerUnitData)agent.AgentData;
         if (data.Target != null && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
+            agent.ActiveClip = 0;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             _pathCompleted = false;
             return attack;
         }
         
         if (_pathCompleted && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
         {
+            agent.ActiveClip = 2;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             _pathCompleted = false;
             return value;
         }
@@ -45,6 +49,8 @@ public class UnitMove : AgentState
             _pathCompleted = false;
             if (end == null && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
             {
+                agent.ActiveClip = 2;
+                agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                 return idle;
             }
             _points = Pathfinding.PathToQueueOfVectors(end);
@@ -80,6 +86,8 @@ public class UnitMove : AgentState
                 if(_points.Count > 0)_currentPoint = _points.Dequeue();
                 else
                 {
+                    agent.ActiveClip = 2;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     _pathCompleted = true;
                 }
             }
@@ -90,6 +98,8 @@ public class UnitMove : AgentState
                     agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
                 {
                     //Repath
+                    agent.ActiveClip = 4;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     _repath = true;
                 }
             }

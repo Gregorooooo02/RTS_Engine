@@ -57,7 +57,14 @@ public class Agent : Component
     
     public MeshRenderer Renderer = null;
     public AnimatedMeshRenderer AnimatedRenderer = null;
-    public int ActiveClip = 0;
+    public int ActiveClip = 2;
+    
+    // **Unit animations**
+    // Attack - 0
+    // Death - 1
+    // Idle - 2
+    // Change to furniture - 3
+    // Move - 4
 
     private readonly List<Point> _occupiedNodes = new();
 
@@ -84,7 +91,7 @@ public class Agent : Component
 
         if (AnimatedRenderer != null)
         {
-            ActiveClip = AnimatedRenderer._skinnedModel.ActiveAnimationClip;
+            AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveClip;
         }
 
         if (!AgentData.Alive)

@@ -7,13 +7,13 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>83,08158</x>
-        <y>2</y>
-        <z>142,53291</z>
+        <x>80,022415</x>
+        <y>0</y>
+        <z>122,18081</z>
       </position>
       <rotation>
         <x>0</x>
-        <y>-1,5043162</y>
+        <y>170,56616</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -23,25 +23,14 @@
       </scale>
     </component>
     <component>
-      <type>MeshRenderer</type>
-      <active>True</active>
-      <model>
-        <path>krzeslo</path>
-        <technique>PBR</technique>
-      </model>
-    </component>
-    <component>
-      <type>Pickable</type>
-      <active>True</active>
-      <pickableType>Unit</pickableType>
-    </component>
-    <component>
       <type>Agent</type>
       <active>True</active>
       <agentType>PlayerUnit</agentType>
       <agentLayer>PLAYER</agentLayer>
       <separationDistance>1</separationDistance>
-      <heightOffset>2</heightOffset>
+      <attackingRadius>1</attackingRadius>
+      <heightOffset>1,7</heightOffset>
+      <directionOffset>0</directionOffset>
       <agentData>
         <hp>100</hp>
         <maxHp>100</maxHp>
@@ -54,7 +43,30 @@
         <maxAttackRange>2,5</maxAttackRange>
         <minPointDistance>0,5</minPointDistance>
         <repathDelay>0,5</repathDelay>
+        <isRanged>False</isRanged>
+        <projectileSpeed>25</projectileSpeed>
+        <projectileMinDistance>1</projectileMinDistance>
+        <projectileType>Arrow</projectileType>
       </agentData>
+    </component>
+    <component>
+      <type>AnimatedMeshRenderer</type>
+      <active>True</active>
+      <animatedModel>
+        <path>krzesloSkinned</path>
+        <technique>PBR_Skinned</technique>
+        <speed>0,5</speed>
+        <currentClip>2</currentClip>
+        <translationInterpolation>Linear</translationInterpolation>
+        <orientationInterpolation>Linear</orientationInterpolation>
+        <scaleInterpolation>Linear</scaleInterpolation>
+        <loop>True</loop>
+      </animatedModel>
+    </component>
+    <component>
+      <type>Pickable</type>
+      <active>True</active>
+      <pickableType>Unit</pickableType>
     </component>
   </components>
   <childObjects>
@@ -105,9 +117,9 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>272</x>
+                <x>362</x>
                 <y>740</y>
-                <z>0</z>
+                <z>0,1</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -144,7 +156,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>272</x>
+                    <x>362</x>
                     <y>740</y>
                     <z>0</z>
                   </position>
@@ -186,7 +198,7 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>275</x>
+                <x>365</x>
                 <y>770</y>
                 <z>0</z>
               </position>

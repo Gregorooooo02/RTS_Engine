@@ -22,10 +22,14 @@ public class UnitIdle : AgentState
         PlayerUnitData data = (PlayerUnitData)agent.AgentData;
         if (data.MovementScheduled && agent.AgentStates.TryGetValue(Agent.State.Move,out AgentState move))
         {
+            agent.ActiveClip = 4;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             return move;
         }
         if (data.Target != null && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
+            agent.ActiveClip = 0;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             return attack;
         }
         return this;

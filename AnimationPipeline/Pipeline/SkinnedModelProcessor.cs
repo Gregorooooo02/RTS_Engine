@@ -25,7 +25,7 @@ namespace AnimationPipeline.Pipeline
     /// This should be part of a Content Pipeline Extension Library project.
     ///
     /// </summary>
-    [ContentProcessor(DisplayName = "Model - XNAnimation")]
+    [ContentProcessor(DisplayName = "Model - Animation")]
     public class SkinnedModelProcessor : ContentProcessor<NodeContent, SkinnedModelContent>
     {
         private struct SplitTask

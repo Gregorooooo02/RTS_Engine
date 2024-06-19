@@ -12,6 +12,8 @@
 
 /reference:../AnimationPipeline/bin/Debug/net6.0/Animation.dll
 /reference:../AnimationPipeline/bin/Debug/net6.0/AnimationPipeline.dll
+/reference:../AnimationPipeline/bin/Release/net6.0/AnimationPipeline.dll
+/reference:../AnimationPipeline/bin/Release/net6.0/Animation.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -1785,7 +1787,7 @@
 /processorParam:BakeMeshTransforms=True
 /processorParam:GenerateTangentFrame=False
 /processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=1
+/processorParam:ModelScale=0.01
 /build:krzesloSkinned/krzesloSkinned.fbx
 
 #begin krzesloSkinned/normal.png
@@ -1917,7 +1919,7 @@
 /processorParam:BakeMeshTransforms=True
 /processorParam:GenerateTangentFrame=False
 /processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=1
+/processorParam:ModelScale=0.0004
 /build:minion/minion.fbx
 
 #begin minion/normal.png

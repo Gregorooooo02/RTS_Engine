@@ -7,19 +7,19 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>71,35044</x>
+        <x>85,569275</x>
         <y>0</y>
-        <z>123,00001</z>
+        <z>102,78439</z>
       </position>
       <rotation>
         <x>0</x>
-        <y>-90,91538</y>
+        <y>-50,23242</y>
         <z>0</z>
       </rotation>
       <scale>
-        <x>0,02</x>
-        <y>0,02</y>
-        <z>0,02</z>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
       </scale>
     </component>
     <component>
@@ -30,6 +30,7 @@
       <separationDistance>1</separationDistance>
       <attackingRadius>1</attackingRadius>
       <heightOffset>4</heightOffset>
+      <directionOffset>90</directionOffset>
       <agentData>
         <hp>100</hp>
         <maxHp>100</maxHp>
@@ -54,8 +55,8 @@
       <animatedModel>
         <path>minion</path>
         <technique>PBR_Skinned</technique>
-        <speed>1</speed>
-        <currentClip>0</currentClip>
+        <speed>0,5</speed>
+        <currentClip>2</currentClip>
         <translationInterpolation>Linear</translationInterpolation>
         <orientationInterpolation>Linear</orientationInterpolation>
         <scaleInterpolation>Linear</scaleInterpolation>
@@ -118,7 +119,7 @@
               <position>
                 <x>272</x>
                 <y>740</y>
-                <z>0,5</z>
+                <z>0,8000001</z>
               </position>
               <rotation>
                 <x>0</x>

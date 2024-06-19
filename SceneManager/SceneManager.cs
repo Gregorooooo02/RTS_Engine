@@ -74,24 +74,33 @@ public class SceneManager
 
             Console.WriteLine("Added Civilians");
 
+            GameObject candles = new()
+            {
+                Name = "Candles"
+            };
+            
             GameObject chairs = new()
             {
                 Name = "Chairs"
             };
+            
+            missionRoot.AddChildObject(candles);
             missionRoot.AddChildObject(chairs);
             for (int i = 0; i < 1; i++)
             {
 #if _WINDOWS
-                chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
+                chairs.LoadPrefab(Globals.MainPath + "/Prefabs/candles.xml");
 #else
-                chairs.LoadPrefab("Prefabs/Minion.xml");
+                candles.LoadPrefab("Prefabs/Minion.xml");
+                chairs.LoadPrefab("Prefabs/Chair.xml");
 #endif
 
-                Vector3 chairPos = chairs.Children.Last().Transform.Pos;
-                Vector2 posXZ = new(chairPos.X, chairPos.Z + 2 * i);
+                Vector3 unitPos = candles.Children.Last().Transform.Pos;
+                Vector2 posXZ = new(unitPos.X, unitPos.Z + 2 * i);
 
                 var height = PickingManager.InterpolateWorldHeight(posXZ, currentWorld);
-                chairs.Children.Last().Transform.Move(new Vector3(0, height, 2 * i));
+                candles.Children.Last().Transform.Move(new Vector3(0, height + 4, 2 * i));
+                chairs.Children.Last().Transform.Move(new Vector3(0, height + 2, 2 * i));
             }
 
             Debug.WriteLine("Added units");

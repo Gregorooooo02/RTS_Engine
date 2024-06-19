@@ -34,12 +34,16 @@ public class UnitAttack : AgentState
         if (data.MovementScheduled && agent.AgentStates.TryGetValue(Agent.State.Move,out AgentState move))
         {
             data.Target = null;
+            agent.ActiveClip = 4;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             return move;
         }
         if ((data.Target == null || !data.Target.AgentData.Alive) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
         {
             //TODO: Implement retargeting here
             data.Target = null;
+            agent.ActiveClip = 2;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             return idle;
         }
         
@@ -83,6 +87,8 @@ public class UnitAttack : AgentState
                 //If it's too far, walk to target
                 if (_SearchNearby)
                 {
+                    agent.ActiveClip = 4;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     _SearchNearby = false;
                     Point? newPoint = Pathfinding.GetFirstNearbyFreePoint(target, agent.ID);
                     if (newPoint.HasValue)
@@ -91,6 +97,8 @@ public class UnitAttack : AgentState
                     }
                     else if(agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState exit))
                     {
+                        agent.ActiveClip = 2;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         return exit;
                     }
                     else
@@ -115,6 +123,9 @@ public class UnitAttack : AgentState
             else if (dist < data.MinAttackRange)
             {
                 //If it's to close, walk away from target
+                agent.ActiveClip = 4;
+                agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                
                 float awayDist = data.MaxAttackRange;
                 Vector2 offset = new Vector2(location.X - target.X, location.Y - target.Y);
                 offset.Normalize();
@@ -150,6 +161,8 @@ public class UnitAttack : AgentState
                         int id = Globals.Renderer.WorldRenderer.MapNodes[end.Location.X, end.Location.Y].AllyOccupantId;
                         if (id != agent.ID && id != 0)
                         {
+                            agent.ActiveClip = 4;
+                            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                             _repath = true;
                             _SearchNearby = true;
                         }
@@ -157,6 +170,8 @@ public class UnitAttack : AgentState
                     if(_points.Count > 0)_currentPoint = _points.Dequeue();
                     else
                     {
+                        agent.ActiveClip = 2;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         _pathCompleted = true;
                     }
                 }
@@ -167,6 +182,8 @@ public class UnitAttack : AgentState
                         agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
                     {
                         //Repath
+                        agent.ActiveClip = 4;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         _repath = true;
                     }
                 }
@@ -181,6 +198,8 @@ public class UnitAttack : AgentState
                     if (_attackTimer >= data.AttackDelay)
                     {
                         //Successful attack
+                        agent.ActiveClip = 0;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         _attackTimer = 0;
                         if (data.Target.Type == Agent.AgentType.Soldier)
                         {

@@ -19,7 +19,7 @@ public class AnimatedMeshRenderer : Component
         ParentObject = parentObject;
         Initialize();
     }
-
+    
     public AnimatedMeshRenderer() {}
 
     public override void Update()

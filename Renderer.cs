@@ -387,11 +387,13 @@ public class Renderer
 #if RELEASE
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        //Globals.MainEffect.Parameters["DepthBias"].SetValue(0.02f);
-        //Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
-        foreach (MeshRenderer renderer in Meshes)
+        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
+        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
+        
+        Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
+        foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
-            renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            renderer._skinnedModel.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);

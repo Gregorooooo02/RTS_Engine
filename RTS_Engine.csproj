@@ -57,6 +57,7 @@
     <EmbeddedResource Remove="AnimationPipeline\**" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DLLS\" />
     <Folder Include="Prefabs\" />
   </ItemGroup>
   <ItemGroup>
