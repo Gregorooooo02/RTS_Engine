@@ -208,7 +208,7 @@ public class Renderer
         
         //--------------------Render the scene into the render target--------------------
         Globals.GraphicsDevice.SetRenderTarget(_sceneRenderTarget);
-        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(32,32,32,255), 1.0f,0);
+        Globals.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,new Color(0,0,0,255), 1.0f,0);
         DrawMeshes();
         DrawAnimatedMeshes();
         DrawWorld();
@@ -216,7 +216,6 @@ public class Renderer
         //--------------------------------------------------------------------------------
 
         RenderOutlines();
-        RenderAnimatedOutlines();
 
         //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
         Globals.GraphicsDevice.SetRenderTarget(null);
