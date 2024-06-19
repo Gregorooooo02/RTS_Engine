@@ -114,6 +114,7 @@ public class SceneManager
             Globals.PickingManager.BoxPickingActive = true;
             Globals.PickingManager.GroundPickingActive = true;
             Globals.PickingManager.EnemyPickingActive = true;
+            Globals.FogManager.FogActive = true;
             ChangeScene(_scenes.Count - 1);
             Globals.AgentsManager.Initialize();
         });
@@ -139,6 +140,7 @@ public class SceneManager
                 Globals.PickingManager.BoxPickingActive = false;
                 Globals.PickingManager.GroundPickingActive = false;
                 Globals.PickingManager.EnemyPickingActive = false;
+                Globals.FogManager.FogActive = false;
             }
         }
         

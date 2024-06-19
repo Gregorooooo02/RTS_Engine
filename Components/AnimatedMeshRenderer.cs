@@ -67,6 +67,8 @@ public class AnimatedMeshRenderer : Component
         builder.Append("<type>AnimatedMeshRenderer</type>");
         
         builder.Append("<active>" + Active + "</active>");
+        
+        builder.Append("<applyFog>" + ApplyFog +"</applyFog>");
 
         builder.Append("<animatedModel>" + _skinnedModel.Serialize() + "</animatedModel>");
         
@@ -78,6 +80,7 @@ public class AnimatedMeshRenderer : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        ApplyFog = !bool.TryParse(element.Element("applyFog")?.Value, out bool fog) || fog;
         XElement model = element.Element("animatedModel");
         if (model?.Element("path") == null)
         {
@@ -125,6 +128,7 @@ public class AnimatedMeshRenderer : Component
         if (ImGui.CollapsingHeader("Animated Mesh Renderer"))
         {
             ImGui.Checkbox("Animated Mesh Active", ref Active);
+            ImGui.Checkbox("Apply fog", ref ApplyFog);
             ImGui.Text("Current animated mesh: " + _skinnedModel);
 
             var animationControllerSpeed = _skinnedModel.AnimationController.Speed;

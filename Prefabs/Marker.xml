@@ -7,9 +7,9 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>0</x>
-        <y>1000000</y>
-        <z>0</z>
+        <x>104,78612</x>
+        <y>100000</y>
+        <z>106,83927</z>
       </position>
       <rotation>
         <x>-90</x>
@@ -31,6 +31,7 @@
     <component>
       <type>AnimatedMeshRenderer</type>
       <active>True</active>
+      <applyFog>False</applyFog>
       <animatedModel>
         <path>marker</path>
         <technique>PBR_Skinned</technique>
