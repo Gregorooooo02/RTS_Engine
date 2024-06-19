@@ -37,6 +37,7 @@ public class UnitMove : AgentState
         {
             agent.ActiveClip = 2;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
             _pathCompleted = false;
             return value;
         }
@@ -51,6 +52,7 @@ public class UnitMove : AgentState
             {
                 agent.ActiveClip = 2;
                 agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                 return idle;
             }
             _points = Pathfinding.PathToQueueOfVectors(end);
@@ -88,6 +90,7 @@ public class UnitMove : AgentState
                 {
                     agent.ActiveClip = 2;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                     _pathCompleted = true;
                 }
             }
@@ -100,6 +103,7 @@ public class UnitMove : AgentState
                     //Repath
                     agent.ActiveClip = 4;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                     _repath = true;
                 }
             }

@@ -14,6 +14,8 @@ public class CivilianStart : AgentState
     {
         if (agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState value))
         {
+            agent.ActiveCivilianClip = 4;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
             return value;
         }
         return this;

@@ -66,11 +66,11 @@ public class Agent : Component
     // Change to furniture - 3
     // Move - 4
 
-    public int ActiveCivilianClip = 2;
+    public int ActiveCivilianClip = 1;
     // **Civilian animations**
-    // Wander - 1
-    // Idle - 2
-    // Flee - 3
+    // Flee - 2
+    // Idle - 3
+    // Wander - 4
     
     private readonly List<Point> _occupiedNodes = new();
 

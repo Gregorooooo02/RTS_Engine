@@ -36,6 +36,7 @@ public class UnitAttack : AgentState
             data.Target = null;
             agent.ActiveClip = 4;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
             return move;
         }
         if ((data.Target == null || !data.Target.AgentData.Alive) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
@@ -44,6 +45,7 @@ public class UnitAttack : AgentState
             data.Target = null;
             agent.ActiveClip = 2;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
             return idle;
         }
         
@@ -89,6 +91,7 @@ public class UnitAttack : AgentState
                 {
                     agent.ActiveClip = 4;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                     _SearchNearby = false;
                     Point? newPoint = Pathfinding.GetFirstNearbyFreePoint(target, agent.ID);
                     if (newPoint.HasValue)
@@ -99,6 +102,7 @@ public class UnitAttack : AgentState
                     {
                         agent.ActiveClip = 2;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                         return exit;
                     }
                     else
@@ -125,6 +129,7 @@ public class UnitAttack : AgentState
                 //If it's to close, walk away from target
                 agent.ActiveClip = 4;
                 agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                 
                 float awayDist = data.MaxAttackRange;
                 Vector2 offset = new Vector2(location.X - target.X, location.Y - target.Y);
@@ -163,6 +168,7 @@ public class UnitAttack : AgentState
                         {
                             agent.ActiveClip = 4;
                             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                             _repath = true;
                             _SearchNearby = true;
                         }
@@ -172,6 +178,7 @@ public class UnitAttack : AgentState
                     {
                         agent.ActiveClip = 2;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                         _pathCompleted = true;
                     }
                 }
@@ -184,6 +191,7 @@ public class UnitAttack : AgentState
                         //Repath
                         agent.ActiveClip = 4;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                         _repath = true;
                     }
                 }

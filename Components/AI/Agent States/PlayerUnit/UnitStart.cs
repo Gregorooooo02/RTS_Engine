@@ -32,6 +32,7 @@ public class UnitStart : AgentState
         {
             agent.ActiveClip = 2;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
             return idle;
         }
         

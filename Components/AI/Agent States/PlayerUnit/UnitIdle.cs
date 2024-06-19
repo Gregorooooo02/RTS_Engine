@@ -24,6 +24,7 @@ public class UnitIdle : AgentState
         {
             agent.ActiveClip = 4;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
             return move;
         }
         if (data.Target != null && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
