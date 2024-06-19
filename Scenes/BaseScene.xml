@@ -822,7 +822,7 @@
                   <active>True</active>
                   <position>
                     <x>57</x>
-                    <y>0,8</y>
+                    <y>0,4</y>
                     <z>23,3</z>
                   </position>
                   <rotation>
@@ -1335,8 +1335,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>497</x>
-                        <y>147</y>
+                        <x>496</x>
+                        <y>146</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -1353,7 +1353,7 @@
                     <component>
                       <type>Puzzle</type>
                       <active>False</active>
-                      <sprite>sprite</sprite>
+                      <sprite>UI/PuzzleSprites/sawmillPuzzle</sprite>
                       <gridSize>3</gridSize>
                       <pieceSize>200</pieceSize>
                       <rimSize>3</rimSize>
@@ -1371,7 +1371,7 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>690</x>
+                            <x>700</x>
                             <y>800</y>
                             <z>0</z>
                           </position>
@@ -1415,7 +1415,7 @@
                               <type>Transform</type>
                               <active>True</active>
                               <position>
-                                <x>745</x>
+                                <x>755</x>
                                 <y>812</y>
                                 <z>0</z>
                               </position>
@@ -1898,9 +1898,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>2</x>
-                    <y>2</y>
-                    <z>2</z>
+                    <x>0,25</x>
+                    <y>0,25</y>
+                    <z>0,25</z>
                   </scale>
                 </component>
                 <component>
@@ -1917,7 +1917,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>sand</path>
+                    <path>Env/piaskow</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -1941,9 +1941,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,5</x>
-                        <y>0,5</y>
-                        <z>0,5</z>
+                        <x>4</x>
+                        <y>4</y>
+                        <z>4</z>
                       </scale>
                     </component>
                     <component>
@@ -2402,8 +2402,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>497</x>
-                        <y>147</y>
+                        <x>496</x>
+                        <y>146</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -2420,7 +2420,7 @@
                     <component>
                       <type>Puzzle</type>
                       <active>False</active>
-                      <sprite>knight/albedo</sprite>
+                      <sprite>UI/PuzzleSprites/dmgPuzzle</sprite>
                       <gridSize>3</gridSize>
                       <pieceSize>200</pieceSize>
                       <rimSize>3</rimSize>
@@ -2438,7 +2438,7 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>690</x>
+                            <x>700</x>
                             <y>800</y>
                             <z>0</z>
                           </position>
@@ -2482,7 +2482,7 @@
                               <type>Transform</type>
                               <active>True</active>
                               <position>
-                                <x>745</x>
+                                <x>755</x>
                                 <y>812</y>
                                 <z>0</z>
                               </position>
@@ -2948,7 +2948,7 @@
               </childObjects>
             </object>
             <object>
-              <name>Tent_Place</name>
+              <name>Health_Place</name>
               <active>True</active>
               <components>
                 <component>
@@ -2965,9 +2965,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>0,25</x>
+                    <y>0,25</y>
+                    <z>0,25</z>
                   </scale>
                 </component>
                 <component>
@@ -2979,7 +2979,7 @@
                   <type>MeshRenderer</type>
                   <active>True</active>
                   <model>
-                    <path>sand</path>
+                    <path>Env/piaskow</path>
                     <technique>PBR</technique>
                   </model>
                 </component>
@@ -3008,9 +3008,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>1</x>
-                        <y>1</y>
-                        <z>1</z>
+                        <x>4</x>
+                        <y>4</y>
+                        <z>4</z>
                       </scale>
                     </component>
                     <component>
@@ -3487,7 +3487,7 @@
                     <component>
                       <type>Puzzle</type>
                       <active>False</active>
-                      <sprite>krzeslo/albedo</sprite>
+                      <sprite>UI/PuzzleSprites/healthPuzzle</sprite>
                       <gridSize>4</gridSize>
                       <pieceSize>150</pieceSize>
                       <rimSize>3</rimSize>
@@ -3505,7 +3505,7 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>690</x>
+                            <x>700</x>
                             <y>800</y>
                             <z>0</z>
                           </position>
@@ -3549,7 +3549,7 @@
                               <type>Transform</type>
                               <active>True</active>
                               <position>
-                                <x>745</x>
+                                <x>755</x>
                                 <y>812</y>
                                 <z>0</z>
                               </position>
@@ -3826,8 +3826,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -3997,8 +3997,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
