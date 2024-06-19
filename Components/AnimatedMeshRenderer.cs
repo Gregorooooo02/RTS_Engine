@@ -13,6 +13,8 @@ public class AnimatedMeshRenderer : Component
 {
     public AnimatedModelData _skinnedModel {get; private set;}
     public bool IsVisible { get; private set; } = true;
+
+    public bool AdditionalVisibility = true;
     
     //TODO: Add serialization, deserialization and Inspect checkbox for boolean below
     public bool ApplyFog = true;
@@ -29,19 +31,19 @@ public class AnimatedMeshRenderer : Component
     {
         if (Active)
         {
-            if (_skinnedModel.IsInView(ParentObject.Transform.ModelMatrix))
+            if (_skinnedModel.IsInView(ParentObject.Transform.ModelMatrix) && AdditionalVisibility)
             {
                 IsVisible = true;
                 Globals.Renderer.AnimatedMeshes.Add(this);
-                if (Globals.IsPaused) return;
-                _skinnedModel.UpdateClip();
-                _skinnedModel.AnimationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
-                _skinnedModel.AnimationController.SkinnedBoneTransforms.CopyTo(_skinnedModel.BoneTransforms, 0);
             }
             else
             {
                 IsVisible = false;
             }
+            if (Globals.IsPaused) return;
+            _skinnedModel.UpdateClip();
+            _skinnedModel.AnimationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
+            _skinnedModel.AnimationController.SkinnedBoneTransforms.CopyTo(_skinnedModel.BoneTransforms, 0);
         }
     }
 
@@ -129,6 +131,7 @@ public class AnimatedMeshRenderer : Component
         {
             ImGui.Checkbox("Animated Mesh Active", ref Active);
             ImGui.Checkbox("Apply fog", ref ApplyFog);
+            ImGui.Text("Additional visibility: " + AdditionalVisibility);
             ImGui.Text("Current animated mesh: " + _skinnedModel);
 
             var animationControllerSpeed = _skinnedModel.AnimationController.Speed;

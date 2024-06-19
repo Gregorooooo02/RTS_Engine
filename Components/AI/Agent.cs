@@ -144,6 +144,11 @@ public class Agent : Component
         if (AgentLayer == LayerType.ENEMY)
         {
             CheckFieldOfVision();
+            if (Type != AgentType.EnemyBuilding && AnimatedRenderer != null)
+            {
+                Console.WriteLine(ParentObject.Name);
+                AnimatedRenderer.AdditionalVisibility = Globals.FogManager.IsVisible(Position);
+            }
         }
         
         try
