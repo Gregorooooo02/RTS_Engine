@@ -33,6 +33,12 @@ public class CivilianFlee : AgentState
 
     public override AgentState UpdateState(Agent agent)
     {
+        if (agent.ActiveCivilianClip != 2)
+        {
+            agent.ActiveCivilianClip = 2;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+        }
+        
         WandererData data = (WandererData)agent.AgentData;
         Vector2 target = new Vector2(Target.Position.X, Target.Position.Z);
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);

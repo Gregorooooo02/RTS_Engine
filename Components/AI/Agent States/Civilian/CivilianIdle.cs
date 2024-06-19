@@ -22,6 +22,12 @@ public class CivilianIdle : AgentState
 
     public override AgentState UpdateState(Agent agent)
     {
+        if (agent.ActiveCivilianClip != 3)
+        {
+            agent.ActiveCivilianClip = 3;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+        }
+        
         WandererData data = (WandererData)agent.AgentData;
         if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
         {

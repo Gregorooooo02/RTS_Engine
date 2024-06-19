@@ -61,6 +61,12 @@ public class CivilianWander : AgentState
     
     public override AgentState UpdateState(Agent agent)
     {
+        if (agent.ActiveCivilianClip != 4)
+        {
+            agent.ActiveCivilianClip = 4;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+        }
+        
         Vector2 agentPosition = new Vector2(agent.Position.X, agent.Position.Z);
         WandererData data = (WandererData)agent.AgentData;
         if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
