@@ -162,10 +162,16 @@ public class CivilianFlee : AgentState
             
             Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
             Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(location + currentOffset, -direction);
-            
+
+            if (endPoint.X < 0 || endPoint.Y < 0 || endPoint.X >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) ||
+                endPoint.Y >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(1))
+            {
+                _end = null;
+                return this;
+            }
             if (!Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X, (int)endPoint.Y].Available)
                 _searchNearby = true;
-            
+        
             if (_searchNearby)
             {
                 _searchNearby = false;
@@ -177,15 +183,16 @@ public class CivilianFlee : AgentState
             }
             goal ??= new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
             start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
-            
+        
             _destination = location + currentOffset;
-            
+        
             System.Threading.Tasks.Task.Factory.StartNew(() =>
             { 
                 _end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
                 _pathingCompleted = true;
             });
             _pathingScheduled = true;
+        
         }
 
         if (_points != null && !_pathCompleted && !_pathingScheduled)

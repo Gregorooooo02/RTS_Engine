@@ -11,7 +11,7 @@ static const float PI = 3.14159265359;
 static const float3 dirLightDirection = float3(0.5,-1,0.5);
 static const float3 dirLightColor = float3(1, 1, 0.6);
 static const float dirLightIntesity = 6.5;
-static const float ShadowMapSize = 4096;
+static const float ShadowMapSize = 8192;
 static const float fogScale = 1.0 / 4096.0;
 static const float DepthBias = 0.005;
 
@@ -38,6 +38,7 @@ cbuffer BoneTransforms : register(b2)
 };
 
 float gamma;
+bool applyFog;
 //float DepthBias;
 //float ShadowMapSize;
 //float dirLightIntesity;
@@ -342,13 +343,16 @@ VertexShaderOutput PBR_Instanced_VS(VertexShaderInput input, InstanceData data)
 
 float4 PBR_PS(VertexShaderOutput input) : COLOR
 {
-    float2 fogCoords = input.WorldPosition.xz * fogScale;
-    float fogValue = tex2D(FogDiscovery, fogCoords).r + tex2D(FogVisibility, fogCoords).r;
-    if (fogValue < 0.0001f)
+    float fogValue = 1.0f;
+    if (applyFog == true)
     {
-        return float4(0, 0, 0, 1);
-    }
-       
+        float2 fogCoords = input.WorldPosition.xz * fogScale;
+        fogValue = tex2D(FogDiscovery, fogCoords).r + tex2D(FogVisibility, fogCoords).r;
+        if (fogValue < 0.0001f)
+        {
+            return float4(0, 0, 0, 1);
+        }
+    }   
     float3 albedo = pow(tex2D(albedoSampler, input.TexCoords).rgb, gamma);
     float metallic = tex2D(metalnessSampler, input.TexCoords).r;
     float roughness = tex2D(roughnessSampler, input.TexCoords).r;
