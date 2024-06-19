@@ -33,6 +33,7 @@ public class AnimatedMeshRenderer : Component
                 if (Globals.IsPaused) return;
                 _skinnedModel.UpdateClip();
                 _skinnedModel.AnimationController.Update(Globals.ElapsedGameTime, ParentObject.Transform.ModelMatrix);
+                _skinnedModel.AnimationController.SkinnedBoneTransforms.CopyTo(_skinnedModel.BoneTransforms, 0);
             }
             else
             {
@@ -49,6 +50,9 @@ public class AnimatedMeshRenderer : Component
     public override void Initialize()
     {
         _skinnedModel = AssetManager.DefaultAnimatedModel;
+        // Copy the bone transforms from the animation controller to the skinned model
+        _skinnedModel.BoneTransforms = new Matrix[_skinnedModel.AnimationController.SkinnedBoneTransforms.Length];
+        _skinnedModel.AnimationController.SkinnedBoneTransforms.CopyTo(_skinnedModel.BoneTransforms, 0);
     }
 
     public override string ComponentToXmlString()
@@ -98,7 +102,11 @@ public class AnimatedMeshRenderer : Component
 
     public void LoadModel(string modelPath, string technique = "PBR_Skinned")
     {
-        _skinnedModel = AssetManager.GetAnimatedModel(modelPath);
+        _skinnedModel = new AnimatedModelData(AssetManager.GetAnimatedModel(modelPath));
+        // Copy the bone transforms from the animation controller to the skinned model
+        _skinnedModel.BoneTransforms = new Matrix[_skinnedModel.AnimationController.SkinnedBoneTransforms.Length];
+        _skinnedModel.AnimationController.SkinnedBoneTransforms.CopyTo(_skinnedModel.BoneTransforms, 0);
+        
         _skinnedModel.ShaderTechniqueName = technique;
     }
 

@@ -177,6 +177,33 @@ namespace Animation.Controllers
             isPlaying = false;
         }
 
+        public AnimationController(AnimationController original)
+        {
+            skeleton = original.skeleton;
+            localBonePoses = new Pose[skeleton.Count];
+            skinnedBoneTransforms = new Matrix[skeleton.Count];
+            skeleton[0].CopyBindPoseTo(localBonePoses);
+
+            time = TimeSpan.Zero;
+            speed = 1.0f;
+            loopEnabled = true;
+            playbackMode = PlaybackMode.Forward;
+
+            blendWeight = 1.0f;
+
+            translationInterpolation = InterpolationMode.None;
+            orientationInterpolation = InterpolationMode.None;
+            scaleInterpolation = InterpolationMode.None;
+
+            crossFadeEnabled = false;
+            crossFadeInterpolationAmount = 0.0f;
+            crossFadeTime = TimeSpan.Zero;
+            crossFadeElapsedTime = TimeSpan.Zero;
+
+            hasFinished = false;
+            isPlaying = false;
+        }
+
         /// <inheritdoc />
         public void StartClip(AnimationClip animationClip)
         {

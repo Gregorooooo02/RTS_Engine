@@ -17,6 +17,9 @@ public class AnimatedModelData
     public int CurrentModelIndex;
     public readonly List<SkinnedModel> SkinnedModels = new();
     public AnimationController AnimationController;
+
+    public Matrix[] BoneTransforms;
+    
     public int ActiveAnimationClip;
     public int PreviousAnimationClip;
     
@@ -80,7 +83,7 @@ public class AnimatedModelData
         Globals.MainEffect.Parameters["World"]?.SetValue(Matrix.Identity);
         Matrix temp = Matrix.Transpose(Matrix.Invert(world));
         Globals.MainEffect.Parameters["normalMatrix"]?.SetValue(temp);
-        Globals.MainEffect.Parameters["BoneTransforms"]?.SetValue(AnimationController.SkinnedBoneTransforms);
+        Globals.MainEffect.Parameters["BoneTransforms"]?.SetValue(BoneTransforms);
         
         for (int i = 0; i < SkinnedModels[CurrentModelIndex].Model.Meshes.Count; i++)
         {
@@ -127,7 +130,9 @@ public class AnimatedModelData
         LoadModel(manager, modelPath);
         CalculateBoundingSphere();
         
+        BoneTransforms = new Matrix[SkinnedModels[CurrentModelIndex].SkeletonBones.Count];
         AnimationController = new AnimationController(SkinnedModels[CurrentModelIndex].SkeletonBones);
+        AnimationController.SkinnedBoneTransforms.CopyTo(BoneTransforms, 0);
         AnimationController.Speed = 0.5f;
         
         AnimationController.TranslationInterpolation = InterpolationMode.Linear;
@@ -137,7 +142,58 @@ public class AnimatedModelData
         AnimationController.LoopEnabled = true;
         
         ActiveAnimationClip = 0;
-        AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);    
+        AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
+        
+        BoneTransforms = new Matrix[SkinnedModels[CurrentModelIndex].SkeletonBones.Count];
+        ResetBoneTransforms();
+    }
+
+    public AnimatedModelData(AnimatedModelData original)
+    {
+        this.CurrentModelIndex = original.CurrentModelIndex;
+        this.SkinnedModels = new List<SkinnedModel>(original.SkinnedModels);
+        this.AnimationController = new AnimationController(original.AnimationController);
+        this.BoneTransforms = new Matrix[original.BoneTransforms.Length];
+        original.BoneTransforms.CopyTo(this.BoneTransforms, 0);
+        this.ActiveAnimationClip = original.ActiveAnimationClip;
+        this.PreviousAnimationClip = original.PreviousAnimationClip;
+        this.ModelPath = original.ModelPath;
+        this.BoundingSphere = original.BoundingSphere;
+        this.ShaderTechniqueName = original.ShaderTechniqueName;
+        this.Textures = new List<List<List<Texture2D>>>();
+        foreach (var textureList in original.Textures)
+        {
+            List<List<Texture2D>> temp = new List<List<Texture2D>>();
+            foreach (var list in textureList)
+            {
+                temp.Add(new List<Texture2D>(list));
+            }
+            this.Textures.Add(temp);
+        }
+        
+        this.ChangedClip = original.ChangedClip;
+        this.IsMultiMesh = original.IsMultiMesh;
+        this._lodUsed = original._lodUsed;
+        this._lodThresholds = new List<float>(original._lodThresholds);
+        
+        this.AnimationController.SkinnedBoneTransforms.CopyTo(this.BoneTransforms, 0);
+        this.AnimationController.Speed = original.AnimationController.Speed;
+        this.AnimationController.TranslationInterpolation = original.AnimationController.TranslationInterpolation;
+        this.AnimationController.OrientationInterpolation = original.AnimationController.OrientationInterpolation;
+        this.AnimationController.ScaleInterpolation = original.AnimationController.ScaleInterpolation;
+        this.AnimationController.LoopEnabled = original.AnimationController.LoopEnabled;
+        
+        this.ResetBoneTransforms();
+        
+        this.AnimationController.StartClip(this.SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
+    }
+
+    private void ResetBoneTransforms()
+    {
+        for (int i = 0; i < BoneTransforms.Length; i++)
+        {
+            BoneTransforms[i] = Matrix.Identity;
+        }
     }
 
     private void CalculateBoundingSphere()
