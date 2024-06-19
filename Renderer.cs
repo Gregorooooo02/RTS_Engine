@@ -427,7 +427,8 @@ public class Renderer
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (MeshRenderer renderer in Meshes)
         {
-            renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
+            Globals.MainEffect.Parameters["applyFog"]?.SetValue(renderer.ApplyFog);
+            if(renderer.ParentObject.Transform != null)renderer._model.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
@@ -460,6 +461,7 @@ public class Renderer
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
         {
+            Globals.MainEffect.Parameters["applyFog"]?.SetValue(renderer.ApplyFog);
             renderer._skinnedModel.Draw(renderer.ParentObject.Transform.ModelMatrix);
         }
 #elif DEBUG
