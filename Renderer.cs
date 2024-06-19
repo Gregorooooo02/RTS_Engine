@@ -162,7 +162,6 @@ public class Renderer
         //--------------------------------------------------------------------------------
         
         RenderOutlines();
-        RenderAnimatedOutlines();
         
         //--------------------Draw rendered scene target to screen while applying postprocessing--------------------
         Globals.GraphicsDevice.SetRenderTarget(null);
@@ -268,8 +267,29 @@ public class Renderer
             {
                 if (agent.Renderer != null)
                 {
+                    _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes"];
                     _outlineGenerator.Parameters["World"].SetValue(agent.ParentObject.Transform.ModelMatrix);
                     foreach (ModelMesh mesh in agent.Renderer._model.Models[agent.Renderer._model.CurrentModelIndex].Meshes)
+                    {
+                        //foreach (ModelMeshPart part in mesh.MeshParts)
+                        for(int i = 0;i < mesh.MeshParts.Count;i++)
+                        {
+                            var part = mesh.MeshParts[i];
+                            if (part.PrimitiveCount <= 0) continue;
+                            _outlineGenerator.CurrentTechnique.Passes[0].Apply();
+                            Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                            Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                        }
+                    } 
+                }
+
+                if (agent.AnimatedRenderer != null)
+                {
+                    _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes_Skinned"];
+                    _outlineGenerator.Parameters["World"].SetValue(Matrix.Identity);
+                    _outlineGenerator.Parameters["BoneTransforms"]?.SetValue(agent.AnimatedRenderer._skinnedModel.AnimationController.SkinnedBoneTransforms);
+                    foreach (ModelMesh mesh in agent.AnimatedRenderer._skinnedModel.SkinnedModels[agent.AnimatedRenderer._skinnedModel.CurrentModelIndex].Model.Meshes)
                     {
                         //foreach (ModelMeshPart part in mesh.MeshParts)
                         for(int i = 0;i < mesh.MeshParts.Count;i++)
@@ -293,7 +313,6 @@ public class Renderer
             Globals.SpriteBatch.End();
             
             Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes"];
             _drawnEnemies.Clear();
             foreach (Agent agent in Globals.AgentsManager.SelectedUnits)
             {
@@ -301,7 +320,7 @@ public class Renderer
                 if (data.Target is { Renderer: not null } && !_drawnEnemies.Contains(data.Target))
                 {
                     _drawnEnemies.Add(data.Target);
-                    
+                    _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes"];
                     _outlineGenerator.Parameters["World"].SetValue(data.Target.ParentObject.Transform.ModelMatrix);
                     foreach (ModelMesh mesh in data.Target.Renderer._model.Models[data.Target.Renderer._model.CurrentModelIndex].Meshes)
                     {
@@ -317,89 +336,32 @@ public class Renderer
                         }
                     } 
                 }
+                if (data.Target is { AnimatedRenderer: not null } && !_drawnEnemies.Contains(data.Target))
+                {
+                    _drawnEnemies.Add(data.Target);
+                    _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes_Skinned"];
+                    _outlineGenerator.Parameters["World"].SetValue(Matrix.Identity);
+                    _outlineGenerator.Parameters["BoneTransforms"]?.SetValue(data.Target.AnimatedRenderer._skinnedModel.AnimationController.SkinnedBoneTransforms);
+                    foreach (ModelMesh mesh in data.Target.AnimatedRenderer._skinnedModel.SkinnedModels[data.Target.AnimatedRenderer._skinnedModel.CurrentModelIndex].Model.Meshes)
+                    {
+                        //foreach (ModelMeshPart part in mesh.MeshParts)
+                        for(int i = 0;i < mesh.MeshParts.Count;i++)
+                        {
+                            var part = mesh.MeshParts[i];
+                            if (part.PrimitiveCount <= 0) continue;
+                            _outlineGenerator.CurrentTechnique.Passes[0].Apply();
+                            Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+                            Globals.GraphicsDevice.Indices = part.IndexBuffer;
+                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
+                        }
+                    } 
+                }
             }
-            
             Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy2);
             _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
             _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1.Width, 1.0f / _outlineTargetAlly1.Height));
             Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
             Globals.SpriteBatch.Draw(_outlineTargetEnemy1,Vector2.Zero,Color.White);
-            Globals.SpriteBatch.End();
-        }
-    }
-
-    private void RenderAnimatedOutlines()
-    {
-        //Render outlines for selected player units
-        if (Globals.AgentsManager.SelectedUnits.Count > 0)
-        {
-            //FloodPasses = Globals.ZoomDegrees < _floodThreshold ? 0 : -1;
-            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly1Animated);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes_Skinned"];
-            _outlineGenerator.Parameters["Projection"].SetValue(Globals.Projection);
-            _outlineGenerator.Parameters["View"].SetValue(Globals.View);
-            foreach (Agent agent in Globals.AgentsManager.SelectedUnits)
-            {
-                if (agent.AnimatedRenderer != null)
-                {
-                    _outlineGenerator.Parameters["World"].SetValue(agent.ParentObject.Transform.ModelMatrix);
-                    _outlineGenerator.Parameters["BoneTransforms"]?.SetValue(agent.AnimatedRenderer._skinnedModel.AnimationController.SkinnedBoneTransforms);
-                    foreach (ModelMesh mesh in agent.AnimatedRenderer._skinnedModel.SkinnedModels[agent.AnimatedRenderer._skinnedModel.CurrentModelIndex].Model.Meshes)
-                    {
-                        //foreach (ModelMeshPart part in mesh.MeshParts)
-                        for(int i = 0;i < mesh.MeshParts.Count;i++)
-                        {
-                            var part = mesh.MeshParts[i];
-                            if (part.PrimitiveCount <= 0) continue;
-                            _outlineGenerator.CurrentTechnique.Passes[0].Apply();
-                            Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-                            Globals.GraphicsDevice.Indices = part.IndexBuffer;
-                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-                        }
-                    } 
-                }
-            }
-            
-            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetAlly2Animated);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
-            _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1Animated.Width, 1.0f / _outlineTargetAlly1Animated.Height));
-            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-            Globals.SpriteBatch.Draw(_outlineTargetAlly1Animated,Vector2.Zero,Color.White);
-            Globals.SpriteBatch.End();
-            
-            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy1Animated);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Silhouettes_Skinned"];
-            _drawnEnemies.Clear();
-            foreach (Agent agent in Globals.AgentsManager.SelectedUnits)
-            {
-                PlayerUnitData data = (PlayerUnitData)agent.AgentData;
-                if (data.Target is { AnimatedRenderer: not null } && !_drawnEnemies.Contains(data.Target))
-                {
-                    _drawnEnemies.Add(data.Target);
-                    
-                    _outlineGenerator.Parameters["World"].SetValue(data.Target.ParentObject.Transform.ModelMatrix);
-                    _outlineGenerator.Parameters["BoneTransforms"]?.SetValue(data.Target.AnimatedRenderer._skinnedModel.AnimationController.SkinnedBoneTransforms);
-                    foreach (ModelMesh mesh in data.Target.AnimatedRenderer._skinnedModel.SkinnedModels[agent.AnimatedRenderer._skinnedModel.CurrentModelIndex].Model.Meshes)
-                    {
-                        //foreach (ModelMeshPart part in mesh.MeshParts)
-                        for(int i = 0;i < mesh.MeshParts.Count;i++)
-                        {
-                            var part = mesh.MeshParts[i];
-                            if (part.PrimitiveCount <= 0) continue;
-                            _outlineGenerator.CurrentTechnique.Passes[0].Apply();
-                            Globals.GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-                            Globals.GraphicsDevice.Indices = part.IndexBuffer;
-                            Globals.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, part.VertexOffset, part.StartIndex, part.PrimitiveCount);
-                        }
-                    } 
-                }
-            }
-            
-            Globals.GraphicsDevice.SetRenderTarget(_outlineTargetEnemy2Animated);
-            _outlineGenerator.CurrentTechnique = _outlineGenerator.Techniques["Init"];
-            _outlineGenerator.Parameters["parameters"]?.SetValue(new Vector4(0,0, 1.0f / _outlineTargetAlly1Animated.Width, 1.0f / _outlineTargetAlly1Animated.Height));
-            Globals.SpriteBatch.Begin(SpriteSortMode.Deferred,null,null,null,null,_outlineGenerator);
-            Globals.SpriteBatch.Draw(_outlineTargetEnemy1Animated,Vector2.Zero,Color.White);
             Globals.SpriteBatch.End();
         }
     }

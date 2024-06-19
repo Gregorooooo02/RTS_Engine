@@ -90,7 +90,8 @@ public class SceneManager
             for (int i = 0; i < 1; i++)
             {
 #if _WINDOWS
-                chairs.LoadPrefab(Globals.MainPath + "/Prefabs/candles.xml");
+                candles.LoadPrefab(Globals.MainPath + "/Prefabs/Minion.xml");
+                chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
 #else
                 candles.LoadPrefab("Prefabs/Minion.xml");
                 chairs.LoadPrefab("Prefabs/Chair.xml");
