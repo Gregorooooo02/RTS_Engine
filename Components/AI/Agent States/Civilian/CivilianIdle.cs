@@ -9,6 +9,8 @@ public class CivilianIdle : AgentState
     private bool _active = false;
     private float _maxTime;
     private readonly Random _random = new();
+
+    private bool _changeIdle = false;
     
     public AgentState Caller;
     
@@ -22,10 +24,16 @@ public class CivilianIdle : AgentState
 
     public override AgentState UpdateState(Agent agent)
     {
+        if (_changeIdle)
+        {
+            _changeIdle = false;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+        }
         if (agent.ActiveCivilianClip != 3)
         {
             agent.ActiveCivilianClip = 3;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            _changeIdle = true;
         }
         
         WandererData data = (WandererData)agent.AgentData;

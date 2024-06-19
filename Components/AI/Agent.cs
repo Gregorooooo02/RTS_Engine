@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -57,6 +58,9 @@ public class Agent : Component
     
     public MeshRenderer Renderer = null;
     public AnimatedMeshRenderer AnimatedRenderer = null;
+
+    public HashSet<int> AttackFrames = new();
+    public int DeathFrame;
     
     public int ActiveClip = 2;
     // **Unit animations**
@@ -146,7 +150,6 @@ public class Agent : Component
             CheckFieldOfVision();
             if (Type != AgentType.EnemyBuilding && AnimatedRenderer != null)
             {
-                Console.WriteLine(ParentObject.Name);
                 AnimatedRenderer.AdditionalVisibility = Globals.FogManager.IsVisible(Position);
             }
         }
@@ -456,6 +459,22 @@ public class Agent : Component
         
         builder.Append("<directionOffset>" + DirectionOffset + "</directionOffset>");
         
+        builder.Append("<deathFrame>" + DeathFrame + "</deathFrame>");
+        
+        builder.Append("<attackFrames>");
+        
+        builder.Append("<count>" + AttackFrames.Count + "</count>");
+
+        int frameID = 0;
+        
+        foreach (int frame in AttackFrames)
+        {
+            builder.Append("<f" + frameID + ">" + frame + "</f" + frameID + ">");
+            frameID++;
+        }
+        
+        builder.Append("</attackFrames>");
+        
         builder.Append("<agentData>" + AgentData.Serialize() + "</agentData>");
         
         builder.Append("</component>");
@@ -508,6 +527,18 @@ public class Agent : Component
         }
         ID = CurrentID;
         CurrentID++;
+        
+        DeathFrame = int.TryParse(element.Element("deathFrame")?.Value, out int frame) ? frame : 0;
+        XElement attackFrames = element.Element("attackFrames");
+        if(attackFrames == null) return;
+        int amount = int.TryParse(attackFrames?.Element("count").Value, out int a) ? a : 0;
+        for (int i = 0; i < amount; i++)
+        {
+            if (int.TryParse(attackFrames.Element("f" + i).Value, out int b))
+            {
+                AttackFrames.Add(b);
+            }
+        }
     }
 
     public override void RemoveComponent()
@@ -526,6 +557,8 @@ public class Agent : Component
 
 #if DEBUG
     private bool _changingBehavior = false;
+    private bool _addFrame = false;
+    private int _frameToAdd = 0;
     public override void Inspect()
     {
         if(ImGui.CollapsingHeader("Agent"))
@@ -561,12 +594,48 @@ public class Agent : Component
 
             ImGui.DragFloat("Turn speed", ref _turnSpeed);
             AgentData.Inspect();
+            ImGui.Separator();
+            ImGui.InputInt("Death frame", ref DeathFrame);
+            ImGui.Text("Current attack frames:");
+            if (AttackFrames.Count == 0)
+            {
+                ImGui.Text("None");
+            }
+            foreach (int frame in AttackFrames)
+            {
+                ImGui.Text(frame.ToString());
+            }
+
+            if (ImGui.Button("Add frame"))
+            {
+                _addFrame = true;
+            }
+            if (ImGui.Button("Remove last frame") && AttackFrames.Count != 0)
+            {
+                AttackFrames.Remove(AttackFrames.Last());
+            }
             if (ImGui.Button("Remove component"))
             {
                 RemoveComponent();
             }
         }
 
+        if (_addFrame)
+        {
+            ImGui.Begin("Add attack frame");
+            ImGui.InputInt("Frame to add", ref _frameToAdd);
+            if (ImGui.Button("Add frame"))
+            {
+                AttackFrames.Add(_frameToAdd);
+                _addFrame = false;
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                _addFrame = false;
+            }
+            ImGui.End();
+        }
+        
         if (_changingBehavior)
         {
             ImGui.Begin("Change behavior");

@@ -25,6 +25,8 @@ public class CivilianFlee : AgentState
     private bool _searchNearby = false;
 
     private float _angle = 0;
+
+    private bool _changeFlee = false;
     
     public override void Initialize(Agent agent)
     {
@@ -33,12 +35,6 @@ public class CivilianFlee : AgentState
 
     public override AgentState UpdateState(Agent agent)
     {
-        if (agent.ActiveCivilianClip != 2)
-        {
-            agent.ActiveCivilianClip = 2;
-            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-        }
-        
         WandererData data = (WandererData)agent.AgentData;
         Vector2 target = new Vector2(Target.Position.X, Target.Position.Z);
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
@@ -210,6 +206,17 @@ public class CivilianFlee : AgentState
             }
             else
             {
+                if (_changeFlee)
+                {
+                    _changeFlee = false;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                }
+                if (agent.ActiveCivilianClip != 2)
+                {
+                    agent.ActiveCivilianClip = 2;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    _changeFlee = true;
+                }
                 agent.MoveToPoint(_currentPoint, data.FleeingSpeed);
             }
         }

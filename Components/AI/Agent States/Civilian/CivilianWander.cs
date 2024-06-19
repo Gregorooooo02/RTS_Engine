@@ -12,6 +12,8 @@ public class CivilianWander : AgentState
     private Vector2 _currentPoint;
     private bool _traversing = false;
     private int _maxAttempts = 10;
+
+    private bool _changeMove = false;
     
     public CivilianWander()
     {
@@ -61,12 +63,6 @@ public class CivilianWander : AgentState
     
     public override AgentState UpdateState(Agent agent)
     {
-        if (agent.ActiveCivilianClip != 4)
-        {
-            agent.ActiveCivilianClip = 4;
-            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-        }
-        
         Vector2 agentPosition = new Vector2(agent.Position.X, agent.Position.Z);
         WandererData data = (WandererData)agent.AgentData;
         if (data.Awareness > data.AwarenessThreshold && agent.AgentStates.TryGetValue(Agent.State.RunAway,out AgentState flee))
@@ -132,6 +128,17 @@ public class CivilianWander : AgentState
             }
             else
             {
+                if (_changeMove)
+                {
+                    _changeMove = false;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                }
+                if (agent.ActiveCivilianClip != 4)
+                {
+                    agent.ActiveCivilianClip = 4;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    _changeMove = true;
+                }
                 agent.MoveToPoint(_currentPoint, data.WanderingSpeed);
             }
         }

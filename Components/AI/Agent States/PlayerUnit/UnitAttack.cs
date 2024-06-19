@@ -19,6 +19,9 @@ public class UnitAttack : AgentState
     private bool _SearchNearby = false;
     private bool _attacking = false;
 
+    private bool _changeAttack = false;
+    private bool _changeMove = false;
+
     private Vector2 finalPoint;
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
@@ -34,18 +37,12 @@ public class UnitAttack : AgentState
         if (data.MovementScheduled && agent.AgentStates.TryGetValue(Agent.State.Move,out AgentState move))
         {
             data.Target = null;
-            agent.ActiveClip = 4;
-            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
             return move;
         }
         if ((data.Target == null || !data.Target.AgentData.Alive) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
         {
             //TODO: Implement retargeting here
             data.Target = null;
-            agent.ActiveClip = 2;
-            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
             return idle;
         }
         
@@ -89,9 +86,6 @@ public class UnitAttack : AgentState
                 //If it's too far, walk to target
                 if (_SearchNearby)
                 {
-                    agent.ActiveClip = 4;
-                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-                    agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                     _SearchNearby = false;
                     Point? newPoint = Pathfinding.GetFirstNearbyFreePoint(target, agent.ID);
                     if (newPoint.HasValue)
@@ -100,9 +94,6 @@ public class UnitAttack : AgentState
                     }
                     else if(agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState exit))
                     {
-                        agent.ActiveClip = 2;
-                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                         return exit;
                     }
                     else
@@ -127,10 +118,6 @@ public class UnitAttack : AgentState
             else if (dist < data.MinAttackRange)
             {
                 //If it's to close, walk away from target
-                agent.ActiveClip = 4;
-                agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-                agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
-                
                 float awayDist = data.MaxAttackRange;
                 Vector2 offset = new Vector2(location.X - target.X, location.Y - target.Y);
                 offset.Normalize();
@@ -166,9 +153,6 @@ public class UnitAttack : AgentState
                         int id = Globals.Renderer.WorldRenderer.MapNodes[end.Location.X, end.Location.Y].AllyOccupantId;
                         if (id != agent.ID && id != 0)
                         {
-                            agent.ActiveClip = 4;
-                            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-                            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                             _repath = true;
                             _SearchNearby = true;
                         }
@@ -176,22 +160,28 @@ public class UnitAttack : AgentState
                     if(_points.Count > 0)_currentPoint = _points.Dequeue();
                     else
                     {
-                        agent.ActiveClip = 2;
-                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                         _pathCompleted = true;
                     }
                 }
                 else
                 {
+                    if (_changeMove)
+                    {
+                        _changeMove = false;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    }
+                    if (agent.ActiveClip != 4 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
+                    {
+                        agent.ActiveClip = 4;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
+                        _changeMove = true;
+                    }
                     agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
                     if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId !=
                         agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
                     {
                         //Repath
-                        agent.ActiveClip = 4;
-                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                         _repath = true;
                     }
                 }
@@ -202,12 +192,22 @@ public class UnitAttack : AgentState
                 float angle = CivilianWander.AngleDegrees(agent.Direction, direction);
                 if (MathF.Abs(angle) < 5.0f)
                 {
+                    if (_changeAttack)
+                    {
+                        _changeAttack = false;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    }
+                    if (agent.ActiveClip != 0 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
+                    {
+                        agent.ActiveClip = 0;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
+                        _changeAttack = true;
+                    }
                     //TODO: After adding animations remember to modify the if statement below to check for specific animation frame
                     if (_attackTimer >= data.AttackDelay)
                     {
                         //Successful attack
-                        agent.ActiveClip = 0;
-                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         _attackTimer = 0;
                         if (data.Target.Type == Agent.AgentType.Soldier)
                         {
