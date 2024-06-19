@@ -475,6 +475,43 @@ public class PickingManager
         return new Ray(Globals.ViewPos, direction);
     }
 
+    private static Vector3 MultiplyPoint(Matrix matrix, Vector3 point)
+    {
+        Vector3 result = new Vector3(0,0,0);
+        result.X = matrix.M11 * point.X + matrix.M12 * point.Y + matrix.M13 * point.Z + matrix.M14;
+        result.Y = matrix.M21 * point.X + matrix.M22 * point.Y + matrix.M23 * point.Z + matrix.M24;
+        result.Z = matrix.M31 * point.X + matrix.M32 * point.Y + matrix.M33 * point.Z + matrix.M34;
+        float num = matrix.M41 * point.X + matrix.M42 * point.Y + matrix.M43 * point.Z + matrix.M44;
+        num = 1.0f / num;
+        result.X *= num;
+        result.Y *= num;
+        result.Z *= num;
+        return result;
+    }
+    
+    public static Vector3? CalculatePositionOnScreen(Vector3 worldPos)
+    {
+        Vector4 res = Vector4.Transform(Vector4.Transform(worldPos, Globals.View), Globals.Projection);
+        //Convert to normalized device coordinates
+        res /= res.W;
+        //Convert from [-1,1] to [0,1]
+        res += Vector4.One;
+        res /= 2.0f;
+        //Invert Y so (0,0) is in upper left corner
+        res.Y = 1.0f - res.Y;
+
+        //Convert to pixel position
+        Vector3 result = new Vector3(res.X * Globals.GraphicsDeviceManager.PreferredBackBufferWidth, res.Y * Globals.GraphicsDeviceManager.PreferredBackBufferHeight,0);
+        
+        //If calculated location is outside of viewport bounds return null, otherwise return calculated location.
+        if (result.X < 0 || result.Y < 0 || result.X > Globals.GraphicsDeviceManager.PreferredBackBufferWidth ||
+            result.Y > Globals.GraphicsDeviceManager.PreferredBackBufferHeight)
+        {
+            return null;
+        }
+        return result;
+    }
+
     public Vector3? PickGround(Point mousePosition, float heightGrace, int maxTries = 10)
     {
         if (!GroundPickingActive) return null;
