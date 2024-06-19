@@ -7,39 +7,30 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>146,99995</x>
-        <y>18,313646</y>
-        <z>158,17554</z>
+        <x>100</x>
+        <y>0</y>
+        <z>100</z>
       </position>
       <rotation>
         <x>0</x>
-        <y>-0,06480076</y>
+        <y>94,08575</y>
         <z>0</z>
       </rotation>
       <scale>
-        <x>3</x>
-        <y>3</y>
-        <z>3</z>
+        <x>0,03</x>
+        <y>0,03</y>
+        <z>0,03</z>
       </scale>
-    </component>
-    <component>
-      <type>MeshRenderer</type>
-      <active>True</active>
-      <model>
-        <path>peasant</path>
-        <technique>PBR</technique>
-      </model>
-    </component>
-    <component>
-      <type>Pickable</type>
-      <active>True</active>
-      <pickableType>Enemy</pickableType>
     </component>
     <component>
       <type>Agent</type>
       <active>True</active>
       <agentType>Civilian</agentType>
       <agentLayer>ENEMY</agentLayer>
+      <separationDistance>1</separationDistance>
+      <attackingRadius>1</attackingRadius>
+      <heightOffset>2</heightOffset>
+      <directionOffset>180</directionOffset>
       <agentData>
         <hp>100</hp>
         <maxHp>100</maxHp>
@@ -62,6 +53,25 @@
         <fleeingDistance>40</fleeingDistance>
         <repathDelay>2</repathDelay>
       </agentData>
+    </component>
+    <component>
+      <type>AnimatedMeshRenderer</type>
+      <active>True</active>
+      <animatedModel>
+        <path>peasantSkinned</path>
+        <technique>PBR_Skinned</technique>
+        <speed>1</speed>
+        <currentClip>2</currentClip>
+        <translationInterpolation>Linear</translationInterpolation>
+        <orientationInterpolation>Linear</orientationInterpolation>
+        <scaleInterpolation>Linear</scaleInterpolation>
+        <loop>True</loop>
+      </animatedModel>
+    </component>
+    <component>
+      <type>Pickable</type>
+      <active>True</active>
+      <pickableType>Enemy</pickableType>
     </component>
   </components>
   <childObjects></childObjects>

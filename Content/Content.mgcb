@@ -12,8 +12,6 @@
 
 /reference:../AnimationPipeline/bin/Debug/net6.0/Animation.dll
 /reference:../AnimationPipeline/bin/Debug/net6.0/AnimationPipeline.dll
-/reference:../AnimationPipeline/bin/Release/net6.0/AnimationPipeline.dll
-/reference:../AnimationPipeline/bin/Release/net6.0/Animation.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -2152,6 +2150,18 @@
 /processorParam:TextureFormat=Color
 /build:peasant/albedo.png
 
+#begin peasant/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasant/albedo.png
+
 #begin peasant/ao.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2163,6 +2173,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:peasant/ao.png
+
+#begin peasant/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasant/ao.png
+
+#begin peasant/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasant/normal.png
 
 #begin peasant/normal.png
 /importer:TextureImporter
@@ -2206,6 +2240,75 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:peasant/roughness.png
+
+#begin peasant/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasant/roughness.png
+
+#begin peasantSkinned/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/albedo.png
+
+#begin peasantSkinned/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/ao.png
+
+#begin peasantSkinned/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/normal.png
+
+#begin peasantSkinned/peasantSkinned.fbx
+/importer:FbxImporter
+/processor:SkinnedModelProcessor
+/processorParam:BakeMeshTransforms=True
+/processorParam:GenerateTangentFrame=False
+/processorParam:ModelRotate=0, 0, 0
+/processorParam:ModelScale=1
+/build:peasantSkinned/peasantSkinned.fbx
+
+#begin peasantSkinned/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/roughness.png
 
 #begin sand/albedo.png
 /importer:TextureImporter

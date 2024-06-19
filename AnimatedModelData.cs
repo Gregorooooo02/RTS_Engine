@@ -136,16 +136,8 @@ public class AnimatedModelData
         
         AnimationController.LoopEnabled = true;
         
-        if (SkinnedModels[CurrentModelIndex].AnimationClips.Count > 4)
-        {
-            ActiveAnimationClip = 2;
-            AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);
-        }
-        else
-        {
-            ActiveAnimationClip = 0;
-            AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);    
-        }
+        ActiveAnimationClip = 0;
+        AnimationController.StartClip(SkinnedModels[CurrentModelIndex].AnimationClips.Values[ActiveAnimationClip]);    
     }
 
     private void CalculateBoundingSphere()

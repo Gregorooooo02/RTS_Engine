@@ -7,13 +7,13 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>85,569275</x>
+        <x>81,41803</x>
         <y>0</y>
-        <z>102,78439</z>
+        <z>108,46486</z>
       </position>
       <rotation>
         <x>0</x>
-        <y>-50,23242</y>
+        <y>111,356384</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -39,11 +39,11 @@
         <walkingSpeed>14</walkingSpeed>
         <damage>10</damage>
         <attackDelay>0,8</attackDelay>
-        <minAttackRange>1,5</minAttackRange>
-        <maxAttackRange>2,5</maxAttackRange>
+        <minAttackRange>40</minAttackRange>
+        <maxAttackRange>50</maxAttackRange>
         <minPointDistance>0,5</minPointDistance>
         <repathDelay>0,5</repathDelay>
-        <isRanged>False</isRanged>
+        <isRanged>True</isRanged>
         <projectileSpeed>25</projectileSpeed>
         <projectileMinDistance>1</projectileMinDistance>
         <projectileType>Arrow</projectileType>
@@ -119,7 +119,7 @@
               <position>
                 <x>272</x>
                 <y>740</y>
-                <z>0,8000001</z>
+                <z>0,9000001</z>
               </position>
               <rotation>
                 <x>0</x>

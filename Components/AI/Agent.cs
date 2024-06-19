@@ -57,8 +57,8 @@ public class Agent : Component
     
     public MeshRenderer Renderer = null;
     public AnimatedMeshRenderer AnimatedRenderer = null;
-    public int ActiveClip = 2;
     
+    public int ActiveClip = 2;
     // **Unit animations**
     // Attack - 0
     // Death - 1
@@ -66,6 +66,12 @@ public class Agent : Component
     // Change to furniture - 3
     // Move - 4
 
+    public int ActiveCivilianClip = 2;
+    // **Civilian animations**
+    // Wander - 1
+    // Idle - 2
+    // Flee - 3
+    
     private readonly List<Point> _occupiedNodes = new();
 
     public int ID;
@@ -89,9 +95,14 @@ public class Agent : Component
             }
         }
 
-        if (AnimatedRenderer != null)
+        if (AnimatedRenderer != null && Type == AgentType.PlayerUnit)
         {
             AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveClip;
+        }
+        
+        if (AnimatedRenderer != null && Type == AgentType.Civilian)
+        {
+            AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveCivilianClip;
         }
 
         if (!AgentData.Alive)

@@ -63,13 +63,14 @@ public class SceneManager
             GameObject civilians = new GameObject();
             civilians.Name = "Civilians";
             missionRoot.AddChildObject(civilians);
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 10; i++)
             {
 #if _WINDOWS
                 civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
 #else
                 civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
+                civilians.Children[i].Name = "Civilian" + i;
             }
 
             Console.WriteLine("Added Civilians");
@@ -94,7 +95,9 @@ public class SceneManager
                 candles.LoadPrefab("Prefabs/Minion.xml");
                 chairs.LoadPrefab("Prefabs/Chair.xml");
 #endif
-
+                candles.Children[i].Name = "Candle" + i;
+                chairs.Children[i].Name = "Chair" + i;
+                
                 Vector3 unitPos = candles.Children.Last().Transform.Pos;
                 Vector2 posXZ = new(unitPos.X, unitPos.Z + 2 * i);
 

@@ -252,8 +252,18 @@ public class PickingManager
                 foreach (Pickable entity in Pickables)
                 {
                     if(entity.Type != Pickable.PickableType.Enemy) continue;
-                    BoundingSphere sphere =
-                        entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                    BoundingSphere sphere = default;
+                    if (entity.Renderer != null)
+                    {
+                        sphere =
+                            entity.Renderer._model.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);                         
+                    }
+                    else if (entity.AnimatedRenderer != null)
+                    {
+                        sphere =
+                            entity.AnimatedRenderer._skinnedModel.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                    }
+                     
                     float? dist = sphere.Intersects(ray.Value);
                      
                     if (dist.HasValue)
