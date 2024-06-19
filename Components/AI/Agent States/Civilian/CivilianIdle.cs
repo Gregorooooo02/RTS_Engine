@@ -29,10 +29,11 @@ public class CivilianIdle : AgentState
             _changeIdle = false;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
         }
-        if (agent.ActiveCivilianClip != 3)
+        if (agent.ActiveCivilianClip != 3 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
         {
             agent.ActiveCivilianClip = 3;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
             _changeIdle = true;
         }
         
