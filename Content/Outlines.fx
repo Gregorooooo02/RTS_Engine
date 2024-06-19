@@ -16,6 +16,11 @@ matrix View;
 float4 parameters;
 float StepWidth;
 
+cbuffer BoneTransforms : register(b2) 
+{
+    matrix BoneTransforms[72];
+};
+
 Texture2D workTexture;
 
 sampler2D workSampler = sampler_state
@@ -26,6 +31,8 @@ sampler2D workSampler = sampler_state
 struct VertexShaderInput
 {
 	float4 Position : POSITION0;
+	int4 BoneIndices : BLENDINDICES0;
+	float4 BoneWeights : BLENDWEIGHT0;
 };
 
 struct VertexShaderOutput
@@ -37,6 +44,22 @@ VertexShaderOutput SilVS(in VertexShaderInput input)
 {
     VertexShaderOutput output = (VertexShaderOutput) 0;
     output.Position = mul(mul(mul(input.Position, World), View), Projection);
+    
+    return output;
+}
+
+VertexShaderOutput Sil_SkinnedVS(in VertexShaderInput input) 
+{
+    VertexShaderOutput output = (VertexShaderOutput) 0;
+    
+    float4 skinnedPosition = float4(0, 0, 0, 0);
+   
+    for (int i = 0; i < 4; i++)
+    {
+        skinnedPosition += mul(input.Position, BoneTransforms[input.BoneIndices[i]]) * input.BoneWeights[i];
+    }
+    
+    output.Position = mul(mul(mul(skinnedPosition, World), View), Projection);
     
     return output;
 }
@@ -55,6 +78,15 @@ technique Silhouettes
     }
 };
 
+technique Silhouettes_Skinned
+{
+    pass P0
+    {
+        VertexShader = compile VS_SHADERMODEL Sil_SkinnedVS();
+        PixelShader = compile PS_SHADERMODEL SilPS();
+    }
+};
+
 
 struct SpriteShaderInput
 {
@@ -65,7 +97,7 @@ struct SpriteShaderInput
 
 float4 UVExtraction(SpriteShaderInput input) : COLOR
 {
-    float4 color = tex2D(workSampler, input.TextureCoordinates) * input.Color;
+    float4 color = tex2D(workSampler, input.TextureCoordinates) * input.Color;  
     return color > 0 ? float4(input.TextureCoordinates, 0.01, 1) : color;
 }
 
