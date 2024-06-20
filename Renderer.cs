@@ -455,8 +455,6 @@ public class Renderer
 #if RELEASE
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(_shadowMapRenderTarget);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
-        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
@@ -467,8 +465,6 @@ public class Renderer
 #elif DEBUG
         Globals.MainEffect.Parameters["ShadowMap"]?.SetValue(Globals.DrawShadows ? _shadowMapRenderTarget : _blank);
         Globals.MainEffect.Parameters["dirLightSpace"]?.SetValue(_lightViewProjection);
-        // Globals.MainEffect.Parameters["DepthBias"].SetValue(0.005f);
-        // Globals.MainEffect.Parameters["ShadowMapSize"].SetValue(ShadowMapSize);
         
         Globals.MainEffect.CurrentTechnique = Globals.MainEffect.Techniques["PBR"];
         foreach (AnimatedMeshRenderer renderer in AnimatedMeshes)
@@ -496,7 +492,6 @@ public class Renderer
     
     private void DrawShadows()
     {
-        
         float sqrtZoom = MathF.Sqrt(Globals.ZoomDegrees);
         float offset = -sqrtZoom * Globals.ZoomDegrees * 0.2f - 45;
         float size = sqrtZoom * Globals.ZoomDegrees * 0.77f + 50;

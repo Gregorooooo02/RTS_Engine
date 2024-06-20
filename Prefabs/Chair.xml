@@ -13,7 +13,7 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>74,07922</y>
+        <y>91,978096</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -31,6 +31,11 @@
       <attackingRadius>1</attackingRadius>
       <heightOffset>1,7</heightOffset>
       <directionOffset>0</directionOffset>
+      <deathFrame>0</deathFrame>
+      <attackFrames>
+        <count>1</count>
+        <f0>15</f0>
+      </attackFrames>
       <agentData>
         <hp>100</hp>
         <maxHp>100</maxHp>
@@ -123,9 +128,9 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>362</x>
+                <x>452</x>
                 <y>740</y>
-                <z>0,1</z>
+                <z>0,2</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -162,7 +167,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>362</x>
+                    <x>452</x>
                     <y>740</y>
                     <z>0</z>
                   </position>
@@ -204,7 +209,7 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>365</x>
+                <x>455</x>
                 <y>770</y>
                 <z>0</z>
               </position>

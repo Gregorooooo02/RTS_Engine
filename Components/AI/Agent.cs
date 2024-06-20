@@ -59,7 +59,7 @@ public class Agent : Component
     public MeshRenderer Renderer = null;
     public AnimatedMeshRenderer AnimatedRenderer = null;
 
-    public HashSet<int> AttackFrames = new();
+    public List<int> AttackFrames = new();
     public int DeathFrame;
     
     public int ActiveClip = 2;
@@ -75,6 +75,10 @@ public class Agent : Component
     // Flee - 2
     // Idle - 3
     // Wander - 4
+
+    private bool _ChangeDeath = false;
+
+    private int _deathCounter = 0;
     
     private readonly List<Point> _occupiedNodes = new();
 
@@ -111,7 +115,6 @@ public class Agent : Component
 
         if (!AgentData.Alive)
         {
-            ParentObject.Active = false;
             switch (AgentLayer)
             {
                 case LayerType.ENEMY:
@@ -134,6 +137,33 @@ public class Agent : Component
                 case LayerType.PLAYER:
                     Globals.AgentsManager.Units.Remove(this);
                     break;
+            }
+
+            if (Type == AgentType.PlayerUnit && AnimatedRenderer != null)
+            {
+                if (_ChangeDeath)
+                {
+                    _ChangeDeath = false;
+                    AnimatedRenderer._skinnedModel.ChangedClip = true;
+                }
+                if (ActiveClip != 1 || AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                {
+                    ActiveClip = 1;
+                    AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
+                    _ChangeDeath = true;
+                }
+
+                _deathCounter++;
+                if (_deathCounter >= DeathFrame)
+                {
+                    ParentObject.Active = false;
+                }
+            }
+            else
+            {
+                //Implement for others
+                ParentObject.Active = false;
             }
             return;
         }
@@ -612,7 +642,12 @@ public class Agent : Component
             }
             if (ImGui.Button("Remove last frame") && AttackFrames.Count != 0)
             {
-                AttackFrames.Remove(AttackFrames.Last());
+                AttackFrames.RemoveAt(AttackFrames.Count - 1);
+            }
+
+            if (ImGui.Button("Reset death frame"))
+            {
+                _deathCounter = 0;
             }
             if (ImGui.Button("Remove component"))
             {

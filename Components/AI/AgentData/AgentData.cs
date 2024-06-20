@@ -64,6 +64,11 @@ public class AgentData
             Hp = MaxHp;
             Alive = true;
         }
+        ImGui.SameLine();
+        if (ImGui.Button("Kill"))
+        {
+            DealDamage(MaxHp);
+        }
     }
 #endif
 }

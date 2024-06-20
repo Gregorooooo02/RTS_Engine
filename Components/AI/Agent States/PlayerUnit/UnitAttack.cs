@@ -25,12 +25,29 @@ public class UnitAttack : AgentState
     private Vector2 finalPoint;
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
+
+    private int _framesSinceLastAttachFrame = 0;
+    private int _currentAttackIndex = 0;
     
     public override void Initialize(Agent agent)
     {
         
     }
 
+    public void GetNextAgentAttackIndex(Agent agent)
+    {
+        int count = agent.AttackFrames.Count;
+        if (_currentAttackIndex == count - 1) _currentAttackIndex = 0;
+        else _currentAttackIndex++;
+        _framesSinceLastAttachFrame = 0;
+    }
+
+    public void ResetFrameData()
+    {
+        _framesSinceLastAttachFrame = 0;
+        _currentAttackIndex = 0;
+    }
+    
     public override AgentState UpdateState(Agent agent)
     {
         PlayerUnitData data = (PlayerUnitData)agent.AgentData;
@@ -177,6 +194,7 @@ public class UnitAttack : AgentState
                         agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                         _changeMove = true;
                     }
+                    ResetFrameData();
                     agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
                     if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId !=
                         agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
@@ -205,9 +223,11 @@ public class UnitAttack : AgentState
                         _changeAttack = true;
                     }
                     //TODO: After adding animations remember to modify the if statement below to check for specific animation frame
-                    if (_attackTimer >= data.AttackDelay)
+                    _framesSinceLastAttachFrame++;
+                    if (agent.AttackFrames[_currentAttackIndex] == _framesSinceLastAttachFrame /*_attackTimer >= data.AttackDelay*/)
                     {
                         //Successful attack
+                        GetNextAgentAttackIndex(agent);
                         _attackTimer = 0;
                         if (data.Target.Type == Agent.AgentType.Soldier)
                         {

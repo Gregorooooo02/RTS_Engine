@@ -13,7 +13,7 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>167,1042</y>
+        <y>95,19255</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -31,6 +31,12 @@
       <attackingRadius>1</attackingRadius>
       <heightOffset>4</heightOffset>
       <directionOffset>90</directionOffset>
+      <deathFrame>0</deathFrame>
+      <attackFrames>
+        <count>2</count>
+        <f0>25</f0>
+        <f1>15</f1>
+      </attackFrames>
       <agentData>
         <hp>100</hp>
         <maxHp>100</maxHp>
@@ -125,7 +131,7 @@
               <position>
                 <x>272</x>
                 <y>740</y>
-                <z>0,2</z>
+                <z>0,3</z>
               </position>
               <rotation>
                 <x>0</x>
