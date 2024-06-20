@@ -4429,6 +4429,11 @@
                           <active>True</active>
                           <action>CREATE_MISSION</action>
                         </component>
+                        <component>
+                          <type>Button</type>
+                          <active>True</active>
+                          <action>CANCEL_MISSION_SELECT</action>
+                        </component>
                       </components>
                       <childObjects>
                         <object>
