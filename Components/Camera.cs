@@ -162,15 +162,25 @@ public class Camera : Component
         right.Normalize();
         Vector3 combined = Vector3.Add(forward * x, right * y);
         if(x + y != 0 || x * y != 0)combined.Normalize();
-        ParentObject.Transform.Move(combined * Globals.DeltaTime * _cameraSpeed);
-
+        Vector3 newPos = combined * Globals.DeltaTime * _cameraSpeed + ParentObject.Transform.Pos;
+        
         if (IsWorldCamera)
         {
+            if (newPos.X < 0 || newPos.Z < 0 || newPos.X >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1 ||
+                newPos.Z >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1)
+            {
+                return;
+            }
+            ParentObject.Transform.SetLocalPosition(newPos);
             float newHeight = _aboveGroundOffset +
                               PickingManager.InterpolateWorldHeight(new Vector2(ParentObject.Transform.Pos.X,
                                   ParentObject.Transform.Pos.Z));
             currentHeight = currentHeight < 0 ? ParentObject.Transform.Pos.Y : MathHelper.Lerp(currentHeight,newHeight,_heightLerpSpeed * Globals.DeltaTime);
             ParentObject.Transform.SetLocalPositionY(currentHeight);
+        }
+        else
+        {
+            ParentObject.Transform.SetLocalPosition(newPos);
         }
     }
     

@@ -29,28 +29,32 @@ public class SceneManager
 
         System.Threading.Tasks.Task.Factory.StartNew(() =>
         {
-            Scene missionScene = new LoadedScene();
-            missionScene.Name = "MissionScene";
-            Console.WriteLine("Created scene");
-            missionScene.SceneRoot = missionRoot;
-            Console.WriteLine("Created scene root");
-            missionRoot.Name = "Root";
+            try
+            {
 
-            var currentWorld = missionRoot.GetComponent<WorldRenderer>();
 
-            currentWorld.GenerateWorld();
-            Console.WriteLine("Created World");
+                Scene missionScene = new LoadedScene();
+                missionScene.Name = "MissionScene";
+                Console.WriteLine("Created scene");
+                missionScene.SceneRoot = missionRoot;
+                Console.WriteLine("Created scene root");
+                missionRoot.Name = "Root";
 
-            GameObject camera = new GameObject();
-            camera.Name = "Camera";
-            missionRoot.AddChildObject(camera);
-            camera.AddComponent<Camera>();
-            camera.GetComponent<Camera>().IsWorldCamera = true;
-            camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
-            Console.WriteLine("Added Camera");
+                var currentWorld = missionRoot.GetComponent<WorldRenderer>();
+
+                currentWorld.GenerateWorld();
+                Console.WriteLine("Created World");
+
+                GameObject camera = new GameObject();
+                camera.Name = "Camera";
+                missionRoot.AddChildObject(camera);
+                camera.AddComponent<Camera>();
+                camera.GetComponent<Camera>().IsWorldCamera = true;
+                camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
+                Console.WriteLine("Added Camera");
 
 #if _WINDOWS
-            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+                missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
             missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
@@ -60,63 +64,68 @@ public class SceneManager
 #else
             missionRoot.LoadPrefab("Prefabs/Marker.xml");
 #endif
-            GameObject civilians = new GameObject();
-            civilians.Name = "Civilians";
-            missionRoot.AddChildObject(civilians);
-            for (int i = 0; i < 10; i++)
-            {
+                GameObject civilians = new GameObject();
+                civilians.Name = "Civilians";
+                missionRoot.AddChildObject(civilians);
+                for (int i = 0; i < 10; i++)
+                {
 #if _WINDOWS
-                civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
+                    civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
 #else
                 civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
-                civilians.Children[i].Name = "Civilian" + i;
-            }
+                    civilians.Children[i].Name = "Civilian" + i;
+                }
 
-            Console.WriteLine("Added Civilians");
+                Console.WriteLine("Added Civilians");
 
-            GameObject candles = new()
-            {
-                Name = "Candles"
-            };
-            
-            GameObject chairs = new()
-            {
-                Name = "Chairs"
-            };
-            
-            missionRoot.AddChildObject(candles);
-            missionRoot.AddChildObject(chairs);
-            for (int i = 0; i < 1; i++)
-            {
+                GameObject candles = new()
+                {
+                    Name = "Candles"
+                };
+
+                GameObject chairs = new()
+                {
+                    Name = "Chairs"
+                };
+
+                missionRoot.AddChildObject(candles);
+                missionRoot.AddChildObject(chairs);
+                for (int i = 0; i < 1; i++)
+                {
 #if _WINDOWS
-                candles.LoadPrefab(Globals.MainPath + "/Prefabs/Minion.xml");
-                chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
+                    candles.LoadPrefab(Globals.MainPath + "/Prefabs/Minion.xml");
+                    chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
 #else
                 candles.LoadPrefab("Prefabs/Minion.xml");
                 chairs.LoadPrefab("Prefabs/Chair.xml");
 #endif
-                candles.Children[i].Name = "Candle" + i;
-                chairs.Children[i].Name = "Chair" + i;
-                
-                Vector3 unitPos = candles.Children.Last().Transform.Pos;
-                Vector2 posXZ = new(unitPos.X, unitPos.Z + 2 * i);
+                    candles.Children[i].Name = "Candle" + i;
+                    chairs.Children[i].Name = "Chair" + i;
 
-                var height = PickingManager.InterpolateWorldHeight(posXZ, currentWorld);
-                candles.Children.Last().Transform.Move(new Vector3(0, height + 4, 2 * i));
-                chairs.Children.Last().Transform.Move(new Vector3(0, height + 2, 2 * i));
+                    Vector3 unitPos = candles.Children.Last().Transform.Pos;
+                    Vector2 posXZ = new(unitPos.X, unitPos.Z + 2 * i);
+
+                    var height = PickingManager.InterpolateWorldHeight(posXZ, currentWorld);
+                    candles.Children.Last().Transform.Move(new Vector3(0, height + 4, 2 * i));
+                    chairs.Children.Last().Transform.Move(new Vector3(0, height + 2, 2 * i));
+                }
+
+                Debug.WriteLine("Added units");
+                AddScene(missionScene);
+
+                Globals.PickingManager.SinglePickingActive = true;
+                Globals.PickingManager.BoxPickingActive = true;
+                Globals.PickingManager.GroundPickingActive = true;
+                Globals.PickingManager.EnemyPickingActive = true;
+                Globals.FogManager.FogActive = true;
+                ChangeScene(_scenes.Count - 1);
+                Globals.AgentsManager.Initialize();
             }
-
-            Debug.WriteLine("Added units");
-            AddScene(missionScene);
-
-            Globals.PickingManager.SinglePickingActive = true;
-            Globals.PickingManager.BoxPickingActive = true;
-            Globals.PickingManager.GroundPickingActive = true;
-            Globals.PickingManager.EnemyPickingActive = true;
-            Globals.FogManager.FogActive = true;
-            ChangeScene(_scenes.Count - 1);
-            Globals.AgentsManager.Initialize();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         });
     }
 

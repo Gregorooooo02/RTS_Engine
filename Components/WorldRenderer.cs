@@ -287,9 +287,6 @@ public class WorldRenderer : Component
                 if (MapNodes[i, j].Height <= MaxWaterLevel) MapNodes[i, j].Available = false;
             }
         }
-        
-        //TODO: Move the invocation below, so it's executed after all changes to MapNodes array has been made. Mainly it should be executed after static terrain features are placed in mission.
-        CalculatePathfindingGridConnections();
     }
 
     public void CalculatePathfindingGridConnections()
@@ -442,6 +439,9 @@ public class WorldRenderer : Component
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
         GenerateVoronoiFeatures();
+        
+        //TODO: Move the invocation below, so it's executed after all changes to MapNodes array has been made. Mainly it should be executed after static terrain features are placed in mission.
+        CalculatePathfindingGridConnections();
         // Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
     
@@ -568,6 +568,7 @@ public class WorldRenderer : Component
                                 && HeightData[(int)position.X, (int)position.Z] < 20.0f)
                             {
                                 PlaceTree(trees, position);
+                                ObstructTerrain(new Vector2(position.X, position.Z), 3.0f);
                                 placedTrees.Add(position);
                                 treePlaced = true;
                                 break;
@@ -589,6 +590,25 @@ public class WorldRenderer : Component
             else
             {
                 
+            }
+        }
+    }
+
+    private void ObstructTerrain(Vector2 location, float radius)
+    {
+        //Remove pathfinding nodes in square around location, radius is half the length of the side of said square
+        int leftX = (int)MathF.Ceiling(location.X - radius);
+        int rightX = (int)(location.X + radius);
+        
+        int topY = (int)MathF.Ceiling(location.Y - radius);
+        int bottomY = (int)(location.Y + radius);
+        
+        for (int i = leftX; i <= rightX; i++)
+        {
+            for (int j = topY; j <= bottomY; j++)
+            {
+                if(i < 0 || j < 0 || i > MapNodes.GetLength(0) - 2 || j > MapNodes.GetLength(1) - 2)continue;
+                MapNodes[i, j].Available = false;
             }
         }
     }
