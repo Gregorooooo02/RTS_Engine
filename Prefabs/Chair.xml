@@ -31,7 +31,7 @@
       <attackingRadius>1</attackingRadius>
       <heightOffset>1,7</heightOffset>
       <directionOffset>0</directionOffset>
-      <deathFrame>0</deathFrame>
+      <deathFrame>30</deathFrame>
       <attackFrames>
         <count>1</count>
         <f0>15</f0>

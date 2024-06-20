@@ -150,6 +150,7 @@ public class Agent : Component
                 {
                     ActiveClip = 1;
                     AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    AnimatedRenderer._skinnedModel.AnimationController.LoopEnabled = false;
                     AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                     _ChangeDeath = true;
                 }
@@ -157,6 +158,8 @@ public class Agent : Component
                 _deathCounter++;
                 if (_deathCounter >= DeathFrame)
                 {
+                    FogReveler reveler = ParentObject.GetComponent<FogReveler>();
+                    if (reveler != null) reveler.Active = false;
                     ParentObject.Active = false;
                 }
             }
@@ -648,6 +651,11 @@ public class Agent : Component
             if (ImGui.Button("Reset death frame"))
             {
                 _deathCounter = 0;
+                if (Type == AgentType.PlayerUnit)
+                {
+                    FogReveler reveler = ParentObject.GetComponent<FogReveler>();
+                    if (reveler != null) reveler.Active = true;
+                }
             }
             if (ImGui.Button("Remove component"))
             {

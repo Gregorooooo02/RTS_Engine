@@ -88,7 +88,7 @@ public class FogManager
             Globals.SpriteBatch.Begin();
             foreach (FogReveler reveler in Revelers)
             {
-                Globals.SpriteBatch.Draw(reveler.Track,new Vector2(reveler.CurrentPosition.X / (float)FogResolution,reveler.CurrentPosition.Y / (float)FogResolution),null,_visibleColor,0,
+                if(reveler.Active) Globals.SpriteBatch.Draw(reveler.Track,new Vector2(reveler.CurrentPosition.X / (float)FogResolution,reveler.CurrentPosition.Y / (float)FogResolution),null,_visibleColor,0,
                     new Vector2(reveler.RevealRadius),new Vector2(1.0f / FogResolution),SpriteEffects.None,0);
             }
             Globals.SpriteBatch.End();
