@@ -31,9 +31,8 @@ public class SceneManager
         {
             try
             {
-
-
                 Scene missionScene = new LoadedScene();
+                missionScene.IsMissionScene = true;
                 missionScene.Name = "MissionScene";
                 Console.WriteLine("Created scene");
                 missionScene.SceneRoot = missionRoot;
@@ -143,13 +142,18 @@ public class SceneManager
         for (int i = 0;i < sceneChangeActions.Length;i++) {
             if (InputManager.Instance.GetAction(sceneChangeActions[i])?.state == ActionState.RELEASED)
             {
-                ChangeScene(i);
+                if (CurrentScene.IsMissionScene)
+                {
+                    _scenes.Remove(CurrentScene);
+                }
                 Globals.AgentsManager.Units.Clear();
                 Globals.PickingManager.SinglePickingActive = false;
                 Globals.PickingManager.BoxPickingActive = false;
                 Globals.PickingManager.GroundPickingActive = false;
                 Globals.PickingManager.EnemyPickingActive = false;
                 Globals.FogManager.FogActive = false;
+                
+                ChangeScene(i);
             }
         }
         

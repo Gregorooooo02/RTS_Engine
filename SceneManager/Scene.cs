@@ -7,6 +7,7 @@ public abstract class Scene
     public string Name;
     public string TempName = "";
     public GameObject SceneRoot;
+    public bool IsMissionScene = false;
 
     public abstract void Initialize();
     public abstract void Update(GameTime gameTime);
