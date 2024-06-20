@@ -156,6 +156,10 @@ public class SceneManager
         if (InputManager.Instance.GetAction(GameAction.CREATE_MISSION)?.state == ActionState.RELEASED)
         {
             CreateMissionScene();
+            
+            Globals.GraphicsDevice.SetRenderTarget(Globals.FogManager.PermanentMaskTarget);
+            Globals.GraphicsDevice.Clear(new Color(0,0,0,255));
+            Globals.GraphicsDevice.SetRenderTarget(null);
         }
     }
 
