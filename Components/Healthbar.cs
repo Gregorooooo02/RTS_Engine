@@ -108,6 +108,10 @@ public class Healthbar : Component
             {
                 _fillingOffset = fill;
             }
+            if (ImGui.Button("Remove component"))
+            {
+                RemoveComponent();
+            }
         }
     }
 #endif

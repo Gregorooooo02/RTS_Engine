@@ -122,7 +122,7 @@ public class WandererData : AgentData
         ImGui.DragFloat("Wandering distance", ref WanderingDistance);
         ImGui.DragFloat("Min point distance", ref MinPointDistance);
         ImGui.Separator();
-        ImGui.Text("Awareness: " + Awareness);
+        ImGui.DragFloat("Awareness", ref Awareness);
         ImGui.DragFloat("Awareness threshold", ref AwarenessThreshold);
         ImGui.DragFloat("Awareness decay", ref AwarenessDecay);
         ImGui.Separator();

@@ -2998,6 +2998,30 @@
 /processorParam:TextureFormat=Color
 /build:UI/alarmMeter.png
 
+#begin UI/AwerenessBarWhite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/AwerenessBarWhite.png
+
+#begin UI/AwerenessBarWhiteSmall.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/AwerenessBarWhiteSmall.png
+
 #begin UI/buttonHovered.png
 /importer:TextureImporter
 /processor:TextureProcessor
