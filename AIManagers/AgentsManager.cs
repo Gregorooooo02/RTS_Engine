@@ -23,8 +23,8 @@ public class AgentsManager
     public Vector3 UiOffset = new(90.0f, 0.0f, 0.0f);
     public Vector3 BackgroundOffset = new(0.0f, 0.0f, 0.1f);
 
-    private readonly Vector3 iconsStart = new Vector3(229, 642 , 0);
-    private readonly Vector3 healthbarsStart = new Vector3(227, 617,0);
+    private readonly Vector3 _iconsStart = new Vector3(275, 770 , 0);
+    private readonly Vector3 _healthbarsStart = new Vector3(272, 740,0);
 
     public Marker Marker = null;
 
@@ -36,6 +36,7 @@ public class AgentsManager
 
     public void PlacePortraits()
     {
+        Console.WriteLine(Globals.Ratio);
         for (int i = 0; i < Units.Count; i++)
         {
             var uiObject = Units[i].ParentObject.FindGameObjectByName("UI");
@@ -45,9 +46,9 @@ public class AgentsManager
             
             if (icon == null || healthBar == null || healthStatus == null) continue;
             
-            icon?.Transform.SetLocalPosition(iconsStart * Globals.Ratio + UiOffset * i);
-            healthBar?.Transform.SetLocalPosition(healthbarsStart * Globals.Ratio + BackgroundOffset + UiOffset * i);
-            healthStatus?.Transform.SetLocalPosition(healthbarsStart * Globals.Ratio + UiOffset * i);
+            icon?.Transform.SetLocalPosition(_iconsStart + UiOffset * i);
+            healthBar?.Transform.SetLocalPosition(_healthbarsStart + BackgroundOffset + UiOffset * i);
+            healthStatus?.Transform.SetLocalPosition(_healthbarsStart  + UiOffset * i);
         }
     }
     
