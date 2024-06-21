@@ -9,6 +9,8 @@ public static class GameManager
     public static int PuzzleNumber;
     public static float CurrentAwareness = 0;
     public static float AwarenessLimit = 100.0f;
+    public static float DamageMultiplier = 1.0f;
+    public static float HealthMultiplier = 1.0f;
 
     private static GameAction _status = GameAction.NONE;
 
@@ -76,6 +78,8 @@ public static class GameManager
         ImGui.DragInt("Puzzle Number", ref PuzzleNumber);
         ImGui.DragFloat("Current awareness", ref CurrentAwareness);
         ImGui.DragFloat("Maximum awareness", ref AwarenessLimit);
+        ImGui.DragFloat("Damage multiplier", ref DamageMultiplier, 0.1f, 1.0f);
+        ImGui.DragFloat("Health multiplier", ref HealthMultiplier, 0.1f, 1.0f);
         ImGui.End();
     }
 }

@@ -95,9 +95,9 @@ public class SoldierData : AgentData
         return builder.ToString();
     }
 
-    public override void Deserialize(XElement element)
+    public override void Deserialize(XElement element, bool applyBonuses = false)
     {
-        base.Deserialize(element);
+        base.Deserialize(element,applyBonuses);
         
         PathId = element.Element("pathId")?.Value;
         PatrollingType = Enum.TryParse(element.Element("patrollingType")?.Value, out PatrolType patrolType) ? patrolType : PatrolType.Circle;

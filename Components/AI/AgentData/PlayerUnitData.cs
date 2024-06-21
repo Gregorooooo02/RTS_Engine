@@ -81,13 +81,13 @@ public class PlayerUnitData : AgentData
         return builder.ToString();
     }
 
-    public override void Deserialize(XElement element)
+    public override void Deserialize(XElement element, bool applyBonuses = false)
     {
-        base.Deserialize(element);
+        base.Deserialize(element, applyBonuses);
         
         Presence = float.TryParse(element.Element("presence")?.Value, out float presence) ? presence : 5.0f;
         WalkingSpeed = float.TryParse(element.Element("walkingSpeed")?.Value, out float walkingSpeed) ? walkingSpeed : 8.0f;
-        Damage = float.TryParse(element.Element("damage")?.Value, out float damage) ? damage : 10.0f;
+        Damage = float.TryParse(element.Element("damage")?.Value, out float damage) ? (applyBonuses ? GameManager.DamageMultiplier * damage : damage) : 10.0f;
         AttackDelay = float.TryParse(element.Element("attackDelay")?.Value, out float attackDelay) ? attackDelay : 0.8f;
         MinAttackRange = float.TryParse(element.Element("minAttackRange")?.Value, out float minAttackRange) ? minAttackRange : 1.5f;
         MaxAttackRange = float.TryParse(element.Element("maxAttackRange")?.Value, out float maxAttackRange) ? maxAttackRange : 2.5f;

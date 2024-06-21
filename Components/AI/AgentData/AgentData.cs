@@ -45,10 +45,10 @@ public class AgentData
         return builder.ToString();
     }
 
-    public virtual void Deserialize(XElement element)
+    public virtual void Deserialize(XElement element, bool applyBonuses = false)
     {
-        Hp = float.TryParse(element.Element("hp")?.Value, out float hp) ? hp : 100.0f;
-        MaxHp = float.TryParse(element.Element("maxHp")?.Value, out float maxHp) ? maxHp : 100.0f;
+        Hp = float.TryParse(element.Element("hp")?.Value, out float hp) ? (applyBonuses ? GameManager.HealthMultiplier * hp : hp) : 100.0f;
+        MaxHp = float.TryParse(element.Element("maxHp")?.Value, out float maxHp) ? (applyBonuses ? GameManager.HealthMultiplier * maxHp : maxHp) : 100.0f;
         Alive = !bool.TryParse(element.Element("alive")?.Value, out bool alive) || alive;
     }
 

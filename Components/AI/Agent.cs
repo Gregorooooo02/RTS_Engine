@@ -542,7 +542,7 @@ public class Agent : Component
                 break;
             case AgentType.PlayerUnit:
                 AgentData = new PlayerUnitData();
-                AgentData.Deserialize(element.Element("agentData"));
+                AgentData.Deserialize(element.Element("agentData"), true);
                 _currentState = ((PlayerUnitData)AgentData).EntryState;
                 break;
             case AgentType.EnemyBuilding:

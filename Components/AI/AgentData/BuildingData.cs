@@ -20,9 +20,9 @@ public class BuildingData : AgentData
 
     public BuildingData() : base(100){}
     
-    public override void Deserialize(XElement element)
+    public override void Deserialize(XElement element, bool applyBonuses = false)
     {
-        base.Deserialize(element);
+        base.Deserialize(element, applyBonuses);
     }
 
 #if DEBUG

@@ -80,9 +80,9 @@ public class WandererData : AgentData
         return builder.ToString();
     }
 
-    public override void Deserialize(XElement element)
+    public override void Deserialize(XElement element, bool applyBonuses = false)
     {
-        base.Deserialize(element);
+        base.Deserialize(element,applyBonuses);
 
         Awareness = float.TryParse(element.Element("awareness")?.Value, out float awareness) ? awareness : 0;
         AwarenessThreshold = float.TryParse(element.Element("awarenessThreshold")?.Value, out float awarenessThreshold) ? awarenessThreshold : 100.0f;
