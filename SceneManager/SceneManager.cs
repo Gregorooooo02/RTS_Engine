@@ -25,7 +25,7 @@ public class SceneManager
         GameObject missionRoot = new GameObject();
         missionRoot.AddComponent<WorldRenderer>();
 
-        ChangeScene(2);
+        ChangeScene(1);
 
         System.Threading.Tasks.Task.Factory.StartNew(() =>
         {

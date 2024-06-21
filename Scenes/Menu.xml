@@ -131,7 +131,8 @@
             <component>
               <type>Button</type>
               <active>True</active>
-              <action>SCENE1</action>
+              <portrait>False</portrait>
+              <action>SCENE2</action>
             </component>
           </components>
           <childObjects>
@@ -302,6 +303,7 @@
             <component>
               <type>Button</type>
               <active>True</active>
+              <portrait>False</portrait>
               <action>EXIT</action>
             </component>
           </components>
@@ -387,6 +389,8 @@
           <keyboardControl>False</keyboardControl>
           <mouseControl>False</mouseControl>
           <scrollControl>False</scrollControl>
+          <aboveGroundOffset>20</aboveGroundOffset>
+          <heightLerpSpeed>6</heightLerpSpeed>
         </component>
       </components>
       <childObjects></childObjects>
@@ -417,6 +421,7 @@
         <component>
           <type>MeshRenderer</type>
           <active>True</active>
+          <applyFog>True</applyFog>
           <model>
             <path>trawa</path>
             <technique>PBR</technique>
@@ -475,6 +480,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -509,6 +515,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -543,6 +550,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -577,6 +585,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -611,6 +620,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -645,6 +655,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -679,6 +690,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -713,6 +725,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -747,6 +760,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -781,6 +795,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -815,6 +830,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -849,6 +865,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -883,6 +900,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/Trees/drzewoiglaste</path>
                     <technique>PBR</technique>
@@ -919,6 +937,7 @@
             <component>
               <type>MeshRenderer</type>
               <active>True</active>
+              <applyFog>True</applyFog>
               <model>
                 <path>domludzi</path>
                 <technique>PBR</technique>
@@ -953,6 +972,7 @@
             <component>
               <type>MeshRenderer</type>
               <active>True</active>
+              <applyFog>True</applyFog>
               <model>
                 <path>ognisko</path>
                 <technique>PBR</technique>
@@ -987,6 +1007,7 @@
             <component>
               <type>MeshRenderer</type>
               <active>True</active>
+              <applyFog>True</applyFog>
               <model>
                 <path>Env/barrel</path>
                 <technique>PBR</technique>
@@ -1021,6 +1042,7 @@
             <component>
               <type>MeshRenderer</type>
               <active>True</active>
+              <applyFog>True</applyFog>
               <model>
                 <path>Env/barrel</path>
                 <technique>PBR</technique>

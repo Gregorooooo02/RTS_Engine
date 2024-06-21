@@ -94,13 +94,13 @@ public sealed class Game1 : Game
 #if DEBUG
         //_sceneManager.AddScene(new MapScene());
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
-        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
         _sceneManager.AddScene(FileManager.PopulateScene("Loading Scene"));
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
         // _sceneManager.AddScene(new MapScene());
 #elif RELEASE
         _sceneManager.AddScene(FileManager.PopulateScene("Menu"));
-        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
         _sceneManager.AddScene(FileManager.PopulateScene("Loading Scene"));
+        _sceneManager.AddScene(FileManager.PopulateScene("BaseScene"));
 #endif
     }
 

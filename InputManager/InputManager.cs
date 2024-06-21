@@ -39,7 +39,8 @@ public enum GameAction
     COMPLETE,
     INCOMPLETE,
     GAME_OVER,
-    WIN
+    WIN,
+    RESET
 }
 
 public class InputManager

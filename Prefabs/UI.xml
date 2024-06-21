@@ -374,7 +374,7 @@
                 <component>
                   <type>Button</type>
                   <active>True</active>
-                  <action>SCENE1</action>
+                  <action>SCENE2</action>
                 </component>
                 <component>
                   <type>Button</type>
