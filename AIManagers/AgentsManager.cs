@@ -36,7 +36,6 @@ public class AgentsManager
 
     public void PlacePortraits()
     {
-        Console.WriteLine(Globals.Ratio);
         for (int i = 0; i < Units.Count; i++)
         {
             var uiObject = Units[i].ParentObject.FindGameObjectByName("UI");

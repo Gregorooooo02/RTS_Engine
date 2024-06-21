@@ -14,7 +14,7 @@ public class CivilianFlee : AgentState
     
     private Queue<Vector2> _points;
     private Vector2 _currentPoint;
-    private readonly int _maxAttempts = 10;
+    private readonly int _maxAttempts = 15;
     private int _currentAttempts = 0;
     
     Node _end = null;
@@ -45,83 +45,14 @@ public class CivilianFlee : AgentState
             data.Alarmed = false;
             return wander1;
         }
-
-        /*
-        if (Vector2.Distance(_destination, location) <= data.FleeingSpeed || _timeSinceLastRepath >= data.RepathDelay)
-        {
-            Node end = null;
-            int attempts = 0;
-            Vector2 direction = location - target;
-            direction.Normalize();
-            Vector2 currentOffset = direction * data.FleeingDistance;
-            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
-            float angle = 0;
-            do
-            {
-                if (attempts > _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle) && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState wander))
-                {
-                    //If flee attempts fails return to idle
-                    ((CivilianIdle)idle).Caller = wander;
-                    Target = null;
-                    data.Alarmed = false;
-                    return idle;
-                }
-                if (angle != 0)
-                {
-                    currentOffset.X = MathF.Cos(angle) * direction.X - MathF.Sin(angle) * direction.Y;
-                    currentOffset.Y = MathF.Sin(angle) * direction.X + MathF.Cos(angle) * direction.Y;
-                    currentOffset *= data.FleeingDistance;
-                }
-                Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(location + currentOffset, -direction);
-                attempts++;
-                
-                _destination = location + currentOffset;
-                
-                if (((int)endPoint.X < 1 || (int)endPoint.Y < 1 ||
-                     (int)endPoint.X > Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 2 ||
-                     (int)endPoint.Y > Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 2) || !Globals.Renderer.WorldRenderer.MapNodes[(int)endPoint.X,(int)endPoint.Y].Available)
-                {
-                    angle *= -1;
-                    if (angle >= 0)
-                    {
-                        angle += 0.2617993878f;
-                    }
-                    continue;
-                }
-                
-                Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
-                Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
-            
-                end = Pathfinding.CalculatePath(goal, start,false);
-            } while (end is null);
-            _points = Pathfinding.PathToQueueOfVectors(end);
-            _points.Enqueue(_destination);
-            _currentPoint = _points.Dequeue();
-            _timeSinceLastRepath = 0;
-        }
-        else
-        {
-            _timeSinceLastRepath += Globals.DeltaTime;
-            if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
-            {
-                _currentPoint = _points.Dequeue();
-            }
-            else
-            {
-                agent.MoveToPoint(_currentPoint, data.FleeingSpeed);
-            }
-        }
-        */
         
         if (_pathingCompleted && _pathingScheduled)
         {
             //When pathing completes
-            
             _pathingScheduled = false;
             _pathingCompleted = false;
             if (_end == null && _currentAttempts < _maxAttempts)
             {
-                //TODO: Schedule repathing here
                 _repath = true;
                 _currentAttempts++;
                 _angle *= -1;
@@ -132,6 +63,7 @@ public class CivilianFlee : AgentState
             } 
             else if (_end == null && _currentAttempts >= _maxAttempts && agent.AgentStates.TryGetValue(Agent.State.Wander, out AgentState wander))
             {
+                _angle = 0;
                 Target = null;
                 data.Alarmed = false;
                 return wander;
@@ -168,6 +100,8 @@ public class CivilianFlee : AgentState
             if (endPoint.X < 0 || endPoint.Y < 0 || endPoint.X >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) ||
                 endPoint.Y >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(1))
             {
+                _pathingCompleted = true;
+                _pathingScheduled = true;
                 _end = null;
                 return this;
             }
