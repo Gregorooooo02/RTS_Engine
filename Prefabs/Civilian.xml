@@ -127,8 +127,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>637,1342</x>
-                <y>367,56726</y>
+                <x>126,30557</x>
+                <y>212,87245</y>
                 <z>0,1</z>
               </position>
               <rotation>
@@ -167,8 +167,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>638,3342</x>
-                <y>370,26724</y>
+                <x>127,50558</x>
+                <y>215,57245</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -177,7 +177,7 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,94</x>
+                <x>0,82</x>
                 <y>1</y>
                 <z>1</z>
               </scale>
@@ -242,14 +242,14 @@
       <childObjects>
         <object>
           <name>Background</name>
-          <active>True</active>
+          <active>False</active>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>636,7342</x>
-                <y>341,86725</y>
+                <x>475,08356</x>
+                <y>350,9859</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -282,14 +282,14 @@
         </object>
         <object>
           <name>Filling</name>
-          <active>True</active>
+          <active>False</active>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>637,2342</x>
-                <y>343,66724</y>
+                <x>475,58356</x>
+                <y>352,7859</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -298,7 +298,7 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
+                <x>0,9757999</x>
                 <y>1</y>
                 <z>1</z>
               </scale>
@@ -310,8 +310,8 @@
               <sprite>UI/AwerenessBarWhiteSmall</sprite>
               <color>
                 <r>255</r>
-                <g>142</g>
-                <b>0</b>
+                <g>180</g>
+                <b>6</b>
                 <a>255</a>
               </color>
               <screenSizeX>1600</screenSizeX>
@@ -321,6 +321,55 @@
           <childObjects></childObjects>
         </object>
       </childObjects>
+    </object>
+    <object>
+      <name>Mark</name>
+      <active>True</active>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>138,40558</x>
+            <y>161,07245</y>
+            <z>0,3</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>1</x>
+            <y>1</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>SpiteRenderer</type>
+          <active>True</active>
+          <useLocal>True</useLocal>
+          <sprite>UI/pauseButton</sprite>
+          <color>
+            <r>255</r>
+            <g>0</g>
+            <b>0</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+        <component>
+          <type>AlertnessMark</type>
+          <active>True</active>
+          <markOffset>
+            <x>-30,7</x>
+            <y>-119</y>
+            <z>0,3</z>
+          </markOffset>
+        </component>
+      </components>
+      <childObjects></childObjects>
     </object>
   </childObjects>
 </rootObject>
