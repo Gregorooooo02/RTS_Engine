@@ -138,7 +138,13 @@ public class Camera : Component
     public void MoveCameraToPosition(Vector3 position)
     {
         if(!IsWorldCamera) return;
-        ParentObject.Transform.SetLocalPosition(position);
+        Vector3 newPos = position + new Vector3(20, 0, 5);
+        if (newPos.X < 0 || newPos.Z < 0 || newPos.X >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(0) - 1 ||
+            newPos.Z >= Globals.Renderer.WorldRenderer.MapNodes.GetLength(1) - 1)
+        {
+            newPos = position;
+        }
+        ParentObject.Transform.SetLocalPosition(newPos);
         float newHeight = _aboveGroundOffset +
                           PickingManager.InterpolateWorldHeight(new Vector2(ParentObject.Transform.Pos.X,
                               ParentObject.Transform.Pos.Z));

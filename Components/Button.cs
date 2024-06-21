@@ -21,7 +21,7 @@ public class Button : Component
 
     public bool IsPressed = false;
 
-    public bool UnitPortrait = false;
+    private bool _unitPortrait = false;
     private Agent _agent;
     
     public override void Update()
@@ -34,7 +34,7 @@ public class Button : Component
                 if (ButtonVisual.Active)
                 {
                     MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
-                    if (UnitPortrait)
+                    if (_unitPortrait)
                     {
                         _agent ??= ParentObject.Parent.Parent.GetComponent<Agent>();
                         if (action is { state: ActionState.RELEASED} && _agent != null)
@@ -202,6 +202,8 @@ public class Button : Component
         
         builder.Append("<active>" + Active +"</active>");
         
+        builder.Append("<portrait>" + _unitPortrait +"</portrait>");
+        
         builder.Append("<action>"+ _buttonAction +"</action>");
 
         if (_buttonAction == GameAction.TOGGLE_ACTIVE)
@@ -216,6 +218,7 @@ public class Button : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        _unitPortrait = element.Element("portrait")?.Value == "True";
         Enum.TryParse(element?.Element("action")?.Value, out GameAction action);
         _buttonAction = action;
         GameObjectName = element?.Element("linkedObject")?.Value;
@@ -233,7 +236,7 @@ public class Button : Component
         if(ImGui.CollapsingHeader("Button"))
         {
             ImGui.Checkbox("Button active", ref Active);
-            ImGui.Checkbox("Unit portrait", ref UnitPortrait);
+            ImGui.Checkbox("Unit portrait", ref _unitPortrait);
             ImGui.Text("Linked with SpiteRenderer from object: " + ButtonVisual?.ParentObject.Name);
             ImGui.Text("Current function: " + _buttonAction);
             if (ImGui.Button("Change button function"))

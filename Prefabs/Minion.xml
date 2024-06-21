@@ -53,6 +53,7 @@
         <projectileSpeed>25</projectileSpeed>
         <projectileMinDistance>1</projectileMinDistance>
         <projectileType>Arrow</projectileType>
+        <hideTime>2</hideTime>
       </agentData>
     </component>
     <component>
@@ -130,8 +131,8 @@
               <active>True</active>
               <position>
                 <x>272</x>
-                <y>740</y>
-                <z>0,3</z>
+                <y>740,00006</y>
+                <z>0,4</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -169,7 +170,7 @@
                   <active>True</active>
                   <position>
                     <x>272</x>
-                    <y>740</y>
+                    <y>740,00006</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -211,7 +212,7 @@
               <active>True</active>
               <position>
                 <x>275</x>
-                <y>770</y>
+                <y>770,00006</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -238,6 +239,12 @@
               </color>
               <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <portrait>True</portrait>
+              <action>EXIT</action>
             </component>
           </components>
           <childObjects></childObjects>
