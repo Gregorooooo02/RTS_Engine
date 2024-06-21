@@ -93,6 +93,14 @@ public class Agent : Component
     public override void Update()
     {
         if(!Active || Globals.IsPaused)return;
+        
+        UiObject ??= ParentObject.FindGameObjectByName("UI");
+        Icon ??= UiObject?.FindGameObjectByName("Icon");
+        HealthBarBackground ??= UiObject?.FindGameObjectByName("HP");
+        HealthBar ??= HealthBarBackground?.Children[0];
+        
+        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage * Globals.Ratio);
+        
         Position = ParentObject.Transform.ModelMatrix.Translation;
         if (Renderer == null || AnimatedRenderer == null)
         {
@@ -138,6 +146,7 @@ public class Agent : Component
                     break;
                 case LayerType.PLAYER:
                     Globals.AgentsManager.Units.Remove(this);
+                    Globals.AgentsManager.PlacePortraits();
                     break;
             }
 
@@ -172,13 +181,6 @@ public class Agent : Component
             }
             return;
         }
-        
-        UiObject = ParentObject.FindGameObjectByName("UI");
-        Icon = UiObject?.FindGameObjectByName("Icon");
-        HealthBarBackground = UiObject?.FindGameObjectByName("HP");
-        HealthBar = HealthBarBackground?.Children[0];
-        
-        HealthBar?.Transform.SetLocalScaleX(AgentData.HpAsPercentage * Globals.Ratio);
         
         if (AgentLayer == LayerType.ENEMY)
         {

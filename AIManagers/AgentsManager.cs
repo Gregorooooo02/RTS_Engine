@@ -23,11 +23,19 @@ public class AgentsManager
     public Vector3 UiOffset = new(90.0f, 0.0f, 0.0f);
     public Vector3 BackgroundOffset = new(0.0f, 0.0f, 0.1f);
 
+    private readonly Vector3 iconsStart = new Vector3(229, 642 , 0);
+    private readonly Vector3 healthbarsStart = new Vector3(227, 617,0);
+
     public Marker Marker = null;
 
     public void Initialize()
     {
         // Initialize the UI for all units with the offset
+        PlacePortraits();
+    }
+
+    public void PlacePortraits()
+    {
         for (int i = 0; i < Units.Count; i++)
         {
             var uiObject = Units[i].ParentObject.FindGameObjectByName("UI");
@@ -37,12 +45,12 @@ public class AgentsManager
             
             if (icon == null || healthBar == null || healthStatus == null) continue;
             
-            icon?.Transform.SetLocalPosition(icon.Transform.Pos + UiOffset * i);
-            healthBar?.Transform.SetLocalPosition(healthBar.Transform.Pos + BackgroundOffset + UiOffset * i);
-            healthStatus?.Transform.SetLocalPosition(healthStatus.Transform.Pos + UiOffset * i);
+            icon?.Transform.SetLocalPosition(iconsStart * Globals.Ratio + UiOffset * i);
+            healthBar?.Transform.SetLocalPosition(healthbarsStart * Globals.Ratio + BackgroundOffset + UiOffset * i);
+            healthStatus?.Transform.SetLocalPosition(healthbarsStart * Globals.Ratio + UiOffset * i);
         }
     }
-
+    
     public static void ChangeUnitSelection(Agent agent,bool selected)
     {
         agent?.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(selected ? GameAction.SELECT : GameAction.DESELECT);
