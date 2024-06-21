@@ -42,31 +42,43 @@ public class AgentsManager
             healthStatus?.Transform.SetLocalPosition(healthStatus.Transform.Pos + UiOffset * i);
         }
     }
+
+    public static void ChangeUnitSelection(Agent agent,bool selected)
+    {
+        agent?.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(selected ? GameAction.SELECT : GameAction.DESELECT);
+    }
+
+    public void DeselectAllUnits()
+    {
+        foreach (Agent selectedUnit in SelectedUnits)
+        {
+            ChangeUnitSelection(selectedUnit, false);
+        }
+        SelectedUnits.Clear();
+    }
     
     public void CheckForOrders()
     {
         //Probe for unit selection
         List<Pickable> units = Globals.PickingManager.PickUnits();
         //If unit picking attempt happened and CTRL key was not pressed then clear selected units list
-        if(Globals.PickingManager.PickedUnits && !InputManager.Instance.IsActive(GameAction.CTRL))
-        { 
-            foreach (Agent selectedUnit in SelectedUnits)
-            {
-                selectedUnit?.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(GameAction.DESELECT);
-            }
-            SelectedUnits.Clear();
-        }
-        //Then add all selected units to list
-        foreach (Pickable unit in units)
+        if (!Globals.HitUI)
         {
-            Agent temp = unit.ParentObject.GetComponent<Agent>();
-            if (temp != null)
+            if(Globals.PickingManager.PickedUnits && !InputManager.Instance.IsActive(GameAction.CTRL))
+            { 
+                DeselectAllUnits();
+            }
+            //Then add all selected units to list
+            foreach (Pickable unit in units)
             {
-                temp.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(GameAction.SELECT);
-                SelectedUnits.Add(temp);
+                Agent temp = unit.ParentObject.GetComponent<Agent>();
+                if (temp != null && !SelectedUnits.Contains(temp))
+                {
+                    ChangeUnitSelection(temp, true);
+                    SelectedUnits.Add(temp);
+                }
             }
         }
-
         Pickable selectedEnemy = Globals.PickingManager.PickEnemy();
         if (Globals.PickingManager.PickedEnemy && selectedEnemy == null)
         {

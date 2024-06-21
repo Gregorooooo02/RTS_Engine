@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
+using RTS_Engine.Components.AI;
 using Quaternion = System.Numerics.Quaternion;
 
 namespace RTS_Engine;
@@ -19,6 +20,9 @@ public class Button : Component
     public string GameObjectName = "Root";
 
     public bool IsPressed = false;
+
+    public bool UnitPortrait = false;
+    private Agent _agent;
     
     public override void Update()
     {
@@ -26,9 +30,39 @@ public class Button : Component
         {
             if (ButtonVisual != null)
             {
+                
                 if (ButtonVisual.Active)
                 {
                     MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
+                    if (UnitPortrait)
+                    {
+                        _agent ??= ParentObject.Parent.Parent.GetComponent<Agent>();
+                        if (action is { state: ActionState.RELEASED} && _agent != null)
+                        {
+                            if (action.StartingPosition.X >= _pos.X
+                                    && action.StartingPosition.X <= _pos.X + ButtonVisual.Sprite.Width * _scale.X
+                                    && action.StartingPosition.Y >= _pos.Y
+                                    && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
+                            {
+                                Globals.HitUI = true;
+                                if (InputManager.Instance.IsActive(GameAction.CTRL))
+                                {
+                                    if (!Globals.AgentsManager.SelectedUnits.Contains(_agent))
+                                    {
+                                        Globals.AgentsManager.SelectedUnits.Add(_agent);
+                                        AgentsManager.ChangeUnitSelection(_agent, true);
+                                    }
+                                }
+                                else
+                                {
+                                    Globals.AgentsManager.DeselectAllUnits();
+                                    Globals.AgentsManager.SelectedUnits.Add(_agent);
+                                    AgentsManager.ChangeUnitSelection(_agent, true);
+                                }
+                            }
+                        }
+                        return;
+                    }
                     //Check if the LMB was pressed
                     if (action is {state: ActionState.PRESSED, duration: <= 0})
                     {
@@ -173,6 +207,7 @@ public class Button : Component
         if(ImGui.CollapsingHeader("Button"))
         {
             ImGui.Checkbox("Button active", ref Active);
+            ImGui.Checkbox("Unit portrait", ref UnitPortrait);
             ImGui.Text("Linked with SpiteRenderer from object: " + ButtonVisual?.ParentObject.Name);
             ImGui.Text("Current function: " + _buttonAction);
             if (ImGui.Button("Change button function"))

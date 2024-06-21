@@ -90,6 +90,8 @@ namespace RTS_Engine
         public static AgentsManager AgentsManager;
         public static AudioManager AudioManager;
 
+        public static bool HitUI = false;
+
         #endregion
 
         #region Time
@@ -115,6 +117,7 @@ namespace RTS_Engine
         {
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             ElapsedGameTime = gameTime.ElapsedGameTime;
+            HitUI = false;
 
             if(InputManager.Instance.GetAction(GameAction.PAUSE)?.state == ActionState.RELEASED) IsPaused = !IsPaused;
             
