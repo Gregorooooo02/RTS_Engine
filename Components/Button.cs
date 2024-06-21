@@ -39,6 +39,13 @@ public class Button : Component
                         _agent ??= ParentObject.Parent.Parent.GetComponent<Agent>();
                         if (action is { state: ActionState.RELEASED} && _agent != null)
                         {
+                            if (ButtonVisual.useLocalPosition)
+                            {
+                                _pos.X = ParentObject.Transform.Pos.X;
+                                _pos.Y = ParentObject.Transform.Pos.Y;
+                                _scale.X = ParentObject.Transform.Scl.X;
+                                _scale.Y = ParentObject.Transform.Scl.Y;
+                            }
                             if (action.StartingPosition.X >= _pos.X
                                     && action.StartingPosition.X <= _pos.X + ButtonVisual.Sprite.Width * _scale.X
                                     && action.StartingPosition.Y >= _pos.Y
@@ -59,6 +66,25 @@ public class Button : Component
                                     Globals.AgentsManager.SelectedUnits.Add(_agent);
                                     AgentsManager.ChangeUnitSelection(_agent, true);
                                 }
+                                return;
+                            }
+                        }
+                        MouseAction action2 = InputManager.Instance.GetMouseAction(GameAction.MMB);
+                        if (action2 is { state: ActionState.RELEASED } && _agent != null)
+                        {
+                            if (ButtonVisual.useLocalPosition)
+                            {
+                                _pos.X = ParentObject.Transform.Pos.X;
+                                _pos.Y = ParentObject.Transform.Pos.Y;
+                                _scale.X = ParentObject.Transform.Scl.X;
+                                _scale.Y = ParentObject.Transform.Scl.Y;
+                            }
+                            if (action2.StartingPosition.X >= _pos.X
+                                && action2.StartingPosition.X <= _pos.X + ButtonVisual.Sprite.Width * _scale.X
+                                && action2.StartingPosition.Y >= _pos.Y
+                                && action2.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
+                            {
+                                Globals.CurrentCamera.MoveCameraToPosition(_agent.Position);
                             }
                         }
                         return;

@@ -132,8 +132,20 @@ public class Camera : Component
         Globals.ViewPos = ParentObject.Transform.ModelMatrix.Translation;
         Globals.View = Matrix.CreateLookAt(Globals.ViewPos, ParentObject.Transform.ModelMatrix.Forward + Globals.ViewPos, Vector3.Up);
         Globals.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FovDegrees), Globals.GraphicsDevice.Viewport.AspectRatio, NearPlane, FarPlane);
+        Globals.CurrentCamera = this;
     }
 
+    public void MoveCameraToPosition(Vector3 position)
+    {
+        if(!IsWorldCamera) return;
+        ParentObject.Transform.SetLocalPosition(position);
+        float newHeight = _aboveGroundOffset +
+                          PickingManager.InterpolateWorldHeight(new Vector2(ParentObject.Transform.Pos.X,
+                              ParentObject.Transform.Pos.Z));
+        currentHeight = currentHeight < 0 ? ParentObject.Transform.Pos.Y : MathHelper.Lerp(currentHeight,newHeight,_heightLerpSpeed * Globals.DeltaTime);
+        ParentObject.Transform.SetLocalPositionY(currentHeight);
+    }
+    
     private void MoveCamera()
     {
         if(!_keyboardControl) return;

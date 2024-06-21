@@ -78,6 +78,8 @@ namespace RTS_Engine
         public static Matrix Projection = Matrix.Identity;
         public static Vector3 ViewPos;
         public static float ZoomDegrees = 45.0f;
+
+        public static Camera CurrentCamera;
         
         public static BoundingFrustum BoundingFrustum = new BoundingFrustum(Matrix.Identity);
         #endregion
