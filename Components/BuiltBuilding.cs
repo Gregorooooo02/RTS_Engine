@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -7,6 +8,13 @@ namespace RTS_Engine;
 
 public class BuiltBuilding : Component
 {
+    public enum BonusType
+    {
+        None,
+        Damage,
+        Health
+    }
+    
     public int MeatCost;
     public int Level;
 
@@ -14,6 +22,8 @@ public class BuiltBuilding : Component
     private GameObject _upgradeButton;
     private GameObject _cancelButton;
     private GameObject _costText;
+
+    private BonusType _bonusType;
 
     public override void Update()
     {
@@ -42,6 +52,14 @@ public class BuiltBuilding : Component
             {
                 GameManager.MeatNumber -= MeatCost;
                 Level++;
+                if (_bonusType == BonusType.Damage)
+                {
+                    GameManager.DamageMultiplier = 1.0f + (Level - 1) * 0.1f;
+                }
+                else
+                {
+                    GameManager.HealthMultiplier = 1.0f + (Level - 1) * 0.1f;
+                }
                 MeatCost += 100;
                 _upgradeButton.GetComponent<Button>().IsPressed = false;
             }
@@ -95,6 +113,8 @@ public class BuiltBuilding : Component
         
         builder.Append("<level>" + Level + "</level>");
         
+        builder.Append("<bonusType>" + _bonusType + "</bonusType>");
+        
         builder.Append("</component>");
         
         return builder.ToString();
@@ -105,6 +125,8 @@ public class BuiltBuilding : Component
         Active = element.Element("active")?.Value == "True";
         MeatCost = int.TryParse(element.Element("meatCost")?.Value, out MeatCost) ? MeatCost : 100;
         Level = int.TryParse(element.Element("level")?.Value, out Level) ? Level : 1;
+        XElement bonus = element.Element("bonusType");
+        _bonusType = bonus != null ?(BonusType)Enum.Parse(typeof(BonusType), element.Element("bonusType")?.Value) : BonusType.None;
     }
     
     public override void RemoveComponent()
@@ -113,6 +135,7 @@ public class BuiltBuilding : Component
     }
     
 #if DEBUG
+    private bool _changingBonus = false;
     public override void Inspect()
     {
         if (ImGui.CollapsingHeader("BuiltBuilding"))
@@ -120,6 +143,40 @@ public class BuiltBuilding : Component
             ImGui.Checkbox("BuiltBuilding active", ref Active);
             ImGui.SliderInt("Meat cost", ref MeatCost, 0, 1000);
             ImGui.SliderInt("Level", ref Level, 1, 5);
+            ImGui.Text("Current bonus: " + _bonusType);
+            ImGui.SameLine();
+            if (ImGui.Button("Switch bonus"))
+            {
+                _changingBonus = true;
+            }
+            if (ImGui.Button("Remove component"))
+            {
+                RemoveComponent();
+            }
+        }
+        if (_changingBonus)
+        {
+            ImGui.Begin("Change bonus");
+            var values = Enum.GetValues(typeof(BonusType));
+            foreach (BonusType type in values)
+            {
+                if (ImGui.Button(type.ToString()))
+                {
+                    if (_bonusType == type)
+                    {
+                        _changingBonus = false;
+                        ImGui.End();
+                        return;
+                    }
+                    _bonusType = type;
+                    _changingBonus = false;
+                }
+            }
+            if (ImGui.Button("Cancel"))
+            {
+                _changingBonus = false;
+            }
+            ImGui.End();
         }
     }
 #endif
