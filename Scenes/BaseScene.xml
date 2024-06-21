@@ -50,6 +50,7 @@
         <component>
           <type>MeshRenderer</type>
           <active>True</active>
+          <applyFog>True</applyFog>
           <model>
             <path>trawa</path>
             <technique>PBR</technique>
@@ -849,6 +850,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/piaskow</path>
                     <technique>PBR</technique>
@@ -882,6 +884,7 @@
                     <component>
                       <type>MeshRenderer</type>
                       <active>True</active>
+                      <applyFog>True</applyFog>
                       <model>
                         <path>tartak</path>
                         <technique>PBR</technique>
@@ -897,6 +900,7 @@
                       <active>True</active>
                       <meatCost>0</meatCost>
                       <level>1</level>
+                      <bonusType>None</bonusType>
                     </component>
                   </components>
                   <childObjects>
@@ -1104,6 +1108,7 @@
                             <component>
                               <type>Button</type>
                               <active>True</active>
+                              <portrait>False</portrait>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
                           </components>
@@ -1192,6 +1197,7 @@
                             <component>
                               <type>Button</type>
                               <active>True</active>
+                              <portrait>False</portrait>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
                           </components>
@@ -1403,6 +1409,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>EXITPUZZLE</action>
                         </component>
                       </components>
@@ -1657,6 +1664,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
                       </components>
@@ -1745,6 +1753,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
                       </components>
@@ -1916,6 +1925,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/piaskow</path>
                     <technique>PBR</technique>
@@ -1949,6 +1959,7 @@
                     <component>
                       <type>MeshRenderer</type>
                       <active>True</active>
+                      <applyFog>True</applyFog>
                       <model>
                         <path>domludzi</path>
                         <technique>PBR</technique>
@@ -1959,6 +1970,7 @@
                       <active>True</active>
                       <meatCost>100</meatCost>
                       <level>1</level>
+                      <bonusType>Damage</bonusType>
                     </component>
                     <component>
                       <type>Pickable</type>
@@ -2171,6 +2183,7 @@
                             <component>
                               <type>Button</type>
                               <active>True</active>
+                              <portrait>False</portrait>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
                           </components>
@@ -2259,6 +2272,7 @@
                             <component>
                               <type>Button</type>
                               <active>True</active>
+                              <portrait>False</portrait>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
                           </components>
@@ -2470,6 +2484,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>EXITPUZZLE</action>
                         </component>
                       </components>
@@ -2724,6 +2739,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
                       </components>
@@ -2812,6 +2828,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
                       </components>
@@ -2978,6 +2995,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>Env/piaskow</path>
                     <technique>PBR</technique>
@@ -3016,6 +3034,7 @@
                     <component>
                       <type>MeshRenderer</type>
                       <active>True</active>
+                      <applyFog>True</applyFog>
                       <model>
                         <path>Env/props/namiot</path>
                         <technique>PBR</technique>
@@ -3026,6 +3045,7 @@
                       <active>True</active>
                       <meatCost>100</meatCost>
                       <level>1</level>
+                      <bonusType>Health</bonusType>
                     </component>
                     <component>
                       <type>Pickable</type>
@@ -3238,6 +3258,7 @@
                             <component>
                               <type>Button</type>
                               <active>True</active>
+                              <portrait>False</portrait>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
                           </components>
@@ -3326,6 +3347,7 @@
                             <component>
                               <type>Button</type>
                               <active>True</active>
+                              <portrait>False</portrait>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
                           </components>
@@ -3537,6 +3559,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>EXITPUZZLE</action>
                         </component>
                       </components>
@@ -3791,6 +3814,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
                       </components>
@@ -3879,6 +3903,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
                       </components>
@@ -4067,6 +4092,7 @@
                 <component>
                   <type>MeshRenderer</type>
                   <active>True</active>
+                  <applyFog>True</applyFog>
                   <model>
                     <path>ognisko</path>
                     <technique>PBR</technique>
@@ -4204,6 +4230,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>CANCEL_MISSION_SELECT</action>
                         </component>
                       </components>
@@ -4292,6 +4319,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>CONFIRM</action>
                         </component>
                       </components>
@@ -4337,6 +4365,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>CONFIRM</action>
                         </component>
                       </components>
@@ -4382,6 +4411,7 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>CONFIRM</action>
                         </component>
                       </components>
@@ -4427,11 +4457,13 @@
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>CREATE_MISSION</action>
                         </component>
                         <component>
                           <type>Button</type>
                           <active>True</active>
+                          <portrait>False</portrait>
                           <action>CANCEL_MISSION_SELECT</action>
                         </component>
                       </components>
@@ -4529,6 +4561,7 @@
         <component>
           <type>MeshRenderer</type>
           <active>False</active>
+          <applyFog>True</applyFog>
           <model>
             <path>defaultModel</path>
             <technique>PBR</technique>
@@ -4772,6 +4805,7 @@
             <component>
               <type>Button</type>
               <active>True</active>
+              <portrait>False</portrait>
               <action>TOGGLE_ACTIVE</action>
               <linkedObject>Confirm_Window</linkedObject>
             </component>
@@ -4898,11 +4932,13 @@
                     <component>
                       <type>Button</type>
                       <active>True</active>
+                      <portrait>False</portrait>
                       <action>SCENE0</action>
                     </component>
                     <component>
                       <type>Button</type>
                       <active>True</active>
+                      <portrait>False</portrait>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
                   </components>
@@ -4991,6 +5027,7 @@
                     <component>
                       <type>Button</type>
                       <active>True</active>
+                      <portrait>False</portrait>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
                   </components>
