@@ -26,6 +26,9 @@ public class PlayerUnitData : AgentData
     public float ProjectileMinDistance = 1.0f;
     public ProjectileManager.ProjectileType ProjectileType;
 
+    public float HideTime = 2.0f;
+    public bool IsHidden = false;
+
     public Agent Target;
     
     private Vector2 _destination;
@@ -74,6 +77,8 @@ public class PlayerUnitData : AgentData
         
         builder.Append("<projectileType>" + ProjectileType + "</projectileType>");
         
+        builder.Append("<hideTime>" + HideTime + "</hideTime>");
+        
         return builder.ToString();
     }
 
@@ -89,6 +94,7 @@ public class PlayerUnitData : AgentData
         MaxAttackRange = float.TryParse(element.Element("maxAttackRange")?.Value, out float maxAttackRange) ? maxAttackRange : 2.5f;
         MinPointDistance = float.TryParse(element.Element("minPointDistance")?.Value, out float minPointDistance) ? minPointDistance : 0.5f;
         RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
+        HideTime = float.TryParse(element.Element("hideTime")?.Value, out float hideTime) ? hideTime : 2.0f;
         IsRanged = element.Element("isRanged")?.Value == "True";
         ProjectileSpeed = float.TryParse(element.Element("projectileSpeed")?.Value, out float projectileSpeed) ? projectileSpeed : 25.0f;
         ProjectileMinDistance = float.TryParse(element.Element("projectileMinDistance")?.Value, out float projectileMinDistance) ? projectileMinDistance : 1.0f;
@@ -100,6 +106,8 @@ public class PlayerUnitData : AgentData
     public override void Inspect()
     {
         base.Inspect();
+        ImGui.DragFloat("Hide time", ref HideTime);
+        ImGui.Separator();
         ImGui.DragFloat("Unit presence", ref Presence);
         ImGui.Separator();
         ImGui.DragFloat("Walking speed", ref WalkingSpeed);
