@@ -41,7 +41,6 @@ public class AlertnessMark : Component
         
         if (_agent != null && _renderer != null)
         {
-            
             if (_isSoldier && _soldierData != null)
             {
                 Vector3? newPos = PickingManager.CalculatePositionOnScreen(_agent.Position);
@@ -67,6 +66,12 @@ public class AlertnessMark : Component
                 {
                     _renderer.Active = false;
                 }
+            }
+
+            if (!_agent.AgentData.Alive)
+            {
+                _renderer.Active = false;
+                Active = false;
             }
         }
     }
