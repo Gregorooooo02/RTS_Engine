@@ -144,7 +144,7 @@ public class SceneManager
             {
                 if (CurrentScene.IsMissionScene)
                 {
-                    _scenes.Remove(CurrentScene);
+                    RemoveScene(CurrentScene);
                 }
                 Globals.AgentsManager.Units.Clear();
                 Globals.PickingManager.SinglePickingActive = false;
@@ -202,6 +202,12 @@ public class SceneManager
         }
     }
 
+    public void RemoveScene(Scene scene)
+    {
+        GameObject.ClearObject(scene.SceneRoot);
+        _scenes.Remove(scene);
+    }
+    
     public void RemoveScene(int index)
     {
         GameObject.ClearObject(_scenes[index].SceneRoot);
