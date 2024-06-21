@@ -117,9 +117,9 @@ public class GameObject
         {
             ClearObject(gameObject.Children[i]);
         }
-        for (int i = gameObject._components.Count - 1; i >= 0 ; i--)
+        while (gameObject._components.Count > 0)
         {
-            gameObject._components[i].RemoveComponent();
+            gameObject._components[0].RemoveComponent();
         }
         gameObject.Transform = null;
     }

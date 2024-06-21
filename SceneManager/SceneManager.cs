@@ -165,6 +165,22 @@ public class SceneManager
             Globals.GraphicsDevice.Clear(new Color(0,0,0,255));
             Globals.GraphicsDevice.SetRenderTarget(null);
         }
+
+        if (InputManager.Instance.GetAction(GameAction.RESET)?.state == ActionState.RELEASED)
+        {
+            //Reset camp scene
+            RemoveScene(2);
+            AddScene(FileManager.PopulateScene("BaseScene"));
+            
+            //Reset player stats
+            GameManager.MeatNumber = 0;
+            GameManager.PuzzleNumber = 0;
+            GameManager.CurrentAwareness = 0;
+            GameManager.DamageMultiplier = 1.0f;
+            GameManager.HealthMultiplier = 1.0f;
+            
+            //TODO: Add any necessary resets here
+        }
     }
 
     public void ChangeScene(int i)

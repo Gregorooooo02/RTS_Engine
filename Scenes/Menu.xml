@@ -181,7 +181,7 @@
           </childObjects>
         </object>
         <object>
-          <name>Settings_Button</name>
+          <name>Reset_Button</name>
           <active>True</active>
           <components>
             <component>
@@ -217,6 +217,12 @@
               <screenSizeX>1600</screenSizeX>
               <screenSizeY>900</screenSizeY>
             </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <portrait>False</portrait>
+              <action>RESET</action>
+            </component>
           </components>
           <childObjects>
             <object>
@@ -246,7 +252,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Settings</contents>
+                  <contents>Reset</contents>
                   <font>Fonts/lightFont</font>
                   <color>
                     <r>255</r>
