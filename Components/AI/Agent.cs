@@ -15,6 +15,8 @@ public class Agent : Component
 {
     private static int CurrentID = 1;
     
+    public bool IsHidden = false;
+    
     public enum AgentType
     {
         Civilian,
@@ -286,7 +288,7 @@ public class Agent : Component
             if(data.Awareness < data.AwarenessThreshold)data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
-                if(!t.AgentData.Alive || !t.ParentObject.Active) continue;
+                if(!t.AgentData.Alive || !t.ParentObject.Active || t.IsHidden) continue;
                 //Calculate offset vector from this civilian to player unit from the list
                 offset = new Vector2(t.Position.X - Position.X, t.Position.Z - Position.Z);
                 float length = offset.Length();
@@ -335,7 +337,7 @@ public class Agent : Component
             if(data.Awareness < data.AwarenessThreshold)data.Target = null;
             foreach (Agent t in Globals.AgentsManager.Units)
             {
-                if(!t.AgentData.Alive || !t.ParentObject.Active) continue;
+                if(!t.AgentData.Alive || !t.ParentObject.Active || t.IsHidden) continue;
                 //Calculate offset vector from this civilian to player unit from the list
                 offset = new Vector2(t.Position.X - Position.X, t.Position.Z - Position.Z);
                 float length = offset.Length();

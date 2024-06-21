@@ -27,7 +27,6 @@ public class PlayerUnitData : AgentData
     public ProjectileManager.ProjectileType ProjectileType;
 
     public float HideTime = 2.0f;
-    public bool IsHidden = false;
 
     public Agent Target;
     

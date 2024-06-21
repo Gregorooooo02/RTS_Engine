@@ -42,7 +42,7 @@ public class UnitIdle : AgentState
         {
             _changeHidden = false;
             agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
-            data.IsHidden = true;
+            agent.IsHidden = true;
         }
         if ((agent.ActiveClip != 3 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f) && currentHideTime >= data.HideTime)
         {
@@ -58,14 +58,14 @@ public class UnitIdle : AgentState
         {
             currentHideTime = 0;
             agent.AnimatedRenderer._skinnedModel.AnimationController.LoopEnabled = true;
-            data.IsHidden = false;
+            agent.IsHidden = false;
             return move;
         }
         if (data.Target != null && agent.AgentStates.TryGetValue(Agent.State.Attack, out AgentState attack))
         {
             currentHideTime = 0;
             agent.AnimatedRenderer._skinnedModel.AnimationController.LoopEnabled = true;
-            data.IsHidden = false;
+            agent.IsHidden = false;
             return attack;
         }
         return this;
