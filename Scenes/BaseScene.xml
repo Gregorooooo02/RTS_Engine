@@ -1109,6 +1109,8 @@
                               <type>Button</type>
                               <active>True</active>
                               <portrait>False</portrait>
+                              <isUnitSelect>False</isUnitSelect>
+                              <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
                           </components>
@@ -1198,6 +1200,8 @@
                               <type>Button</type>
                               <active>True</active>
                               <portrait>False</portrait>
+                              <isUnitSelect>False</isUnitSelect>
+                              <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
                           </components>
@@ -1410,6 +1414,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>EXITPUZZLE</action>
                         </component>
                       </components>
@@ -1665,6 +1671,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
                       </components>
@@ -1754,6 +1762,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
                       </components>
@@ -2184,6 +2194,8 @@
                               <type>Button</type>
                               <active>True</active>
                               <portrait>False</portrait>
+                              <isUnitSelect>False</isUnitSelect>
+                              <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
                           </components>
@@ -2273,6 +2285,8 @@
                               <type>Button</type>
                               <active>True</active>
                               <portrait>False</portrait>
+                              <isUnitSelect>False</isUnitSelect>
+                              <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
                           </components>
@@ -2485,6 +2499,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>EXITPUZZLE</action>
                         </component>
                       </components>
@@ -2740,6 +2756,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
                       </components>
@@ -2829,6 +2847,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
                       </components>
@@ -3259,6 +3279,8 @@
                               <type>Button</type>
                               <active>True</active>
                               <portrait>False</portrait>
+                              <isUnitSelect>False</isUnitSelect>
+                              <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
                           </components>
@@ -3348,6 +3370,8 @@
                               <type>Button</type>
                               <active>True</active>
                               <portrait>False</portrait>
+                              <isUnitSelect>False</isUnitSelect>
+                              <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
                           </components>
@@ -3560,6 +3584,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>EXITPUZZLE</action>
                         </component>
                       </components>
@@ -3815,6 +3841,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
                       </components>
@@ -3904,6 +3932,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
                       </components>
@@ -4231,6 +4261,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>CANCEL_MISSION_SELECT</action>
                         </component>
                       </components>
@@ -4320,6 +4352,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>True</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>CONFIRM</action>
                         </component>
                       </components>
@@ -4366,6 +4400,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>True</isUnitSelect>
+                          <unitID>1</unitID>
                           <action>CONFIRM</action>
                         </component>
                       </components>
@@ -4412,6 +4448,8 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>True</isUnitSelect>
+                          <unitID>2</unitID>
                           <action>CONFIRM</action>
                         </component>
                       </components>
@@ -4458,12 +4496,16 @@
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>CREATE_MISSION</action>
                         </component>
                         <component>
                           <type>Button</type>
                           <active>True</active>
                           <portrait>False</portrait>
+                          <isUnitSelect>False</isUnitSelect>
+                          <unitID>0</unitID>
                           <action>CANCEL_MISSION_SELECT</action>
                         </component>
                       </components>
@@ -4806,6 +4848,8 @@
               <type>Button</type>
               <active>True</active>
               <portrait>False</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <unitID>0</unitID>
               <action>TOGGLE_ACTIVE</action>
               <linkedObject>Confirm_Window</linkedObject>
             </component>
@@ -4933,12 +4977,16 @@
                       <type>Button</type>
                       <active>True</active>
                       <portrait>False</portrait>
+                      <isUnitSelect>False</isUnitSelect>
+                      <unitID>0</unitID>
                       <action>SCENE0</action>
                     </component>
                     <component>
                       <type>Button</type>
                       <active>True</active>
                       <portrait>False</portrait>
+                      <isUnitSelect>False</isUnitSelect>
+                      <unitID>0</unitID>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
                   </components>
@@ -5028,6 +5076,8 @@
                       <type>Button</type>
                       <active>True</active>
                       <portrait>False</portrait>
+                      <isUnitSelect>False</isUnitSelect>
+                      <unitID>0</unitID>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
                   </components>

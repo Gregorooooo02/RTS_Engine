@@ -12,6 +12,12 @@ public static class GameManager
     public static float DamageMultiplier = 1.0f;
     public static float HealthMultiplier = 1.0f;
 
+    // 0000 0000
+    // 1st bit - Wardrobe
+    // 2nd bit - Cabinet
+    // 3rd bit - Chandelier
+    public static byte UnitsSelectedForMission = 0;
+
     private static GameAction _status = GameAction.NONE;
 
     public static readonly List<Task> Tasks = new();
@@ -41,14 +47,16 @@ public static class GameManager
 
     public static GameAction CheckIfGameOver()
     {
+        /*
         for (int i = 0; i < Globals.AgentsManager.Units.Count; i++)
         {
             if (Globals.AgentsManager.Units[i].AgentData.Alive) return GameAction.NONE;
             
             _status = GameAction.GAME_OVER;
         }
-        
-        return _status;
+        */
+        return Globals.AgentsManager.Units.Count > 0 ? GameAction.NONE : GameAction.GAME_OVER;
+        //return _status;
     }
     
     public static void AddMeat(int amount)
@@ -80,6 +88,7 @@ public static class GameManager
         ImGui.DragFloat("Maximum awareness", ref AwarenessLimit);
         ImGui.DragFloat("Damage multiplier", ref DamageMultiplier, 0.1f, 1.0f);
         ImGui.DragFloat("Health multiplier", ref HealthMultiplier, 0.1f, 1.0f);
+        ImGui.Text("Selected units mask " + UnitsSelectedForMission);
         ImGui.End();
     }
 }

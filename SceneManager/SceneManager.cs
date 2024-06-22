@@ -178,7 +178,7 @@ public class SceneManager
             GameManager.CurrentAwareness = 0;
             GameManager.DamageMultiplier = 1.0f;
             GameManager.HealthMultiplier = 1.0f;
-            
+            GameManager.UnitsSelectedForMission = 0;
             //TODO: Add any necessary resets here
         }
     }

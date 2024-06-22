@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -22,6 +23,8 @@ public class Button : Component
     public bool IsPressed = false;
 
     private bool _unitPortrait = false;
+    private bool _isUnitSelect = false;
+    private int _unitID = 0;
     private Agent _agent;
     
     public override void Update()
@@ -134,17 +137,41 @@ public class Button : Component
                                 Globals.PickingManager.PlayerBuildingPickingActive = true;
                                 Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
                             }
+
+
+                            if (_isUnitSelect)
+                            {
+                                if (_buttonAction == GameAction.CONFIRM)
+                                {
+                                    int count = Convert.ToString(GameManager.UnitsSelectedForMission,2).ToCharArray().Count(c => c == '1');
+                                    if (count < 2)
+                                    {
+                                        SelectAndDeselect(_buttonAction);
+                                        _buttonAction = GameAction.DECLINE;
+                                        GameManager.UnitsSelectedForMission += (byte)(1 << _unitID);
+                                    }
+                                }
+                                else if (_buttonAction == GameAction.DECLINE)
+                                {
+                                    SelectAndDeselect(_buttonAction);
+                                    _buttonAction = GameAction.CONFIRM;
+                                    GameManager.UnitsSelectedForMission -= (byte)(1 << _unitID);
+                                }
+                            }
+                            else
+                            {
+                                if (_buttonAction == GameAction.CONFIRM)
+                                {
+                                    SelectAndDeselect(_buttonAction);
+                                    _buttonAction = GameAction.DECLINE;
+                                }
+                                else if (_buttonAction == GameAction.DECLINE)
+                                {
+                                    SelectAndDeselect(_buttonAction);
+                                    _buttonAction = GameAction.CONFIRM;
+                                }
+                            }
                             
-                            if (_buttonAction == GameAction.CONFIRM)
-                            {
-                                SelectAndDeselect(_buttonAction);
-                                _buttonAction = GameAction.DECLINE;
-                            }
-                            else if (_buttonAction == GameAction.DECLINE)
-                            {
-                                SelectAndDeselect(_buttonAction);
-                                _buttonAction = GameAction.CONFIRM;
-                            }
                         }
                     }
                     else
@@ -204,6 +231,10 @@ public class Button : Component
         
         builder.Append("<portrait>" + _unitPortrait +"</portrait>");
         
+        builder.Append("<isUnitSelect>" + _isUnitSelect +"</isUnitSelect>");
+        
+        builder.Append("<unitID>" + _unitID +"</unitID>");
+        
         builder.Append("<action>"+ _buttonAction +"</action>");
 
         if (_buttonAction == GameAction.TOGGLE_ACTIVE)
@@ -219,9 +250,11 @@ public class Button : Component
     {
         Active = element.Element("active")?.Value == "True";
         _unitPortrait = element.Element("portrait")?.Value == "True";
+        _isUnitSelect = element.Element("isUnitSelect")?.Value == "True";
         Enum.TryParse(element?.Element("action")?.Value, out GameAction action);
         _buttonAction = action;
         GameObjectName = element?.Element("linkedObject")?.Value;
+        _unitID = int.TryParse(element.Element("unitID")?.Value, out int id) ? id : 0;
     }
 
     public override void RemoveComponent()
@@ -237,6 +270,8 @@ public class Button : Component
         {
             ImGui.Checkbox("Button active", ref Active);
             ImGui.Checkbox("Unit portrait", ref _unitPortrait);
+            ImGui.Checkbox("Unit selection", ref _isUnitSelect);
+            ImGui.SliderInt("Unit ID", ref _unitID, 0, 2);
             ImGui.Text("Linked with SpiteRenderer from object: " + ButtonVisual?.ParentObject.Name);
             ImGui.Text("Current function: " + _buttonAction);
             if (ImGui.Button("Change button function"))
