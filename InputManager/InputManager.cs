@@ -40,7 +40,9 @@ public enum GameAction
     INCOMPLETE,
     GAME_OVER,
     WIN,
-    RESET
+    RESET,
+    DISABLE_PICKING,
+    ENABLE_PICKING
 }
 
 public class InputManager

@@ -4853,6 +4853,14 @@
               <action>TOGGLE_ACTIVE</action>
               <linkedObject>Confirm_Window</linkedObject>
             </component>
+            <component>
+              <type>Button</type>
+              <active>True</active>
+              <portrait>False</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <unitID>0</unitID>
+              <action>DISABLE_PICKING</action>
+            </component>
           </components>
           <childObjects>
             <object>
@@ -4989,6 +4997,14 @@
                       <unitID>0</unitID>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
+                    <component>
+                      <type>Button</type>
+                      <active>True</active>
+                      <portrait>False</portrait>
+                      <isUnitSelect>False</isUnitSelect>
+                      <unitID>0</unitID>
+                      <action>ENABLE_PICKING</action>
+                    </component>
                   </components>
                   <childObjects>
                     <object>
@@ -5079,6 +5095,14 @@
                       <isUnitSelect>False</isUnitSelect>
                       <unitID>0</unitID>
                       <action>TOGGLE_ACTIVE_PARENT</action>
+                    </component>
+                    <component>
+                      <type>Button</type>
+                      <active>True</active>
+                      <portrait>False</portrait>
+                      <isUnitSelect>False</isUnitSelect>
+                      <unitID>0</unitID>
+                      <action>ENABLE_PICKING</action>
                     </component>
                   </components>
                   <childObjects>

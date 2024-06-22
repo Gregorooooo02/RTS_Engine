@@ -93,7 +93,7 @@ public class Button : Component
                         return;
                     }
                     //Check if the LMB was pressed
-                    if (action is {state: ActionState.PRESSED, duration: <= 0})
+                    if (action is {state: ActionState.RELEASED})
                     {
                         if (ButtonVisual.useLocalPosition)
                         {
@@ -118,6 +118,7 @@ public class Button : Component
                             && action.StartingPosition.Y >= _pos.Y
                             && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
                         {
+                            Globals.HitUI = true;
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
                             IsPressed = true;
                             

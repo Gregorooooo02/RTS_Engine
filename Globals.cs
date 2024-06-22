@@ -125,6 +125,20 @@ namespace RTS_Engine
             
             if(InputManager.Instance.GetAction(GameAction.RESIZE_FULLSCREEN)?.state == ActionState.RELEASED) ChangeScreenSize(ScreenSize.FULLSCREEN);
             if(InputManager.Instance.GetAction(GameAction.RESIZE_WINDOWED)?.state == ActionState.RELEASED) ChangeScreenSize(ScreenSize.WINDOWED);
+
+            if (InputManager.Instance.GetAction(GameAction.DISABLE_PICKING)?.state == ActionState.RELEASED)
+            {
+                PickingManager.PlayerBuildingPickingActive = false;
+                PickingManager.PlayerBuildingUiBuiltActive = false;
+                PickingManager.PlayerMissionSelectPickingActive = false;
+            }
+
+            if (InputManager.Instance.GetAction(GameAction.ENABLE_PICKING)?.state == ActionState.RELEASED)
+            {
+                PickingManager.PlayerBuildingPickingActive = true;
+                PickingManager.PlayerBuildingUiBuiltActive = true;
+                PickingManager.PlayerMissionSelectPickingActive = true;
+            }
             
         }
         

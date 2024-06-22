@@ -284,7 +284,7 @@ public class PickingManager
     public Pickable PickBuilding()
     {
         PickedBuilding = false;
-        if (!PlayerBuildingPickingActive) return null;
+        if (!PlayerBuildingPickingActive  || Globals.HitUI) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED })
         {
@@ -320,7 +320,7 @@ public class PickingManager
     public Pickable PickBuiltBuilding()
     {
         PickedBuiltBuilding = false;
-        if (!PlayerBuildingBuiltPickingActive) return null;
+        if (!PlayerBuildingBuiltPickingActive  || Globals.HitUI) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state: ActionState.RELEASED })
         {
@@ -356,7 +356,7 @@ public class PickingManager
     public Pickable PickMissionSelect()
     {
         PickedMissionSelect = false;
-        if (!PlayerMissionSelectPickingActive) return null;
+        if (!PlayerMissionSelectPickingActive || Globals.HitUI) return null;
         MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
         if (action is { state : ActionState.RELEASED })
         {
