@@ -147,6 +147,9 @@ public class Agent : Component
                 case LayerType.PLAYER:
                     Globals.AgentsManager.Units.Remove(this);
                     Globals.AgentsManager.PlacePortraits();
+                    HealthBarBackground.Active = false;
+                    HealthBar.Active = false;
+                    Icon.Active = false;
                     break;
             }
 

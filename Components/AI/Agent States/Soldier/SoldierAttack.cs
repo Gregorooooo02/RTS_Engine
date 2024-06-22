@@ -32,14 +32,31 @@ public class SoldierAttack : AgentState
         
     }
 
+    private Agent CheckForNearbyEnemies(Agent self, float maxRange)
+    {
+        foreach (Agent unit in Globals.AgentsManager.Units)
+        {
+            if (Vector3.Distance(self.Position, unit.Position) <= maxRange && !unit.IsHidden && unit.AgentData.Alive)
+            {
+                return unit;
+            }
+        }
+        return null;
+    }
+    
+
     public override AgentState UpdateState(Agent agent)
     {
         SoldierData data = (SoldierData)agent.AgentData;
         if ((Target == null || !Target.AgentData.Alive) && agent.AgentStates.TryGetValue(Agent.State.Patrol,out AgentState patrol))
         {
-            data.Alarmed = false;
-            Target = null;
-            return patrol;
+            Target = CheckForNearbyEnemies(agent, data.RetargetRange);
+            if (Target == null)
+            {
+                data.Alarmed = false;
+                return patrol;
+            }
+            data.Target = Target;
         }
         Vector2 location = new Vector2(agent.Position.X, agent.Position.Z);
         Vector2 target = new Vector2(Target.Position.X, Target.Position.Z);

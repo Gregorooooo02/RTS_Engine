@@ -32,6 +32,7 @@ public class SoldierData : AgentData
     public float AttackDelay = 0.8f;
     public float MinAttackRange = 1.5f;
     public float MaxAttackRange = 2.5f;
+    public float RetargetRange = 7.0f;
     
     public float RepathDelay = 0.5f;
     
@@ -79,6 +80,7 @@ public class SoldierData : AgentData
         builder.Append("<attackDelay>" + AttackDelay + "</attackDelay>");
         builder.Append("<minAttackRange>" + MinAttackRange + "</minAttackRange>");
         builder.Append("<maxAttackRange>" + MaxAttackRange + "</maxAttackRange>");
+        builder.Append("<retargetRange>" + RetargetRange + "</retargetRange>");
         
         builder.Append("<repathDelay>" + RepathDelay + "</repathDelay>");
         
@@ -117,6 +119,7 @@ public class SoldierData : AgentData
         AttackDelay = float.TryParse(element.Element("attackDelay")?.Value, out float attackDelay) ? attackDelay : 0.8f;
         MinAttackRange = float.TryParse(element.Element("minAttackRange")?.Value, out float minAttackRange) ? minAttackRange : 1.5f;
         MaxAttackRange = float.TryParse(element.Element("maxAttackRange")?.Value, out float maxAttackRange) ? maxAttackRange : 2.5f;
+        RetargetRange = float.TryParse(element.Element("retargetRange")?.Value, out float retargetRange) ? retargetRange : 7.0f;
         
         RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
         
@@ -157,6 +160,7 @@ public class SoldierData : AgentData
         ImGui.DragFloat("Attack delay", ref AttackDelay);
         ImGui.DragFloat("Min attack range", ref MinAttackRange);
         ImGui.DragFloat("Max attack range", ref MaxAttackRange);
+        ImGui.DragFloat("Max retarget range", ref RetargetRange);
         ImGui.Separator();
         ImGui.Text("Awareness: " + Awareness);
         ImGui.DragFloat("Awareness threshold", ref AwarenessThreshold);
