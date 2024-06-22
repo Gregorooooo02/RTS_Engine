@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>Point</name>
+  <active>True</active>
+  <cascadingActive>True</cascadingActive>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </scale>
+    </component>
+    <component>
+      <type>MeshRenderer</type>
+      <active>True</active>
+      <applyFog>True</applyFog>
+      <model>
+        <path>TestWall</path>
+        <technique>PBR</technique>
+      </model>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>

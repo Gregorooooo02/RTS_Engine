@@ -529,22 +529,42 @@ public class WorldRenderer : Component
         trees.Name = "Trees";
         
         GameObject rocks = new GameObject();
+
+        GameObject villages = new GameObject();
         
         this.ParentObject.AddChildObject(trees);
         trees.AddComponent<InstancedRendererController>();
         trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
         
         this.ParentObject.AddChildObject(rocks);
-        rocks.AddComponent<InstancedRendererController>(); 
+        rocks.AddComponent<InstancedRendererController>();
+
+        ParentObject.AddChildObject(villages);
+        villages.Name = "Villages";
 
         float minDistance = 5.0f;
         int maxAttempts = 10;
         List<Vector3> placedTrees = new();
         
+
+        
         foreach (var kvp in voronoiRegions)
         {
             var site = kvp.Key;
             var region = kvp.Value;
+            
+            float height = PickingManager.InterpolateWorldHeight(site, this);
+            if (height > 10.0f && height < 20.0f)
+            {
+                //Console.WriteLine(site);
+#if _WINDOWS
+                villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village1.xml");
+#else
+            villages.LoadPrefab("Prefabs/Village1.xml");
+#endif
+                PlaceVillage(site,villages.Children.Last());
+                continue;
+            }
             
             // Try to place multiple trees in the region
             int treeCount = random.Next(10, 20);
@@ -591,6 +611,45 @@ public class WorldRenderer : Component
             {
                 
             }
+        }
+    }
+
+    private void PlaceVillage(Vector2 location, GameObject villageRoot)
+    {
+        //villageRoot.Children[0] buildings
+        //villageRoot.Children[1] props
+        //villageRoot.Children[2] soldiers
+        //villageRoot.Children[3] civilians
+        Vector3 offset = new Vector3(location.X, 0, location.Y);
+        Vector3 newPos;
+        foreach (GameObject building in villageRoot.Children[0].Children)
+        {
+            newPos = building.Transform.Pos + offset;
+            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            building.Transform.SetLocalPosition(newPos);
+        }
+
+        foreach (GameObject prop in villageRoot.Children[1].Children)
+        {
+            newPos = prop.Transform.Pos + offset;
+            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            prop.Transform.SetLocalPosition(newPos);
+        }
+
+        foreach (GameObject soldier in villageRoot.Children[2].Children)
+        {
+            newPos = soldier.Children[0].Transform.Pos + offset;
+            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            soldier.Children[0].Transform.SetLocalPosition(newPos); 
+            
+            soldier.Children[1].Transform.SetLocalPosition(offset);
+        }
+
+        foreach (GameObject civilian in villageRoot.Children[3].Children)
+        {
+            newPos = civilian.Transform.Pos + offset;
+            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            civilian.Transform.SetLocalPosition(newPos); 
         }
     }
 

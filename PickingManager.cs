@@ -617,21 +617,35 @@ public class PickingManager
         int xUp = xDown + 1;
         int zDown = (int)MathF.Floor(location.Y);
         int zUp = zDown + 1;
+        try
+        {
+            //Calculate weights for vertices
+            float weightX = location.X % 1;
+            float weightZ = location.Y % 1;
 
-        //Calculate weights for vertices
-        float weightX = location.X % 1;
-        float weightZ = location.Y % 1;
+            //Prepare height data from selected vertices
+
+            float height1 = world.MapNodes[xDown, zDown].Height;
+            float height2 = world.MapNodes[xDown, zUp].Height;
+            float height3 = world.MapNodes[xUp, zDown].Height;
+            float height4 = world.MapNodes[xUp, zUp].Height;
             
-        //Prepare height data from selected vertices
-        float height1 = world.MapNodes[xDown, zDown].Height;
-        float height2 = world.MapNodes[xDown, zUp].Height;
-        float height3 = world.MapNodes[xUp, zDown].Height;
-        float height4 = world.MapNodes[xUp, zUp].Height;
+            //Calculate weighted average of height values in selected vertices.
+            return (height1 * (1 - weightX) + height1 * (1 - weightZ) +
+                    height2 * (1 - weightX) + height2 * weightZ +
+                    height3 * weightX + height3 * (1 - weightZ) +
+                    height4 * weightX + height4 * weightZ) / 4.0f;
 
-        //Calculate weighted average of height values in selected vertices.
-        return (height1 * (1 - weightX) + height1 * (1 - weightZ) + 
-                height2 * (1 - weightX) + height2 * weightZ + 
-                height3 * weightX + height3 * (1 - weightZ) +
-                height4 * weightX + height4 * weightZ) / 4.0f;
+        }
+        catch (Exception e)
+        {
+            //Console.WriteLine(location);
+            //Console.WriteLine(xDown);
+            //Console.WriteLine(zDown);
+            //Console.WriteLine(xUp);
+            //Console.WriteLine(zUp);
+        }
+
+        return 0;
     }
 }

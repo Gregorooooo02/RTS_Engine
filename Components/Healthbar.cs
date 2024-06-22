@@ -21,7 +21,7 @@ public class Healthbar : Component
         _agent ??= ParentObject.Parent.GetComponent<Agent>();
         _barBck ??= ParentObject.Children[0];
         _barFill ??= ParentObject.Children[1];
-
+        
         if (_agent != null && _barBck != null && _barFill != null)
         {
             if (!Active || _agent.AgentData.Hp >= _agent.AgentData.MaxHp || _agent.AgentData.Hp <= 0)
