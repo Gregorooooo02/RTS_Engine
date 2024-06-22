@@ -560,7 +560,7 @@ public class WorldRenderer : Component
 #if _WINDOWS
                 villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village1.xml");
 #else
-            villages.LoadPrefab("Prefabs/Village1.xml");
+                villages.LoadPrefab("Prefabs/Village1.xml");
 #endif
                 PlaceVillage(site,villages.Children.Last());
                 continue;
