@@ -249,7 +249,7 @@ public class UnitAttack : AgentState
                         }
                         if (data.IsRanged)
                         {
-                            Globals.AgentsManager.ProjectileManager.AddProjectile(ProjectileManager.ProjectileType.Arrow,data.Target,data.ProjectileSpeed,data.ProjectileMinDistance, data.Damage, agent.Position);
+                            Globals.AgentsManager.ProjectileManager.AddProjectile(data.ProjectileType,data.Target,data.ProjectileSpeed,data.ProjectileMinDistance, data.Damage, agent.Position);
                         }
                         else
                         {

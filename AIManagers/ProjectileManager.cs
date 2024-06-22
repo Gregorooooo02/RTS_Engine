@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using RTS_Engine.Components.AI;
 
@@ -9,7 +10,8 @@ public class ProjectileManager
     public enum ProjectileType
     {
         Arrow,
-        Fireball
+        Fireball,
+        Cupboard
     }
     
     public List<Projectile> ActiveProjectiles = new();
@@ -27,6 +29,9 @@ public class ProjectileManager
                 break;
             case ProjectileType.Fireball:
                 meshRenderer.LoadModel("");
+                break;
+            case ProjectileType.Cupboard:
+                meshRenderer.LoadModel("cupboardProjectile");
                 break;
         }
         newProjectile.AddComponent(meshRenderer);
