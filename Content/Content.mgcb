@@ -1854,7 +1854,7 @@
 /processorParam:BakeMeshTransforms=True
 /processorParam:GenerateTangentFrame=False
 /processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=0.1
+/processorParam:ModelScale=0.001
 /build:mag/mag.fbx
 
 #begin mag/metalness.png
