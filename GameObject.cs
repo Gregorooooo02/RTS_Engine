@@ -13,6 +13,7 @@ public class GameObject
     public string Name = "NewObject";
     public bool Active = true;
     private bool _wasActive;
+    public bool UseCascadingActiveState = true;
 
     public Transform Transform;
     private List<Component> _components = new();
@@ -28,13 +29,16 @@ public class GameObject
 
     public void Update()
     {
-        if (!Active && _wasActive)
+        if (UseCascadingActiveState)
         {
-            SetChildrenInactive(this);
-        } 
-        else if (Active && !_wasActive)
-        {
-            SetChildrenActive(this);    
+            if (!Active && _wasActive)
+            {
+                SetChildrenInactive(this);
+            } 
+            else if (Active && !_wasActive)
+            {
+                SetChildrenActive(this);    
+            }
         }
         
         if (Active)
@@ -185,6 +189,7 @@ public class GameObject
         builder.Append("<rootObject>");
         builder.Append("<name>" + Name + "</name>");
         builder.Append("<active>" + Active +"</active>");
+        builder.Append("<cascadingActive>" + UseCascadingActiveState +"</cascadingActive>");
         builder.Append("<components>");
         builder.Append(Transform.ComponentToXmlString());
         foreach (Component c in _components)
@@ -208,6 +213,7 @@ public class GameObject
         builder.Append("<object>");
         builder.Append("<name>" + Name + "</name>");
         builder.Append("<active>" + Active +"</active>");
+        builder.Append("<cascadingActive>" + UseCascadingActiveState +"</cascadingActive>");
         builder.Append("<components>");
         builder.Append(Transform.ComponentToXmlString());
         foreach (Component c in _components)
@@ -285,6 +291,7 @@ public class GameObject
     {
         ImGui.Begin("Inspector");
         ImGui.Checkbox("Active", ref Active);
+        ImGui.Checkbox("Use cascading active state", ref UseCascadingActiveState);
         ImGui.InputText("Object name", ref Name, 20);
         if(ImGui.Button("Delete GameObject"))
         {

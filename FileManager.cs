@@ -104,6 +104,8 @@ public class KeyBindsData
         GameObject currentObject = new GameObject();
         currentObject.Name = objectNode.Element("name").Value;
         currentObject.Active = objectNode.Element("active").Value == "True";
+        XElement cascading = objectNode.Element("cascadingActive");
+        currentObject.UseCascadingActiveState = cascading == null || cascading.Value == "True";
         foreach (XElement component in objectNode.Element("components").Elements())
         {
             if (component.Element("type")?.Value == "Transform")

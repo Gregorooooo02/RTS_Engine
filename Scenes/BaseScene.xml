@@ -2,6 +2,7 @@
 <rootObject>
   <name>Root</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -27,6 +28,7 @@
     <object>
       <name>Ground</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -61,6 +63,7 @@
         <object>
           <name>Trees</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -94,6 +97,7 @@
             <object>
               <name>Tree1</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -123,6 +127,7 @@
             <object>
               <name>Tree2</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -152,6 +157,7 @@
             <object>
               <name>Tree3</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -181,6 +187,7 @@
             <object>
               <name>Tree4</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -210,6 +217,7 @@
             <object>
               <name>Tree5</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -239,6 +247,7 @@
             <object>
               <name>Tree6</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -268,6 +277,7 @@
             <object>
               <name>Tree7</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -297,6 +307,7 @@
             <object>
               <name>Tree8</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -326,6 +337,7 @@
             <object>
               <name>Tree9</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -355,6 +367,7 @@
             <object>
               <name>Tree10</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -384,6 +397,7 @@
             <object>
               <name>Tree11</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -413,6 +427,7 @@
             <object>
               <name>Tree12</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -442,6 +457,7 @@
             <object>
               <name>Tree13</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -471,6 +487,7 @@
             <object>
               <name>Tree14</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -500,6 +517,7 @@
             <object>
               <name>Tree15</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -529,6 +547,7 @@
             <object>
               <name>Tree16</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -558,6 +577,7 @@
             <object>
               <name>Tree17</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -587,6 +607,7 @@
             <object>
               <name>Tree18</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -616,6 +637,7 @@
             <object>
               <name>Tree19</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -645,6 +667,7 @@
             <object>
               <name>Tree20</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -674,6 +697,7 @@
             <object>
               <name>Tree21</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -703,6 +727,7 @@
             <object>
               <name>Tree22</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -732,6 +757,7 @@
             <object>
               <name>Tree23</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -761,6 +787,7 @@
             <object>
               <name>Tree24</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -792,6 +819,7 @@
         <object>
           <name>Structures</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -817,6 +845,7 @@
             <object>
               <name>Sawmill_Place</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -861,6 +890,7 @@
                 <object>
                   <name>Building</name>
                   <active>False</active>
+                  <cascadingActive>False</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -907,6 +937,7 @@
                     <object>
                       <name>UI_Built</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -946,6 +977,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -987,6 +1019,7 @@
                             <object>
                               <name>Info</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -1031,6 +1064,7 @@
                         <object>
                           <name>Sprite</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1071,6 +1105,7 @@
                         <object>
                           <name>Upgrade_Button</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1118,6 +1153,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -1162,6 +1198,7 @@
                         <object>
                           <name>Cancel_Button</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1209,6 +1246,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -1253,6 +1291,7 @@
                         <object>
                           <name>Cost</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1292,6 +1331,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -1340,6 +1380,7 @@
                 <object>
                   <name>Puzzle</name>
                   <active>True</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -1376,6 +1417,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1423,6 +1465,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1469,6 +1512,7 @@
                 <object>
                   <name>UI</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -1508,6 +1552,7 @@
                     <object>
                       <name>Text</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1549,6 +1594,7 @@
                         <object>
                           <name>Info</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1593,6 +1639,7 @@
                     <object>
                       <name>Sprite</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1633,6 +1680,7 @@
                     <object>
                       <name>Build_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1680,6 +1728,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1724,6 +1773,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1771,6 +1821,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1815,6 +1866,7 @@
                     <object>
                       <name>Cost</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -1854,6 +1906,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -1902,6 +1955,7 @@
             <object>
               <name>Dmg_Place</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -1946,6 +2000,7 @@
                 <object>
                   <name>Building</name>
                   <active>False</active>
+                  <cascadingActive>False</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -1992,6 +2047,7 @@
                     <object>
                       <name>UI_Built</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2031,6 +2087,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2072,6 +2129,7 @@
                             <object>
                               <name>Info</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2116,6 +2174,7 @@
                         <object>
                           <name>Sprite</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2156,6 +2215,7 @@
                         <object>
                           <name>Upgrade_Button</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2203,6 +2263,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2247,6 +2308,7 @@
                         <object>
                           <name>Cancel_Button</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2294,6 +2356,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2338,6 +2401,7 @@
                         <object>
                           <name>Cost</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2377,6 +2441,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -2425,6 +2490,7 @@
                 <object>
                   <name>Puzzle</name>
                   <active>True</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -2461,6 +2527,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2508,6 +2575,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2554,6 +2622,7 @@
                 <object>
                   <name>UI</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -2593,6 +2662,7 @@
                     <object>
                       <name>Text</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2634,6 +2704,7 @@
                         <object>
                           <name>Info</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2678,6 +2749,7 @@
                     <object>
                       <name>Sprite</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2718,6 +2790,7 @@
                     <object>
                       <name>Build_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2765,6 +2838,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2809,6 +2883,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2856,6 +2931,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2900,6 +2976,7 @@
                     <object>
                       <name>Cost</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -2939,6 +3016,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -2987,6 +3065,7 @@
             <object>
               <name>Health_Place</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -3031,6 +3110,7 @@
                 <object>
                   <name>Building</name>
                   <active>False</active>
+                  <cascadingActive>False</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -3077,6 +3157,7 @@
                     <object>
                       <name>UI_Built</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3116,6 +3197,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3157,6 +3239,7 @@
                             <object>
                               <name>Info</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3201,6 +3284,7 @@
                         <object>
                           <name>Sprite</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3241,6 +3325,7 @@
                         <object>
                           <name>Upgrade_Button</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3288,6 +3373,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3332,6 +3418,7 @@
                         <object>
                           <name>Cancel_Button</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3379,6 +3466,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3423,6 +3511,7 @@
                         <object>
                           <name>Cost</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3462,6 +3551,7 @@
                             <object>
                               <name>Text</name>
                               <active>False</active>
+                              <cascadingActive>True</cascadingActive>
                               <components>
                                 <component>
                                   <type>Transform</type>
@@ -3510,6 +3600,7 @@
                 <object>
                   <name>Puzzle</name>
                   <active>True</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -3546,6 +3637,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3593,6 +3685,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3639,6 +3732,7 @@
                 <object>
                   <name>UI</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -3678,6 +3772,7 @@
                     <object>
                       <name>Text</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3719,6 +3814,7 @@
                         <object>
                           <name>Info</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3763,6 +3859,7 @@
                     <object>
                       <name>Sprite</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3803,6 +3900,7 @@
                     <object>
                       <name>Build_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3850,6 +3948,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3894,6 +3993,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -3941,6 +4041,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -3985,6 +4086,7 @@
                     <object>
                       <name>Cost</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4024,6 +4126,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -4074,6 +4177,7 @@
         <object>
           <name>Props</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -4099,6 +4203,7 @@
             <object>
               <name>Campfire</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -4142,6 +4247,7 @@
                 <object>
                   <name>Mission_Window</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -4181,6 +4287,7 @@
                     <object>
                       <name>Text</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4223,6 +4330,7 @@
                     <object>
                       <name>Cancel_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4270,6 +4378,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -4314,6 +4423,7 @@
                     <object>
                       <name>Wardrobe</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4362,6 +4472,7 @@
                     <object>
                       <name>Shelf</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4410,6 +4521,7 @@
                     <object>
                       <name>Chandelier</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4458,6 +4570,7 @@
                     <object>
                       <name>Start_Button</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -4513,6 +4626,7 @@
                         <object>
                           <name>Text</name>
                           <active>False</active>
+                          <cascadingActive>True</cascadingActive>
                           <components>
                             <component>
                               <type>Transform</type>
@@ -4565,6 +4679,7 @@
     <object>
       <name>MainCamera</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -4615,6 +4730,7 @@
     <object>
       <name>UI</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -4640,6 +4756,7 @@
         <object>
           <name>Meat_Counter</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -4679,6 +4796,7 @@
             <object>
               <name>Text</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -4725,6 +4843,7 @@
         <object>
           <name>Puzzle_Counter</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -4764,6 +4883,7 @@
             <object>
               <name>Text</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -4810,6 +4930,7 @@
         <object>
           <name>Exit_Button</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -4866,6 +4987,7 @@
             <object>
               <name>Confirm_Window</name>
               <active>False</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -4905,6 +5027,7 @@
                 <object>
                   <name>Text</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -4947,6 +5070,7 @@
                 <object>
                   <name>Yes_Button</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -5010,6 +5134,7 @@
                     <object>
                       <name>Text</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
@@ -5054,6 +5179,7 @@
                 <object>
                   <name>No_Button</name>
                   <active>False</active>
+                  <cascadingActive>True</cascadingActive>
                   <components>
                     <component>
                       <type>Transform</type>
@@ -5109,6 +5235,7 @@
                     <object>
                       <name>Text</name>
                       <active>False</active>
+                      <cascadingActive>True</cascadingActive>
                       <components>
                         <component>
                           <type>Transform</type>
