@@ -151,6 +151,23 @@ public class Camera : Component
         currentHeight = currentHeight < 0 ? ParentObject.Transform.Pos.Y : MathHelper.Lerp(currentHeight,newHeight,_heightLerpSpeed * Globals.DeltaTime);
         ParentObject.Transform.SetLocalPositionY(currentHeight);
     }
+
+    public void MoveCameraToPosition(Vector3 position, WorldRenderer world)
+    {
+        if(!IsWorldCamera) return;
+        Vector3 newPos = position + new Vector3(20, 0, 5);
+        if (newPos.X < 0 || newPos.Z < 0 || newPos.X >= world.MapNodes.GetLength(0) - 1 ||
+            newPos.Z >= world.MapNodes.GetLength(1) - 1)
+        {
+            newPos = position;
+        }
+        ParentObject.Transform.SetLocalPosition(newPos);
+        float newHeight = _aboveGroundOffset +
+                          PickingManager.InterpolateWorldHeight(new Vector2(ParentObject.Transform.Pos.X,
+                              ParentObject.Transform.Pos.Z),world);
+        currentHeight = currentHeight < 0 ? ParentObject.Transform.Pos.Y : MathHelper.Lerp(currentHeight,newHeight,_heightLerpSpeed * Globals.DeltaTime);
+        ParentObject.Transform.SetLocalPositionY(currentHeight);
+    }
     
     private void MoveCamera()
     {

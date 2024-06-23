@@ -545,9 +545,6 @@ public class WorldRenderer : Component
         float minDistance = 5.0f;
         int maxAttempts = 10;
         List<Vector3> placedTrees = new();
-        
-        Console.WriteLine(voronoiRegions.Count);
-
         List<Vector2> villagePositions = new();
 
         float minVillageDistance = 60.0f;
@@ -606,7 +603,6 @@ public class WorldRenderer : Component
         
         //Place player units
         //TODO: Implement placing player units in the world
-        /*
         foreach (var kvp in voronoiRegions)
         {
             var site = kvp.Key;
@@ -627,16 +623,39 @@ public class WorldRenderer : Component
             float height = PickingManager.InterpolateWorldHeight(location, this);
             if (height > minHeight && height < maxHeight)
             {
+                byte unitsMask = GameManager.UnitsSelectedForMission;
+                string name = null;
+                for (int i = 0; i < 3; i++)
+                {
+                    if ((unitsMask & 1) > 0)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                name = "Chair.xml";
+                                break;
+                            case 1:
+                                name = "Chair.xml";
+                                break;
+                            case 2:
+                                name = "Minion.xml";
+                                break;
+                        }
+                        if(name == null) continue;
 #if _WINDOWS
-                ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/Wardrobe.xml");
+                        ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/" + name);
 #else
-                ParentObject.LoadPrefab("Prefabs/Wardrobe.xml");
+                        ParentObject.LoadPrefab("Prefabs/" + name);
 #endif
+                        CorrectObjectPosition(ParentObject.Children.Last(),location + (Vector2.One * 5.0f * (i - 1)));
+                    }
+                    unitsMask >>= 1;
+                }
                 voronoiRegions.Remove(site);
                 break;
             }
         }
-        */
+        
         
         //Place terrain features
         //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
@@ -683,6 +702,13 @@ public class WorldRenderer : Component
         }
     }
 
+    private void CorrectObjectPosition(GameObject gameObject, Vector2 offset)
+    {
+        Vector3 newPos = gameObject.Transform.Pos + new Vector3(offset.X,0,offset.Y);
+        newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+        gameObject.Transform.SetLocalPosition(newPos);
+    }
+    
     private void PlaceVillage(Vector2 location, GameObject villageRoot)
     {
         //villageRoot.Children[0] buildings

@@ -50,18 +50,19 @@ public class SceneManager
                 camera.AddComponent<Camera>();
                 camera.GetComponent<Camera>().IsWorldCamera = true;
                 camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
+                if(Globals.AgentsManager.Units.Count > 0)camera.GetComponent<Camera>().MoveCameraToPosition(Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
                 Console.WriteLine("Added Camera");
 
 #if _WINDOWS
                 missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
-            missionRoot.LoadPrefab("Prefabs/UI.xml");
+                missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
 
 #if _WINDOWS
                 missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
 #else
-            missionRoot.LoadPrefab("Prefabs/Marker.xml");
+                missionRoot.LoadPrefab("Prefabs/Marker.xml");
 #endif
                 GameObject civilians = new GameObject();
                 civilians.Name = "Civilians";
@@ -71,46 +72,12 @@ public class SceneManager
 #if _WINDOWS
                     civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
 #else
-                civilians.LoadPrefab("Prefabs/Civilian.xml");
+                    civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
                     civilians.Children[i].Name = "Civilian" + i;
                 }
 
                 Console.WriteLine("Added Civilians");
-
-                GameObject candles = new()
-                {
-                    Name = "Candles"
-                };
-
-                GameObject chairs = new()
-                {
-                    Name = "Chairs"
-                };
-
-                missionRoot.AddChildObject(candles);
-                missionRoot.AddChildObject(chairs);
-                for (int i = 0; i < 1; i++)
-                {
-#if _WINDOWS
-                    candles.LoadPrefab(Globals.MainPath + "/Prefabs/Minion.xml");
-                    chairs.LoadPrefab(Globals.MainPath + "/Prefabs/Chair.xml");
-#else
-                candles.LoadPrefab("Prefabs/Minion.xml");
-                chairs.LoadPrefab("Prefabs/Chair.xml");
-#endif
-                    candles.Children[i].Name = "Candle" + i;
-                    chairs.Children[i].Name = "Chair" + i;
-
-                    Vector3 unitPos = candles.Children.Last().Transform.Pos;
-                    Vector2 posXZ = new(unitPos.X, unitPos.Z + 2 * i);
-
-                    var height = PickingManager.InterpolateWorldHeight(posXZ, currentWorld);
-                    candles.Children.Last().Transform.Move(new Vector3(0, height + 4, 2 * i));
-                    chairs.Children.Last().Transform.Move(new Vector3(0, height + 2, 2 * i));
-                }
-
-                Debug.WriteLine("Added units");
                 AddScene(missionScene);
 
                 Globals.PickingManager.SinglePickingActive = true;
