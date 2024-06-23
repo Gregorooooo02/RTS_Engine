@@ -694,21 +694,21 @@ public class WorldRenderer : Component
         foreach (GameObject building in villageRoot.Children[0].Children)
         {
             newPos = building.Transform.Pos + offset;
-            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
             building.Transform.SetLocalPosition(newPos);
         }
 
         foreach (GameObject prop in villageRoot.Children[1].Children)
         {
             newPos = prop.Transform.Pos + offset;
-            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
             prop.Transform.SetLocalPosition(newPos);
         }
 
         foreach (GameObject soldier in villageRoot.Children[2].Children)
         {
             newPos = soldier.Children[0].Transform.Pos + offset;
-            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
             soldier.Children[0].Transform.SetLocalPosition(newPos); 
             
             soldier.Children[1].Transform.SetLocalPosition(offset);
@@ -717,7 +717,7 @@ public class WorldRenderer : Component
         foreach (GameObject civilian in villageRoot.Children[3].Children)
         {
             newPos = civilian.Transform.Pos + offset;
-            newPos.Y = PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
+            newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
             civilian.Transform.SetLocalPosition(newPos); 
         }
     }
