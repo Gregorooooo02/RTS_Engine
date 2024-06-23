@@ -4293,7 +4293,7 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>672,2222</x>
+                            <x>572,622</x>
                             <y>288,88892</y>
                             <z>0</z>
                           </position>
@@ -4312,12 +4312,12 @@
                           <type>TextRenderer</type>
                           <active>True</active>
                           <useLocal>True</useLocal>
-                          <contents>Select your furniture</contents>
+                          <contents>Select two furniture for the mission</contents>
                           <font>defaultFont</font>
                           <color>
-                            <r>255</r>
-                            <g>255</g>
-                            <b>255</b>
+                            <r>0</r>
+                            <g>0</g>
+                            <b>0</b>
                             <a>255</a>
                           </color>
                           <screenSizeX>1600</screenSizeX>
