@@ -118,6 +118,12 @@ public class Button : Component
                             && action.StartingPosition.Y >= _pos.Y
                             && action.StartingPosition.Y <= _pos.Y + ButtonVisual.Sprite.Height * _scale.Y)
                         {
+                            if (_buttonAction == GameAction.CREATE_MISSION)
+                            {
+                                int count = Convert.ToString(GameManager.UnitsSelectedForMission,2).ToCharArray().Count(c => c == '1');
+                                if(count < 2) return;
+                            }
+                            
                             Globals.HitUI = true;
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
                             IsPressed = true;
