@@ -546,7 +546,10 @@ public class WorldRenderer : Component
         int maxAttempts = 10;
         List<Vector3> placedTrees = new();
         
+        Console.WriteLine(voronoiRegions.Count);
 
+        int villageLimit = 1;
+        int currentVillageCount = 0;
         
         foreach (var kvp in voronoiRegions)
         {
@@ -554,7 +557,7 @@ public class WorldRenderer : Component
             var region = kvp.Value;
             
             float height = PickingManager.InterpolateWorldHeight(site, this);
-            if (height > 10.0f && height < 20.0f)
+            if (height > 10.0f && height < 20.0f && currentVillageCount < villageLimit)
             {
                 //Console.WriteLine(site);
 #if _WINDOWS
@@ -563,6 +566,7 @@ public class WorldRenderer : Component
                 villages.LoadPrefab("Prefabs/Village1.xml");
 #endif
                 PlaceVillage(site,villages.Children.Last());
+                currentVillageCount++;
                 continue;
             }
             

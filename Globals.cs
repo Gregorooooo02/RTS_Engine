@@ -229,7 +229,7 @@ namespace RTS_Engine
         public static bool ShowSelectedSilhouettes = false;
         public static bool DrawShadows = true;
         public static bool DrawMeshes = true;
-        public static bool DebugCamera = true;
+        public static bool DebugCamera = false;
         public static bool DrawWireframe = false;
         public static bool DrawSelectFrustum = false;
         public static bool DrawExplored = false;
