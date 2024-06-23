@@ -3181,15 +3181,6 @@
 /processorParam:TextureFormat=Color
 /build:tartakanimated/3/roughness.png
 
-#begin tartakanimated/tartakanimated.fbx
-/importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:BakeMeshTransforms=True
-/processorParam:GenerateTangentFrame=False
-/processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=1
-/build:tartakanimated/tartakanimated.fbx
-
 #begin teapot/1/teapot.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
