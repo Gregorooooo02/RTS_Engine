@@ -30,6 +30,7 @@ public class Building : Component
             Globals.PickingManager.PlayerMissionSelectPickingActive = true;
             
             _cancelButton.GetComponent<Button>().IsPressed = false;
+            Globals.UIActive = false;
         }
         
         _costText = _ui.FindGameObjectByName("Cost").Children[0];
@@ -91,8 +92,10 @@ public class Building : Component
                 Globals.PickingManager.PlayerMissionSelectPickingActive = true;
                 
                 GameManager.RemovePuzzle(PuzzleCost);
+                Globals.UIActive = false;
             };
 
+            Globals.UIActive = true;
             _ui.Active = false;
             Globals.PickingManager.PlayerBuildingUiActive = false;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
@@ -112,6 +115,7 @@ public class Building : Component
         if (Globals.PickingManager.PlayerBuildingUiActive)
         {
             _ui.Active = true;
+            Globals.UIActive = true;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
             Globals.PickingManager.PlayerBuildingUiBuiltActive = false;
             Globals.PickingManager.PlayerMissionSelectPickingActive = false;

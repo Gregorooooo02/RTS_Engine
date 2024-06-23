@@ -1145,6 +1145,7 @@
                               <active>True</active>
                               <portrait>False</portrait>
                               <isUnitSelect>False</isUnitSelect>
+                              <isWindowTrigger>False</isWindowTrigger>
                               <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
@@ -1238,6 +1239,7 @@
                               <active>True</active>
                               <portrait>False</portrait>
                               <isUnitSelect>False</isUnitSelect>
+                              <isWindowTrigger>False</isWindowTrigger>
                               <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
@@ -1457,6 +1459,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>EXITPUZZLE</action>
                         </component>
@@ -1720,6 +1723,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
@@ -1757,8 +1761,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -1813,6 +1817,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
@@ -1935,8 +1940,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -2255,6 +2260,7 @@
                               <active>True</active>
                               <portrait>False</portrait>
                               <isUnitSelect>False</isUnitSelect>
+                              <isWindowTrigger>False</isWindowTrigger>
                               <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
@@ -2348,6 +2354,7 @@
                               <active>True</active>
                               <portrait>False</portrait>
                               <isUnitSelect>False</isUnitSelect>
+                              <isWindowTrigger>False</isWindowTrigger>
                               <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
@@ -2567,6 +2574,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>EXITPUZZLE</action>
                         </component>
@@ -2830,6 +2838,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
@@ -2867,8 +2876,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -2923,6 +2932,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
@@ -3045,8 +3055,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -3365,6 +3375,7 @@
                               <active>True</active>
                               <portrait>False</portrait>
                               <isUnitSelect>False</isUnitSelect>
+                              <isWindowTrigger>False</isWindowTrigger>
                               <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PUZZLE</action>
                             </component>
@@ -3458,6 +3469,7 @@
                               <active>True</active>
                               <portrait>False</portrait>
                               <isUnitSelect>False</isUnitSelect>
+                              <isWindowTrigger>False</isWindowTrigger>
                               <unitID>0</unitID>
                               <action>TOGGLE_ACTIVE_PARENT</action>
                             </component>
@@ -3677,6 +3689,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>EXITPUZZLE</action>
                         </component>
@@ -3940,6 +3953,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PUZZLE</action>
                         </component>
@@ -3977,8 +3991,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -4033,6 +4047,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>TOGGLE_ACTIVE_PARENT</action>
                         </component>
@@ -4155,8 +4170,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>0</g>
-                                <b>0</b>
+                                <g>255</g>
+                                <b>255</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -4370,6 +4385,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>CANCEL_MISSION_SELECT</action>
                         </component>
@@ -4463,6 +4479,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>True</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>CONFIRM</action>
                         </component>
@@ -4512,6 +4529,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>True</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>1</unitID>
                           <action>CONFIRM</action>
                         </component>
@@ -4561,6 +4579,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>True</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>2</unitID>
                           <action>CONFIRM</action>
                         </component>
@@ -4610,6 +4629,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>CREATE_MISSION</action>
                         </component>
@@ -4618,6 +4638,7 @@
                           <active>True</active>
                           <portrait>False</portrait>
                           <isUnitSelect>False</isUnitSelect>
+                          <isWindowTrigger>False</isWindowTrigger>
                           <unitID>0</unitID>
                           <action>CANCEL_MISSION_SELECT</action>
                         </component>
@@ -4908,7 +4929,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>False</useLocal>
-                  <contents>0</contents>
+                  <contents>187</contents>
                   <font>defaultFont</font>
                   <color>
                     <r>255</r>
@@ -4970,6 +4991,7 @@
               <active>True</active>
               <portrait>False</portrait>
               <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>True</isWindowTrigger>
               <unitID>0</unitID>
               <action>TOGGLE_ACTIVE</action>
               <linkedObject>Confirm_Window</linkedObject>
@@ -4979,6 +5001,7 @@
               <active>True</active>
               <portrait>False</portrait>
               <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>True</isWindowTrigger>
               <unitID>0</unitID>
               <action>TOGGLE_PICKING</action>
             </component>
@@ -5110,6 +5133,7 @@
                       <active>True</active>
                       <portrait>False</portrait>
                       <isUnitSelect>False</isUnitSelect>
+                      <isWindowTrigger>False</isWindowTrigger>
                       <unitID>0</unitID>
                       <action>SCENE0</action>
                     </component>
@@ -5118,6 +5142,7 @@
                       <active>True</active>
                       <portrait>False</portrait>
                       <isUnitSelect>False</isUnitSelect>
+                      <isWindowTrigger>False</isWindowTrigger>
                       <unitID>0</unitID>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
@@ -5126,6 +5151,7 @@
                       <active>True</active>
                       <portrait>False</portrait>
                       <isUnitSelect>False</isUnitSelect>
+                      <isWindowTrigger>False</isWindowTrigger>
                       <unitID>0</unitID>
                       <action>ENABLE_PICKING</action>
                     </component>
@@ -5219,6 +5245,7 @@
                       <active>True</active>
                       <portrait>False</portrait>
                       <isUnitSelect>False</isUnitSelect>
+                      <isWindowTrigger>False</isWindowTrigger>
                       <unitID>0</unitID>
                       <action>TOGGLE_ACTIVE_PARENT</action>
                     </component>
@@ -5227,6 +5254,7 @@
                       <active>True</active>
                       <portrait>False</portrait>
                       <isUnitSelect>False</isUnitSelect>
+                      <isWindowTrigger>False</isWindowTrigger>
                       <unitID>0</unitID>
                       <action>ENABLE_PICKING</action>
                     </component>

@@ -38,6 +38,7 @@ public class BuiltBuilding : Component
             Globals.PickingManager.PlayerMissionSelectPickingActive = true;
             
             _cancelButton.GetComponent<Button>().IsPressed = false;
+            Globals.UIActive = false;
         }
         
         _costText = _ui.FindGameObjectByName("Cost").Children[0];
@@ -93,6 +94,7 @@ public class BuiltBuilding : Component
         if (Globals.PickingManager.PlayerBuildingUiBuiltActive)
         {
             _ui.Active = true;
+            Globals.UIActive = true;
             Globals.PickingManager.PlayerBuildingPickingActive = false;
             Globals.PickingManager.PlayerBuildingBuiltPickingActive = false;
             Globals.PickingManager.PlayerMissionSelectPickingActive = false;

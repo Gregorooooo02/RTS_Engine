@@ -24,6 +24,7 @@ public class Button : Component
 
     private bool _unitPortrait = false;
     private bool _isUnitSelect = false;
+    private bool _isWindowTrigger = false;
     private int _unitID = 0;
     private Agent _agent;
     
@@ -33,9 +34,9 @@ public class Button : Component
         {
             if (ButtonVisual != null)
             {
-                
                 if (ButtonVisual.Active)
                 {
+                    if(_isWindowTrigger && Globals.UIActive) return;
                     MouseAction action = InputManager.Instance.GetMouseAction(GameAction.LMB);
                     if (_unitPortrait)
                     {
@@ -143,6 +144,7 @@ public class Button : Component
                                 ParentObject.ToggleParentActiveState();
                                 Globals.PickingManager.PlayerBuildingPickingActive = true;
                                 Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
+                                Globals.UIActive = false;
                             }
 
 
@@ -240,6 +242,8 @@ public class Button : Component
         
         builder.Append("<isUnitSelect>" + _isUnitSelect +"</isUnitSelect>");
         
+        builder.Append("<isWindowTrigger>" + _isWindowTrigger +"</isWindowTrigger>");
+        
         builder.Append("<unitID>" + _unitID +"</unitID>");
         
         builder.Append("<action>"+ _buttonAction +"</action>");
@@ -258,6 +262,7 @@ public class Button : Component
         Active = element.Element("active")?.Value == "True";
         _unitPortrait = element.Element("portrait")?.Value == "True";
         _isUnitSelect = element.Element("isUnitSelect")?.Value == "True";
+        _isWindowTrigger = element.Element("isWindowTrigger")?.Value == "True";
         Enum.TryParse(element?.Element("action")?.Value, out GameAction action);
         _buttonAction = action;
         GameObjectName = element?.Element("linkedObject")?.Value;
@@ -278,6 +283,7 @@ public class Button : Component
             ImGui.Checkbox("Button active", ref Active);
             ImGui.Checkbox("Unit portrait", ref _unitPortrait);
             ImGui.Checkbox("Unit selection", ref _isUnitSelect);
+            ImGui.Checkbox("Window trigger", ref _isWindowTrigger);
             ImGui.SliderInt("Unit ID", ref _unitID, 0, 2);
             ImGui.Text("Linked with SpiteRenderer from object: " + ButtonVisual?.ParentObject.Name);
             ImGui.Text("Current function: " + _buttonAction);

@@ -93,6 +93,7 @@ namespace RTS_Engine
         public static AudioManager AudioManager;
 
         public static bool HitUI = false;
+        public static bool UIActive = false;
 
         #endregion
 
