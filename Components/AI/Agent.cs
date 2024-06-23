@@ -36,6 +36,7 @@ public class Agent : Component
     }
 
     private float _turnSpeed = 2.0f;
+    private bool removed = false;
 
     private float _occupyDistance = 5.75f;
 
@@ -63,6 +64,8 @@ public class Agent : Component
 
     public List<int> AttackFrames = new();
     public int DeathFrame;
+
+    private int _meatAward = 10;
     
     public int ActiveClip = 2;
     // **Unit animations**
@@ -125,33 +128,39 @@ public class Agent : Component
 
         if (!AgentData.Alive)
         {
-            switch (AgentLayer)
+            if (!removed)
             {
-                case LayerType.ENEMY:
-                    Globals.AgentsManager.Enemies.Remove(this);
-
-                    switch (Type)
-                    {
-                        case AgentType.Civilian:
-                            Globals.AgentsManager.ClappedCivilians.Add(this);
-                            break;
-                        case AgentType.Soldier:
-                            Globals.AgentsManager.ClappedSoldiers.Add(this);
-                            break;
-                        case AgentType.EnemyBuilding:
-                            Globals.AgentsManager.ClappedBuildings.Add(this);
-                            ChangeNodes(true);
-                            break;
-                    }
-                    break;
-                case LayerType.PLAYER:
-                    Globals.AgentsManager.Units.Remove(this);
-                    Globals.AgentsManager.PlacePortraits();
-                    HealthBarBackground.Active = false;
-                    HealthBar.Active = false;
-                    Icon.Active = false;
-                    break;
+                //Here is code that should be executed only once when agent die
+                removed = true;
+                switch (AgentLayer)
+                {
+                    case LayerType.ENEMY:
+                        Globals.AgentsManager.Enemies.Remove(this);
+                        GameManager.AddMeat(_meatAward);
+                        switch (Type)
+                        {
+                            case AgentType.Civilian:
+                                Globals.AgentsManager.ClappedCivilians.Add(this);
+                                break;
+                            case AgentType.Soldier:
+                                Globals.AgentsManager.ClappedSoldiers.Add(this);
+                                break;
+                            case AgentType.EnemyBuilding:
+                                Globals.AgentsManager.ClappedBuildings.Add(this);
+                                ChangeNodes(true);
+                                break;
+                        }
+                        break;
+                    case LayerType.PLAYER:
+                        Globals.AgentsManager.Units.Remove(this);
+                        Globals.AgentsManager.PlacePortraits();
+                        HealthBarBackground.Active = false;
+                        HealthBar.Active = false;
+                        Icon.Active = false;
+                        break;
+                }
             }
+            
 
             if (Type == AgentType.PlayerUnit && AnimatedRenderer != null)
             {
@@ -495,6 +504,8 @@ public class Agent : Component
         
         builder.Append("<attackingRadius>" + AttackingRadius + "</attackingRadius>");
         
+        builder.Append("<meatAward>" + _meatAward + "</meatAward>");
+        
         builder.Append("<heightOffset>" + _heightOffset + "</heightOffset>");
         
         builder.Append("<directionOffset>" + DirectionOffset + "</directionOffset>");
@@ -531,6 +542,7 @@ public class Agent : Component
         _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
         DirectionOffset = float.TryParse(element.Element("directionOffset")?.Value, out float dir) ? dir : 0.0f;
         AttackingRadius = float.TryParse(element.Element("attackingRadius")?.Value, out float radius) ? radius : 1.0f;
+        _meatAward = int.TryParse(element.Element("meatAward")?.Value, out int meatAward) ? meatAward : 10;
         switch (Type)
         {
             case AgentType.Civilian:
@@ -607,6 +619,7 @@ public class Agent : Component
             ImGui.DragFloat("Occupancy distance", ref _occupyDistance);
             ImGui.DragFloat("Attacking distance", ref AttackingRadius);
             ImGui.DragFloat("Height offset", ref _heightOffset);
+            ImGui.DragInt("Meat reward", ref _meatAward, 1, 0);
             ImGui.DragFloat("Direction offset", ref DirectionOffset, -180.0f, 180.0f);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
