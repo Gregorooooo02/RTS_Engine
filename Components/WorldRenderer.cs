@@ -556,7 +556,9 @@ public class WorldRenderer : Component
             var site = kvp.Key;
             var region = kvp.Value;
             
-            float height = PickingManager.InterpolateWorldHeight(site, this);
+            //TODO: Do some additional correction for spawning villages
+            Vector3 centroid = CalculateCentroid(region);
+            float height = PickingManager.InterpolateWorldHeight(new Vector2(centroid.X, centroid.Z), this);
             if (height > 10.0f && height < 20.0f && currentVillageCount < villageLimit)
             {
                 //Console.WriteLine(site);
@@ -565,7 +567,7 @@ public class WorldRenderer : Component
 #else
                 villages.LoadPrefab("Prefabs/Village1.xml");
 #endif
-                PlaceVillage(site,villages.Children.Last());
+                PlaceVillage(new Vector2(centroid.X, centroid.Z),villages.Children.Last());
                 currentVillageCount++;
                 continue;
             }
