@@ -18,6 +18,15 @@ public class SoldierPatrol : AgentState
     private List<Vector2> _patrolPoints = new();
     private int _currentPatrolPointIndex;
     
+    Node _end = null;
+    private bool _pathingScheduled = false;
+    private bool _pathingCompleted = false;
+    private bool _pathCompleted = false;
+    private bool _repath = false;
+    private bool _searchNearby = false;
+    
+    private Vector2 _destination;
+    
     private bool _traversing = false;
     private int _maxAttempts = 10;
     public override void Initialize(Agent agent)
@@ -92,7 +101,50 @@ public class SoldierPatrol : AgentState
                 _patrolPoints.Add(new Vector2(point.X,point.Z));
             }
         }
+
+        if (_pathingCompleted && _pathingScheduled)
+        {
+            //When pathing completes
+            _pathingScheduled = false;
+            _pathingCompleted = false;
+            UpdateIndex();
+            if(_end != null)
+            {
+                _pathCompleted = false;
+                _points = Pathfinding.PathToQueueOfVectors(_end);
+                _points.Enqueue(_destination);
+                _currentPoint = _points.Dequeue();
+                _traversing = true;
+            }
+        }
         
+        if ((_points == null || _points.Count == 0) && !_pathingScheduled)
+        {
+            _points?.Clear();
+            if (_traversing && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
+            {
+                _traversing = false;
+                return value;
+            }
+            Vector2 direction = _patrolPoints[_currentPatrolPointIndex] - location;
+            direction.Normalize();
+            Vector2 startPoint = Agent.GetFirstIntersectingGridPoint(location, direction);
+            Vector2 endPoint = Agent.GetFirstIntersectingGridPoint(_patrolPoints[_currentPatrolPointIndex], -direction);
+
+            _destination = endPoint;
+            
+            Node start = new Node(new Point((int)startPoint.X, (int)startPoint.Y), null, 1);
+            Node goal = new Node(new Point((int)endPoint.X, (int)endPoint.Y), null, 1);
+            
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            { 
+                _end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
+                _pathingCompleted = true;
+            });
+            _pathingScheduled = true;
+        }
+        
+        /*
         if (_points == null || _points.Count == 0)
         {
             if (_traversing && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState value))
@@ -138,6 +190,20 @@ public class SoldierPatrol : AgentState
                 agent.MoveToPoint(_currentPoint, data.PatrollingSpeed);
             }
         }
+        */
+        
+        if (_points != null && !_pathCompleted && !_pathingScheduled)
+        {
+            if (Vector2.Distance(_currentPoint, location) <= data.MinPointDistance)
+            {
+                _currentPoint = _points.Dequeue();
+            }
+            else
+            {
+                agent.MoveToPoint(_currentPoint, data.PatrollingSpeed);
+            }
+        }
+        
         return this;
     }
 }
