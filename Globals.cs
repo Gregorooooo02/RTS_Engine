@@ -140,6 +140,12 @@ namespace RTS_Engine
                 PickingManager.PlayerMissionSelectPickingActive = true;
             }
             
+            if (InputManager.Instance.GetAction(GameAction.TOGGLE_PICKING)?.state == ActionState.RELEASED)
+            {
+                PickingManager.PlayerBuildingPickingActive = !PickingManager.PlayerBuildingPickingActive;
+                PickingManager.PlayerBuildingUiBuiltActive = !PickingManager.PlayerBuildingUiBuiltActive;
+                PickingManager.PlayerMissionSelectPickingActive = !PickingManager.PlayerMissionSelectPickingActive;
+            }
         }
         
         private static List<Type> GetAllComponents()

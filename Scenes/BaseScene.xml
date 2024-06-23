@@ -4980,7 +4980,7 @@
               <portrait>False</portrait>
               <isUnitSelect>False</isUnitSelect>
               <unitID>0</unitID>
-              <action>DISABLE_PICKING</action>
+              <action>TOGGLE_PICKING</action>
             </component>
           </components>
           <childObjects>

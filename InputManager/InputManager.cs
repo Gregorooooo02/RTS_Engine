@@ -42,7 +42,8 @@ public enum GameAction
     WIN,
     RESET,
     DISABLE_PICKING,
-    ENABLE_PICKING
+    ENABLE_PICKING,
+    TOGGLE_PICKING
 }
 
 public class InputManager
