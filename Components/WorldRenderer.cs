@@ -548,29 +548,102 @@ public class WorldRenderer : Component
         
         Console.WriteLine(voronoiRegions.Count);
 
-        int villageLimit = 1;
+        List<Vector2> villagePositions = new();
+
+        float minVillageDistance = 60.0f;
+
+        int villageLimit = random.Next(1, 4);
         int currentVillageCount = 0;
+
+        //How many village prefabs there are
+        int villageVariants = 1;
+        //List of already used variants
+        List<int> availableVariants = new();
+
+        for (int i = 0; i < villageVariants; i++)
+        {
+            availableVariants.Add(i + 1);
+        }
+
+        float minHeight = 12.0f;
+        float maxHeight = 25.0f;
+
+        //TODO: Do some additional correction for spawning villages
+        //Place villages
+        foreach (var kvp in voronoiRegions)
+        {
+            if(currentVillageCount >= villageLimit || availableVariants.Count == 0) break;
+            var site = kvp.Key;
+            var region = kvp.Value;
+            bool skip = false;
+            
+            Vector3 centroid = CalculateCentroid(region);
+            Vector2 location = new Vector2(centroid.X, centroid.Z);
+            foreach (Vector2 position in villagePositions)
+            {
+                if (Vector2.Distance(position, location) < minVillageDistance)
+                {
+                    skip = true;
+                    break;
+                }
+            }
+            if(skip) continue;
+            float height = PickingManager.InterpolateWorldHeight(location, this);
+            if (height > minHeight && height < maxHeight)
+            {
+                int variant = random.Next(0, availableVariants.Count);
+#if _WINDOWS
+                villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village" + availableVariants[variant] +".xml");
+#else
+                villages.LoadPrefab("Prefabs/Village" + variant + ".xml");
+#endif
+                availableVariants.RemoveAt(variant);
+                PlaceVillage(location,villages.Children.Last());
+                currentVillageCount++;
+                voronoiRegions.Remove(site);
+            }
+        }
         
+        //Place player units
+        //TODO: Implement placing player units in the world
+        /*
         foreach (var kvp in voronoiRegions)
         {
             var site = kvp.Key;
             var region = kvp.Value;
+            bool skip = false;
             
-            //TODO: Do some additional correction for spawning villages
             Vector3 centroid = CalculateCentroid(region);
-            float height = PickingManager.InterpolateWorldHeight(new Vector2(centroid.X, centroid.Z), this);
-            if (height > 10.0f && height < 20.0f && currentVillageCount < villageLimit)
+            Vector2 location = new Vector2(centroid.X, centroid.Z);
+            foreach (Vector2 position in villagePositions)
             {
-                //Console.WriteLine(site);
-#if _WINDOWS
-                villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village1.xml");
-#else
-                villages.LoadPrefab("Prefabs/Village1.xml");
-#endif
-                PlaceVillage(new Vector2(centroid.X, centroid.Z),villages.Children.Last());
-                currentVillageCount++;
-                continue;
+                if (Vector2.Distance(position, location) < minVillageDistance)
+                {
+                    skip = true;
+                    break;
+                }
             }
+            if(skip) continue;
+            float height = PickingManager.InterpolateWorldHeight(location, this);
+            if (height > minHeight && height < maxHeight)
+            {
+#if _WINDOWS
+                ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/Wardrobe.xml");
+#else
+                ParentObject.LoadPrefab("Prefabs/Wardrobe.xml");
+#endif
+                voronoiRegions.Remove(site);
+                break;
+            }
+        }
+        */
+        
+        //Place terrain features
+        //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
+        foreach (var kvp in voronoiRegions)
+        {
+            var site = kvp.Key;
+            var region = kvp.Value;
             
             // Try to place multiple trees in the region
             int treeCount = random.Next(10, 20);
@@ -602,16 +675,6 @@ public class WorldRenderer : Component
                         }
                     }
                 }
-            }
-            else if (random.NextDouble() > 0.5)
-            {
-                // // Place a village
-                // Vector3 position = CalculateCentroid(region);
-                // GameObject village = new GameObject();
-                // village.Name = "Village";
-                // this.ParentObject.AddChildObject(village);
-                // village.Transform.SetLocalPosition(position);
-                // village.AddComponent<Village>();
             }
             else
             {
