@@ -11,6 +11,7 @@ public static class GameManager
     public static float AwarenessLimit = 100.0f;
     public static float DamageMultiplier = 1.0f;
     public static float HealthMultiplier = 1.0f;
+    public static bool TutorialDone = false;
 
     // 0000 0000
     // 1st bit - Wardrobe

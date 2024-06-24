@@ -19,7 +19,7 @@ public class SceneManager
         _scenes = new List<Scene>();
     }
 
-    public void CreateMissionScene()
+    public void CreateMissionScene(bool isTutorial = false)
     {
         GameObject missionRoot = new GameObject();
         missionRoot.AddComponent<WorldRenderer>();
@@ -40,7 +40,7 @@ public class SceneManager
 
                 var currentWorld = missionRoot.GetComponent<WorldRenderer>();
 
-                currentWorld.GenerateWorld(true);
+                currentWorld.GenerateWorld(isTutorial);
                 Console.WriteLine("Created World");
 
                 GameObject camera = new GameObject();
@@ -52,18 +52,31 @@ public class SceneManager
                 camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
                 if(Globals.AgentsManager.Units.Count > 0)cameraComponent.MoveCameraToPosition(Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
                 Console.WriteLine("Added Camera");
-
+                if (isTutorial)
+                {
+                    //Load tutorial UI here
 #if _WINDOWS
-                missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+                    missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
-                missionRoot.LoadPrefab("Prefabs/UI.xml");
+                    missionRoot.LoadPrefab("Prefabs/UI.xml");
+#endif  
+                }
+                else
+                {
+#if _WINDOWS
+                    missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+#else
+                    missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
+                }
+                
 
 #if _WINDOWS
                 missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
 #else
                 missionRoot.LoadPrefab("Prefabs/Marker.xml");
 #endif
+                //TODO: Remove civilian spawning here
                 GameObject civilians = new GameObject();
                 civilians.Name = "Civilians";
                 missionRoot.AddChildObject(civilians);
@@ -135,6 +148,16 @@ public class SceneManager
             Globals.GraphicsDevice.Clear(new Color(0,0,0,255));
             Globals.GraphicsDevice.SetRenderTarget(null);
         }
+        
+        if (InputManager.Instance.GetAction(GameAction.CREATE_TUTORIAL)?.state == ActionState.RELEASED)
+        {
+            CreateMissionScene(true);
+            
+            Globals.GraphicsDevice.SetRenderTarget(Globals.FogManager.PermanentMaskTarget);
+            Globals.GraphicsDevice.Clear(new Color(0,0,0,255));
+            Globals.GraphicsDevice.SetRenderTarget(null);
+            GameManager.TutorialDone = true;
+        }
 
         if (InputManager.Instance.GetAction(GameAction.RESET)?.state == ActionState.RELEASED)
         {
@@ -149,6 +172,7 @@ public class SceneManager
             GameManager.DamageMultiplier = 1.0f;
             GameManager.HealthMultiplier = 1.0f;
             GameManager.UnitsSelectedForMission = 0;
+            GameManager.TutorialDone = false;
             //TODO: Add any necessary resets here
         }
     }
