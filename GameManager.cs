@@ -7,10 +7,13 @@ public static class GameManager
 {
     public static int MeatNumber;
     public static int PuzzleNumber;
+    public static int MissionMeat = 0;
+    public static int MissionPuzzle = 0;
     public static float CurrentAwareness = 0;
     public static float AwarenessLimit = 100.0f;
     public static float DamageMultiplier = 1.0f;
     public static float HealthMultiplier = 1.0f;
+    public static bool TutorialDone = false;
 
     // 0000 0000
     // 1st bit - Wardrobe
@@ -28,21 +31,39 @@ public static class GameManager
         PuzzleNumber = 0;
     }
 
+    public static void AddMissionMeat(int amount)
+    {
+        MissionMeat += amount;
+    }
+    
+    public static void AddMissionPuzzle(int amount)
+    {
+        MissionPuzzle += amount;
+    }
+
+    public static void TransferRewards()
+    {
+        MeatNumber += MissionMeat;
+        PuzzleNumber += MissionPuzzle;
+    }
+
+    public static void ClearMissionRewards()
+    {
+        MissionMeat = 0;
+        MissionPuzzle = 0;
+    }
+    
     public static GameAction CheckTasks()
     {
         for (int i = 0; i < Tasks.Count; i++)
         {
-            if (Tasks[i].Status == GameAction.COMPLETE)
+            if (Tasks[i].Status == GameAction.INCOMPLETE)
             {
-                _status = GameAction.WIN;
-            }
-            else if (Tasks[i].Status == GameAction.INCOMPLETE)
-            {
-                continue;
+                return GameAction.NONE;
             }
         }
-
-        return _status;
+        if (Tasks.Count == 0) return GameAction.NONE;
+        return GameAction.WIN;
     }
 
     public static GameAction CheckIfGameOver()
@@ -55,7 +76,8 @@ public static class GameManager
             _status = GameAction.GAME_OVER;
         }
         */
-        return Globals.AgentsManager.Units.Count > 0 ? GameAction.NONE : GameAction.GAME_OVER;
+        if (CheckTasks() == GameAction.WIN) return GameAction.WIN;
+        return Globals.AgentsManager.Units.Count == 0 || AwarenessLimit <= CurrentAwareness ? GameAction.GAME_OVER : GameAction.NONE;
         //return _status;
     }
     
@@ -82,6 +104,7 @@ public static class GameManager
     public static void CheatMenu()
     {
         ImGui.Begin("Cheat Menu");
+        ImGui.Checkbox("Tutorial done", ref TutorialDone);
         ImGui.DragInt("Meat Number", ref MeatNumber);
         ImGui.DragInt("Puzzle Number", ref PuzzleNumber);
         ImGui.DragFloat("Current awareness", ref CurrentAwareness);

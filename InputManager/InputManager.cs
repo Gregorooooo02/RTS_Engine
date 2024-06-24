@@ -27,6 +27,7 @@ public enum GameAction
     SCENE2,
     SCENE3,
     CREATE_MISSION,
+    CREATE_TUTORIAL,
     CONFIRM,
     DECLINE,
     PAUSE,

@@ -94,6 +94,8 @@ namespace RTS_Engine
 
         public static bool HitUI = false;
         public static bool UIActive = false;
+        public static bool RegenerateWorld = false;
+        public static bool CreatingTutorial = true;
 
         #endregion
 
@@ -146,6 +148,11 @@ namespace RTS_Engine
                 PickingManager.PlayerBuildingPickingActive = !PickingManager.PlayerBuildingPickingActive;
                 PickingManager.PlayerBuildingUiBuiltActive = !PickingManager.PlayerBuildingUiBuiltActive;
                 PickingManager.PlayerMissionSelectPickingActive = !PickingManager.PlayerMissionSelectPickingActive;
+            }
+
+            if (RegenerateWorld)
+            {
+                SceneManager.Instance.CreateMissionScene(CreatingTutorial);
             }
         }
         

@@ -23,8 +23,8 @@ public class TextRenderer : Component
     private List<string> _selectedVariables = new();
     private static Dictionary<string, Func<string>> _gameManagerVariables = new()
     {
-        { "MeatNumber", () => GameManager.MeatNumber.ToString() },
-        { "PuzzleNumber", () => GameManager.PuzzleNumber.ToString() }
+        { "MeatNumber", () => (GameManager.MeatNumber + GameManager.MissionMeat).ToString()},
+        { "PuzzleNumber", () => (GameManager.PuzzleNumber + GameManager.MissionPuzzle).ToString()}
     };
     
     public override void Update() 

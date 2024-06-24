@@ -72,20 +72,20 @@ public class Task : Component
             
             if (Type == RewardType.Puzzle)
             {
-                GameManager.AddPuzzle(Reward);
+                GameManager.AddMissionPuzzle(Reward);
             } 
             else if (Type == RewardType.Meat)
             {
-                GameManager.AddMeat(Reward);
+                GameManager.AddMissionMeat(Reward);
             }
             
             if (Type2 == RewardType.Puzzle)
             {
-                GameManager.AddPuzzle(Reward2);
+                GameManager.AddMissionPuzzle(Reward2);
             } 
             else if (Type2 == RewardType.Meat)
             {
-                GameManager.AddMeat(Reward2);
+                GameManager.AddMissionMeat(Reward2);
             }
         } 
         else if (Progress < Goal)
@@ -144,6 +144,8 @@ public class Task : Component
         Reward2 = int.TryParse(element.Element("reward2")?.Value, out int rewardValue2) ? rewardValue2 : 9;
         TaskDescription = element.Element("description")?.Value;
         Target = (Agent.AgentType) Enum.Parse(typeof(Agent.AgentType), element.Element("target").Value);
+        
+        GameManager.Tasks.Add(this);
     }
 
     public override void RemoveComponent()

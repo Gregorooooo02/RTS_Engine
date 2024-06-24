@@ -136,7 +136,7 @@ public class Agent : Component
                 {
                     case LayerType.ENEMY:
                         Globals.AgentsManager.Enemies.Remove(this);
-                        GameManager.AddMeat(_meatAward);
+                        GameManager.AddMissionMeat(_meatAward);  
                         switch (Type)
                         {
                             case AgentType.Civilian:
@@ -153,6 +153,7 @@ public class Agent : Component
                         break;
                     case LayerType.PLAYER:
                         Globals.AgentsManager.Units.Remove(this);
+                        Globals.AgentsManager.SelectedUnits.Remove(this);
                         Globals.AgentsManager.PlacePortraits();
                         HealthBarBackground.Active = false;
                         HealthBar.Active = false;
@@ -223,19 +224,26 @@ public class Agent : Component
         {
             foreach (Point location in _occupiedNodes)
             {
-                if (clear)
+                try
                 {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == ID)
+                    if (clear)
                     {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = 0;
+                        if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == ID)
+                        {
+                            Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == 0)
+                        {
+                            Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = ID;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == 0)
-                    {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = ID;
-                    }
+                    Console.WriteLine("Unit out of map!");
                 }
             }
         }
@@ -243,7 +251,15 @@ public class Agent : Component
         {
             foreach (Point location in _occupiedNodes)
             {
-                Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].Available = clear;
+                try
+                {
+                    Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].Available = clear;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Building out of map!");
+                }
+               
             }
         }
     }

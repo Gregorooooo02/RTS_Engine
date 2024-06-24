@@ -124,6 +124,15 @@ public class Button : Component
                                 int count = Convert.ToString(GameManager.UnitsSelectedForMission,2).ToCharArray().Count(c => c == '1');
                                 if(count < 2) return;
                             }
+
+                            if (!GameManager.TutorialDone && _buttonAction == GameAction.SCENE2)
+                            {
+                                //Intercept base scene launch and launch tutorial instead
+                                Globals.HitUI = true;
+                                InputManager.Instance._actions.Add(new ActionData(GameAction.CREATE_TUTORIAL));
+                                IsPressed = true;
+                                return;
+                            }
                             
                             Globals.HitUI = true;
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
@@ -136,6 +145,10 @@ public class Button : Component
 
                             if (_buttonAction == GameAction.TOGGLE_ACTIVE_PARENT)
                             {
+                                if (ParentObject.Active)
+                                {
+                                    Globals.UIActive = false;
+                                }
                                 ParentObject.ToggleParentActiveState();
                             }
 
