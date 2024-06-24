@@ -592,7 +592,7 @@ public class WorldRenderer : Component
 #if _WINDOWS
                 villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village" + availableVariants[variant] +".xml");
 #else
-                villages.LoadPrefab("Prefabs/Village" + variant + ".xml");
+                villages.LoadPrefab("Prefabs/Village" + availableVariants[variant] + ".xml");
 #endif
                 availableVariants.RemoveAt(variant);
                 PlaceVillage(location,villages.Children.Last());

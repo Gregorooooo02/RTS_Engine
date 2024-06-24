@@ -896,9 +896,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>24,4</x>
-                        <y>-3,3</y>
-                        <z>-12,1</z>
+                        <x>-2,6</x>
+                        <y>25,2</y>
+                        <z>-16,5</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1761,8 +1761,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -1940,8 +1940,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -2876,8 +2876,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -3055,8 +3055,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -3991,8 +3991,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -4170,8 +4170,8 @@
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
+                                <g>0</g>
+                                <b>0</b>
                                 <a>255</a>
                               </color>
                               <screenSizeX>1600</screenSizeX>
@@ -4929,7 +4929,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>False</useLocal>
-                  <contents>187</contents>
+                  <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
                     <r>255</r>
