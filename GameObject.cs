@@ -27,6 +27,14 @@ public class GameObject
         _wasActive = Active;
     }
 
+    public void ToggleChildrenActive(bool state)
+    {
+        foreach (GameObject child in Children)
+        {
+            child.Active = state;
+        }
+    }
+    
     public void Update()
     {
         if (UseCascadingActiveState)

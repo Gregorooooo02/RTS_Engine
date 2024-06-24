@@ -144,6 +144,8 @@ public class Task : Component
         Reward2 = int.TryParse(element.Element("reward2")?.Value, out int rewardValue2) ? rewardValue2 : 9;
         TaskDescription = element.Element("description")?.Value;
         Target = (Agent.AgentType) Enum.Parse(typeof(Agent.AgentType), element.Element("target").Value);
+        
+        GameManager.Tasks.Add(this);
     }
 
     public override void RemoveComponent()

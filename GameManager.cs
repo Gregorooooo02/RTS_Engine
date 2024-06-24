@@ -57,17 +57,13 @@ public static class GameManager
     {
         for (int i = 0; i < Tasks.Count; i++)
         {
-            if (Tasks[i].Status == GameAction.COMPLETE)
+            if (Tasks[i].Status == GameAction.INCOMPLETE)
             {
-                _status = GameAction.WIN;
-            }
-            else if (Tasks[i].Status == GameAction.INCOMPLETE)
-            {
-                continue;
+                return GameAction.NONE;
             }
         }
-
-        return _status;
+        if (Tasks.Count == 0) return GameAction.NONE;
+        return GameAction.WIN;
     }
 
     public static GameAction CheckIfGameOver()
@@ -80,7 +76,8 @@ public static class GameManager
             _status = GameAction.GAME_OVER;
         }
         */
-        return Globals.AgentsManager.Units.Count > 0 ? GameAction.NONE : GameAction.GAME_OVER;
+        if (CheckTasks() == GameAction.WIN) return GameAction.WIN;
+        return Globals.AgentsManager.Units.Count == 0 || AwarenessLimit <= CurrentAwareness ? GameAction.GAME_OVER : GameAction.NONE;
         //return _status;
     }
     
