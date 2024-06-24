@@ -10,25 +10,7 @@ namespace RTS_Engine;
 public class Emitter : Component
 {
     
-    // public enum UnitType
-    // {
-    //     Knight,
-    //     Civillian,
-    //     Chandelier,
-    //     Chair,
-    //     Umulung
-    // }
-    //
-    public enum SoundType
-    {
-        Idle,
-        Death,
-        Attack,
-        Hit,
-        Move,
-        Fight
-    }
-
+    public UnitType Type;
     public AudioEmitter AudioEmitter;
     public AudioListener Listener;
     public static SoundEffect Sound = AssetManager.DefaultAmbientMusic;
@@ -37,13 +19,47 @@ public class Emitter : Component
     {
         Active = true;
         AudioEmitter = new AudioEmitter();
-        Globals.AudioManager.Emitters.Add(AudioEmitter);
         Listener = Globals.Listener;
+        
+        if (Type == UnitType.Knight)
+        {
+            Sound = AssetManager.DefaultAmbientMusic;
+        }
+        
+        if (Type == UnitType.Chair)
+        {
+            Sound = AssetManager.DefaultSong;
+        }
+        
+    }
+
+    public Emitter(UnitType type)
+    {
+        Type = type;
     }
     
-    public Emitter(){}
+    public Emitter()
+    {
+        
+    }
+    
+    public void ChangeType(UnitType type)
+    {
+        Type = type;
+        if (Type == UnitType.Knight)
+        {
+            Sound = AssetManager.DefaultAmbientMusic;
+        }
+        
+        if (Type == UnitType.Chair)
+        {
+            Sound = AssetManager.DefaultSong;
+        }
+        
+        SoundEffectInstance = Sound.CreateInstance();
+    }
 
-    public void PlaySound()
+    public void PlayIdle()
     {
         SoundEffectInstance.Play();
     }
@@ -81,6 +97,16 @@ public class Emitter : Component
                 ParentObject.RemoveComponent(this);
             }
             
+            ImGui.Text("Change Unit Type:");
+            
+            if(ImGui.Button("Knight"))
+                ChangeType(UnitType.Knight);
+            
+            if(ImGui.Button("Chair"))
+                ChangeType(UnitType.Chair);
+            
+            ImGui.Text("Unit Type:" + Type);
+            
             if (ImGui.Button("Play"))
             {
                 SoundEffectInstance.Play();
@@ -91,6 +117,8 @@ public class Emitter : Component
             {
                 AudioEmitter.Position = pos;
             }
+            
+            
             
         }
     }

@@ -19,6 +19,15 @@ namespace RTS_Engine
         PROP,
         BUILDING
     }
+    
+    public enum UnitType
+    {
+        Knight,
+        Civillian,
+        Chandelier,
+        Chair,
+        Umulung
+    }
 
     public enum ScreenSize
     {
