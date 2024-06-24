@@ -67,7 +67,7 @@ public class SceneManager
 #if _WINDOWS
                             missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
-                        missionRoot.LoadPrefab("Prefabs/UI.xml");
+                            missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
                         }
                         else
