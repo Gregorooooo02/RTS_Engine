@@ -856,7 +856,7 @@ public class WorldRenderer : Component
                         break;
                     }
                 }
-                Console.WriteLine("Failed to spawn player units! Attempting new max height. (Old height: )");
+                Console.WriteLine("Failed to spawn player units! Attempting new max height. (Old height: )" + maxHeight);
                 maxHeight *= 1.05f;
             } while (!placedUnits && maxHeight < globalMaxHeight * 0.7f);
             

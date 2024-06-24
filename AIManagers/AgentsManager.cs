@@ -31,10 +31,10 @@ public class AgentsManager
     public void Initialize()
     {
         // Initialize the UI for all units with the offset
-        PlacePortraits();
+        PlacePortraits(false);
     }
 
-    public void PlacePortraits()
+    public void PlacePortraits(bool scaleStartWithScreenSize = true)
     {
         for (int i = 0; i < Units.Count; i++)
         {
@@ -44,10 +44,19 @@ public class AgentsManager
             var healthStatus = healthBar?.Children[0];
             
             if (icon == null || healthBar == null || healthStatus == null) continue;
-            
-            icon?.Transform.SetLocalPosition(_iconsStart + UiOffset * i);
-            healthBar?.Transform.SetLocalPosition(_healthbarsStart + BackgroundOffset + UiOffset * i);
-            healthStatus?.Transform.SetLocalPosition(_healthbarsStart  + UiOffset * i);
+
+            if (scaleStartWithScreenSize)
+            {
+                icon?.Transform.SetLocalPosition(_iconsStart * Globals.Ratio + UiOffset * i * Globals.Ratio);
+                healthBar?.Transform.SetLocalPosition(_healthbarsStart * Globals.Ratio + BackgroundOffset + UiOffset * i * Globals.Ratio);
+                healthStatus?.Transform.SetLocalPosition(_healthbarsStart * Globals.Ratio  + UiOffset * i * Globals.Ratio);
+            }
+            else
+            {
+                icon?.Transform.SetLocalPosition(_iconsStart + UiOffset * i);
+                healthBar?.Transform.SetLocalPosition(_healthbarsStart + BackgroundOffset + UiOffset * i);
+                healthStatus?.Transform.SetLocalPosition(_healthbarsStart  + UiOffset * i);
+            }
         }
     }
     

@@ -21,10 +21,7 @@ public class SceneManager
 
     public void CreateMissionScene(bool isTutorial = false)
     {
-        bool regenerate = false;
-
-        do
-        {
+            Globals.RegenerateWorld = false;
             Console.WriteLine("Mission generation start!");
             GameObject missionRoot = new GameObject();
             missionRoot.AddComponent<WorldRenderer>();
@@ -34,81 +31,81 @@ public class SceneManager
             Console.WriteLine("Launching new task!");
             System.Threading.Tasks.Task.Factory.StartNew(() =>
             {
-                try
-                {
-                    Scene missionScene = new LoadedScene();
-                    missionScene.IsMissionScene = true;
-                    missionScene.Name = "MissionScene";
-                    Console.WriteLine("Created scene");
-                    missionScene.SceneRoot = missionRoot;
-                    Console.WriteLine("Created scene root");
-                    missionRoot.Name = "Root";
-
-                    var currentWorld = missionRoot.GetComponent<WorldRenderer>();
-
-                    bool result = currentWorld.GenerateWorld(isTutorial);
-                    if (result)
+                    try
                     {
-                        regenerate = false;
-                        Console.WriteLine("Created World");
+                        Scene missionScene = new LoadedScene();
+                        missionScene.IsMissionScene = true;
+                        missionScene.Name = "MissionScene";
+                        Console.WriteLine("Created scene");
+                        missionScene.SceneRoot = missionRoot;
+                        Console.WriteLine("Created scene root");
+                        missionRoot.Name = "Root";
 
-                        GameObject camera = new GameObject();
-                        camera.Name = "Camera";
-                        missionRoot.AddChildObject(camera);
-                        camera.AddComponent<Camera>();
-                        Camera cameraComponent = camera.GetComponent<Camera>();
-                        cameraComponent.IsWorldCamera = true;
-                        camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
-                        if (Globals.AgentsManager.Units.Count > 0)
-                            cameraComponent.MoveCameraToPosition(
-                                Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
-                        Console.WriteLine("Added Camera");
-                        if (isTutorial)
+                        var currentWorld = missionRoot.GetComponent<WorldRenderer>();
+
+                        bool result = currentWorld.GenerateWorld(isTutorial);
+                        if (result)
                         {
-                            //Load tutorial UI here
+                            Console.WriteLine("Created World");
+
+                            GameObject camera = new GameObject();
+                            camera.Name = "Camera";
+                            missionRoot.AddChildObject(camera);
+                            camera.AddComponent<Camera>();
+                            Camera cameraComponent = camera.GetComponent<Camera>();
+                            cameraComponent.IsWorldCamera = true;
+                            camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
+                            if (Globals.AgentsManager.Units.Count > 0)
+                                cameraComponent.MoveCameraToPosition(
+                                    Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
+                            Console.WriteLine("Added Camera");
+                            if (isTutorial)
+                            {
+                                //Load tutorial UI here
 #if _WINDOWS
-                            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+                                missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
-                            missionRoot.LoadPrefab("Prefabs/UI.xml");
+                                missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
+                            }
+                            else
+                            {
+#if _WINDOWS
+                                missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+#else
+                                missionRoot.LoadPrefab("Prefabs/UI.xml");
+#endif
+                            }
+
+
+#if _WINDOWS
+                            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
+#else
+                            missionRoot.LoadPrefab("Prefabs/Marker.xml");
+#endif
+                        
+                            AddScene(missionScene);
+
+                            Globals.PickingManager.SinglePickingActive = true;
+                            Globals.PickingManager.BoxPickingActive = true;
+                            Globals.PickingManager.GroundPickingActive = true;
+                            Globals.PickingManager.EnemyPickingActive = true;
+                            Globals.FogManager.FogActive = true;
+                            ChangeScene(_scenes.Count - 1);
+                            Globals.AgentsManager.Initialize();
+                            Globals.CreatingTutorial = false;
                         }
                         else
                         {
-#if _WINDOWS
-                            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
-#else
-                            missionRoot.LoadPrefab("Prefabs/UI.xml");
-#endif
+                            Console.WriteLine("Scheduling regeneration!");
+                            Globals.RegenerateWorld = true;
                         }
-
-
-#if _WINDOWS
-                        missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
-#else
-                        missionRoot.LoadPrefab("Prefabs/Marker.xml");
-#endif
-                        
-                        AddScene(missionScene);
-
-                        Globals.PickingManager.SinglePickingActive = true;
-                        Globals.PickingManager.BoxPickingActive = true;
-                        Globals.PickingManager.GroundPickingActive = true;
-                        Globals.PickingManager.EnemyPickingActive = true;
-                        Globals.FogManager.FogActive = true;
-                        ChangeScene(_scenes.Count - 1);
-                        Globals.AgentsManager.Initialize();
                     }
-                    else
+                    catch (Exception e)
                     {
-                        regenerate = true;
+                        Console.WriteLine(e);
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
             });
-        } while (regenerate);
     }
 
     public void AddScene(Scene scene)
@@ -173,6 +170,7 @@ public class SceneManager
             AddScene(FileManager.PopulateScene("BaseScene"));
             
             //Reset player stats
+            Globals.CreatingTutorial = true;
             GameManager.MeatNumber = 0;
             GameManager.PuzzleNumber = 0;
             GameManager.CurrentAwareness = 0;
