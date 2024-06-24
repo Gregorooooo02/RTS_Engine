@@ -21,91 +21,106 @@ public class SceneManager
 
     public void CreateMissionScene(bool isTutorial = false)
     {
-        GameObject missionRoot = new GameObject();
-        missionRoot.AddComponent<WorldRenderer>();
+        bool regenerate = false;
 
-        ChangeScene(1);
-
-        System.Threading.Tasks.Task.Factory.StartNew(() =>
+        do
         {
-            try
+            GameObject missionRoot = new GameObject();
+            missionRoot.AddComponent<WorldRenderer>();
+
+            ChangeScene(1);
+
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
             {
-                Scene missionScene = new LoadedScene();
-                missionScene.IsMissionScene = true;
-                missionScene.Name = "MissionScene";
-                Console.WriteLine("Created scene");
-                missionScene.SceneRoot = missionRoot;
-                Console.WriteLine("Created scene root");
-                missionRoot.Name = "Root";
-
-                var currentWorld = missionRoot.GetComponent<WorldRenderer>();
-
-                currentWorld.GenerateWorld(isTutorial);
-                Console.WriteLine("Created World");
-
-                GameObject camera = new GameObject();
-                camera.Name = "Camera";
-                missionRoot.AddChildObject(camera);
-                camera.AddComponent<Camera>();
-                Camera cameraComponent = camera.GetComponent<Camera>();
-                cameraComponent.IsWorldCamera = true;
-                camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
-                if(Globals.AgentsManager.Units.Count > 0)cameraComponent.MoveCameraToPosition(Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
-                Console.WriteLine("Added Camera");
-                if (isTutorial)
+                try
                 {
-                    //Load tutorial UI here
+                    Scene missionScene = new LoadedScene();
+                    missionScene.IsMissionScene = true;
+                    missionScene.Name = "MissionScene";
+                    Console.WriteLine("Created scene");
+                    missionScene.SceneRoot = missionRoot;
+                    Console.WriteLine("Created scene root");
+                    missionRoot.Name = "Root";
+
+                    var currentWorld = missionRoot.GetComponent<WorldRenderer>();
+
+                    bool result = currentWorld.GenerateWorld(isTutorial);
+                    if (result)
+                    {
+                        regenerate = false;
+                        Console.WriteLine("Created World");
+
+                        GameObject camera = new GameObject();
+                        camera.Name = "Camera";
+                        missionRoot.AddChildObject(camera);
+                        camera.AddComponent<Camera>();
+                        Camera cameraComponent = camera.GetComponent<Camera>();
+                        cameraComponent.IsWorldCamera = true;
+                        camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
+                        if (Globals.AgentsManager.Units.Count > 0)
+                            cameraComponent.MoveCameraToPosition(
+                                Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
+                        Console.WriteLine("Added Camera");
+                        if (isTutorial)
+                        {
+                            //Load tutorial UI here
 #if _WINDOWS
-                    missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+                            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
-                    missionRoot.LoadPrefab("Prefabs/UI.xml");
-#endif  
+                        missionRoot.LoadPrefab("Prefabs/UI.xml");
+#endif
+                        }
+                        else
+                        {
+#if _WINDOWS
+                            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
+#else
+                        missionRoot.LoadPrefab("Prefabs/UI.xml");
+#endif
+                        }
+
+
+#if _WINDOWS
+                        missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
+#else
+                    missionRoot.LoadPrefab("Prefabs/Marker.xml");
+#endif
+                        //TODO: Remove civilian spawning here
+                        GameObject civilians = new GameObject();
+                        civilians.Name = "Civilians";
+                        missionRoot.AddChildObject(civilians);
+                        for (int i = 0; i < 10; i++)
+                        {
+#if _WINDOWS
+                            civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
+#else
+                        civilians.LoadPrefab("Prefabs/Civilian.xml");
+#endif
+                            civilians.Children[i].Name = "Civilian" + i;
+                        }
+
+                        Console.WriteLine("Added Civilians");
+                        AddScene(missionScene);
+
+                        Globals.PickingManager.SinglePickingActive = true;
+                        Globals.PickingManager.BoxPickingActive = true;
+                        Globals.PickingManager.GroundPickingActive = true;
+                        Globals.PickingManager.EnemyPickingActive = true;
+                        Globals.FogManager.FogActive = true;
+                        ChangeScene(_scenes.Count - 1);
+                        Globals.AgentsManager.Initialize();
+                    }
+                    else
+                    {
+                        regenerate = true;
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-#if _WINDOWS
-                    missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
-#else
-                    missionRoot.LoadPrefab("Prefabs/UI.xml");
-#endif
+                    Console.WriteLine(e);
                 }
-                
-
-#if _WINDOWS
-                missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
-#else
-                missionRoot.LoadPrefab("Prefabs/Marker.xml");
-#endif
-                //TODO: Remove civilian spawning here
-                GameObject civilians = new GameObject();
-                civilians.Name = "Civilians";
-                missionRoot.AddChildObject(civilians);
-                for (int i = 0; i < 10; i++)
-                {
-#if _WINDOWS
-                    civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
-#else
-                    civilians.LoadPrefab("Prefabs/Civilian.xml");
-#endif
-                    civilians.Children[i].Name = "Civilian" + i;
-                }
-
-                Console.WriteLine("Added Civilians");
-                AddScene(missionScene);
-
-                Globals.PickingManager.SinglePickingActive = true;
-                Globals.PickingManager.BoxPickingActive = true;
-                Globals.PickingManager.GroundPickingActive = true;
-                Globals.PickingManager.EnemyPickingActive = true;
-                Globals.FogManager.FogActive = true;
-                ChangeScene(_scenes.Count - 1);
-                Globals.AgentsManager.Initialize();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        });
+            });
+        } while (regenerate);
     }
 
     public void AddScene(Scene scene)

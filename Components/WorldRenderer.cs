@@ -442,14 +442,15 @@ public class WorldRenderer : Component
          ScanHeightDataFromTexture(GenerateMap.noiseTexture);
     }
 
-    public void GenerateWorld(bool tutorial = false)
+    public bool GenerateWorld(bool tutorial = false)
     {
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
-        GenerateVoronoiFeatures(tutorial);
+        bool result = GenerateVoronoiFeatures(tutorial);
         
         //TODO: Move the invocation below, so it's executed after all changes to MapNodes array has been made. Mainly it should be executed after static terrain features are placed in mission.
         CalculatePathfindingGridConnections();
+        return result;
         // Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
     
@@ -463,12 +464,12 @@ public class WorldRenderer : Component
     }
     
     // Voronoi methods
-    private void GenerateVoronoiFeatures(bool tutorial = false)
+    private bool GenerateVoronoiFeatures(bool tutorial = false)
     {
         var points = GenerateRandomPoints(10, _terrainWidth, _terrainHeight);
         _voronoiRegions = ComputeVoronoiDiagram(points, _terrainWidth, _terrainHeight);
         ClipVoronoiCells(_voronoiRegions, _terrainWidth, _terrainHeight);
-        PlaceFeatures(_voronoiRegions, tutorial);
+        return PlaceFeatures(_voronoiRegions, tutorial);
     }
     
     private List<Vector2> GenerateRandomPoints(int numPoints, int width, int height)
@@ -529,7 +530,7 @@ public class WorldRenderer : Component
         }
     }
 
-    private void PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions, bool tutorial = false)
+    private bool PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions, bool tutorial = false)
     {
         float bottomGrass = (globalMaxHeight - globalMinHeight) * 0.16f;
         float upperGrass = (globalMaxHeight - globalMinHeight) * 0.4f;
@@ -627,7 +628,11 @@ public class WorldRenderer : Component
                 Console.WriteLine("Attempting to place a village!");
             }
             //Search for a place to spawn units nearby
-            if(tutorialVillageLocation == Vector2.Zero) return;
+            if (tutorialVillageLocation == Vector2.Zero)
+            {
+                Console.WriteLine("Failed to generate any village! Re-generating world!");
+                return false;
+            }
             bool validSpot = false;
             do
             {
@@ -761,7 +766,12 @@ public class WorldRenderer : Component
                 }
             }
 
-
+            if (currentVillageCount == 0)
+            {
+                Console.WriteLine("Failed to generate any village! Re-generating world!");
+                return false;
+            }
+            
             //Place player units
             //TODO: Implement placing player units in the world
             bool placedUnits = false;
@@ -824,7 +834,7 @@ public class WorldRenderer : Component
                 }
                 Console.WriteLine("Failed to spawn player units! Attempting new max height. (Old height: )");
                 maxHeight *= 1.05f;
-            } while (!placedUnits);
+            } while (!placedUnits && maxHeight < globalMaxHeight * 0.7f);
             
             //Place terrain features
             //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
@@ -896,6 +906,8 @@ public class WorldRenderer : Component
                 }
             }
         }
+
+        return true;
     }
 
     private void CorrectObjectPosition(GameObject gameObject, Vector2 offset)
