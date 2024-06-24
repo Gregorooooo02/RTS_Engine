@@ -19,19 +19,19 @@ public class Emitter : Component
     //     Umulung
     // }
     //
-    // public enum SoundType
-    // {
-    //     Idle,
-    //     Death,
-    //     Attack,
-    //     Hit,
-    //     Move,
-    //     Fight
-    // }
+    public enum SoundType
+    {
+        Idle,
+        Death,
+        Attack,
+        Hit,
+        Move,
+        Fight
+    }
 
     public AudioEmitter AudioEmitter;
     public AudioListener Listener;
-    public static SoundEffect Sound;
+    public static SoundEffect Sound = AssetManager.DefaultAmbientMusic;
     public SoundEffectInstance SoundEffectInstance = Sound.CreateInstance();
     public override void Initialize()
     {
@@ -79,6 +79,11 @@ public class Emitter : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
+            }
+            
+            if (ImGui.Button("Play"))
+            {
+                SoundEffectInstance.Play();
             }
             
             System.Numerics.Vector3 pos = AudioEmitter.Position.ToNumerics();
