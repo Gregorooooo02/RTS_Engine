@@ -63,7 +63,7 @@ public class WorldRenderer : Component
     private Texture2D _rockTexture;
     private Texture2D _snowTexture;
 
-    public readonly float MaxWaterLevel = 5.2f;
+    public float MaxWaterLevel = 5.2f;
     
     private readonly List<Chunk> _chunks = new List<Chunk>();
     private readonly int _chunkSize = 128;
@@ -72,6 +72,11 @@ public class WorldRenderer : Component
     private List<WaterBody> _waterBodies = new List<WaterBody>();
 
     private Color[] _scannedHeightData;
+
+    private float[] rockOffsets = { 1.0f, 1.0f, 1.0f };
+    
+    private float globalMinHeight = float.MaxValue;
+    private float globalMaxHeight = float.MinValue;
     
     // Voronoi stuff
     private Dictionary<Vector2, List<Vector2>> _voronoiRegions;
@@ -218,8 +223,8 @@ public class WorldRenderer : Component
         HeightData = new float[_terrainWidth, _terrainHeight];
         FinalHeightData = new float[_terrainWidth, _terrainHeight];
         
-        float globalMinHeight = float.MaxValue;
-        float globalMaxHeight = float.MinValue;
+        //float globalMinHeight = float.MaxValue;
+        //float globalMaxHeight = float.MinValue;
         
         for (int x = 0; x < _terrainWidth; x++)
         {
@@ -257,8 +262,10 @@ public class WorldRenderer : Component
                 );
             }
         }
+
+        MaxWaterLevel = (globalMaxHeight - globalMinHeight) * 0.115f;
         
-        _waterBody = new WaterBody(0, 0, _terrainWidth, 3.25f);
+        _waterBody = new WaterBody(0, 0, _terrainWidth, MaxWaterLevel - 1.5f);
         _waterBodies.Add(_waterBody);
         
         MapNodes = new MapNode[_terrainWidth / NodeFrequency, _terrainHeight / NodeFrequency];
@@ -523,28 +530,40 @@ public class WorldRenderer : Component
     
     private void PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions)
     {
+        float bottomGrass = (globalMaxHeight - globalMinHeight) * 0.16f;
+        float upperGrass = (globalMaxHeight - globalMinHeight) * 0.4f;
+        
         Random random = new Random();
         
         GameObject trees = new GameObject();
         trees.Name = "Trees";
         
-        GameObject rocks = new GameObject();
+        GameObject rocks1 = new GameObject();
+        GameObject rocks2 = new GameObject();
+        GameObject rocks3 = new GameObject();
 
         GameObject villages = new GameObject();
         
-        this.ParentObject.AddChildObject(trees);
+        ParentObject.AddChildObject(trees);
         trees.AddComponent<InstancedRendererController>();
         trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
         
-        this.ParentObject.AddChildObject(rocks);
-        rocks.AddComponent<InstancedRendererController>();
+        //TODO: Load models for rocks
+        ParentObject.AddChildObject(rocks1);
+        rocks1.AddComponent<InstancedRendererController>();
+        
+        ParentObject.AddChildObject(rocks2);
+        rocks2.AddComponent<InstancedRendererController>();
+        
+        ParentObject.AddChildObject(rocks3);
+        rocks3.AddComponent<InstancedRendererController>();
 
         ParentObject.AddChildObject(villages);
         villages.Name = "Villages";
 
         float minDistance = 5.0f;
         int maxAttempts = 10;
-        List<Vector3> placedTrees = new();
+        List<Vector3> placedProps = new();
         List<Vector2> villagePositions = new();
 
         float minVillageDistance = 60.0f;
@@ -562,8 +581,8 @@ public class WorldRenderer : Component
             availableVariants.Add(i + 1);
         }
 
-        float minHeight = 12.0f;
-        float maxHeight = 25.0f;
+        float minHeight = bottomGrass * 1.8f;
+        float maxHeight = upperGrass;
 
         //TODO: Do some additional correction for spawning villages
         //Place villages
@@ -656,7 +675,6 @@ public class WorldRenderer : Component
             }
         }
         
-        
         //Place terrain features
         //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
         foreach (var kvp in voronoiRegions)
@@ -665,39 +683,65 @@ public class WorldRenderer : Component
             var region = kvp.Value;
             
             // Try to place multiple trees in the region
-            int treeCount = random.Next(10, 20);
+            int propCount = random.Next(5, 30);
             
-            // Randomly decide if we want to place trees, rocks or villages
-            if (random.NextDouble() > 0.5)
+            
+            if (random.NextDouble() < 0.9f)
             {
-                // Place trees
-                for (int i = 0; i < treeCount; i++)
+                // Place props
+                for (int i = 0; i < propCount; i++)
                 {
-                    bool treePlaced = false;
+                    bool propPlaced = false;
                     for (int attempt = 0; attempt < maxAttempts; attempt++)
                     {
                         Vector2 randomPoint = region[random.Next(region.Count)];
-                        Vector3 position = new Vector3(randomPoint.X,
-                            FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-
-                        if (IsPositionValid(placedTrees, position, minDistance))
+                        if (random.NextDouble() < 0.7f)
                         {
-                            if (HeightData[(int)position.X, (int)position.Z] > 6.0f
-                                && HeightData[(int)position.X, (int)position.Z] < 20.0f)
+                            //Place tree
+                            Vector3 position = new Vector3(randomPoint.X,
+                                FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+                            if (IsPositionValid(placedProps, position, minDistance))
                             {
-                                PlaceTree(trees, position);
-                                ObstructTerrain(new Vector2(position.X, position.Z), 3.0f);
-                                placedTrees.Add(position);
-                                treePlaced = true;
-                                break;
+                                if (HeightData[(int)position.X, (int)position.Z] > bottomGrass
+                                    && HeightData[(int)position.X, (int)position.Z] < upperGrass)
+                                {
+                                    PlaceTree(trees, position);
+                                    ObstructTerrain(new Vector2(position.X, position.Z), 3.0f);
+                                    placedProps.Add(position);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //Place rock
+                            Vector3 position = new Vector3(randomPoint.X,
+                                FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+                            if (IsPositionValid(placedProps, position, minDistance))
+                            {
+                                if (HeightData[(int)position.X, (int)position.Z] < upperGrass * 1.2f)
+                                {
+                                    int rockVariant = random.Next(3);
+                                    switch (rockVariant)
+                                    {
+                                        case 0:
+                                            PlaceRock(rocks1,position,0);
+                                            break;
+                                        case 1:
+                                            PlaceRock(rocks2,position,1);
+                                            break;
+                                        case 2:
+                                            PlaceRock(rocks3,position,2);
+                                            break;
+                                    }
+                                    ObstructTerrain(new Vector2(position.X, position.Z), 1.0f);
+                                    placedProps.Add(position);
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                
             }
         }
     }
@@ -813,6 +857,31 @@ public class WorldRenderer : Component
         // Make a random scale for the tree between 0.9 and 1.25
         float randomScaleY = (float)(random.NextDouble() * 0.35f + 0.9f);
         tree.Transform.SetLocalScale(new Vector3(1, randomScaleY, 1));
+    }
+
+    private void PlaceRock(GameObject root, Vector3 position, int rockId)
+    {
+        Random random = new Random();
+        
+        GameObject rock = new()
+        {
+            Name = "Rock" + rockId
+        };
+        root.AddChildObject(rock);
+        rock.AddComponent<InstancedRendererUnit>();
+
+        position.Y = PickingManager.InterpolateWorldHeight(new Vector2(position.X, position.Z), this) + rockOffsets[rockId];
+        
+        rock.Transform.SetLocalPosition(position);
+        
+        float randomRotation = (float)(random.NextDouble() * 360.0f);
+        rock.Transform.SetLocalRotationY(randomRotation);
+        
+        // Make a random scale for the rocks between 0.7 and 1.4 for all axi
+        float randomScaleX = (float)(random.NextDouble() * 0.7f + 0.7f);
+        float randomScaleY = (float)(random.NextDouble() * 0.7f + 0.7f);
+        float randomScaleZ = (float)(random.NextDouble() * 0.7f + 0.7f);
+        rock.Transform.SetLocalScale(new Vector3(randomScaleX, randomScaleY, randomScaleZ));
     }
 
     public override string ComponentToXmlString()
