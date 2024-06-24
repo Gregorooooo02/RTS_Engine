@@ -375,9 +375,9 @@ public class Renderer
     
     private void DrawSprites()
     {
-        foreach (SpiteRenderer spite in Sprites)
+        for (int i = 0; i < Sprites.Count; i++)
         {
-            spite.Draw();
+            Sprites[i].Draw();
         }
     }
 

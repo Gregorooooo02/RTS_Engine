@@ -634,7 +634,7 @@ public class WorldRenderer : Component
                 return false;
             }
             bool validSpot = false;
-            Vector2 Unitlocation = Vector2.Zero;
+            Vector2 unitLocation = Vector2.Zero;
             do
             {
                 Vector2 direction = CivilianWander.RandomUnitVector2();
@@ -649,7 +649,7 @@ public class WorldRenderer : Component
 #else
                     ParentObject.LoadPrefab("Prefabs/TutorialUnits.xml");
 #endif
-                    Unitlocation = potentialLocation;
+                    unitLocation = potentialLocation;
                     foreach (GameObject unit in ParentObject.Children.Last().Children)
                     {
                         CorrectObjectPosition(unit,potentialLocation);
@@ -679,7 +679,7 @@ public class WorldRenderer : Component
                                 //Place tree
                                 Vector3 position = new Vector3(randomPoint.X,
                                     FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-                                if (IsPositionValid(placedProps, position, minDistance))
+                                if (IsPositionValid(placedProps, position, minDistance) && Vector2.Distance(unitLocation, randomPoint) < 10.0f)
                                 {
                                     if (HeightData[(int)position.X, (int)position.Z] > bottomGrass
                                         && HeightData[(int)position.X, (int)position.Z] < upperGrass)
@@ -696,7 +696,7 @@ public class WorldRenderer : Component
                                 //Place rock
                                 Vector3 position = new Vector3(randomPoint.X,
                                     FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-                                if (IsPositionValid(placedProps, position, minDistance))
+                                if (IsPositionValid(placedProps, position, minDistance) && Vector2.Distance(unitLocation, randomPoint) < 10.0f)
                                 {
                                     if (HeightData[(int)position.X, (int)position.Z] < upperGrass * 1.2f)
                                     {  
@@ -736,7 +736,7 @@ public class WorldRenderer : Component
 #else
                 civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
-                PlaceCivilian(civilians, upperGrass, Unitlocation);
+                PlaceCivilian(civilians, upperGrass, unitLocation);
             }
             ParentObject.AddChildObject(civilians);
 
