@@ -136,7 +136,7 @@ public class Agent : Component
                 {
                     case LayerType.ENEMY:
                         Globals.AgentsManager.Enemies.Remove(this);
-                        GameManager.AddMeat(_meatAward);
+                        GameManager.AddMissionMeat(_meatAward);
                         switch (Type)
                         {
                             case AgentType.Civilian:

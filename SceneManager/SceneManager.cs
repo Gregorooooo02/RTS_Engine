@@ -137,6 +137,9 @@ public class SceneManager
                 Globals.PickingManager.EnemyPickingActive = false;
                 Globals.FogManager.FogActive = false;
                 
+                GameManager.TransferRewards();
+                GameManager.ClearMissionRewards();
+                
                 ChangeScene(i);
             }
         }
@@ -174,6 +177,7 @@ public class SceneManager
             GameManager.HealthMultiplier = 1.0f;
             GameManager.UnitsSelectedForMission = 0;
             GameManager.TutorialDone = false;
+            GameManager.ClearMissionRewards();
             //TODO: Add any necessary resets here
         }
     }

@@ -7,6 +7,8 @@ public static class GameManager
 {
     public static int MeatNumber;
     public static int PuzzleNumber;
+    public static int MissionMeat = 0;
+    public static int MissionPuzzle = 0;
     public static float CurrentAwareness = 0;
     public static float AwarenessLimit = 100.0f;
     public static float DamageMultiplier = 1.0f;
@@ -29,6 +31,28 @@ public static class GameManager
         PuzzleNumber = 0;
     }
 
+    public static void AddMissionMeat(int amount)
+    {
+        MissionMeat += amount;
+    }
+    
+    public static void AddMissionPuzzle(int amount)
+    {
+        MissionPuzzle += amount;
+    }
+
+    public static void TransferRewards()
+    {
+        MeatNumber += MissionMeat;
+        PuzzleNumber += MissionPuzzle;
+    }
+
+    public static void ClearMissionRewards()
+    {
+        MissionMeat = 0;
+        MissionPuzzle = 0;
+    }
+    
     public static GameAction CheckTasks()
     {
         for (int i = 0; i < Tasks.Count; i++)
