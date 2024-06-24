@@ -94,7 +94,39 @@ public class AssetManager
     
     public static SoundEffect DefaultAmbientMusic { get; private set; }
     public static SoundEffect DefaultSong {get; private set;}
-
+    
+    //SOUNDS
+    
+    //CABINET
+    public static SoundEffect CabinetIdle { get; private set; }
+    public static SoundEffect CabinetMove { get; private set; }
+    public static SoundEffect CabinetAttack { get; private set; }
+    
+    //CANDLE
+    public static SoundEffect CandleIdle { get; private set; }
+    public static SoundEffect CandleMove { get; private set; }
+    public static SoundEffect CandleAttack { get; private set; }
+    
+    //CHAIR
+    public static SoundEffect ChairIdle { get; private set; }
+    public static SoundEffect ChairMove { get; private set; }
+    public static SoundEffect ChairAttack { get; private set; }
+    
+    //CHANDELIER
+    public static SoundEffect ChandelierIdle { get; private set; }
+    public static SoundEffect ChandelierMove { get; private set; }
+    public static SoundEffect ChandelierAttack { get; private set; }
+    
+    //MINI CABINET
+    public static SoundEffect MiniCabinetIdle { get; private set; }
+    public static SoundEffect MiniCabinetMove { get; private set; }
+    public static SoundEffect MiniCabinetAttack { get; private set; }
+    
+    //WARDROBE
+    public static SoundEffect WardrobeIdle { get; private set; }
+    public static SoundEffect WardrobeMove { get; private set; }
+    public static SoundEffect WardrobeAttack { get; private set; }
+    
     private class ModelPointer
     {
         public readonly ModelData ModelData;
@@ -186,8 +218,32 @@ public class AssetManager
         DefaultWaveNormalMap = this._content.Load<Texture2D>("TerrainTextures/woda/wave0");
         DefaultAmbientMusic = this._content.Load<SoundEffect>("gameOver");
         DefaultSong = _content.Load<SoundEffect>("amogusDrip");
-        // MediaPlayer.Play(DefaultSong);
-        // MediaPlayer.IsRepeating = true;        
+        
+        //SOUNDS
+        CabinetIdle = _content.Load<SoundEffect>("Sounds/Cabinet_Idle");
+        CabinetMove = _content.Load<SoundEffect>("Sounds/Cabinet_Move");
+        CabinetAttack = _content.Load<SoundEffect>("Sounds/Cabinet_Attack");
+        
+        CandleIdle = _content.Load<SoundEffect>("Sounds/Candle_Idle");
+        CandleMove = _content.Load<SoundEffect>("Sounds/Candle_Move");
+        CandleAttack = _content.Load<SoundEffect>("Sounds/Candle_Attack");
+        
+        ChairIdle = _content.Load<SoundEffect>("Sounds/Chair_Idle");
+        ChairMove = _content.Load<SoundEffect>("Sounds/Chair_Move");
+        ChairAttack = _content.Load<SoundEffect>("Sounds/Chair_Attack");
+        
+        ChandelierIdle = _content.Load<SoundEffect>("Sounds/Chandelier_Idle");
+        ChandelierMove = _content.Load<SoundEffect>("Sounds/Chandelier_Move");
+        ChandelierAttack = _content.Load<SoundEffect>("Sounds/Chandelier_Attack");
+        
+        MiniCabinetIdle = _content.Load<SoundEffect>("Sounds/MiniCabinet_Idle");
+        MiniCabinetMove = _content.Load<SoundEffect>("Sounds/MiniCabinet_Move");
+        MiniCabinetAttack = _content.Load<SoundEffect>("Sounds/MiniCabinet_Attack");
+        
+        WardrobeIdle = _content.Load<SoundEffect>("Sounds/Wardrobe_Idle");
+        WardrobeMove = _content.Load<SoundEffect>("Sounds/Wardrobe_Move");
+        WardrobeAttack = _content.Load<SoundEffect>("Sounds/Wardrobe_Attack");
+        
         //DefaultHeightMaps = new List<Texture2D>
         //{
         //    this._content.Load<Texture2D>("heightmap_0"),

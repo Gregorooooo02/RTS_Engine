@@ -22,11 +22,12 @@ namespace RTS_Engine
     
     public enum UnitType
     {
-        Knight,
-        Civillian,
-        Chandelier,
+        Cabinet,
+        Candle,
         Chair,
-        Umulung
+        Chandelier,
+        MiniCabinet,
+        Wardrobe,
     }
 
     public enum ScreenSize

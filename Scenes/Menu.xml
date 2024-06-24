@@ -2,6 +2,7 @@
 <rootObject>
   <name>Root</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -27,6 +28,7 @@
     <object>
       <name>Title</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -69,6 +71,7 @@
     <object>
       <name>Buttons</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -94,6 +97,7 @@
         <object>
           <name>Play_Button</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -132,6 +136,9 @@
               <type>Button</type>
               <active>True</active>
               <portrait>False</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>False</isWindowTrigger>
+              <unitID>0</unitID>
               <action>SCENE2</action>
             </component>
           </components>
@@ -139,6 +146,7 @@
             <object>
               <name>Text</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -183,6 +191,7 @@
         <object>
           <name>Reset_Button</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -221,6 +230,9 @@
               <type>Button</type>
               <active>True</active>
               <portrait>False</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>False</isWindowTrigger>
+              <unitID>0</unitID>
               <action>RESET</action>
             </component>
           </components>
@@ -228,6 +240,7 @@
             <object>
               <name>Text</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -272,6 +285,7 @@
         <object>
           <name>Exit_Button</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -310,6 +324,9 @@
               <type>Button</type>
               <active>True</active>
               <portrait>False</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>False</isWindowTrigger>
+              <unitID>0</unitID>
               <action>EXIT</action>
             </component>
           </components>
@@ -317,6 +334,7 @@
             <object>
               <name>Text</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -363,6 +381,7 @@
     <object>
       <name>Camera</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -404,6 +423,7 @@
     <object>
       <name>Ground</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -438,6 +458,7 @@
         <object>
           <name>Trees</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -463,6 +484,7 @@
             <object>
               <name>Tree1</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -498,6 +520,7 @@
             <object>
               <name>Tree2</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -533,6 +556,7 @@
             <object>
               <name>Tree3</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -568,6 +592,7 @@
             <object>
               <name>Tree4</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -603,6 +628,7 @@
             <object>
               <name>Tree5</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -638,6 +664,7 @@
             <object>
               <name>Tree6</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -673,6 +700,7 @@
             <object>
               <name>Tree7</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -708,6 +736,7 @@
             <object>
               <name>Tree8</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -743,6 +772,7 @@
             <object>
               <name>Tree9</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -778,6 +808,7 @@
             <object>
               <name>Tree10</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -813,6 +844,7 @@
             <object>
               <name>Tree11</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -848,6 +880,7 @@
             <object>
               <name>Tree12</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -883,6 +916,7 @@
             <object>
               <name>Tree13</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
@@ -920,6 +954,7 @@
         <object>
           <name>House</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -955,6 +990,7 @@
         <object>
           <name>Campfire</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -990,6 +1026,7 @@
         <object>
           <name>Barrel</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -1025,6 +1062,7 @@
         <object>
           <name>Barrel</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>

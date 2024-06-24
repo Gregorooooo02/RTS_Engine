@@ -13,24 +13,20 @@ public class Emitter : Component
     public UnitType Type;
     public AudioEmitter AudioEmitter;
     public AudioListener Listener;
-    public static SoundEffect Sound = AssetManager.DefaultAmbientMusic;
-    public SoundEffectInstance SoundEffectInstance = Sound.CreateInstance();
+    public static SoundEffect Idle;
+    public static SoundEffect Move;
+    public static SoundEffect Attack;
+    private float volume = 1.0f;
+    
+    public SoundEffectInstance IdleInstance;
+    public SoundEffectInstance MoveInstance;
+    public SoundEffectInstance AttackInstance;
     public override void Initialize()
     {
         Active = true;
         AudioEmitter = new AudioEmitter();
         Listener = Globals.Listener;
-        
-        if (Type == UnitType.Knight)
-        {
-            Sound = AssetManager.DefaultAmbientMusic;
-        }
-        
-        if (Type == UnitType.Chair)
-        {
-            Sound = AssetManager.DefaultSong;
-        }
-        
+        SetType(Type);
     }
 
     public Emitter(UnitType type)
@@ -43,30 +39,74 @@ public class Emitter : Component
         
     }
     
-    public void ChangeType(UnitType type)
+    private void SetType(UnitType type)
     {
         Type = type;
-        if (Type == UnitType.Knight)
+
+        switch (type)
         {
-            Sound = AssetManager.DefaultAmbientMusic;
+            case UnitType.Cabinet:
+                Idle = AssetManager.CabinetIdle;
+                Move = AssetManager.CabinetMove;
+                Attack = AssetManager.CabinetAttack;
+                break;
+            case UnitType.Chair:
+                Idle = AssetManager.ChairIdle;
+                Move = AssetManager.ChairMove;
+                Attack = AssetManager.ChairAttack;
+                break;
+            case UnitType.Candle:
+                Idle = AssetManager.CandleIdle;
+                Move = AssetManager.CandleMove;
+                Attack = AssetManager.CandleAttack;
+                break;
+            case UnitType.Chandelier:
+                Idle = AssetManager.ChandelierIdle;
+                Move = AssetManager.ChandelierMove;
+                Attack = AssetManager.ChandelierAttack;
+                break;
+            case UnitType.MiniCabinet:
+                Idle = AssetManager.MiniCabinetIdle;
+                Move = AssetManager.MiniCabinetMove;
+                Attack = AssetManager.MiniCabinetAttack;
+                break;
+            case UnitType.Wardrobe:
+                Idle = AssetManager.WardrobeIdle;
+                Move = AssetManager.WardrobeMove;
+                Attack = AssetManager.WardrobeAttack;
+                break;
+            default:
+                Console.WriteLine("No sound effect for this unit type");
+                break;
         }
         
-        if (Type == UnitType.Chair)
-        {
-            Sound = AssetManager.DefaultSong;
-        }
+        IdleInstance = Idle.CreateInstance();
+        MoveInstance = Move.CreateInstance();
+        AttackInstance = Attack.CreateInstance();
         
-        SoundEffectInstance = Sound.CreateInstance();
     }
 
     public void PlayIdle()
     {
-        SoundEffectInstance.Play();
+        IdleInstance.Play();
+    }
+    
+    public void PlayMove()
+    {
+        MoveInstance.Play();
+    }
+    
+    public void PlayAttack()
+    {
+        AttackInstance.Play();
     }
     public override void Update()
     {
         Listener = Globals.Listener;
-        SoundEffectInstance.Apply3D(Listener, AudioEmitter);
+        AudioEmitter.Position = ParentObject.Transform.Pos;
+        MoveInstance.Apply3D(Listener, AudioEmitter);
+        IdleInstance.Apply3D(Listener, AudioEmitter);
+        AttackInstance.Apply3D(Listener, AudioEmitter);
     }
     
     public override string ComponentToXmlString()
@@ -97,29 +137,49 @@ public class Emitter : Component
                 ParentObject.RemoveComponent(this);
             }
             
-            ImGui.Text("Change Unit Type:");
+            ImGui.Text("Change unit type:");
             
-            if(ImGui.Button("Knight"))
-                ChangeType(UnitType.Knight);
+            if(ImGui.Button("Cabinet"))
+                SetType(UnitType.Cabinet);
+            
+            if(ImGui.Button("Candle"))
+                SetType(UnitType.Candle);
             
             if(ImGui.Button("Chair"))
-                ChangeType(UnitType.Chair);
+                SetType(UnitType.Chair);
             
-            ImGui.Text("Unit Type:" + Type);
+            if(ImGui.Button("Chandelier"))
+                SetType(UnitType.Chandelier);
             
-            if (ImGui.Button("Play"))
+            if(ImGui.Button("MiniCabinet"))
+                SetType(UnitType.MiniCabinet);
+            
+            if(ImGui.Button("Wardrobe"))
+                SetType(UnitType.Wardrobe);
+            
+            ImGui.Text("Unit type: " + Type);
+            
+            if (ImGui.Button("PlayIdle"))
             {
-                SoundEffectInstance.Play();
+                IdleInstance.Play();
             }
             
-            System.Numerics.Vector3 pos = AudioEmitter.Position.ToNumerics();
-            if (ImGui.DragFloat3("Position", ref pos,0.1f))
+            if (ImGui.Button("PlayMove"))
             {
-                AudioEmitter.Position = pos;
+                MoveInstance.Play();
             }
             
-            
-            
+            if (ImGui.Button("PlayAttack"))
+            {
+                AttackInstance.Play();
+            }
+
+            if (ImGui.DragFloat("Volume", ref volume, 0.01f, 0f, 1f))
+            {
+                IdleInstance.Volume = volume;
+                MoveInstance.Volume = volume;
+                AttackInstance.Volume = volume;
+            }
         }
     }
 #endif
