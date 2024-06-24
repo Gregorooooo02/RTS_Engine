@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
 using RTS_Engine.Components.AI;
+using RTS_Engine.Components.AI.Agent_States;
 
 namespace RTS_Engine;
 
@@ -441,11 +442,11 @@ public class WorldRenderer : Component
          ScanHeightDataFromTexture(GenerateMap.noiseTexture);
     }
 
-    public void GenerateWorld()
+    public void GenerateWorld(bool tutorial = false)
     {
         LoadTextures();
         LoadHeightData(GenerateMap.noiseTexture);
-        GenerateVoronoiFeatures();
+        GenerateVoronoiFeatures(tutorial);
         
         //TODO: Move the invocation below, so it's executed after all changes to MapNodes array has been made. Mainly it should be executed after static terrain features are placed in mission.
         CalculatePathfindingGridConnections();
@@ -462,12 +463,12 @@ public class WorldRenderer : Component
     }
     
     // Voronoi methods
-    private void GenerateVoronoiFeatures()
+    private void GenerateVoronoiFeatures(bool tutorial = false)
     {
         var points = GenerateRandomPoints(10, _terrainWidth, _terrainHeight);
         _voronoiRegions = ComputeVoronoiDiagram(points, _terrainWidth, _terrainHeight);
         ClipVoronoiCells(_voronoiRegions, _terrainWidth, _terrainHeight);
-        PlaceFeatures(_voronoiRegions);
+        PlaceFeatures(_voronoiRegions, tutorial);
     }
     
     private List<Vector2> GenerateRandomPoints(int numPoints, int width, int height)
@@ -527,20 +528,31 @@ public class WorldRenderer : Component
             voronoiRegions[site] = clippedRegion;
         }
     }
-    
-    private void PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions)
+
+    private void PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions, bool tutorial = false)
     {
         float bottomGrass = (globalMaxHeight - globalMinHeight) * 0.16f;
         float upperGrass = (globalMaxHeight - globalMinHeight) * 0.4f;
         
         Random random = new Random();
         
-        GameObject trees = new GameObject();
-        trees.Name = "Trees";
-        
-        GameObject rocks1 = new GameObject();
-        GameObject rocks2 = new GameObject();
-        GameObject rocks3 = new GameObject();
+        GameObject trees = new GameObject
+        {
+            Name = "Trees"
+        };
+
+        GameObject rocks1 = new GameObject()
+        {
+            Name = "Rocks1"
+        };
+        GameObject rocks2 = new GameObject()
+        {
+            Name = "Rocks2"
+        };
+        GameObject rocks3 = new GameObject()
+        {
+            Name = "Rocks3"
+        };
 
         GameObject villages = new GameObject();
         
@@ -551,12 +563,15 @@ public class WorldRenderer : Component
         //TODO: Load models for rocks
         ParentObject.AddChildObject(rocks1);
         rocks1.AddComponent<InstancedRendererController>();
+        //rocks1.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
         
         ParentObject.AddChildObject(rocks2);
         rocks2.AddComponent<InstancedRendererController>();
+        //rocks2.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
         
         ParentObject.AddChildObject(rocks3);
         rocks3.AddComponent<InstancedRendererController>();
+        //rocks3.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
 
         ParentObject.AddChildObject(villages);
         villages.Name = "Villages";
@@ -565,11 +580,6 @@ public class WorldRenderer : Component
         int maxAttempts = 10;
         List<Vector3> placedProps = new();
         List<Vector2> villagePositions = new();
-
-        float minVillageDistance = 60.0f;
-
-        int villageLimit = random.Next(1, 4);
-        int currentVillageCount = 0;
 
         //How many village prefabs there are
         int villageVariants = 1;
@@ -580,58 +590,150 @@ public class WorldRenderer : Component
         {
             availableVariants.Add(i + 1);
         }
-
+        
+        float minVillageDistance;
+        
         float minHeight = bottomGrass * 1.8f;
         float maxHeight = upperGrass;
-
-        //TODO: Do some additional correction for spawning villages
-        //Place villages
-        foreach (var kvp in voronoiRegions)
-        {
-            if(currentVillageCount >= villageLimit || availableVariants.Count == 0) break;
-            var site = kvp.Key;
-            var region = kvp.Value;
-            bool skip = false;
             
-            Vector3 centroid = CalculateCentroid(region);
-            Vector2 location = new Vector2(centroid.X, centroid.Z);
-            foreach (Vector2 position in villagePositions)
-            {
-                if (Vector2.Distance(position, location) < minVillageDistance)
-                {
-                    skip = true;
-                    break;
-                }
-            }
-            if(skip) continue;
-            float height = PickingManager.InterpolateWorldHeight(location, this);
-            if (height > minHeight && height < maxHeight)
-            {
-                int variant = random.Next(0, availableVariants.Count);
-#if _WINDOWS
-                villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village" + availableVariants[variant] +".xml");
-#else
-                villages.LoadPrefab("Prefabs/Village" + variant + ".xml");
-#endif
-                availableVariants.RemoveAt(variant);
-                PlaceVillage(location,villages.Children.Last());
-                currentVillageCount++;
-                voronoiRegions.Remove(site);
-            }
-        }
-
-
-        //Place player units
-        //TODO: Implement placing player units in the world
-        bool placedUnits = false;
-        do
+        if (tutorial)
         {
+            //Here generate mission for tutorial
+            minVillageDistance = 80.0f; 
+
+            Vector2 tutorialVillageLocation = Vector2.Zero;
+            
             foreach (var kvp in voronoiRegions)
             {
                 var site = kvp.Key;
                 var region = kvp.Value;
-                bool skip = false;
+                
+                Vector3 centroid = CalculateCentroid(region);
+                Vector2 location = new Vector2(centroid.X, centroid.Z);
+                
+                float height = PickingManager.InterpolateWorldHeight(location, this);
+                if (height > minHeight && height < maxHeight)
+                {
+#if _WINDOWS
+                    villages.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialVillage.xml");
+#else
+                    villages.LoadPrefab("Prefabs/TutorialVillage.xml");
+#endif
+                    PlaceVillage(location,villages.Children.Last());
+                    voronoiRegions.Remove(site);
+                    tutorialVillageLocation = location;
+                    break;
+                }
+                Console.WriteLine("Attempting to place a village!");
+            }
+            //Search for a place to spawn units nearby
+            if(tutorialVillageLocation == Vector2.Zero) return;
+            bool validSpot = false;
+            do
+            {
+                Vector2 direction = CivilianWander.RandomUnitVector2();
+                Vector2 potentialLocation = tutorialVillageLocation + direction * minVillageDistance;
+                //Check if potential location is valid for spawning units
+                float height = PickingManager.InterpolateWorldHeight(potentialLocation, this);
+                if (height > minHeight && height < maxHeight)
+                {
+                    validSpot = true;
+#if _WINDOWS
+                    ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialUnits.xml");
+#else
+                    ParentObject.LoadPrefab("Prefabs/TutorialUnits.xml");
+#endif
+                    foreach (GameObject unit in ParentObject.Children.Last().Children)
+                    {
+                        CorrectObjectPosition(unit,potentialLocation);
+                    }
+                }
+            } while (!validSpot);
+            
+            foreach (var kvp in voronoiRegions)
+            {
+                var site = kvp.Key;
+                var region = kvp.Value;
+                
+                // Try to place multiple trees in the region
+                int propCount = random.Next(5, 30);
+                
+                
+                if (random.NextDouble() < 0.9f)
+                {
+                    // Place props
+                    for (int i = 0; i < propCount; i++)
+                    {
+                        for (int attempt = 0; attempt < maxAttempts; attempt++)
+                        {
+                            Vector2 randomPoint = region[random.Next(region.Count)];
+                            if (random.NextDouble() < 0.75f)
+                            {
+                                //Place tree
+                                Vector3 position = new Vector3(randomPoint.X,
+                                    FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+                                if (IsPositionValid(placedProps, position, minDistance))
+                                {
+                                    if (HeightData[(int)position.X, (int)position.Z] > bottomGrass
+                                        && HeightData[(int)position.X, (int)position.Z] < upperGrass)
+                                    {
+                                        PlaceTree(trees, position);
+                                        ObstructTerrain(new Vector2(position.X, position.Z), 3.0f);
+                                        placedProps.Add(position);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //Place rock
+                                Vector3 position = new Vector3(randomPoint.X,
+                                    FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+                                if (IsPositionValid(placedProps, position, minDistance))
+                                {
+                                    if (HeightData[(int)position.X, (int)position.Z] < upperGrass * 1.2f)
+                                    {  
+                                        int rockVariant = random.Next(3);
+                                        switch (rockVariant)
+                                        {
+                                            case 0:
+                                                PlaceRock(rocks1,position,0);
+                                                break;
+                                            case 1:
+                                                PlaceRock(rocks2,position,1);
+                                                break;
+                                            case 2:
+                                                PlaceRock(rocks3,position,2);
+                                                break;
+                                        }
+                                        ObstructTerrain(new Vector2(position.X, position.Z), 1.0f);
+                                        placedProps.Add(position);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
+        }
+        else
+        {
+            minVillageDistance = 60.0f;
+
+            int villageLimit = random.Next(1, 4);
+            int currentVillageCount = 0;  
+            
+            //TODO: Do some additional correction for spawning villages
+            //Place villages
+            foreach (var kvp in voronoiRegions)
+            {
+                if(currentVillageCount >= villageLimit || availableVariants.Count == 0) break;
+                var site = kvp.Key;
+                var region = kvp.Value;
+                bool skip = false;
+                
                 Vector3 centroid = CalculateCentroid(region);
                 Vector2 location = new Vector2(centroid.X, centroid.Z);
                 foreach (Vector2 position in villagePositions)
@@ -642,116 +744,151 @@ public class WorldRenderer : Component
                         break;
                     }
                 }
-
-                if (skip) continue;
+                if(skip) continue;
                 float height = PickingManager.InterpolateWorldHeight(location, this);
                 if (height > minHeight && height < maxHeight)
                 {
-                    placedUnits = true;
-                    byte unitsMask = GameManager.UnitsSelectedForMission;
-                    string name = null;
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if ((unitsMask & 1) > 0)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    name = "Chair.xml";
-                                    break;
-                                case 1:
-                                    name = "Chair.xml";
-                                    break;
-                                case 2:
-                                    name = "Minion.xml";
-                                    break;
-                            }
-
-                            if (name == null) continue;
+                    int variant = random.Next(0, availableVariants.Count);
 #if _WINDOWS
-                            ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/" + name);
+                    villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village" + availableVariants[variant] +".xml");
 #else
-                        ParentObject.LoadPrefab("Prefabs/" + name);
+                    villages.LoadPrefab("Prefabs/Village" + variant + ".xml");
 #endif
-                            CorrectObjectPosition(ParentObject.Children.Last(),
-                                location + (Vector2.One * 5.0f * (i - 1)));
-                        }
-
-                        unitsMask >>= 1;
-                    }
-
+                    availableVariants.RemoveAt(variant);
+                    PlaceVillage(location,villages.Children.Last());
+                    currentVillageCount++;
                     voronoiRegions.Remove(site);
-                    break;
                 }
             }
-            Console.WriteLine("Failed to spawn player units! Attempting new max height. (Old height: )");
-            maxHeight *= 1.05f;
-        } while (!placedUnits);
 
-        
-        
-        //Place terrain features
-        //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
-        foreach (var kvp in voronoiRegions)
-        {
-            var site = kvp.Key;
-            var region = kvp.Value;
-            
-            // Try to place multiple trees in the region
-            int propCount = random.Next(5, 30);
-            
-            
-            if (random.NextDouble() < 0.9f)
+
+            //Place player units
+            //TODO: Implement placing player units in the world
+            bool placedUnits = false;
+            do
             {
-                // Place props
-                for (int i = 0; i < propCount; i++)
+                foreach (var kvp in voronoiRegions)
                 {
-                    bool propPlaced = false;
-                    for (int attempt = 0; attempt < maxAttempts; attempt++)
+                    var site = kvp.Key;
+                    var region = kvp.Value;
+                    bool skip = false;
+   
+                    Vector3 centroid = CalculateCentroid(region);
+                    Vector2 location = new Vector2(centroid.X, centroid.Z);
+                    foreach (Vector2 position in villagePositions)
                     {
-                        Vector2 randomPoint = region[random.Next(region.Count)];
-                        if (random.NextDouble() < 0.7f)
+                        if (Vector2.Distance(position, location) < minVillageDistance)
                         {
-                            //Place tree
-                            Vector3 position = new Vector3(randomPoint.X,
-                                FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-                            if (IsPositionValid(placedProps, position, minDistance))
+                            skip = true;
+                            break;
+                        }
+                    } 
+                    if (skip) continue;
+                    float height = PickingManager.InterpolateWorldHeight(location, this);
+                    if (height > minHeight && height < maxHeight)
+                    {
+                        placedUnits = true;
+                        byte unitsMask = GameManager.UnitsSelectedForMission;
+                        string name = null;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if ((unitsMask & 1) > 0)
                             {
-                                if (HeightData[(int)position.X, (int)position.Z] > bottomGrass
-                                    && HeightData[(int)position.X, (int)position.Z] < upperGrass)
+                                switch (i)
                                 {
-                                    PlaceTree(trees, position);
-                                    ObstructTerrain(new Vector2(position.X, position.Z), 3.0f);
-                                    placedProps.Add(position);
-                                    break;
+                                    case 0:
+                                        name = "Chair.xml";
+                                        break;
+                                    case 1:
+                                        name = "Chair.xml";
+                                       break;
+                                   case 2:
+                                       name = "Minion.xml";
+                                       break;
+                               }
+                               if (name == null) continue;
+#if _WINDOWS
+                                ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/" + name);
+#else
+                                ParentObject.LoadPrefab("Prefabs/" + name);
+#endif
+                                CorrectObjectPosition(ParentObject.Children.Last(),
+                                location + (Vector2.One * 5.0f * (i - 1)));
+                            }
+                            unitsMask >>= 1;
+                        }
+
+                        voronoiRegions.Remove(site);
+                        break;
+                    }
+                }
+                Console.WriteLine("Failed to spawn player units! Attempting new max height. (Old height: )");
+                maxHeight *= 1.05f;
+            } while (!placedUnits);
+            
+            //Place terrain features
+            //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
+            foreach (var kvp in voronoiRegions)
+            {
+                var site = kvp.Key;
+                var region = kvp.Value;
+                
+                // Try to place multiple trees in the region
+                int propCount = random.Next(5, 30);
+                
+                
+                if (random.NextDouble() < 0.9f)
+                {
+                    // Place props
+                    for (int i = 0; i < propCount; i++)
+                    {
+                        bool propPlaced = false;
+                        for (int attempt = 0; attempt < maxAttempts; attempt++)
+                        {
+                            Vector2 randomPoint = region[random.Next(region.Count)];
+                            if (random.NextDouble() < 0.75f)
+                            {
+                                //Place tree
+                                Vector3 position = new Vector3(randomPoint.X,
+                                    FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+                                if (IsPositionValid(placedProps, position, minDistance))
+                                {
+                                    if (HeightData[(int)position.X, (int)position.Z] > bottomGrass
+                                        && HeightData[(int)position.X, (int)position.Z] < upperGrass)
+                                    {
+                                        PlaceTree(trees, position);
+                                        ObstructTerrain(new Vector2(position.X, position.Z), 3.0f);
+                                        placedProps.Add(position);
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
-                            //Place rock
-                            Vector3 position = new Vector3(randomPoint.X,
-                                FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-                            if (IsPositionValid(placedProps, position, minDistance))
+                            else
                             {
-                                if (HeightData[(int)position.X, (int)position.Z] < upperGrass * 1.2f)
+                                //Place rock
+                                Vector3 position = new Vector3(randomPoint.X,
+                                    FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
+                                if (IsPositionValid(placedProps, position, minDistance))
                                 {
-                                    int rockVariant = random.Next(3);
-                                    switch (rockVariant)
-                                    {
-                                        case 0:
-                                            PlaceRock(rocks1,position,0);
-                                            break;
-                                        case 1:
-                                            PlaceRock(rocks2,position,1);
-                                            break;
-                                        case 2:
-                                            PlaceRock(rocks3,position,2);
-                                            break;
+                                    if (HeightData[(int)position.X, (int)position.Z] < upperGrass * 1.2f)
+                                    {  
+                                        int rockVariant = random.Next(3);
+                                        switch (rockVariant)
+                                        {
+                                            case 0:
+                                                PlaceRock(rocks1,position,0);
+                                                break;
+                                            case 1:
+                                                PlaceRock(rocks2,position,1);
+                                                break;
+                                            case 2:
+                                                PlaceRock(rocks3,position,2);
+                                                break;
+                                        }
+                                        ObstructTerrain(new Vector2(position.X, position.Z), 1.0f);
+                                        placedProps.Add(position);
+                                        break;
                                     }
-                                    ObstructTerrain(new Vector2(position.X, position.Z), 1.0f);
-                                    placedProps.Add(position);
-                                    break;
                                 }
                             }
                         }

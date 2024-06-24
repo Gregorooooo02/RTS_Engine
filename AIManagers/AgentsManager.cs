@@ -53,7 +53,7 @@ public class AgentsManager
     
     public static void ChangeUnitSelection(Agent agent,bool selected)
     {
-        agent?.Icon.GetComponent<SpiteRenderer>().SelectAndDeselect(selected ? GameAction.SELECT : GameAction.DESELECT);
+        agent?.Icon?.GetComponent<SpiteRenderer>()?.SelectAndDeselect(selected ? GameAction.SELECT : GameAction.DESELECT);
     }
 
     public void DeselectAllUnits()

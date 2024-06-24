@@ -40,7 +40,7 @@ public class SceneManager
 
                 var currentWorld = missionRoot.GetComponent<WorldRenderer>();
 
-                currentWorld.GenerateWorld();
+                currentWorld.GenerateWorld(true);
                 Console.WriteLine("Created World");
 
                 GameObject camera = new GameObject();
@@ -112,6 +112,9 @@ public class SceneManager
                 if (CurrentScene.IsMissionScene)
                 {
                     RemoveScene(CurrentScene);
+                    Globals.AgentsManager.ClappedCivilians.Clear();
+                    Globals.AgentsManager.ClappedBuildings.Clear();
+                    Globals.AgentsManager.ClappedSoldiers.Clear();
                 }
                 Globals.AgentsManager.Units.Clear();
                 Globals.PickingManager.SinglePickingActive = false;

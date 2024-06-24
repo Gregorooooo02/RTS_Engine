@@ -21,6 +21,7 @@ public class FogReveler : Component
     public Texture2D Track;
 
     private bool _added = false;
+    public bool OneUse = false;
     
     public FogReveler(){}
     
@@ -72,6 +73,8 @@ public class FogReveler : Component
         
         builder.Append("<active>" + Active +"</active>");
         
+        builder.Append("<oneUse>" + OneUse +"</oneUse>");
+        
         builder.Append("<revealRadius>" + RevealRadius +"</revealRadius>");
         
         builder.Append("</component>");
@@ -81,6 +84,7 @@ public class FogReveler : Component
     public override void Deserialize(XElement element)
     {
         Active = element.Element("active")?.Value == "True";
+        OneUse = element.Element("oneUse")?.Value == "True";
         RevealRadius = int.TryParse(element.Element("revealRadius")?.Value, out int revealRadius) ? revealRadius : 7;
     }
 
@@ -97,6 +101,7 @@ public class FogReveler : Component
         if(ImGui.CollapsingHeader("Fog Reveler"))
         {
             ImGui.Checkbox("Reveler active", ref Active);
+            ImGui.Checkbox("Is used only once?", ref OneUse);
             ImGui.InputInt("Reveal radius", ref RevealRadius);
             if (ImGui.Button("Remove component"))
             {
