@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
-  <name>NewObject</name>
+  <name>Root</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>280,9</x>
-        <y>235,3</y>
+        <x>0</x>
+        <y>0</y>
         <z>0</z>
       </position>
       <rotation>
@@ -22,20 +23,93 @@
         <z>1</z>
       </scale>
     </component>
-    <component>
-      <type>AnimatedSpriteRenderer</type>
-      <active>True</active>
-      <spriteSheet>Loading</spriteSheet>
-      <frames>3</frames>
-      <frameTime>0,6</frameTime>
-      <color>
-        <r>255</r>
-        <g>255</g>
-        <b>255</b>
-        <a>255</a>
-      </color>
-      <isAnimationActive>True</isAnimationActive>
-    </component>
   </components>
-  <childObjects></childObjects>
+  <childObjects>
+    <object>
+      <name>Icon</name>
+      <active>True</active>
+      <cascadingActive>True</cascadingActive>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>20</x>
+            <y>754,2</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>0,75</x>
+            <y>2</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>AnimatedSpriteRenderer</type>
+          <active>True</active>
+          <spriteSheet>UI/loadingScreenIcon</spriteSheet>
+          <frames>4</frames>
+          <frameTime>0,15</frameTime>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <isAnimationActive>True</isAnimationActive>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Loading</name>
+      <active>True</active>
+      <cascadingActive>True</cascadingActive>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>255,6</x>
+            <y>739,7</y>
+            <z>0,6</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>0,25</x>
+            <y>0,5</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>AnimatedSpriteRenderer</type>
+          <active>True</active>
+          <spriteSheet>Loading</spriteSheet>
+          <frames>3</frames>
+          <frameTime>0,3</frameTime>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <isAnimationActive>True</isAnimationActive>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+  </childObjects>
 </rootObject>

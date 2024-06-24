@@ -242,7 +242,7 @@
 /processorParam:BakeMeshTransforms=True
 /processorParam:GenerateTangentFrame=False
 /processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=0.001
+/processorParam:ModelScale=0.01
 /build:babyCupboardAnimation/babyCupboardAnimation.fbx
 
 #begin babyCupboardAnimation/normal.png
@@ -439,6 +439,63 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:cupboardProjectile/cupboardProjectile.fbx
+
+#begin cupboardSkinned/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:cupboardSkinned/albedo.png
+
+#begin cupboardSkinned/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:cupboardSkinned/ao.png
+
+#begin cupboardSkinned/cupboardSkinned.fbx
+/importer:FbxImporter
+/processor:SkinnedModelProcessor
+/processorParam:BakeMeshTransforms=True
+/processorParam:GenerateTangentFrame=False
+/processorParam:ModelRotate=0, 0, 0
+/processorParam:ModelScale=0.01
+/build:cupboardSkinned/cupboardSkinned.fbx
+
+#begin cupboardSkinned/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:cupboardSkinned/normal.png
+
+#begin cupboardSkinned/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:cupboardSkinned/roughness.png
 
 #begin defaultFont.spritefont
 /importer:FontDescriptionImporter
@@ -3772,6 +3829,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/heroHP.png
+
+#begin UI/loadingScreenIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/loadingScreenIcon.png
 
 #begin UI/meatCounter.png
 /importer:TextureImporter
