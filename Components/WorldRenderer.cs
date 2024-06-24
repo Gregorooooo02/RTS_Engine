@@ -619,61 +619,76 @@ public class WorldRenderer : Component
                 voronoiRegions.Remove(site);
             }
         }
-        
+
+
         //Place player units
         //TODO: Implement placing player units in the world
-        foreach (var kvp in voronoiRegions)
+        bool placedUnits = false;
+        do
         {
-            var site = kvp.Key;
-            var region = kvp.Value;
-            bool skip = false;
-            
-            Vector3 centroid = CalculateCentroid(region);
-            Vector2 location = new Vector2(centroid.X, centroid.Z);
-            foreach (Vector2 position in villagePositions)
+            foreach (var kvp in voronoiRegions)
             {
-                if (Vector2.Distance(position, location) < minVillageDistance)
+                var site = kvp.Key;
+                var region = kvp.Value;
+                bool skip = false;
+
+                Vector3 centroid = CalculateCentroid(region);
+                Vector2 location = new Vector2(centroid.X, centroid.Z);
+                foreach (Vector2 position in villagePositions)
                 {
-                    skip = true;
-                    break;
-                }
-            }
-            if(skip) continue;
-            float height = PickingManager.InterpolateWorldHeight(location, this);
-            if (height > minHeight && height < maxHeight)
-            {
-                byte unitsMask = GameManager.UnitsSelectedForMission;
-                string name = null;
-                for (int i = 0; i < 3; i++)
-                {
-                    if ((unitsMask & 1) > 0)
+                    if (Vector2.Distance(position, location) < minVillageDistance)
                     {
-                        switch (i)
+                        skip = true;
+                        break;
+                    }
+                }
+
+                if (skip) continue;
+                float height = PickingManager.InterpolateWorldHeight(location, this);
+                if (height > minHeight && height < maxHeight)
+                {
+                    placedUnits = true;
+                    byte unitsMask = GameManager.UnitsSelectedForMission;
+                    string name = null;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if ((unitsMask & 1) > 0)
                         {
-                            case 0:
-                                name = "Chair.xml";
-                                break;
-                            case 1:
-                                name = "Chair.xml";
-                                break;
-                            case 2:
-                                name = "Minion.xml";
-                                break;
-                        }
-                        if(name == null) continue;
+                            switch (i)
+                            {
+                                case 0:
+                                    name = "Chair.xml";
+                                    break;
+                                case 1:
+                                    name = "Chair.xml";
+                                    break;
+                                case 2:
+                                    name = "Minion.xml";
+                                    break;
+                            }
+
+                            if (name == null) continue;
 #if _WINDOWS
-                        ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/" + name);
+                            ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/" + name);
 #else
                         ParentObject.LoadPrefab("Prefabs/" + name);
 #endif
-                        CorrectObjectPosition(ParentObject.Children.Last(),location + (Vector2.One * 5.0f * (i - 1)));
+                            CorrectObjectPosition(ParentObject.Children.Last(),
+                                location + (Vector2.One * 5.0f * (i - 1)));
+                        }
+
+                        unitsMask >>= 1;
                     }
-                    unitsMask >>= 1;
+
+                    voronoiRegions.Remove(site);
+                    break;
                 }
-                voronoiRegions.Remove(site);
-                break;
             }
-        }
+            Console.WriteLine("Failed to spawn player units! Attempting new max height. (Old height: )");
+            maxHeight *= 1.05f;
+        } while (!placedUnits);
+
+        
         
         //Place terrain features
         //TODO: Rework placing features. Right now in one region there will be tress OR boulders places instead of trees AND boulders. Additionally reduce the RNG while selecting the chunk
