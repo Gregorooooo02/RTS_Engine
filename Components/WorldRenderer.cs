@@ -542,15 +542,15 @@ public class WorldRenderer : Component
             Name = "Trees"
         };
 
-        GameObject rocks1 = new GameObject()
+        GameObject rocks1 = new GameObject
         {
             Name = "Rocks1"
         };
-        GameObject rocks2 = new GameObject()
+        GameObject rocks2 = new GameObject
         {
             Name = "Rocks2"
         };
-        GameObject rocks3 = new GameObject()
+        GameObject rocks3 = new GameObject
         {
             Name = "Rocks3"
         };
@@ -993,6 +993,8 @@ public class WorldRenderer : Component
             newPos = prop.Transform.Pos + offset;
             newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(newPos.X, newPos.Z), this);
             prop.Transform.SetLocalPosition(newPos);
+            
+            ObstructTerrain(new Vector2(newPos.X, newPos.Z),2);
         }
 
         foreach (GameObject soldier in villageRoot.Children[2].Children)
