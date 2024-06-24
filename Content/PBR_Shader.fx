@@ -93,8 +93,8 @@ sampler2D shadowMapSampler = sampler_state
 sampler2D FogVisibility = sampler_state
 {
     Texture = <visibility>;
-    MinFilter = linear;
-    MagFilter = linear;
+    MinFilter = point;
+    MagFilter = point;
     MipFilter = point;
     AddressU = clamp;
     AddressV = clamp;
@@ -103,8 +103,8 @@ sampler2D FogVisibility = sampler_state
 sampler2D FogDiscovery = sampler_state
 {
     Texture = <discovery>;
-    MinFilter = linear;
-    MagFilter = linear;
+    MinFilter = point;
+    MagFilter = point;
     MipFilter = point;
     AddressU = clamp;
     AddressV = clamp;

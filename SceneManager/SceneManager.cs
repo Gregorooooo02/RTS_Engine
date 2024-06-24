@@ -128,6 +128,8 @@ public class SceneManager
                     Globals.AgentsManager.ClappedCivilians.Clear();
                     Globals.AgentsManager.ClappedBuildings.Clear();
                     Globals.AgentsManager.ClappedSoldiers.Clear();
+                    Globals.AgentsManager.SelectedUnits.Clear();
+                    GameManager.CurrentAwareness = 0;
                 }
                 Globals.AgentsManager.Units.Clear();
                 Globals.PickingManager.SinglePickingActive = false;
