@@ -451,7 +451,7 @@ public class WorldRenderer : Component
         //TODO: Move the invocation below, so it's executed after all changes to MapNodes array has been made. Mainly it should be executed after static terrain features are placed in mission.
         CalculatePathfindingGridConnections();
         return result;
-        // Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
+        //Console.WriteLine($"Generated {_voronoiRegions.Count} Voronoi regions.");
     }
     
     private void ScanHeightDataFromTexture(Texture2D heightmap)
@@ -634,6 +634,7 @@ public class WorldRenderer : Component
                 return false;
             }
             bool validSpot = false;
+            Vector2 Unitlocation = Vector2.Zero;
             do
             {
                 Vector2 direction = CivilianWander.RandomUnitVector2();
@@ -648,6 +649,7 @@ public class WorldRenderer : Component
 #else
                     ParentObject.LoadPrefab("Prefabs/TutorialUnits.xml");
 #endif
+                    Unitlocation = potentialLocation;
                     foreach (GameObject unit in ParentObject.Children.Last().Children)
                     {
                         CorrectObjectPosition(unit,potentialLocation);
@@ -722,6 +724,22 @@ public class WorldRenderer : Component
                 }
             }
 
+            GameObject civilians = new GameObject()
+            {
+                Name = "Civilians"
+            };
+            int numberOfCivilians = random.Next(5, 10);
+            for (int i = 0; i < numberOfCivilians; i++)
+            {
+#if _WINDOWS
+                civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
+#else
+                civilians.LoadPrefab("Prefabs/Civilian.xml");
+#endif
+                PlaceCivilian(civilians, upperGrass, Unitlocation);
+            }
+            ParentObject.AddChildObject(civilians);
+
         }
         else
         {
@@ -775,6 +793,7 @@ public class WorldRenderer : Component
             //Place player units
             //TODO: Implement placing player units in the world
             bool placedUnits = false;
+            Vector2 Unitlocation = Vector2.Zero;
             do
             {
                 foreach (var kvp in voronoiRegions)
@@ -827,7 +846,7 @@ public class WorldRenderer : Component
                             }
                             unitsMask >>= 1;
                         }
-
+                        Unitlocation = location;
                         voronoiRegions.Remove(site);
                         break;
                     }
@@ -905,11 +924,48 @@ public class WorldRenderer : Component
                     }
                 }
             }
+            GameObject civilians = new GameObject()
+            {
+                Name = "Civilians"
+            };
+            int numberOfCivilians = random.Next(5, 10);
+            for (int i = 0; i < numberOfCivilians; i++)
+            {
+#if _WINDOWS
+                civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
+#else
+                civilians.LoadPrefab("Prefabs/Civilian.xml");
+#endif
+                PlaceCivilian(civilians, upperGrass, Unitlocation);
+            }
+            ParentObject.AddChildObject(civilians);
         }
 
         return true;
     }
 
+    private void PlaceCivilian(GameObject civilian, float maxHeight, Vector2 playerStartLocation)
+    {
+        Random random = new();
+
+        do
+        {
+            int x = random.Next(1, MapNodes.GetLength(0) - 1);
+            int y = random.Next(1, MapNodes.GetLength(1) - 1);
+
+            if (MapNodes[x, y].Available && MapNodes[x,y].Height < maxHeight && Vector2.Distance(playerStartLocation, new Vector2(x,y)) > 60.0f)
+            {
+                Vector3 newPos = civilian.Transform.Pos + new Vector3(x, 0, y);
+                newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(x, y), this);
+                civilian.Transform.SetLocalPosition(newPos);
+                return;
+            }
+        } while (true);
+        
+
+
+    }
+    
     private void CorrectObjectPosition(GameObject gameObject, Vector2 offset)
     {
         Vector3 newPos = gameObject.Transform.Pos + new Vector3(offset.X,0,offset.Y);

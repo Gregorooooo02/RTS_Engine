@@ -83,6 +83,7 @@ public static class GameManager
     public static void CheatMenu()
     {
         ImGui.Begin("Cheat Menu");
+        ImGui.Checkbox("Tutorial done", ref TutorialDone);
         ImGui.DragInt("Meat Number", ref MeatNumber);
         ImGui.DragInt("Puzzle Number", ref PuzzleNumber);
         ImGui.DragFloat("Current awareness", ref CurrentAwareness);

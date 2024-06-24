@@ -75,7 +75,7 @@ public class SceneManager
 #if _WINDOWS
                             missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
-                        missionRoot.LoadPrefab("Prefabs/UI.xml");
+                            missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
                         }
 
@@ -83,23 +83,9 @@ public class SceneManager
 #if _WINDOWS
                         missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
 #else
-                    missionRoot.LoadPrefab("Prefabs/Marker.xml");
+                        missionRoot.LoadPrefab("Prefabs/Marker.xml");
 #endif
-                        //TODO: Remove civilian spawning here
-                        GameObject civilians = new GameObject();
-                        civilians.Name = "Civilians";
-                        missionRoot.AddChildObject(civilians);
-                        for (int i = 0; i < 10; i++)
-                        {
-#if _WINDOWS
-                            civilians.LoadPrefab(Globals.MainPath + "/Prefabs/Civilian.xml");
-#else
-                        civilians.LoadPrefab("Prefabs/Civilian.xml");
-#endif
-                            civilians.Children[i].Name = "Civilian" + i;
-                        }
-
-                        Console.WriteLine("Added Civilians");
+                        
                         AddScene(missionScene);
 
                         Globals.PickingManager.SinglePickingActive = true;
