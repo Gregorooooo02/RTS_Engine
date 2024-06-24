@@ -841,6 +841,11 @@ public class WorldRenderer : Component
 #else
                                 ParentObject.LoadPrefab("Prefabs/" + name);
 #endif
+                                
+                                //foreach (GameObject unit in ParentObject.Children.Last().Children)
+                                //{
+                                //    CorrectObjectPosition(unit, location + (Vector2.One * 5.0f * (i - 1)));
+                                //}
                                 CorrectObjectPosition(ParentObject.Children.Last(),
                                 location + (Vector2.One * 5.0f * (i - 1)));
                             }

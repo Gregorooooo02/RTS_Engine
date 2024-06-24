@@ -256,7 +256,7 @@
           <active>True</active>
           <portrait>False</portrait>
           <isUnitSelect>False</isUnitSelect>
-          <isWindowTrigger>False</isWindowTrigger>
+          <isWindowTrigger>True</isWindowTrigger>
           <unitID>0</unitID>
           <action>TOGGLE_ACTIVE</action>
           <linkedObject>Confirm_Window</linkedObject>
@@ -606,7 +606,7 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0</x>
+                <x>0,464</x>
                 <y>0,99999994</y>
                 <z>0,99999994</z>
               </scale>
@@ -1007,8 +1007,8 @@
     </object>
     <object>
       <name>Win_Window</name>
-      <active>False</active>
-      <cascadingActive>True</cascadingActive>
+      <active>True</active>
+      <cascadingActive>False</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -1271,8 +1271,8 @@
     </object>
     <object>
       <name>GameOver_Window</name>
-      <active>False</active>
-      <cascadingActive>True</cascadingActive>
+      <active>True</active>
+      <cascadingActive>False</cascadingActive>
       <components>
         <component>
           <type>Transform</type>

@@ -145,6 +145,10 @@ public class Button : Component
 
                             if (_buttonAction == GameAction.TOGGLE_ACTIVE_PARENT)
                             {
+                                if (ParentObject.Active)
+                                {
+                                    Globals.UIActive = false;
+                                }
                                 ParentObject.ToggleParentActiveState();
                             }
 

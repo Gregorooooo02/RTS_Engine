@@ -224,19 +224,26 @@ public class Agent : Component
         {
             foreach (Point location in _occupiedNodes)
             {
-                if (clear)
+                try
                 {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == ID)
+                    if (clear)
                     {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = 0;
+                        if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == ID)
+                        {
+                            Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == 0)
+                        {
+                            Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = ID;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId == 0)
-                    {
-                        Globals.Renderer.WorldRenderer.MapNodes[location.X, location.Y].AllyOccupantId = ID;
-                    }
+                    Console.WriteLine("Unit out of map!");
                 }
             }
         }

@@ -8,13 +8,20 @@ namespace RTS_Engine;
 public class WinLoseWindow : Component
 {
     private GameAction action = GameAction.WIN;
+    private bool _triggered = false;
     
     public override void Update()
     {
         GameAction result = GameManager.CheckIfGameOver();
-        if (result == action)
+        if (result == action && !_triggered)
         {
+            _triggered = true;
             ParentObject.ToggleChildrenActive(true);
+            Globals.UIActive = true;
+            if (action == GameAction.GAME_OVER)
+            {
+                GameManager.ClearMissionRewards();
+            }
         }
     }
 

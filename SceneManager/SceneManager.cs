@@ -25,11 +25,13 @@ public class SceneManager
 
         do
         {
+            Console.WriteLine("Mission generation start!");
             GameObject missionRoot = new GameObject();
             missionRoot.AddComponent<WorldRenderer>();
 
             ChangeScene(1);
 
+            Console.WriteLine("Launching new task!");
             System.Threading.Tasks.Task.Factory.StartNew(() =>
             {
                 try
@@ -136,6 +138,7 @@ public class SceneManager
                 Globals.PickingManager.GroundPickingActive = false;
                 Globals.PickingManager.EnemyPickingActive = false;
                 Globals.FogManager.FogActive = false;
+                Globals.UIActive = false;
                 
                 GameManager.TransferRewards();
                 GameManager.ClearMissionRewards();
