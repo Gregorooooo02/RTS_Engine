@@ -19,6 +19,16 @@ namespace RTS_Engine
         PROP,
         BUILDING
     }
+    
+    public enum UnitType
+    {
+        Cabinet,
+        Candle,
+        Chair,
+        Chandelier,
+        MiniCabinet,
+        Wardrobe,
+    }
 
     public enum ScreenSize
     {

@@ -10,47 +10,103 @@ namespace RTS_Engine;
 public class Emitter : Component
 {
     
-    // public enum UnitType
-    // {
-    //     Knight,
-    //     Civillian,
-    //     Chandelier,
-    //     Chair,
-    //     Umulung
-    // }
-    //
-    // public enum SoundType
-    // {
-    //     Idle,
-    //     Death,
-    //     Attack,
-    //     Hit,
-    //     Move,
-    //     Fight
-    // }
-
+    public UnitType Type;
     public AudioEmitter AudioEmitter;
     public AudioListener Listener;
-    public static SoundEffect Sound;
-    public SoundEffectInstance SoundEffectInstance = Sound.CreateInstance();
+    public static SoundEffect Idle;
+    public static SoundEffect Move;
+    public static SoundEffect Attack;
+    private float volume = 1.0f;
+    
+    public SoundEffectInstance IdleInstance;
+    public SoundEffectInstance MoveInstance;
+    public SoundEffectInstance AttackInstance;
     public override void Initialize()
     {
         Active = true;
         AudioEmitter = new AudioEmitter();
-        Globals.AudioManager.Emitters.Add(AudioEmitter);
         Listener = Globals.Listener;
+        SetType(Type);
+    }
+
+    public Emitter(UnitType type)
+    {
+        Type = type;
     }
     
-    public Emitter(){}
-
-    public void PlaySound()
+    public Emitter()
     {
-        SoundEffectInstance.Play();
+        
+    }
+    
+    private void SetType(UnitType type)
+    {
+        Type = type;
+
+        switch (type)
+        {
+            case UnitType.Cabinet:
+                Idle = AssetManager.CabinetIdle;
+                Move = AssetManager.CabinetMove;
+                Attack = AssetManager.CabinetAttack;
+                break;
+            case UnitType.Chair:
+                Idle = AssetManager.ChairIdle;
+                Move = AssetManager.ChairMove;
+                Attack = AssetManager.ChairAttack;
+                break;
+            case UnitType.Candle:
+                Idle = AssetManager.CandleIdle;
+                Move = AssetManager.CandleMove;
+                Attack = AssetManager.CandleAttack;
+                break;
+            case UnitType.Chandelier:
+                Idle = AssetManager.ChandelierIdle;
+                Move = AssetManager.ChandelierMove;
+                Attack = AssetManager.ChandelierAttack;
+                break;
+            case UnitType.MiniCabinet:
+                Idle = AssetManager.MiniCabinetIdle;
+                Move = AssetManager.MiniCabinetMove;
+                Attack = AssetManager.MiniCabinetAttack;
+                break;
+            case UnitType.Wardrobe:
+                Idle = AssetManager.WardrobeIdle;
+                Move = AssetManager.WardrobeMove;
+                Attack = AssetManager.WardrobeAttack;
+                break;
+            default:
+                Console.WriteLine("No sound effect for this unit type");
+                break;
+        }
+        
+        IdleInstance = Idle.CreateInstance();
+        MoveInstance = Move.CreateInstance();
+        AttackInstance = Attack.CreateInstance();
+        
+    }
+
+    public void PlayIdle()
+    {
+        IdleInstance.Play();
+    }
+    
+    public void PlayMove()
+    {
+        MoveInstance.Play();
+    }
+    
+    public void PlayAttack()
+    {
+        AttackInstance.Play();
     }
     public override void Update()
     {
         Listener = Globals.Listener;
-        SoundEffectInstance.Apply3D(Listener, AudioEmitter);
+        AudioEmitter.Position = ParentObject.Transform.Pos;
+        MoveInstance.Apply3D(Listener, AudioEmitter);
+        IdleInstance.Apply3D(Listener, AudioEmitter);
+        AttackInstance.Apply3D(Listener, AudioEmitter);
     }
     
     public override string ComponentToXmlString()
@@ -81,12 +137,49 @@ public class Emitter : Component
                 ParentObject.RemoveComponent(this);
             }
             
-            System.Numerics.Vector3 pos = AudioEmitter.Position.ToNumerics();
-            if (ImGui.DragFloat3("Position", ref pos,0.1f))
+            ImGui.Text("Change unit type:");
+            
+            if(ImGui.Button("Cabinet"))
+                SetType(UnitType.Cabinet);
+            
+            if(ImGui.Button("Candle"))
+                SetType(UnitType.Candle);
+            
+            if(ImGui.Button("Chair"))
+                SetType(UnitType.Chair);
+            
+            if(ImGui.Button("Chandelier"))
+                SetType(UnitType.Chandelier);
+            
+            if(ImGui.Button("MiniCabinet"))
+                SetType(UnitType.MiniCabinet);
+            
+            if(ImGui.Button("Wardrobe"))
+                SetType(UnitType.Wardrobe);
+            
+            ImGui.Text("Unit type: " + Type);
+            
+            if (ImGui.Button("PlayIdle"))
             {
-                AudioEmitter.Position = pos;
+                IdleInstance.Play();
             }
             
+            if (ImGui.Button("PlayMove"))
+            {
+                MoveInstance.Play();
+            }
+            
+            if (ImGui.Button("PlayAttack"))
+            {
+                AttackInstance.Play();
+            }
+
+            if (ImGui.DragFloat("Volume", ref volume, 0.01f, 0f, 1f))
+            {
+                IdleInstance.Volume = volume;
+                MoveInstance.Volume = volume;
+                AttackInstance.Volume = volume;
+            }
         }
     }
 #endif
