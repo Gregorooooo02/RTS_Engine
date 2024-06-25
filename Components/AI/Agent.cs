@@ -66,6 +66,7 @@ public class Agent : Component
     public int DeathFrame;
 
     private int _meatAward = 10;
+    private float _killAwarenessCost = 2.5f;
     
     public int ActiveClip = 2;
     // **Unit animations**
@@ -140,9 +141,11 @@ public class Agent : Component
                         switch (Type)
                         {
                             case AgentType.Civilian:
+                                GameManager.CurrentAwareness += _killAwarenessCost;
                                 Globals.AgentsManager.ClappedCivilians.Add(this);
                                 break;
                             case AgentType.Soldier:
+                                GameManager.CurrentAwareness += _killAwarenessCost;
                                 Globals.AgentsManager.ClappedSoldiers.Add(this);
                                 break;
                             case AgentType.EnemyBuilding:
@@ -201,6 +204,18 @@ public class Agent : Component
             if (Type != AgentType.EnemyBuilding && AnimatedRenderer != null)
             {
                 AnimatedRenderer.AdditionalVisibility = Globals.FogManager.IsVisible(Position);
+            }
+
+            if (Type == AgentType.Civilian)
+            {
+                WandererData data = (WandererData)AgentData;
+                if (data.Fled)
+                {
+                    Globals.AgentsManager.Enemies.Remove(this);
+                    ParentObject.Active = false;
+                    GameManager.CurrentAwareness += data.FledPenalty;
+                    return;
+                }
             }
         }
         
@@ -526,6 +541,8 @@ public class Agent : Component
         
         builder.Append("<directionOffset>" + DirectionOffset + "</directionOffset>");
         
+        builder.Append("<killAwarenessCost>" + _killAwarenessCost + "</killAwarenessCost>");
+        
         builder.Append("<deathFrame>" + DeathFrame + "</deathFrame>");
         
         builder.Append("<attackFrames>");
@@ -558,6 +575,7 @@ public class Agent : Component
         _heightOffset = float.TryParse(element.Element("heightOffset")?.Value, out float offset) ? offset : 2.0f;
         DirectionOffset = float.TryParse(element.Element("directionOffset")?.Value, out float dir) ? dir : 0.0f;
         AttackingRadius = float.TryParse(element.Element("attackingRadius")?.Value, out float radius) ? radius : 1.0f;
+        _killAwarenessCost = float.TryParse(element.Element("killAwarenessCost")?.Value, out float kill) ? kill : 2.5f;
         _meatAward = int.TryParse(element.Element("meatAward")?.Value, out int meatAward) ? meatAward : 10;
         switch (Type)
         {
@@ -636,7 +654,8 @@ public class Agent : Component
             ImGui.DragFloat("Attacking distance", ref AttackingRadius);
             ImGui.DragFloat("Height offset", ref _heightOffset);
             ImGui.DragInt("Meat reward", ref _meatAward, 1, 0);
-            ImGui.DragFloat("Direction offset", ref DirectionOffset, -180.0f, 180.0f);
+            ImGui.DragFloat("Kill awareness cost", ref _killAwarenessCost,0.1f,0);
+            ImGui.DragFloat("Direction offset", ref DirectionOffset, 1.0f, -180.0f,180.0f);
             ImGui.Checkbox("Agent active", ref Active);
             ImGui.Text("Agent type: " + AgentLayer);
             ImGui.SameLine();

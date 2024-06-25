@@ -33,6 +33,18 @@ public class CivilianFlee : AgentState
         
     }
 
+    private bool CheckForNearbyEnemies(Agent self, float maxRange)
+    {
+        foreach (Agent unit in Globals.AgentsManager.Units)
+        {
+            if (unit.AgentData.Alive && Vector3.Distance(self.Position, unit.Position) <= maxRange)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     public override AgentState UpdateState(Agent agent)
     {
         WandererData data = (WandererData)agent.AgentData;
@@ -41,6 +53,11 @@ public class CivilianFlee : AgentState
         float distance = Vector2.Distance(target,location);
         if ((distance > data.FledDistance || Target == null) && agent.AgentStates.TryGetValue(Agent.State.Wander,out AgentState wander1))
         {
+            //TODO: Check if there are no player units nearby if yes disable themself and increase the meter and if no return to wander
+            if (CheckForNearbyEnemies(agent, data.FledDistance / 2.0f))
+            {
+                data.Fled = true;
+            }
             Target = null;
             data.Alarmed = false;
             return wander1;

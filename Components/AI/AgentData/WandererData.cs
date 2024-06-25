@@ -31,6 +31,8 @@ public class WandererData : AgentData
     public float RepathDelay = 0.5f;
 
     public bool Alarmed = false;
+    public bool Fled = false;
+    public float FledPenalty = 10.0f;
 
     public Agent Target = null;
     public readonly AgentState EntryState = new CivilianStart();
@@ -77,6 +79,8 @@ public class WandererData : AgentData
         builder.Append("<fleeingDistance>" + FleeingDistance + "</fleeingDistance>");
         builder.Append("<repathDelay>" + RepathDelay + "</repathDelay>");
         
+        builder.Append("<fledPenalty>" + FledPenalty + "</fledPenalty>");
+        
         return builder.ToString();
     }
 
@@ -106,6 +110,8 @@ public class WandererData : AgentData
         FledDistance = float.TryParse(element.Element("fledDistance")?.Value, out float fledDistance) ? fledDistance : 50.0f;
         FleeingDistance = float.TryParse(element.Element("fleeingDistance")?.Value, out float fleeingDistance) ? fleeingDistance : 40.0f;
         RepathDelay = float.TryParse(element.Element("repathDelay")?.Value, out float repathDelay) ? repathDelay : 0.5f;
+        
+        FledPenalty = float.TryParse(element.Element("fledPenalty")?.Value, out float fled) ? fled : 10.0f;
     }
 
 #if DEBUG
@@ -134,6 +140,8 @@ public class WandererData : AgentData
         ImGui.DragFloat("Min fled distance", ref FledDistance);
         ImGui.DragFloat("Fleeing distance", ref FleeingDistance);
         ImGui.DragFloat("Repath delay", ref RepathDelay);
+        ImGui.Separator();
+        ImGui.DragFloat("Fled penalty", ref FledPenalty);
     }
 #endif
 }
