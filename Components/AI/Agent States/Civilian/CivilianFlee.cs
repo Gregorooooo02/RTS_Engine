@@ -145,9 +145,9 @@ public class CivilianFlee : AgentState
                     _changeFlee = false;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                 }
-                if (agent.ActiveCivilianClip != 2 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
+                if (agent.ActiveCivilianClip != 1 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
                 {
-                    agent.ActiveCivilianClip = 2;
+                    agent.ActiveCivilianClip = 1;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                     _changeFlee = true;

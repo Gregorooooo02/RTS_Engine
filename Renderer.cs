@@ -15,7 +15,11 @@ public class Renderer
     private readonly Texture2D _blank;
     #endif
     
+#if _WINDOWS
     private static readonly int ShadowMapSize = 4096;
+#else
+    private static readonly int ShadowMapSize = 2048;
+#endif
     private readonly List<Agent> _drawnEnemies = new();
     
     private readonly Effect _shadowMapGenerator;
