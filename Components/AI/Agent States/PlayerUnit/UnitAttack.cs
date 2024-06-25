@@ -224,7 +224,7 @@ public class UnitAttack : AgentState
                     }
                     //TODO: After adding animations remember to modify the if statement below to check for specific animation frame
                     _framesSinceLastAttachFrame++;
-                    if (agent.AttackFrames[_currentAttackIndex] == _framesSinceLastAttachFrame /*_attackTimer >= data.AttackDelay*/)
+                    if (/*agent.AttackFrames[_currentAttackIndex] == _framesSinceLastAttachFrame*/_attackTimer >= data.AttackDelay)
                     {
                         //Successful attack
                         GetNextAgentAttackIndex(agent);
