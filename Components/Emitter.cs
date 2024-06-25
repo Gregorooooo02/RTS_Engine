@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
@@ -13,9 +14,9 @@ public class Emitter : Component
     public UnitType Type;
     public AudioEmitter AudioEmitter;
     public AudioListener Listener;
-    public static SoundEffect Idle;
-    public static SoundEffect Move;
-    public static SoundEffect Attack;
+    private static List<SoundEffect> Idle = new List<SoundEffect>();
+    private static List<SoundEffect> Move = new List<SoundEffect>();
+    private static List<SoundEffect> Attack = new List<SoundEffect>();
     private float volume = 1.0f;
     private float scale = 1.0f;
     
@@ -80,26 +81,34 @@ public class Emitter : Component
                 Console.WriteLine("No sound effect for this unit type");
                 break;
         }
+        IdleInstance = AudioManager.RandomSound(Idle).CreateInstance();
+        MoveInstance = AudioManager.RandomSound(Move).CreateInstance();
+        AttackInstance = AudioManager.RandomSound(Attack).CreateInstance();
         
-        IdleInstance = Idle.CreateInstance();
-        MoveInstance = Move.CreateInstance();
-        AttackInstance = Attack.CreateInstance();
         
     }
 
     public void PlayIdle()
     {
+        IdleInstance = AudioManager.RandomSound(Idle).CreateInstance();
         IdleInstance.Play();
     }
     
     public void PlayMove()
     {
+        MoveInstance = AudioManager.RandomSound(Move).CreateInstance();
         MoveInstance.Play();
     }
     
     public void PlayAttack()
     {
+        AttackInstance = AudioManager.RandomSound(Attack).CreateInstance();
         AttackInstance.Play();
+    }
+    
+    public static void PlayMissionTheme()
+    {
+        AudioManager.PlayMissionTheme();
     }
     public override void Update()
     {
@@ -120,6 +129,12 @@ public class Emitter : Component
         
         builder.Append("<active>" + Active + "</active>");
         
+        builder.Append("<type>" + Type + "</type>");
+        
+        builder.Append("<volume>" + volume + "</volume>");
+        
+        builder.Append("<scale>" + scale + "</scale>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -136,6 +151,11 @@ public class Emitter : Component
             if (ImGui.Button("Remove component"))
             {
                 ParentObject.RemoveComponent(this);
+            }
+            
+            if (ImGui.Button("Play theme"))
+            {
+                PlayMissionTheme();
             }
             
             ImGui.Text("Change unit type:");
@@ -162,17 +182,17 @@ public class Emitter : Component
             
             if (ImGui.Button("PlayIdle"))
             {
-                IdleInstance.Play();
+                PlayIdle();
             }
             
             if (ImGui.Button("PlayMove"))
             {
-                MoveInstance.Play();
+                PlayMove();
             }
             
             if (ImGui.Button("PlayAttack"))
             {
-                AttackInstance.Play();
+                PlayAttack();
             }
 
             if (ImGui.DragFloat("Volume", ref volume, 0.01f, 0f, 1f))
@@ -189,8 +209,12 @@ public class Emitter : Component
         }
     }
 #endif
-    
-    public override void Deserialize(XElement element){}
+
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        Type = Enum.TryParse(element.Element("type")?.Value, out Type) ? Type : UnitType.Cabinet;
+    }
     public override void RemoveComponent()
     {
         ParentObject.RemoveComponent(this);

@@ -98,34 +98,37 @@ public class AssetManager
     //SOUNDS
     
     //CABINET
-    public static SoundEffect CabinetIdle { get; private set; }
-    public static SoundEffect CabinetMove { get; private set; }
-    public static SoundEffect CabinetAttack { get; private set; }
+    public static List<SoundEffect> CabinetIdle = new List<SoundEffect>();
+    public static List<SoundEffect> CabinetMove = new List<SoundEffect>();
+    public static List<SoundEffect> CabinetAttack = new List<SoundEffect>();
     
     //CANDLE
-    public static SoundEffect CandleIdle { get; private set; }
-    public static SoundEffect CandleMove { get; private set; }
-    public static SoundEffect CandleAttack { get; private set; }
+    public static List<SoundEffect> CandleIdle = new List<SoundEffect>();
+    public static List<SoundEffect> CandleMove = new List<SoundEffect>();
+    public static List<SoundEffect> CandleAttack = new List<SoundEffect>();
     
     //CHAIR
-    public static SoundEffect ChairIdle { get; private set; }
-    public static SoundEffect ChairMove { get; private set; }
-    public static SoundEffect ChairAttack { get; private set; }
+    public static List<SoundEffect> ChairIdle = new List<SoundEffect>();
+    public static List<SoundEffect> ChairMove = new List<SoundEffect>();
+    public static List<SoundEffect> ChairAttack = new List<SoundEffect>();
     
     //CHANDELIER
-    public static SoundEffect ChandelierIdle { get; private set; }
-    public static SoundEffect ChandelierMove { get; private set; }
-    public static SoundEffect ChandelierAttack { get; private set; }
+    public static List<SoundEffect> ChandelierIdle = new List<SoundEffect>();
+    public static List<SoundEffect> ChandelierMove = new List<SoundEffect>();
+    public static List<SoundEffect> ChandelierAttack = new List<SoundEffect>();
     
     //MINI CABINET
-    public static SoundEffect MiniCabinetIdle { get; private set; }
-    public static SoundEffect MiniCabinetMove { get; private set; }
-    public static SoundEffect MiniCabinetAttack { get; private set; }
+    public static List<SoundEffect> MiniCabinetIdle = new List<SoundEffect>();
+    public static List<SoundEffect> MiniCabinetMove = new List<SoundEffect>();
+    public static List<SoundEffect> MiniCabinetAttack = new List<SoundEffect>();
     
     //WARDROBE
-    public static SoundEffect WardrobeIdle { get; private set; }
-    public static SoundEffect WardrobeMove { get; private set; }
-    public static SoundEffect WardrobeAttack { get; private set; }
+    public static List<SoundEffect> WardrobeIdle = new List<SoundEffect>();
+    public static List<SoundEffect> WardrobeMove = new List<SoundEffect>();
+    public static List<SoundEffect> WardrobeAttack = new List<SoundEffect>();
+    
+    //THEMES
+    public static SoundEffect MissionTheme { get; private set; }
     
     private class ModelPointer
     {
@@ -220,29 +223,96 @@ public class AssetManager
         DefaultSong = _content.Load<SoundEffect>("amogusDrip");
         
         //SOUNDS
-        CabinetIdle = _content.Load<SoundEffect>("Sounds/Cabinet_Idle");
-        CabinetMove = _content.Load<SoundEffect>("Sounds/Cabinet_Move");
-        CabinetAttack = _content.Load<SoundEffect>("Sounds/Cabinet_Attack");
         
-        CandleIdle = _content.Load<SoundEffect>("Sounds/Candle_Idle");
-        CandleMove = _content.Load<SoundEffect>("Sounds/Candle_Move");
-        CandleAttack = _content.Load<SoundEffect>("Sounds/Candle_Attack");
+        //CABINET
+        CabinetAttack.Add(_content.Load<SoundEffect>("Sounds/cabinet_attack1"));
+        CabinetAttack.Add(_content.Load<SoundEffect>("Sounds/cabinet_attack2"));
+        CabinetAttack.Add(_content.Load<SoundEffect>("Sounds/cabinet_attack3"));
+        CabinetAttack.Add(_content.Load<SoundEffect>("Sounds/cabinet_attack4"));
         
-        ChairIdle = _content.Load<SoundEffect>("Sounds/Chair_Idle");
-        ChairMove = _content.Load<SoundEffect>("Sounds/Chair_Move");
-        ChairAttack = _content.Load<SoundEffect>("Sounds/Chair_Attack");
+        CabinetIdle.Add(_content.Load<SoundEffect>("Sounds/cabinet_idle1"));
+        CabinetIdle.Add(_content.Load<SoundEffect>("Sounds/cabinet_idle2"));
+        CabinetIdle.Add(_content.Load<SoundEffect>("Sounds/cabinet_idle3"));
         
-        ChandelierIdle = _content.Load<SoundEffect>("Sounds/Chandelier_Idle");
-        ChandelierMove = _content.Load<SoundEffect>("Sounds/Chandelier_Move");
-        ChandelierAttack = _content.Load<SoundEffect>("Sounds/Chandelier_Attack");
+        CabinetMove.Add(_content.Load<SoundEffect>("Sounds/cabinet_move1"));
+        CabinetMove.Add(_content.Load<SoundEffect>("Sounds/cabinet_move2"));
+        CabinetMove.Add(_content.Load<SoundEffect>("Sounds/cabinet_move3"));
         
-        MiniCabinetIdle = _content.Load<SoundEffect>("Sounds/MiniCabinet_Idle");
-        MiniCabinetMove = _content.Load<SoundEffect>("Sounds/MiniCabinet_Move");
-        MiniCabinetAttack = _content.Load<SoundEffect>("Sounds/MiniCabinet_Attack");
+        //CANDLE
+        CandleAttack.Add(_content.Load<SoundEffect>("Sounds/candle_attack1"));
+        CandleAttack.Add(_content.Load<SoundEffect>("Sounds/candle_attack2"));
         
-        WardrobeIdle = _content.Load<SoundEffect>("Sounds/Wardrobe_Idle");
-        WardrobeMove = _content.Load<SoundEffect>("Sounds/Wardrobe_Move");
-        WardrobeAttack = _content.Load<SoundEffect>("Sounds/Wardrobe_Attack");
+        CandleIdle.Add(_content.Load<SoundEffect>("Sounds/candle_idle1"));
+        CandleIdle.Add(_content.Load<SoundEffect>("Sounds/candle_idle2"));
+        CandleIdle.Add(_content.Load<SoundEffect>("Sounds/candle_idle3"));
+        CandleIdle.Add(_content.Load<SoundEffect>("Sounds/candle_idle4"));
+        CandleIdle.Add(_content.Load<SoundEffect>("Sounds/candle_idle5"));
+        
+        CandleMove.Add(_content.Load<SoundEffect>("Sounds/candle_move1"));
+        CandleMove.Add(_content.Load<SoundEffect>("Sounds/candle_move2"));
+        CandleMove.Add(_content.Load<SoundEffect>("Sounds/candle_move3"));
+        
+        //CHAIR
+        ChairAttack.Add(_content.Load<SoundEffect>("Sounds/chair_attack1"));
+        ChairAttack.Add(_content.Load<SoundEffect>("Sounds/chair_attack2"));
+        ChairAttack.Add(_content.Load<SoundEffect>("Sounds/chair_attack3"));
+        ChairAttack.Add(_content.Load<SoundEffect>("Sounds/chair_attack4"));
+        ChairAttack.Add(_content.Load<SoundEffect>("Sounds/chair_attack5"));
+        
+        ChairIdle.Add(_content.Load<SoundEffect>("Sounds/chair_idle1"));
+        ChairIdle.Add(_content.Load<SoundEffect>("Sounds/chair_idle2"));
+        ChairIdle.Add(_content.Load<SoundEffect>("Sounds/chair_idle3"));
+        ChairIdle.Add(_content.Load<SoundEffect>("Sounds/chair_idle4"));
+        ChairIdle.Add(_content.Load<SoundEffect>("Sounds/chair_idle5"));
+        
+        ChairMove.Add(_content.Load<SoundEffect>("Sounds/chair_move1"));
+        ChairMove.Add(_content.Load<SoundEffect>("Sounds/chair_move2"));
+        ChairMove.Add(_content.Load<SoundEffect>("Sounds/chair_move3"));
+        ChairMove.Add(_content.Load<SoundEffect>("Sounds/chair_move4"));
+        ChairMove.Add(_content.Load<SoundEffect>("Sounds/chair_move5"));
+        
+        //CHANDELIER
+        ChandelierAttack.Add(_content.Load<SoundEffect>("Sounds/chandelier_attack1"));
+        ChandelierAttack.Add(_content.Load<SoundEffect>("Sounds/chandelier_attack2"));
+        ChandelierAttack.Add(_content.Load<SoundEffect>("Sounds/chandelier_attack3"));
+        
+        ChandelierIdle.Add(_content.Load<SoundEffect>("Sounds/chandelier_idle1"));
+        ChandelierIdle.Add(_content.Load<SoundEffect>("Sounds/chandelier_idle2"));
+        ChandelierIdle.Add(_content.Load<SoundEffect>("Sounds/chandelier_idle3"));
+        ChandelierIdle.Add(_content.Load<SoundEffect>("Sounds/chandelier_idle4"));
+        
+        ChandelierMove.Add(_content.Load<SoundEffect>("Sounds/chandelier_move1"));
+        ChandelierMove.Add(_content.Load<SoundEffect>("Sounds/chandelier_move2"));
+        ChandelierMove.Add(_content.Load<SoundEffect>("Sounds/chandelier_move3"));
+        
+        //MINI CABINET
+        MiniCabinetAttack.Add(_content.Load<SoundEffect>("Sounds/mini_attack1"));
+        MiniCabinetAttack.Add(_content.Load<SoundEffect>("Sounds/mini_attack2"));
+        MiniCabinetAttack.Add(_content.Load<SoundEffect>("Sounds/mini_attack3"));
+        MiniCabinetAttack.Add(_content.Load<SoundEffect>("Sounds/mini_attack4"));
+        
+        MiniCabinetIdle.Add(_content.Load<SoundEffect>("Sounds/mini_idle1"));
+        MiniCabinetIdle.Add(_content.Load<SoundEffect>("Sounds/mini_idle2"));
+        MiniCabinetIdle.Add(_content.Load<SoundEffect>("Sounds/mini_idle3"));
+        
+        MiniCabinetMove.Add(_content.Load<SoundEffect>("Sounds/mini_move1"));
+        MiniCabinetMove.Add(_content.Load<SoundEffect>("Sounds/mini_move2"));
+        MiniCabinetMove.Add(_content.Load<SoundEffect>("Sounds/mini_move3"));
+        
+        //WARDROBE
+        WardrobeAttack.Add(_content.Load<SoundEffect>("Sounds/wardrobe_attack1"));
+        WardrobeAttack.Add(_content.Load<SoundEffect>("Sounds/wardrobe_attack2"));
+        WardrobeAttack.Add(_content.Load<SoundEffect>("Sounds/wardrobe_attack3"));
+        WardrobeAttack.Add(_content.Load<SoundEffect>("Sounds/wardrobe_attack4"));
+        
+        WardrobeIdle.Add(_content.Load<SoundEffect>("Sounds/wardrobe_idle1"));
+        WardrobeIdle.Add(_content.Load<SoundEffect>("Sounds/wardrobe_idle2"));
+        
+        WardrobeMove.Add(_content.Load<SoundEffect>("Sounds/wardrobe_move1"));
+        WardrobeMove.Add(_content.Load<SoundEffect>("Sounds/wardrobe_move2"));
+        WardrobeMove.Add(_content.Load<SoundEffect>("Sounds/wardrobe_move3"));
+        
+        MissionTheme = _content.Load<SoundEffect>("Sounds/Mission_Theme");
         
         //DefaultHeightMaps = new List<Texture2D>
         //{
