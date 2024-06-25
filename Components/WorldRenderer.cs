@@ -679,7 +679,7 @@ public class WorldRenderer : Component
                                 //Place tree
                                 Vector3 position = new Vector3(randomPoint.X,
                                     FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-                                if (IsPositionValid(placedProps, position, minDistance) && Vector2.Distance(unitLocation, randomPoint) < 10.0f)
+                                if (IsPositionValid(placedProps, position, minDistance) && Vector2.Distance(unitLocation, randomPoint) > 10.0f)
                                 {
                                     if (HeightData[(int)position.X, (int)position.Z] > bottomGrass
                                         && HeightData[(int)position.X, (int)position.Z] < upperGrass)
@@ -696,7 +696,7 @@ public class WorldRenderer : Component
                                 //Place rock
                                 Vector3 position = new Vector3(randomPoint.X,
                                     FinalHeightData[(int)randomPoint.X, (int)randomPoint.Y] + 8, randomPoint.Y);
-                                if (IsPositionValid(placedProps, position, minDistance) && Vector2.Distance(unitLocation, randomPoint) < 10.0f)
+                                if (IsPositionValid(placedProps, position, minDistance) && Vector2.Distance(unitLocation, randomPoint) > 10.0f)
                                 {
                                     if (HeightData[(int)position.X, (int)position.Z] < upperGrass * 1.2f)
                                     {  
@@ -724,11 +724,13 @@ public class WorldRenderer : Component
                 }
             }
 
+            
             GameObject civilians = new GameObject()
             {
                 Name = "Civilians"
             };
-            int numberOfCivilians = random.Next(5, 10);
+            int numberOfCivilians = random.Next(8, 15);
+            Console.WriteLine("Placing " + numberOfCivilians +" random civilians");
             for (int i = 0; i < numberOfCivilians; i++)
             {
 #if _WINDOWS
@@ -736,7 +738,8 @@ public class WorldRenderer : Component
 #else
                 civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
-                PlaceCivilian(civilians, upperGrass, unitLocation);
+                Console.WriteLine("Placing civilian " + (i + 1));
+                PlaceCivilian(civilians.Children.Last(), upperGrass, bottomGrass, unitLocation);
             }
             ParentObject.AddChildObject(civilians);
 
@@ -941,7 +944,7 @@ public class WorldRenderer : Component
 #else
                 civilians.LoadPrefab("Prefabs/Civilian.xml");
 #endif
-                PlaceCivilian(civilians, upperGrass, Unitlocation);
+                PlaceCivilian(civilians.Children.Last(), upperGrass, bottomGrass, Unitlocation);
             }
             ParentObject.AddChildObject(civilians);
         }
@@ -949,26 +952,24 @@ public class WorldRenderer : Component
         return true;
     }
 
-    private void PlaceCivilian(GameObject civilian, float maxHeight, Vector2 playerStartLocation)
+    private void PlaceCivilian(GameObject civilian, float maxHeight, float minHeight, Vector2 playerStartLocation)
     {
         Random random = new();
 
         do
         {
-            int x = random.Next(1, MapNodes.GetLength(0) - 1);
-            int y = random.Next(1, MapNodes.GetLength(1) - 1);
+            int x = random.Next(5, MapNodes.GetLength(0) - 5);
+            int y = random.Next(5, MapNodes.GetLength(1) - 5);
 
-            if (MapNodes[x, y].Available && MapNodes[x,y].Height < maxHeight && Vector2.Distance(playerStartLocation, new Vector2(x,y)) > 60.0f)
+            if (MapNodes[x, y].Available && MapNodes[x,y].Height < maxHeight && MapNodes[x, y].Available && MapNodes[x,y].Height > minHeight && Vector2.Distance(playerStartLocation, new Vector2(x,y)) > 60.0f)
             {
                 Vector3 newPos = civilian.Transform.Pos + new Vector3(x, 0, y);
                 newPos.Y += PickingManager.InterpolateWorldHeight(new Vector2(x, y), this);
                 civilian.Transform.SetLocalPosition(newPos);
                 return;
             }
+            maxHeight *= 1.1f;
         } while (true);
-        
-
-
     }
     
     private void CorrectObjectPosition(GameObject gameObject, Vector2 offset)
