@@ -46,15 +46,15 @@
   <childObjects>
     <object>
       <name>Background</name>
-      <active>True</active>
+      <active>False</active>
       <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>589,34845</x>
-            <y>354,1468</y>
+            <x>707,31226</x>
+            <y>390,73627</y>
             <z>0,1</z>
           </position>
           <rotation>
@@ -87,15 +87,15 @@
     </object>
     <object>
       <name>Filling</name>
-      <active>True</active>
+      <active>False</active>
       <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>590,54846</x>
-            <y>356,84677</y>
+            <x>708,51227</x>
+            <y>393,43628</y>
             <z>0</z>
           </position>
           <rotation>
@@ -104,7 +104,7 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,98</x>
+            <x>0,9</x>
             <y>1</y>
             <z>1</z>
           </scale>
@@ -128,15 +128,15 @@
     </object>
     <object>
       <name>Heart</name>
-      <active>True</active>
+      <active>False</active>
       <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>563,64844</x>
-            <y>352,44678</y>
+            <x>681,61224</x>
+            <y>389,0363</y>
             <z>0</z>
           </position>
           <rotation>

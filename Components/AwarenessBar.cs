@@ -14,9 +14,11 @@ public class AwarenessBar : Component
     private GameObject _barBck;
     private GameObject _barFill;
     private SpiteRenderer _barFillSpite;
+    private GameObject _eyeIcon = null;
 
     private Vector3 _fillingOffset;
     private Vector3 _barOffset;
+    private Vector3 _eyeOffset;
 
     private SoldierData _soldierData;
     private WandererData _wandererData;
@@ -29,6 +31,7 @@ public class AwarenessBar : Component
         _agent ??= ParentObject.Parent.GetComponent<Agent>();
         _barBck ??= ParentObject.Children[0];
         _barFill ??= ParentObject.Children[1];
+        if(ParentObject.Children.Count > 2) _eyeIcon ??= ParentObject.Children[2];
         if (_agent != null && _wandererData == null && _soldierData == null)
         {
             if (_agent.Type == Agent.AgentType.Civilian)
@@ -48,7 +51,7 @@ public class AwarenessBar : Component
             _barFillSpite = _barFill.GetComponent<SpiteRenderer>();
         }
 
-        if (_agent != null && _barBck != null && _barFill != null)
+        if (_agent != null && _barBck != null && _barFill != null && _eyeIcon != null)
         {
             if (_isSoldier && _soldierData != null)
             {
@@ -56,15 +59,18 @@ public class AwarenessBar : Component
                 {
                     _barBck.Active = false;
                     _barFill.Active = false;
+                    _eyeIcon.Active = false;
                     return;
                 }
                 _barBck.Active = true;
                 _barFill.Active = true;
+                _eyeIcon.Active = true;
                 Vector3? newPos = PickingManager.CalculatePositionOnScreen(_agent.Position);
                 if (newPos.HasValue)
                 {
                     _barBck.Transform.SetLocalPosition(newPos.Value + _barOffset);
                     _barFill.Transform.SetLocalPosition(newPos.Value + _fillingOffset);
+                    _eyeIcon.Transform.SetLocalPosition(newPos.Value + _eyeOffset);
                     float ratio = _soldierData.Awareness / _soldierData.AwarenessThreshold;
                     _barFill.Transform.SetLocalScaleX(MathF.Min(ratio, 1.0f) * _barFill.Transform.Scl.Z);
                     _barFillSpite.Color = new Color(1.0f, 1.0f - ratio, 1.0f - ratio);
@@ -73,6 +79,7 @@ public class AwarenessBar : Component
                 {
                     _barBck.Active = false;
                     _barFill.Active = false;
+                    _eyeIcon.Active = false;
                 }
                 
             }
@@ -82,15 +89,18 @@ public class AwarenessBar : Component
                 {
                     _barBck.Active = false;
                     _barFill.Active = false;
+                    _eyeIcon.Active = false;
                     return;
                 }
                 _barBck.Active = true;
                 _barFill.Active = true;
+                _eyeIcon.Active = true;
                 Vector3? newPos = PickingManager.CalculatePositionOnScreen(_agent.Position);
                 if (newPos.HasValue)
                 {
                     _barBck.Transform.SetLocalPosition(newPos.Value + _barOffset);
                     _barFill.Transform.SetLocalPosition(newPos.Value + _fillingOffset);
+                    _eyeIcon.Transform.SetLocalPosition(newPos.Value + _eyeOffset);
                     float ratio = _wandererData.Awareness / _wandererData.AwarenessThreshold;
                     _barFill.Transform.SetLocalScaleX(MathF.Min(ratio, 1.0f) * _barFill.Transform.Scl.Z);
                     _barFillSpite.Color = new Color(1.0f, 1.0f - ratio * 0.3f, 1.0f - ratio);
@@ -99,6 +109,7 @@ public class AwarenessBar : Component
                 {
                     _barBck.Active = false;
                     _barFill.Active = false;
+                    _eyeIcon.Active = false;
                 }
             }
             
@@ -132,6 +143,12 @@ public class AwarenessBar : Component
         builder.Append("<z>" + _fillingOffset.Z + "</z>");
         builder.Append("</fillingOffset>");
         
+        builder.Append("<eyeOffset>");
+        builder.Append("<x>" + _eyeOffset.X + "</x>");
+        builder.Append("<y>" + _eyeOffset.Y + "</y>");
+        builder.Append("<z>" + _eyeOffset.Z + "</z>");
+        builder.Append("</eyeOffset>");
+        
         builder.Append("</component>");
         return builder.ToString();
     }
@@ -143,6 +160,9 @@ public class AwarenessBar : Component
         _barOffset = new Vector3(float.Parse(offsetBar.Element("x").Value), float.Parse(offsetBar.Element("y").Value), float.Parse(offsetBar.Element("z").Value));
         XElement offsetFill = element.Element("fillingOffset");
         _fillingOffset = new Vector3(float.Parse(offsetFill.Element("x").Value),float.Parse(offsetFill.Element("y").Value),float.Parse(offsetFill.Element("z").Value));
+        XElement offsetEye = element.Element("eyeOffset");
+        if(offsetEye != null)_eyeOffset = new Vector3(float.Parse(offsetEye.Element("x").Value),float.Parse(offsetEye.Element("y").Value),float.Parse(offsetEye.Element("z").Value));
+
     }
 
     public override void RemoveComponent()
@@ -165,6 +185,11 @@ public class AwarenessBar : Component
             if (ImGui.DragFloat3("Filling offset", ref fill,0.1f))
             {
                 _fillingOffset = fill;
+            }
+            System.Numerics.Vector3 heart = _eyeOffset.ToNumerics();
+            if (ImGui.DragFloat3("Eye offset", ref heart,0.1f))
+            {
+                _eyeOffset = heart;
             }
             if (ImGui.Button("Remove component"))
             {

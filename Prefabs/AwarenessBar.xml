@@ -2,6 +2,7 @@
 <rootObject>
   <name>AwarenessBar</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -28,27 +29,33 @@
       <barOffset>
         <x>-43,2</x>
         <y>-92,9</y>
-        <z>0</z>
+        <z>0,2</z>
       </barOffset>
       <fillingOffset>
         <x>-42,7</x>
         <y>-91,1</y>
         <z>0</z>
       </fillingOffset>
+      <eyeOffset>
+        <x>-69,9</x>
+        <y>-94,7</y>
+        <z>0</z>
+      </eyeOffset>
     </component>
   </components>
   <childObjects>
     <object>
       <name>Background</name>
-      <active>True</active>
+      <active>False</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>636,7342</x>
-            <y>341,86725</y>
-            <z>0</z>
+            <x>706,91223</x>
+            <y>365,0363</y>
+            <z>0,2</z>
           </position>
           <rotation>
             <x>0</x>
@@ -80,14 +87,15 @@
     </object>
     <object>
       <name>Filling</name>
-      <active>True</active>
+      <active>False</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>637,2342</x>
-            <y>343,66724</y>
+            <x>707,41223</x>
+            <y>366,83627</y>
             <z>0</z>
           </position>
           <rotation>
@@ -96,7 +104,7 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>1</x>
+            <x>0,6766667</x>
             <y>1</y>
             <z>1</z>
           </scale>
@@ -108,8 +116,49 @@
           <sprite>UI/AwerenessBarWhiteSmall</sprite>
           <color>
             <r>255</r>
-            <g>142</g>
-            <b>0</b>
+            <g>203</g>
+            <b>82</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Eye</name>
+      <active>False</active>
+      <cascadingActive>True</cascadingActive>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>680,2122</x>
+            <y>363,23627</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>0,03</x>
+            <y>0,03</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>SpiteRenderer</type>
+          <active>True</active>
+          <useLocal>True</useLocal>
+          <sprite>UI/eye</sprite>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
             <a>255</a>
           </color>
           <screenSizeX>1600</screenSizeX>

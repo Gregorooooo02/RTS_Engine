@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
-  <name>Mark</name>
+  <name>UnitVisibility</name>
   <active>True</active>
   <cascadingActive>True</cascadingActive>
   <components>
@@ -8,9 +8,9 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>680,4734</x>
-        <y>351,1177</y>
-        <z>0,3</z>
+        <x>609,18823</x>
+        <y>310,14044</y>
+        <z>0</z>
       </position>
       <rotation>
         <x>0</x>
@@ -18,8 +18,8 @@
         <z>0</z>
       </rotation>
       <scale>
-        <x>0,08</x>
-        <y>0,07</y>
+        <x>0,06</x>
+        <y>0,06</y>
         <z>1</z>
       </scale>
     </component>
@@ -27,23 +27,23 @@
       <type>SpiteRenderer</type>
       <active>True</active>
       <useLocal>True</useLocal>
-      <sprite>UI/exclamationMark</sprite>
+      <sprite>UI/eyeNon</sprite>
       <color>
         <r>255</r>
-        <g>0</g>
-        <b>0</b>
+        <g>255</g>
+        <b>255</b>
         <a>255</a>
       </color>
       <screenSizeX>1600</screenSizeX>
       <screenSizeY>900</screenSizeY>
     </component>
     <component>
-      <type>AlertnessMark</type>
+      <type>HiddenIndicator</type>
       <active>True</active>
       <markOffset>
-        <x>-35,7</x>
-        <y>-124,6</y>
-        <z>0,3</z>
+        <x>-22,8</x>
+        <y>-53,5</y>
+        <z>0</z>
       </markOffset>
     </component>
   </components>
