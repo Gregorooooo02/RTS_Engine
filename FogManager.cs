@@ -28,7 +28,7 @@ public class FogManager
     #endregion
 
     #region RenderTargets
-
+    
     public readonly RenderTarget2D PermanentMaskTarget = new(Globals.GraphicsDevice, TextureSize, TextureSize, false,
         SurfaceFormat.Single, DepthFormat.Depth16,0,RenderTargetUsage.PreserveContents);
     public readonly RenderTarget2D VisibilityMaskTarget = new(Globals.GraphicsDevice, TextureSize, TextureSize, false,
@@ -136,6 +136,15 @@ public class FogManager
     private void MakeHole(Texture2D texture, Point position, int radius, Color[] color)
     {
         int px, nx, py, ny, distance;
+        Color[] black = { new Color(0,0,0,0) };
+        for (int i = 0; i < texture.Width; i++)
+        {
+            for (int j = 0; j < texture.Height; j++)
+            {
+                texture.SetData(0,new Rectangle(i,j,1,1),black,0,1);
+            }
+        }
+        
         for (int i = 0; i < radius; i++)
         {
             distance = (int)MathF.Round(MathF.Sqrt((float)radius * radius - i * i));
