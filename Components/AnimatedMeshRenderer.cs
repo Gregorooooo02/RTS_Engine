@@ -132,7 +132,7 @@ public class AnimatedMeshRenderer : Component
             ImGui.Checkbox("Animated Mesh Active", ref Active);
             ImGui.Checkbox("Apply fog", ref ApplyFog);
             ImGui.Text("Additional visibility: " + AdditionalVisibility);
-            ImGui.Text("Current animated mesh: " + _skinnedModel);
+            ImGui.Text("Current animated mesh: " + _skinnedModel.ModelPath);
 
             var animationControllerSpeed = _skinnedModel.AnimationController.Speed;
             ImGui.DragFloat("Animation speed", ref animationControllerSpeed, 0.01f, 0.01f, 10f);
