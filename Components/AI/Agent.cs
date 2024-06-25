@@ -78,9 +78,10 @@ public class Agent : Component
 
     public int ActiveCivilianClip = 1;
     // **Civilian animations**
-    // Flee - 2
-    // Idle - 3
-    // Wander - 4
+    // Death - 0
+    // Flee - 1
+    // Idle - 2
+    // Wander - 3
 
     private bool _ChangeDeath = false;
 

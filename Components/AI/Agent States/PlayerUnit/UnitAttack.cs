@@ -104,7 +104,7 @@ public class UnitAttack : AgentState
                 if (_SearchNearby)
                 {
                     _SearchNearby = false;
-                    Point? newPoint = Pathfinding.GetFirstNearbyFreePoint(target, agent.ID);
+                    Point? newPoint = Pathfinding.GetFirstNearbyFreePoint(target, agent.ID, 36);
                     if (newPoint.HasValue)
                     {
                         goal = new Node(newPoint.Value, null, 1);

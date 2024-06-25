@@ -224,7 +224,7 @@ public class SoldierAttack : AgentState
                 
                 System.Threading.Tasks.Task.Factory.StartNew(() =>
                 { 
-                    end = Pathfinding.CalculatePath(goal, start, true, agent.ID);
+                    end = Pathfinding.CalculatePath(goal, start, false, agent.ID);
                     _pathingCompleted = true;
                 });
                 _pathingScheduled = true;

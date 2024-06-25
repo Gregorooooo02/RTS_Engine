@@ -20,7 +20,7 @@ public class AgentsManager
     
     public List<Agent> SelectedUnits = new();
     
-    public Vector3 UiOffset = new(90.0f, 0.0f, 0.0f);
+    public Vector3 UiOffset = new(120.0f, 0.0f, 0.0f);
     public Vector3 BackgroundOffset = new(0.0f, 0.0f, 0.1f);
 
     private readonly Vector3 _iconsStart = new Vector3(275, 770 , 0);

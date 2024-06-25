@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>Barrel</name>
+  <active>True</active>
+  <cascadingActive>True</cascadingActive>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>7,2</x>
+        <y>0,7</y>
+        <z>4,5</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>0,5</x>
+        <y>0,5</y>
+        <z>0,5</z>
+      </scale>
+    </component>
+    <component>
+      <type>MeshRenderer</type>
+      <active>True</active>
+      <applyFog>True</applyFog>
+      <model>
+        <path>Env/barrel</path>
+        <technique>PBR</technique>
+      </model>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>

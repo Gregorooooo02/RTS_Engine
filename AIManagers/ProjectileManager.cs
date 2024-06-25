@@ -25,10 +25,10 @@ public class ProjectileManager
         switch (type)
         {
             case ProjectileType.Arrow:
-                meshRenderer.LoadModel("");
+                meshRenderer.LoadModel("arrowProjectile");
                 break;
             case ProjectileType.Fireball:
-                meshRenderer.LoadModel("");
+                meshRenderer.LoadModel("fireballProjectile");
                 break;
             case ProjectileType.Cupboard:
                 meshRenderer.LoadModel("cupboardProjectile");
