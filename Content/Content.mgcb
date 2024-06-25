@@ -2529,6 +2529,63 @@
 /processorParam:DebugMode=Auto
 /build:PBR_Shader.fx
 
+#begin peasantSkinned/albedo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/albedo.png
+
+#begin peasantSkinned/ao.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/ao.png
+
+#begin peasantSkinned/normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/normal.png
+
+#begin peasantSkinned/peasantSkinned.fbx
+/importer:FbxImporter
+/processor:SkinnedModelProcessor
+/processorParam:BakeMeshTransforms=True
+/processorParam:GenerateTangentFrame=False
+/processorParam:ModelRotate=0, 0, 0
+/processorParam:ModelScale=1
+/build:peasantSkinned/peasantSkinned.fbx
+
+#begin peasantSkinned/roughness.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:peasantSkinned/roughness.png
+
 #begin ShadowMaps.fx
 /importer:EffectImporter
 /processor:EffectProcessor

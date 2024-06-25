@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
-  <name>Minion</name>
+  <name>BabyCupboard</name>
   <active>True</active>
   <cascadingActive>True</cascadingActive>
   <components>
@@ -14,13 +14,13 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>136,22536</y>
+        <y>78,85452</y>
         <z>0</z>
       </rotation>
       <scale>
-        <x>1</x>
-        <y>1</y>
-        <z>1</z>
+        <x>1,2</x>
+        <y>1,2</y>
+        <z>1,2</z>
       </scale>
     </component>
     <component>
@@ -31,30 +31,29 @@
       <separationDistance>1</separationDistance>
       <attackingRadius>1,2</attackingRadius>
       <meatAward>0</meatAward>
-      <heightOffset>4</heightOffset>
-      <directionOffset>90</directionOffset>
-      <deathFrame>0</deathFrame>
+      <heightOffset>2</heightOffset>
+      <directionOffset>-90</directionOffset>
+      <deathFrame>30</deathFrame>
       <attackFrames>
-        <count>2</count>
-        <f0>25</f0>
-        <f1>15</f1>
+        <count>1</count>
+        <f0>10</f0>
       </attackFrames>
       <agentData>
-        <hp>100</hp>
-        <maxHp>100</maxHp>
+        <hp>120</hp>
+        <maxHp>120</maxHp>
         <alive>True</alive>
         <presence>5</presence>
-        <walkingSpeed>14</walkingSpeed>
-        <damage>7</damage>
-        <attackDelay>0,8</attackDelay>
-        <minAttackRange>40</minAttackRange>
-        <maxAttackRange>50</maxAttackRange>
+        <walkingSpeed>10,5</walkingSpeed>
+        <damage>12</damage>
+        <attackDelay>1</attackDelay>
+        <minAttackRange>5</minAttackRange>
+        <maxAttackRange>25</maxAttackRange>
         <minPointDistance>0,5</minPointDistance>
         <repathDelay>0,5</repathDelay>
         <isRanged>True</isRanged>
         <projectileSpeed>25</projectileSpeed>
         <projectileMinDistance>1</projectileMinDistance>
-        <projectileType>Arrow</projectileType>
+        <projectileType>Cupboard</projectileType>
         <hideTime>2</hideTime>
       </agentData>
     </component>
@@ -63,7 +62,7 @@
       <active>True</active>
       <applyFog>True</applyFog>
       <animatedModel>
-        <path>minion</path>
+        <path>babyCupboardAnimation</path>
         <technique>PBR_Skinned</technique>
         <speed>1</speed>
         <currentClip>2</currentClip>
@@ -82,7 +81,7 @@
       <type>FogReveler</type>
       <active>True</active>
       <oneUse>False</oneUse>
-      <revealRadius>20</revealRadius>
+      <revealRadius>22</revealRadius>
     </component>
   </components>
   <childObjects>
@@ -135,7 +134,7 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>452</x>
+                <x>272</x>
                 <y>740</y>
                 <z>0,1</z>
               </position>
@@ -175,7 +174,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>452</x>
+                    <x>272</x>
                     <y>740</y>
                     <z>0</z>
                   </position>
@@ -218,7 +217,7 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>455</x>
+                <x>275</x>
                 <y>770</y>
                 <z>0</z>
               </position>
@@ -237,7 +236,7 @@
               <type>SpiteRenderer</type>
               <active>True</active>
               <useLocal>True</useLocal>
-              <sprite>UI/Units/candleNormal</sprite>
+              <sprite>UI/Units/smallshelfNormal</sprite>
               <color>
                 <r>255</r>
                 <g>255</g>
@@ -315,8 +314,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>893,8656</x>
-                <y>433,94464</y>
+                <x>624,9683</x>
+                <y>443,1894</y>
                 <z>0,1</z>
               </position>
               <rotation>
@@ -325,9 +324,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,81600004</x>
-                <y>1,14</y>
-                <z>1,2</z>
+                <x>0,68</x>
+                <y>0,95</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -341,8 +340,8 @@
                 <b>255</b>
                 <a>255</a>
               </color>
-              <screenSizeX>1920</screenSizeX>
-              <screenSizeY>1080</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
@@ -356,8 +355,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>895,0656</x>
-                <y>436,64465</y>
+                <x>626,16833</x>
+                <y>445,8894</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -366,9 +365,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1,1880001</x>
-                <y>1,2</y>
-                <z>1,2</z>
+                <x>0,6666667</x>
+                <y>1</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -382,8 +381,8 @@
                 <b>255</b>
                 <a>255</a>
               </color>
-              <screenSizeX>1920</screenSizeX>
-              <screenSizeY>1080</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
@@ -399,8 +398,8 @@
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>653,93976</x>
-            <y>395,75482</y>
+            <x>510,85944</x>
+            <y>552,8516</y>
             <z>0</z>
           </position>
           <rotation>

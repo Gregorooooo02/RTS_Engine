@@ -832,7 +832,7 @@ public class WorldRenderer : Component
                                         name = "Chair.xml";
                                         break;
                                     case 1:
-                                        name = "Chair.xml";
+                                        name = "Cupboard.xml";
                                        break;
                                    case 2:
                                        name = "Minion.xml";

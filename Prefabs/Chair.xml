@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rootObject>
-  <name>Chair</name>
+  <name>Chair1</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -28,24 +29,25 @@
       <agentType>PlayerUnit</agentType>
       <agentLayer>PLAYER</agentLayer>
       <separationDistance>1</separationDistance>
-      <attackingRadius>1</attackingRadius>
+      <attackingRadius>2</attackingRadius>
+      <meatAward>0</meatAward>
       <heightOffset>1,7</heightOffset>
       <directionOffset>0</directionOffset>
       <deathFrame>30</deathFrame>
       <attackFrames>
         <count>1</count>
-        <f0>15</f0>
+        <f0>10</f0>
       </attackFrames>
       <agentData>
-        <hp>100</hp>
-        <maxHp>100</maxHp>
+        <hp>150</hp>
+        <maxHp>150</maxHp>
         <alive>True</alive>
         <presence>5</presence>
         <walkingSpeed>14</walkingSpeed>
         <damage>10</damage>
         <attackDelay>0,8</attackDelay>
-        <minAttackRange>1,5</minAttackRange>
-        <maxAttackRange>2,5</maxAttackRange>
+        <minAttackRange>1</minAttackRange>
+        <maxAttackRange>5</maxAttackRange>
         <minPointDistance>0,5</minPointDistance>
         <repathDelay>0,5</repathDelay>
         <isRanged>False</isRanged>
@@ -63,11 +65,11 @@
         <path>krzesloSkinned</path>
         <technique>PBR_Skinned</technique>
         <speed>1</speed>
-        <currentClip>2</currentClip>
+        <currentClip>3</currentClip>
         <translationInterpolation>Linear</translationInterpolation>
         <orientationInterpolation>Linear</orientationInterpolation>
         <scaleInterpolation>Linear</scaleInterpolation>
-        <loop>True</loop>
+        <loop>False</loop>
       </animatedModel>
     </component>
     <component>
@@ -78,13 +80,15 @@
     <component>
       <type>FogReveler</type>
       <active>True</active>
-      <revealRadius>14</revealRadius>
+      <oneUse>False</oneUse>
+      <revealRadius>16</revealRadius>
     </component>
   </components>
   <childObjects>
     <object>
       <name>UI</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -124,14 +128,15 @@
         <object>
           <name>HP</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>542</x>
-                <y>740,00006</y>
-                <z>0,3</z>
+                <x>272</x>
+                <y>740</y>
+                <z>0,1</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -163,13 +168,14 @@
             <object>
               <name>CurrentHP</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>542</x>
-                    <y>740,00006</y>
+                    <x>272</x>
+                    <y>740</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -205,13 +211,14 @@
         <object>
           <name>Icon</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>545</x>
-                <y>770,00006</y>
+                <x>275</x>
+                <y>770</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -243,6 +250,9 @@
               <type>Button</type>
               <active>True</active>
               <portrait>True</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>False</isWindowTrigger>
+              <unitID>0</unitID>
               <action>EXIT</action>
             </component>
           </components>
@@ -253,6 +263,7 @@
     <object>
       <name>Healthbar</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -286,19 +297,25 @@
             <y>-64,5</y>
             <z>0</z>
           </fillingOffset>
+          <heartOffset>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </heartOffset>
         </component>
       </components>
       <childObjects>
         <object>
           <name>Background</name>
           <active>False</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>893,8656</x>
-                <y>433,94464</y>
+                <x>624,9683</x>
+                <y>443,1894</y>
                 <z>0,1</z>
               </position>
               <rotation>
@@ -307,9 +324,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,81600004</x>
-                <y>1,14</y>
-                <z>1,2</z>
+                <x>0,68</x>
+                <y>0,95</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -323,8 +340,8 @@
                 <b>255</b>
                 <a>255</a>
               </color>
-              <screenSizeX>1920</screenSizeX>
-              <screenSizeY>1080</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
@@ -332,13 +349,14 @@
         <object>
           <name>Filling</name>
           <active>False</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>895,0656</x>
-                <y>436,64465</y>
+                <x>626,16833</x>
+                <y>445,8894</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -347,9 +365,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1,1880001</x>
-                <y>1,2</y>
-                <z>1,2</z>
+                <x>0,6666667</x>
+                <y>1</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -363,13 +381,63 @@
                 <b>255</b>
                 <a>255</a>
               </color>
-              <screenSizeX>1920</screenSizeX>
-              <screenSizeY>1080</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
         </object>
       </childObjects>
+    </object>
+    <object>
+      <name>UnitVisibility</name>
+      <active>True</active>
+      <cascadingActive>True</cascadingActive>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>737,10767</x>
+            <y>465,07202</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>0,06</x>
+            <y>0,06</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>SpiteRenderer</type>
+          <active>True</active>
+          <useLocal>True</useLocal>
+          <sprite>UI/eyeNon</sprite>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+        <component>
+          <type>HiddenIndicator</type>
+          <active>True</active>
+          <markOffset>
+            <x>-22,8</x>
+            <y>-53,5</y>
+            <z>0</z>
+          </markOffset>
+        </component>
+      </components>
+      <childObjects></childObjects>
     </object>
   </childObjects>
 </rootObject>
