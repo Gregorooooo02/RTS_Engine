@@ -17,6 +17,7 @@ public class Emitter : Component
     public static SoundEffect Move;
     public static SoundEffect Attack;
     private float volume = 1.0f;
+    private float scale = 1.0f;
     
     public SoundEffectInstance IdleInstance;
     public SoundEffectInstance MoveInstance;
@@ -179,6 +180,11 @@ public class Emitter : Component
                 IdleInstance.Volume = volume;
                 MoveInstance.Volume = volume;
                 AttackInstance.Volume = volume;
+            }
+            
+            if (ImGui.DragFloat("Distance Scale", ref scale, 0.1f, 0f, 100f))
+            {
+                SoundEffect.DistanceScale = scale;
             }
         }
     }
