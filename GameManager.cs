@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using ImGuiNET;
+using Microsoft.Xna.Framework;
 
 namespace RTS_Engine;
 
@@ -31,6 +33,11 @@ public static class GameManager
         PuzzleNumber = 0;
     }
 
+    public static void ChangeAwareness(float change)
+    {
+        CurrentAwareness = MathHelper.Clamp(CurrentAwareness + change, 0, AwarenessLimit);
+    }
+    
     public static void AddMissionMeat(int amount)
     {
         MissionMeat += amount;
