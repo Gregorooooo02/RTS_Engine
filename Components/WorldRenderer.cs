@@ -618,7 +618,7 @@ public class WorldRenderer : Component
 #if _WINDOWS
                     villages.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialVillage.xml");
 #else
-                    villages.LoadPrefab("Prefabs/TutorialVillage.xml");
+                    villages.LoadPrefab("Prefabs/Village1.xml");
 #endif
                     PlaceVillage(location,villages.Children.Last());
                     voronoiRegions.Remove(site);

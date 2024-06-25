@@ -61,18 +61,18 @@
               <active>True</active>
               <position>
                 <x>8,2</x>
-                <y>1</y>
+                <y>2</y>
                 <z>-2</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>11</y>
+                <y>-140</y>
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,5</x>
+                <y>0,5</y>
+                <z>0,5</z>
               </scale>
             </component>
             <component>
@@ -80,7 +80,7 @@
               <active>True</active>
               <applyFog>True</applyFog>
               <model>
-                <path>defaultModel</path>
+                <path>domludzi</path>
                 <technique>PBR</technique>
               </model>
             </component>
@@ -91,6 +91,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>5,75</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
               <deathFrame>0</deathFrame>
@@ -106,7 +107,7 @@
             <component>
               <type>Pickable</type>
               <active>True</active>
-              <pickableType>EnemyBuilding</pickableType>
+              <pickableType>Enemy</pickableType>
             </component>
           </components>
           <childObjects>
@@ -147,6 +148,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -245,19 +251,19 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>2,4</x>
-                <y>1</y>
+                <x>0,1</x>
+                <y>1,5</y>
                 <z>-9,8</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>46</y>
+                <y>-75</y>
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,4</x>
+                <y>0,4</y>
+                <z>0,4</z>
               </scale>
             </component>
             <component>
@@ -265,7 +271,7 @@
               <active>True</active>
               <applyFog>True</applyFog>
               <model>
-                <path>defaultModel</path>
+                <path>domludzi</path>
                 <technique>PBR</technique>
               </model>
             </component>
@@ -276,6 +282,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>5,75</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
               <deathFrame>0</deathFrame>
@@ -291,7 +298,7 @@
             <component>
               <type>Pickable</type>
               <active>True</active>
-              <pickableType>EnemyBuilding</pickableType>
+              <pickableType>Enemy</pickableType>
             </component>
           </components>
           <childObjects>
@@ -332,6 +339,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -431,18 +443,18 @@
               <active>True</active>
               <position>
                 <x>-2,6</x>
-                <y>1</y>
+                <y>1,6</y>
                 <z>8,3</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>240</y>
+                <y>128</y>
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,45</x>
+                <y>0,45</y>
+                <z>0,45</z>
               </scale>
             </component>
             <component>
@@ -450,7 +462,7 @@
               <active>True</active>
               <applyFog>True</applyFog>
               <model>
-                <path>defaultModel</path>
+                <path>domludzi</path>
                 <technique>PBR</technique>
               </model>
             </component>
@@ -461,6 +473,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>5,75</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
               <deathFrame>0</deathFrame>
@@ -476,7 +489,7 @@
             <component>
               <type>Pickable</type>
               <active>True</active>
-              <pickableType>EnemyBuilding</pickableType>
+              <pickableType>Enemy</pickableType>
             </component>
           </components>
           <childObjects>
@@ -517,6 +530,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -615,19 +633,19 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>-17,3</x>
-                <y>1</y>
+                <x>-11,8</x>
+                <y>1,1</y>
                 <z>3,3</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>202</y>
+                <y>13</y>
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1</x>
-                <y>1</y>
-                <z>1</z>
+                <x>0,5</x>
+                <y>0,5</y>
+                <z>0,5</z>
               </scale>
             </component>
             <component>
@@ -635,7 +653,7 @@
               <active>True</active>
               <applyFog>True</applyFog>
               <model>
-                <path>defaultModel</path>
+                <path>Env/props/namiot</path>
                 <technique>PBR</technique>
               </model>
             </component>
@@ -646,6 +664,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>5,75</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
               <deathFrame>0</deathFrame>
@@ -661,7 +680,7 @@
             <component>
               <type>Pickable</type>
               <active>True</active>
-              <pickableType>EnemyBuilding</pickableType>
+              <pickableType>Enemy</pickableType>
             </component>
           </components>
           <childObjects>
@@ -702,6 +721,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -828,13 +852,49 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>8,6</x>
-                <y>4,6</y>
-                <z>8,6</z>
+                <x>6,8</x>
+                <y>6,2</y>
+                <z>7,6</z>
               </position>
               <rotation>
                 <x>0</x>
                 <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,5</x>
+                <y>0,7</y>
+                <z>0,5</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <applyFog>True</applyFog>
+              <model>
+                <path>Env/Trees/drzewoiglaste</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Tree</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>-7,2</x>
+                <y>4</y>
+                <z>-12,5</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>-104</y>
                 <z>0</z>
               </rotation>
               <scale>
@@ -865,8 +925,8 @@
               <active>True</active>
               <position>
                 <x>-1,6</x>
-                <y>4</y>
-                <z>-12,5</z>
+                <y>4,4</y>
+                <z>15,7</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -900,49 +960,13 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>-1,9</x>
-                <y>4,6</y>
-                <z>12,6</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>0,5</x>
-                <y>0,5</y>
-                <z>0,5</z>
-              </scale>
-            </component>
-            <component>
-              <type>MeshRenderer</type>
-              <active>True</active>
-              <applyFog>True</applyFog>
-              <model>
-                <path>Env/Trees/drzewoiglaste</path>
-                <technique>PBR</technique>
-              </model>
-            </component>
-          </components>
-          <childObjects></childObjects>
-        </object>
-        <object>
-          <name>Tree</name>
-          <active>True</active>
-          <cascadingActive>True</cascadingActive>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>-10,2</x>
+                <x>-11</x>
                 <y>4,6</y>
                 <z>8,6</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>0</y>
+                <y>-58</y>
                 <z>0</z>
               </rotation>
               <scale>
@@ -972,9 +996,45 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>8,6</x>
+                <x>9,6</x>
                 <y>4,6</y>
-                <z>-6</z>
+                <z>-10,2</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>-60</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,5</x>
+                <y>0,5</y>
+                <z>0,5</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <applyFog>True</applyFog>
+              <model>
+                <path>Env/Trees/drzewoiglaste</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Barrel</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>7,2</x>
+                <y>0,7</y>
+                <z>4,5</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -992,7 +1052,79 @@
               <active>True</active>
               <applyFog>True</applyFog>
               <model>
-                <path>Env/Trees/drzewoiglaste</path>
+                <path>Env/barrel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Barrel</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>6</x>
+                <y>0,7</y>
+                <z>3,4</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,5</x>
+                <y>0,5</y>
+                <z>0,5</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <applyFog>True</applyFog>
+              <model>
+                <path>Env/barrel</path>
+                <technique>PBR</technique>
+              </model>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
+          <name>Campfire</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>-15,5</x>
+                <y>0,2</y>
+                <z>-2,8</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,3</x>
+                <y>0,3</y>
+                <z>0,3</z>
+              </scale>
+            </component>
+            <component>
+              <type>MeshRenderer</type>
+              <active>True</active>
+              <applyFog>True</applyFog>
+              <model>
+                <path>ognisko</path>
                 <technique>PBR</technique>
               </model>
             </component>
@@ -1062,29 +1194,20 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>2</x>
-                    <y>0</y>
-                    <z>2</z>
+                    <x>0</x>
+                    <y>2</y>
+                    <z>0</z>
                   </position>
                   <rotation>
                     <x>0</x>
-                    <y>0</y>
+                    <y>156,96777</y>
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>0,03</z>
                   </scale>
-                </component>
-                <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <applyFog>True</applyFog>
-                  <model>
-                    <path>knight</path>
-                    <technique>PBR</technique>
-                  </model>
                 </component>
                 <component>
                   <type>Agent</type>
@@ -1093,8 +1216,9 @@
                   <agentLayer>ENEMY</agentLayer>
                   <separationDistance>5,75</separationDistance>
                   <attackingRadius>1</attackingRadius>
-                  <heightOffset>2</heightOffset>
-                  <directionOffset>0</directionOffset>
+                  <meatAward>10</meatAward>
+                  <heightOffset>1,7</heightOffset>
+                  <directionOffset>180</directionOffset>
                   <deathFrame>0</deathFrame>
                   <attackFrames>
                     <count>0</count>
@@ -1130,12 +1254,247 @@
                   </agentData>
                 </component>
                 <component>
+                  <type>AnimatedMeshRenderer</type>
+                  <active>True</active>
+                  <applyFog>True</applyFog>
+                  <animatedModel>
+                    <path>knightAnim</path>
+                    <technique>PBR_Skinned</technique>
+                    <speed>0,5</speed>
+                    <currentClip>2</currentClip>
+                    <translationInterpolation>Linear</translationInterpolation>
+                    <orientationInterpolation>Linear</orientationInterpolation>
+                    <scaleInterpolation>Linear</scaleInterpolation>
+                    <loop>True</loop>
+                  </animatedModel>
+                </component>
+                <component>
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
               </components>
               <childObjects>
+                <object>
+                  <name>AwarenessBar</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>AwarenessBar</type>
+                      <active>True</active>
+                      <barOffset>
+                        <x>-43,2</x>
+                        <y>-92,9</y>
+                        <z>0,2</z>
+                      </barOffset>
+                      <fillingOffset>
+                        <x>-42,7</x>
+                        <y>-91,1</y>
+                        <z>0</z>
+                      </fillingOffset>
+                      <eyeOffset>
+                        <x>-69,9</x>
+                        <y>-94,7</y>
+                        <z>0</z>
+                      </eyeOffset>
+                    </component>
+                  </components>
+                  <childObjects>
+                    <object>
+                      <name>Background</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>706,91223</x>
+                            <y>365,0363</y>
+                            <z>0,2</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,68</x>
+                            <y>0,95</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heroBar</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Filling</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>707,41223</x>
+                            <y>366,83627</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,6766667</x>
+                            <y>1</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/AwerenessBarWhiteSmall</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>203</g>
+                            <b>82</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Eye</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>680,2122</x>
+                            <y>363,23627</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,03</x>
+                            <y>0,03</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/eye</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                  </childObjects>
+                </object>
+                <object>
+                  <name>Mark</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,08</x>
+                        <y>0,07</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>False</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/exclamationMark</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                    <component>
+                      <type>AlertnessMark</type>
+                      <active>True</active>
+                      <markOffset>
+                        <x>-35,7</x>
+                        <y>-124,6</y>
+                        <z>0,3</z>
+                      </markOffset>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
                 <object>
                   <name>Healthbar</name>
                   <active>True</active>
@@ -1173,6 +1532,11 @@
                         <y>-64,5</y>
                         <z>0</z>
                       </fillingOffset>
+                      <heartOffset>
+                        <x>-68,5</x>
+                        <y>-68,9</y>
+                        <z>0</z>
+                      </heartOffset>
                     </component>
                   </components>
                   <childObjects>
@@ -1185,8 +1549,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>893,8656</x>
-                            <y>433,94464</y>
+                            <x>632,69696</x>
+                            <y>338,8333</y>
                             <z>0,1</z>
                           </position>
                           <rotation>
@@ -1195,9 +1559,9 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,81600004</x>
-                            <y>1,14</y>
-                            <z>1,2</z>
+                            <x>0,68</x>
+                            <y>0,95</y>
+                            <z>1</z>
                           </scale>
                         </component>
                         <component>
@@ -1211,8 +1575,8 @@
                             <b>255</b>
                             <a>255</a>
                           </color>
-                          <screenSizeX>1920</screenSizeX>
-                          <screenSizeY>1080</screenSizeY>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
                         </component>
                       </components>
                       <childObjects></childObjects>
@@ -1226,8 +1590,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>895,0656</x>
-                            <y>436,64465</y>
+                            <x>633,897</x>
+                            <y>341,5333</y>
                             <z>0</z>
                           </position>
                           <rotation>
@@ -1236,9 +1600,9 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>1,1880001</x>
-                            <y>1,2</y>
-                            <z>1,2</z>
+                            <x>0,97</x>
+                            <y>1</y>
+                            <z>1</z>
                           </scale>
                         </component>
                         <component>
@@ -1252,8 +1616,49 @@
                             <b>255</b>
                             <a>255</a>
                           </color>
-                          <screenSizeX>1920</screenSizeX>
-                          <screenSizeY>1080</screenSizeY>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Heart</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>606,99695</x>
+                            <y>337,1333</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,03</x>
+                            <y>0,03</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heart</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>0</g>
+                            <b>0</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
                         </component>
                       </components>
                       <childObjects></childObjects>
@@ -1300,9 +1705,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>0</x>
+                        <x>2,8</x>
                         <y>0</y>
-                        <z>0</z>
+                        <z>4,2</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1320,7 +1725,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1356,7 +1761,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1392,7 +1797,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1428,7 +1833,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1464,7 +1869,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1476,7 +1881,7 @@
           </childObjects>
         </object>
         <object>
-          <name>Soldier2</name>
+          <name>Soldier1</name>
           <active>True</active>
           <cascadingActive>True</cascadingActive>
           <components>
@@ -1510,29 +1915,20 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>2</x>
-                    <y>0</y>
-                    <z>2</z>
+                    <x>0</x>
+                    <y>2</y>
+                    <z>0</z>
                   </position>
                   <rotation>
                     <x>0</x>
-                    <y>0</y>
+                    <y>156,96777</y>
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>0,03</z>
                   </scale>
-                </component>
-                <component>
-                  <type>MeshRenderer</type>
-                  <active>True</active>
-                  <applyFog>True</applyFog>
-                  <model>
-                    <path>knight</path>
-                    <technique>PBR</technique>
-                  </model>
                 </component>
                 <component>
                   <type>Agent</type>
@@ -1541,8 +1937,9 @@
                   <agentLayer>ENEMY</agentLayer>
                   <separationDistance>5,75</separationDistance>
                   <attackingRadius>1</attackingRadius>
-                  <heightOffset>2</heightOffset>
-                  <directionOffset>0</directionOffset>
+                  <meatAward>10</meatAward>
+                  <heightOffset>1,7</heightOffset>
+                  <directionOffset>180</directionOffset>
                   <deathFrame>0</deathFrame>
                   <attackFrames>
                     <count>0</count>
@@ -1578,12 +1975,247 @@
                   </agentData>
                 </component>
                 <component>
+                  <type>AnimatedMeshRenderer</type>
+                  <active>True</active>
+                  <applyFog>True</applyFog>
+                  <animatedModel>
+                    <path>knightAnim</path>
+                    <technique>PBR_Skinned</technique>
+                    <speed>0,5</speed>
+                    <currentClip>2</currentClip>
+                    <translationInterpolation>Linear</translationInterpolation>
+                    <orientationInterpolation>Linear</orientationInterpolation>
+                    <scaleInterpolation>Linear</scaleInterpolation>
+                    <loop>True</loop>
+                  </animatedModel>
+                </component>
+                <component>
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
               </components>
               <childObjects>
+                <object>
+                  <name>AwarenessBar</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>AwarenessBar</type>
+                      <active>True</active>
+                      <barOffset>
+                        <x>-43,2</x>
+                        <y>-92,9</y>
+                        <z>0,2</z>
+                      </barOffset>
+                      <fillingOffset>
+                        <x>-42,7</x>
+                        <y>-91,1</y>
+                        <z>0</z>
+                      </fillingOffset>
+                      <eyeOffset>
+                        <x>-69,9</x>
+                        <y>-94,7</y>
+                        <z>0</z>
+                      </eyeOffset>
+                    </component>
+                  </components>
+                  <childObjects>
+                    <object>
+                      <name>Background</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>706,91223</x>
+                            <y>365,0363</y>
+                            <z>0,2</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,68</x>
+                            <y>0,95</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heroBar</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Filling</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>707,41223</x>
+                            <y>366,83627</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,6766667</x>
+                            <y>1</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/AwerenessBarWhiteSmall</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>203</g>
+                            <b>82</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Eye</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>680,2122</x>
+                            <y>363,23627</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,03</x>
+                            <y>0,03</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/eye</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                  </childObjects>
+                </object>
+                <object>
+                  <name>Mark</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,08</x>
+                        <y>0,07</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>False</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/exclamationMark</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                    <component>
+                      <type>AlertnessMark</type>
+                      <active>True</active>
+                      <markOffset>
+                        <x>-35,7</x>
+                        <y>-124,6</y>
+                        <z>0,3</z>
+                      </markOffset>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
                 <object>
                   <name>Healthbar</name>
                   <active>True</active>
@@ -1621,6 +2253,11 @@
                         <y>-64,5</y>
                         <z>0</z>
                       </fillingOffset>
+                      <heartOffset>
+                        <x>-68,5</x>
+                        <y>-68,9</y>
+                        <z>0</z>
+                      </heartOffset>
                     </component>
                   </components>
                   <childObjects>
@@ -1633,8 +2270,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>893,8656</x>
-                            <y>433,94464</y>
+                            <x>632,69696</x>
+                            <y>338,8333</y>
                             <z>0,1</z>
                           </position>
                           <rotation>
@@ -1643,9 +2280,9 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,81600004</x>
-                            <y>1,14</y>
-                            <z>1,2</z>
+                            <x>0,68</x>
+                            <y>0,95</y>
+                            <z>1</z>
                           </scale>
                         </component>
                         <component>
@@ -1659,8 +2296,8 @@
                             <b>255</b>
                             <a>255</a>
                           </color>
-                          <screenSizeX>1920</screenSizeX>
-                          <screenSizeY>1080</screenSizeY>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
                         </component>
                       </components>
                       <childObjects></childObjects>
@@ -1674,8 +2311,8 @@
                           <type>Transform</type>
                           <active>True</active>
                           <position>
-                            <x>895,0656</x>
-                            <y>436,64465</y>
+                            <x>633,897</x>
+                            <y>341,5333</y>
                             <z>0</z>
                           </position>
                           <rotation>
@@ -1684,9 +2321,9 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>1,1880001</x>
-                            <y>1,2</y>
-                            <z>1,2</z>
+                            <x>0,97</x>
+                            <y>1</y>
+                            <z>1</z>
                           </scale>
                         </component>
                         <component>
@@ -1700,8 +2337,49 @@
                             <b>255</b>
                             <a>255</a>
                           </color>
-                          <screenSizeX>1920</screenSizeX>
-                          <screenSizeY>1080</screenSizeY>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Heart</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>606,99695</x>
+                            <y>337,1333</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,03</x>
+                            <y>0,03</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heart</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>0</g>
+                            <b>0</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
                         </component>
                       </components>
                       <childObjects></childObjects>
@@ -1748,7 +2426,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>0</x>
+                        <x>-8,4</x>
                         <y>0</y>
                         <z>0</z>
                       </position>
@@ -1768,7 +2446,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1784,9 +2462,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>13,8</x>
+                        <x>-13,7</x>
                         <y>0</y>
-                        <z>1,8</z>
+                        <z>-3,9</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1804,7 +2482,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1820,9 +2498,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>18,9</x>
+                        <x>-10,2</x>
                         <y>0</y>
-                        <z>13,6</z>
+                        <z>-20,1</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1840,7 +2518,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1856,9 +2534,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>3,8</x>
+                        <x>-0,6</x>
                         <y>0</y>
-                        <z>18,6</z>
+                        <z>-18,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1876,7 +2554,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1892,9 +2570,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>-10,5</x>
+                        <x>7,4</x>
                         <y>0</y>
-                        <z>18,7</z>
+                        <z>-16,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1912,7 +2590,584 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
+                        <technique>PBR</technique>
+                      </model>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Archer</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+          </components>
+          <childObjects>
+            <object>
+              <name>Agent</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>2</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>156,96777</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>0,03</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>Agent</type>
+                  <active>True</active>
+                  <agentType>Soldier</agentType>
+                  <agentLayer>ENEMY</agentLayer>
+                  <separationDistance>5,75</separationDistance>
+                  <attackingRadius>1</attackingRadius>
+                  <meatAward>10</meatAward>
+                  <heightOffset>1,7</heightOffset>
+                  <directionOffset>180</directionOffset>
+                  <deathFrame>0</deathFrame>
+                  <attackFrames>
+                    <count>0</count>
+                  </attackFrames>
+                  <agentData>
+                    <hp>100</hp>
+                    <maxHp>100</maxHp>
+                    <alive>True</alive>
+                    <pathId>Path1_3</pathId>
+                    <patrollingType>Circle</patrollingType>
+                    <awareness>0</awareness>
+                    <awarenessThreshold>100</awarenessThreshold>
+                    <awarenessDecay>0,1</awarenessDecay>
+                    <minPointDistance>0,3</minPointDistance>
+                    <patrollingSpeed>7</patrollingSpeed>
+                    <attackingWalkingSpeed>9</attackingWalkingSpeed>
+                    <maxIdleTime>5</maxIdleTime>
+                    <minIdleTime>2</minIdleTime>
+                    <damage>10</damage>
+                    <attackDelay>0,8</attackDelay>
+                    <minAttackRange>4</minAttackRange>
+                    <maxAttackRange>20</maxAttackRange>
+                    <retargetRange>7</retargetRange>
+                    <repathDelay>0,5</repathDelay>
+                    <sightRange>40</sightRange>
+                    <sightAngle>60</sightAngle>
+                    <sightHeight>4</sightHeight>
+                    <minPresenceMultiplier>0,2</minPresenceMultiplier>
+                    <isRanged>True</isRanged>
+                    <projectileSpeed>25</projectileSpeed>
+                    <projectileMinDistance>1</projectileMinDistance>
+                    <projectileType>Arrow</projectileType>
+                  </agentData>
+                </component>
+                <component>
+                  <type>AnimatedMeshRenderer</type>
+                  <active>True</active>
+                  <applyFog>True</applyFog>
+                  <animatedModel>
+                    <path>archerAnim</path>
+                    <technique>PBR_Skinned</technique>
+                    <speed>0,5</speed>
+                    <currentClip>2</currentClip>
+                    <translationInterpolation>Linear</translationInterpolation>
+                    <orientationInterpolation>Linear</orientationInterpolation>
+                    <scaleInterpolation>Linear</scaleInterpolation>
+                    <loop>True</loop>
+                  </animatedModel>
+                </component>
+                <component>
+                  <type>Pickable</type>
+                  <active>True</active>
+                  <pickableType>Enemy</pickableType>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>AwarenessBar</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>AwarenessBar</type>
+                      <active>True</active>
+                      <barOffset>
+                        <x>-43,2</x>
+                        <y>-92,9</y>
+                        <z>0,2</z>
+                      </barOffset>
+                      <fillingOffset>
+                        <x>-42,7</x>
+                        <y>-91,1</y>
+                        <z>0</z>
+                      </fillingOffset>
+                      <eyeOffset>
+                        <x>-69,9</x>
+                        <y>-94,7</y>
+                        <z>0</z>
+                      </eyeOffset>
+                    </component>
+                  </components>
+                  <childObjects>
+                    <object>
+                      <name>Background</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>706,91223</x>
+                            <y>365,0363</y>
+                            <z>0,2</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,68</x>
+                            <y>0,95</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heroBar</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Filling</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>707,41223</x>
+                            <y>366,83627</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,6766667</x>
+                            <y>1</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/AwerenessBarWhiteSmall</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>203</g>
+                            <b>82</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Eye</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>680,2122</x>
+                            <y>363,23627</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,03</x>
+                            <y>0,03</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/eye</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                  </childObjects>
+                </object>
+                <object>
+                  <name>Mark</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,08</x>
+                        <y>0,07</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>False</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/exclamationMark</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                    <component>
+                      <type>AlertnessMark</type>
+                      <active>True</active>
+                      <markOffset>
+                        <x>-35,7</x>
+                        <y>-124,6</y>
+                        <z>0,3</z>
+                      </markOffset>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Healthbar</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>Healthbar</type>
+                      <active>True</active>
+                      <barOffset>
+                        <x>-42,8</x>
+                        <y>-67,2</y>
+                        <z>0,1</z>
+                      </barOffset>
+                      <fillingOffset>
+                        <x>-41,6</x>
+                        <y>-64,5</y>
+                        <z>0</z>
+                      </fillingOffset>
+                      <heartOffset>
+                        <x>-68,5</x>
+                        <y>-68,9</y>
+                        <z>0</z>
+                      </heartOffset>
+                    </component>
+                  </components>
+                  <childObjects>
+                    <object>
+                      <name>Background</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>632,69696</x>
+                            <y>338,8333</y>
+                            <z>0,1</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,68</x>
+                            <y>0,95</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heroBar</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Filling</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>633,897</x>
+                            <y>341,5333</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,97</x>
+                            <y>1</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/minionHP</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>255</g>
+                            <b>255</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                    <object>
+                      <name>Heart</name>
+                      <active>False</active>
+                      <cascadingActive>True</cascadingActive>
+                      <components>
+                        <component>
+                          <type>Transform</type>
+                          <active>True</active>
+                          <position>
+                            <x>606,99695</x>
+                            <y>337,1333</y>
+                            <z>0</z>
+                          </position>
+                          <rotation>
+                            <x>0</x>
+                            <y>0</y>
+                            <z>0</z>
+                          </rotation>
+                          <scale>
+                            <x>0,03</x>
+                            <y>0,03</y>
+                            <z>1</z>
+                          </scale>
+                        </component>
+                        <component>
+                          <type>SpiteRenderer</type>
+                          <active>True</active>
+                          <useLocal>True</useLocal>
+                          <sprite>UI/heart</sprite>
+                          <color>
+                            <r>255</r>
+                            <g>0</g>
+                            <b>0</b>
+                            <a>255</a>
+                          </color>
+                          <screenSizeX>1600</screenSizeX>
+                          <screenSizeY>900</screenSizeY>
+                        </component>
+                      </components>
+                      <childObjects></childObjects>
+                    </object>
+                  </childObjects>
+                </object>
+              </childObjects>
+            </object>
+            <object>
+              <name>Path1_3</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>PatrolPath</type>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Point</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>-16,8</x>
+                        <y>0</y>
+                        <z>-2</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>MeshRenderer</type>
+                      <active>False</active>
+                      <applyFog>True</applyFog>
+                      <model>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1928,9 +3183,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>-23,2</x>
+                        <x>-15,8</x>
                         <y>0</y>
-                        <z>7,5</z>
+                        <z>9,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1948,7 +3203,7 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -1964,9 +3219,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>-23,1</x>
+                        <x>-9,8</x>
                         <y>0</y>
-                        <z>-12,2</z>
+                        <z>14,1</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1984,7 +3239,79 @@
                       <active>False</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>TestWall</path>
+                        <path></path>
+                        <technique>PBR</technique>
+                      </model>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Point</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>-3,4</x>
+                        <y>0</y>
+                        <z>19,3</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>MeshRenderer</type>
+                      <active>False</active>
+                      <applyFog>True</applyFog>
+                      <model>
+                        <path></path>
+                        <technique>PBR</technique>
+                      </model>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Point</name>
+                  <active>True</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>5,7</x>
+                        <y>0</y>
+                        <z>15,1</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>1</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>MeshRenderer</type>
+                      <active>False</active>
+                      <applyFog>True</applyFog>
+                      <model>
+                        <path></path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -2033,12 +3360,12 @@
               <active>True</active>
               <position>
                 <x>0</x>
-                <y>0</y>
+                <y>3</y>
                 <z>0</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>94,08575</y>
+                <y>271,4434</y>
                 <z>0</z>
               </rotation>
               <scale>
@@ -2054,6 +3381,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>1</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <deathFrame>0</deathFrame>
@@ -2091,7 +3419,7 @@
                 <path>peasantSkinned</path>
                 <technique>PBR_Skinned</technique>
                 <speed>1</speed>
-                <currentClip>2</currentClip>
+                <currentClip>4</currentClip>
                 <translationInterpolation>Linear</translationInterpolation>
                 <orientationInterpolation>Linear</orientationInterpolation>
                 <scaleInterpolation>Linear</scaleInterpolation>
@@ -2105,6 +3433,176 @@
             </component>
           </components>
           <childObjects>
+            <object>
+              <name>AwarenessBar</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>AwarenessBar</type>
+                  <active>True</active>
+                  <barOffset>
+                    <x>-43,2</x>
+                    <y>-92,9</y>
+                    <z>0,2</z>
+                  </barOffset>
+                  <fillingOffset>
+                    <x>-42,7</x>
+                    <y>-91,1</y>
+                    <z>0</z>
+                  </fillingOffset>
+                  <eyeOffset>
+                    <x>-69,9</x>
+                    <y>-94,7</y>
+                    <z>0</z>
+                  </eyeOffset>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Background</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>706,91223</x>
+                        <y>365,0363</y>
+                        <z>0,2</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heroBar</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Filling</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>707,41223</x>
+                        <y>366,83627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,6766667</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/AwerenessBarWhiteSmall</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>203</g>
+                        <b>82</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Eye</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,2122</x>
+                        <y>363,23627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/eye</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
             <object>
               <name>Healthbar</name>
               <active>True</active>
@@ -2142,6 +3640,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -2154,8 +3657,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>126,30557</x>
-                        <y>212,87245</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -2195,8 +3698,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>127,50558</x>
-                        <y>215,57245</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -2205,7 +3708,7 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,82</x>
+                        <x>0,9</x>
                         <y>1</y>
                         <z>1</z>
                       </scale>
@@ -2227,50 +3730,8 @@
                   </components>
                   <childObjects></childObjects>
                 </object>
-              </childObjects>
-            </object>
-            <object>
-              <name>AwarenessBar</name>
-              <active>True</active>
-              <cascadingActive>True</cascadingActive>
-              <components>
-                <component>
-                  <type>Transform</type>
-                  <active>True</active>
-                  <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                  </position>
-                  <rotation>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                  </rotation>
-                  <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
-                  </scale>
-                </component>
-                <component>
-                  <type>AwarenessBar</type>
-                  <active>True</active>
-                  <barOffset>
-                    <x>-43,2</x>
-                    <y>-92,9</y>
-                    <z>0</z>
-                  </barOffset>
-                  <fillingOffset>
-                    <x>-42,7</x>
-                    <y>-91,1</y>
-                    <z>0</z>
-                  </fillingOffset>
-                </component>
-              </components>
-              <childObjects>
                 <object>
-                  <name>Background</name>
+                  <name>Heart</name>
                   <active>False</active>
                   <cascadingActive>True</cascadingActive>
                   <components>
@@ -2278,8 +3739,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>475,08356</x>
-                        <y>350,9859</y>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -2288,8 +3749,8 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,68</x>
-                        <y>0,95</y>
+                        <x>0,03</x>
+                        <y>0,03</y>
                         <z>1</z>
                       </scale>
                     </component>
@@ -2297,52 +3758,11 @@
                       <type>SpiteRenderer</type>
                       <active>True</active>
                       <useLocal>True</useLocal>
-                      <sprite>UI/heroBar</sprite>
+                      <sprite>UI/heart</sprite>
                       <color>
                         <r>255</r>
-                        <g>255</g>
-                        <b>255</b>
-                        <a>255</a>
-                      </color>
-                      <screenSizeX>1600</screenSizeX>
-                      <screenSizeY>900</screenSizeY>
-                    </component>
-                  </components>
-                  <childObjects></childObjects>
-                </object>
-                <object>
-                  <name>Filling</name>
-                  <active>False</active>
-                  <cascadingActive>True</cascadingActive>
-                  <components>
-                    <component>
-                      <type>Transform</type>
-                      <active>True</active>
-                      <position>
-                        <x>475,58356</x>
-                        <y>352,7859</y>
-                        <z>0</z>
-                      </position>
-                      <rotation>
-                        <x>0</x>
-                        <y>0</y>
-                        <z>0</z>
-                      </rotation>
-                      <scale>
-                        <x>0,9757999</x>
-                        <y>1</y>
-                        <z>1</z>
-                      </scale>
-                    </component>
-                    <component>
-                      <type>SpiteRenderer</type>
-                      <active>True</active>
-                      <useLocal>True</useLocal>
-                      <sprite>UI/AwerenessBarWhiteSmall</sprite>
-                      <color>
-                        <r>255</r>
-                        <g>180</g>
-                        <b>6</b>
+                        <g>0</g>
+                        <b>0</b>
                         <a>255</a>
                       </color>
                       <screenSizeX>1600</screenSizeX>
@@ -2362,8 +3782,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>138,40558</x>
-                    <y>161,07245</y>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
                     <z>0,3</z>
                   </position>
                   <rotation>
@@ -2372,8 +3792,8 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
+                    <x>0,08</x>
+                    <y>0,07</y>
                     <z>1</z>
                   </scale>
                 </component>
@@ -2381,7 +3801,7 @@
                   <type>SpiteRenderer</type>
                   <active>False</active>
                   <useLocal>True</useLocal>
-                  <sprite>UI/pauseButton</sprite>
+                  <sprite>UI/exclamationMark</sprite>
                   <color>
                     <r>255</r>
                     <g>0</g>
@@ -2395,8 +3815,8 @@
                   <type>AlertnessMark</type>
                   <active>True</active>
                   <markOffset>
-                    <x>-30,7</x>
-                    <y>-119</y>
+                    <x>-35,7</x>
+                    <y>-124,6</y>
                     <z>0,3</z>
                   </markOffset>
                 </component>
@@ -2415,12 +3835,12 @@
               <active>True</active>
               <position>
                 <x>0</x>
-                <y>0</y>
+                <y>3</y>
                 <z>0</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>94,08575</y>
+                <y>271,4434</y>
                 <z>0</z>
               </rotation>
               <scale>
@@ -2436,6 +3856,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>1</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <deathFrame>0</deathFrame>
@@ -2473,7 +3894,7 @@
                 <path>peasantSkinned</path>
                 <technique>PBR_Skinned</technique>
                 <speed>1</speed>
-                <currentClip>2</currentClip>
+                <currentClip>4</currentClip>
                 <translationInterpolation>Linear</translationInterpolation>
                 <orientationInterpolation>Linear</orientationInterpolation>
                 <scaleInterpolation>Linear</scaleInterpolation>
@@ -2487,6 +3908,176 @@
             </component>
           </components>
           <childObjects>
+            <object>
+              <name>AwarenessBar</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>AwarenessBar</type>
+                  <active>True</active>
+                  <barOffset>
+                    <x>-43,2</x>
+                    <y>-92,9</y>
+                    <z>0,2</z>
+                  </barOffset>
+                  <fillingOffset>
+                    <x>-42,7</x>
+                    <y>-91,1</y>
+                    <z>0</z>
+                  </fillingOffset>
+                  <eyeOffset>
+                    <x>-69,9</x>
+                    <y>-94,7</y>
+                    <z>0</z>
+                  </eyeOffset>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Background</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>706,91223</x>
+                        <y>365,0363</y>
+                        <z>0,2</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heroBar</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Filling</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>707,41223</x>
+                        <y>366,83627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,6766667</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/AwerenessBarWhiteSmall</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>203</g>
+                        <b>82</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Eye</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,2122</x>
+                        <y>363,23627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/eye</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
             <object>
               <name>Healthbar</name>
               <active>True</active>
@@ -2524,6 +4115,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -2536,8 +4132,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>126,30557</x>
-                        <y>212,87245</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -2577,8 +4173,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>127,50558</x>
-                        <y>215,57245</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -2587,7 +4183,7 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,82</x>
+                        <x>0,9</x>
                         <y>1</y>
                         <z>1</z>
                       </scale>
@@ -2609,50 +4205,8 @@
                   </components>
                   <childObjects></childObjects>
                 </object>
-              </childObjects>
-            </object>
-            <object>
-              <name>AwarenessBar</name>
-              <active>True</active>
-              <cascadingActive>True</cascadingActive>
-              <components>
-                <component>
-                  <type>Transform</type>
-                  <active>True</active>
-                  <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                  </position>
-                  <rotation>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                  </rotation>
-                  <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
-                  </scale>
-                </component>
-                <component>
-                  <type>AwarenessBar</type>
-                  <active>True</active>
-                  <barOffset>
-                    <x>-43,2</x>
-                    <y>-92,9</y>
-                    <z>0</z>
-                  </barOffset>
-                  <fillingOffset>
-                    <x>-42,7</x>
-                    <y>-91,1</y>
-                    <z>0</z>
-                  </fillingOffset>
-                </component>
-              </components>
-              <childObjects>
                 <object>
-                  <name>Background</name>
+                  <name>Heart</name>
                   <active>False</active>
                   <cascadingActive>True</cascadingActive>
                   <components>
@@ -2660,8 +4214,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>475,08356</x>
-                        <y>350,9859</y>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -2670,8 +4224,8 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,68</x>
-                        <y>0,95</y>
+                        <x>0,03</x>
+                        <y>0,03</y>
                         <z>1</z>
                       </scale>
                     </component>
@@ -2679,52 +4233,11 @@
                       <type>SpiteRenderer</type>
                       <active>True</active>
                       <useLocal>True</useLocal>
-                      <sprite>UI/heroBar</sprite>
+                      <sprite>UI/heart</sprite>
                       <color>
                         <r>255</r>
-                        <g>255</g>
-                        <b>255</b>
-                        <a>255</a>
-                      </color>
-                      <screenSizeX>1600</screenSizeX>
-                      <screenSizeY>900</screenSizeY>
-                    </component>
-                  </components>
-                  <childObjects></childObjects>
-                </object>
-                <object>
-                  <name>Filling</name>
-                  <active>False</active>
-                  <cascadingActive>True</cascadingActive>
-                  <components>
-                    <component>
-                      <type>Transform</type>
-                      <active>True</active>
-                      <position>
-                        <x>475,58356</x>
-                        <y>352,7859</y>
-                        <z>0</z>
-                      </position>
-                      <rotation>
-                        <x>0</x>
-                        <y>0</y>
-                        <z>0</z>
-                      </rotation>
-                      <scale>
-                        <x>0,9757999</x>
-                        <y>1</y>
-                        <z>1</z>
-                      </scale>
-                    </component>
-                    <component>
-                      <type>SpiteRenderer</type>
-                      <active>True</active>
-                      <useLocal>True</useLocal>
-                      <sprite>UI/AwerenessBarWhiteSmall</sprite>
-                      <color>
-                        <r>255</r>
-                        <g>180</g>
-                        <b>6</b>
+                        <g>0</g>
+                        <b>0</b>
                         <a>255</a>
                       </color>
                       <screenSizeX>1600</screenSizeX>
@@ -2744,8 +4257,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>138,40558</x>
-                    <y>161,07245</y>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
                     <z>0,3</z>
                   </position>
                   <rotation>
@@ -2754,8 +4267,8 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
+                    <x>0,08</x>
+                    <y>0,07</y>
                     <z>1</z>
                   </scale>
                 </component>
@@ -2763,7 +4276,7 @@
                   <type>SpiteRenderer</type>
                   <active>False</active>
                   <useLocal>True</useLocal>
-                  <sprite>UI/pauseButton</sprite>
+                  <sprite>UI/exclamationMark</sprite>
                   <color>
                     <r>255</r>
                     <g>0</g>
@@ -2777,8 +4290,8 @@
                   <type>AlertnessMark</type>
                   <active>True</active>
                   <markOffset>
-                    <x>-30,7</x>
-                    <y>-119</y>
+                    <x>-35,7</x>
+                    <y>-124,6</y>
                     <z>0,3</z>
                   </markOffset>
                 </component>
@@ -2797,12 +4310,12 @@
               <active>True</active>
               <position>
                 <x>0</x>
-                <y>0</y>
+                <y>3</y>
                 <z>0</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>94,08575</y>
+                <y>271,4434</y>
                 <z>0</z>
               </rotation>
               <scale>
@@ -2818,6 +4331,7 @@
               <agentLayer>ENEMY</agentLayer>
               <separationDistance>1</separationDistance>
               <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <deathFrame>0</deathFrame>
@@ -2855,7 +4369,7 @@
                 <path>peasantSkinned</path>
                 <technique>PBR_Skinned</technique>
                 <speed>1</speed>
-                <currentClip>2</currentClip>
+                <currentClip>4</currentClip>
                 <translationInterpolation>Linear</translationInterpolation>
                 <orientationInterpolation>Linear</orientationInterpolation>
                 <scaleInterpolation>Linear</scaleInterpolation>
@@ -2869,6 +4383,176 @@
             </component>
           </components>
           <childObjects>
+            <object>
+              <name>AwarenessBar</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>AwarenessBar</type>
+                  <active>True</active>
+                  <barOffset>
+                    <x>-43,2</x>
+                    <y>-92,9</y>
+                    <z>0,2</z>
+                  </barOffset>
+                  <fillingOffset>
+                    <x>-42,7</x>
+                    <y>-91,1</y>
+                    <z>0</z>
+                  </fillingOffset>
+                  <eyeOffset>
+                    <x>-69,9</x>
+                    <y>-94,7</y>
+                    <z>0</z>
+                  </eyeOffset>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Background</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>706,91223</x>
+                        <y>365,0363</y>
+                        <z>0,2</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heroBar</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Filling</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>707,41223</x>
+                        <y>366,83627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,6766667</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/AwerenessBarWhiteSmall</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>203</g>
+                        <b>82</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Eye</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,2122</x>
+                        <y>363,23627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/eye</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
             <object>
               <name>Healthbar</name>
               <active>True</active>
@@ -2906,6 +4590,11 @@
                     <y>-64,5</y>
                     <z>0</z>
                   </fillingOffset>
+                  <heartOffset>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
+                    <z>0</z>
+                  </heartOffset>
                 </component>
               </components>
               <childObjects>
@@ -2918,8 +4607,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>126,30557</x>
-                        <y>212,87245</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -2959,8 +4648,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>127,50558</x>
-                        <y>215,57245</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -2969,7 +4658,7 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,82</x>
+                        <x>0,9</x>
                         <y>1</y>
                         <z>1</z>
                       </scale>
@@ -2991,8 +4680,184 @@
                   </components>
                   <childObjects></childObjects>
                 </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
               </childObjects>
             </object>
+            <object>
+              <name>Mark</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
+                    <z>0,3</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,08</x>
+                    <y>0,07</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>False</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/exclamationMark</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+                <component>
+                  <type>AlertnessMark</type>
+                  <active>True</active>
+                  <markOffset>
+                    <x>-35,7</x>
+                    <y>-124,6</y>
+                    <z>0,3</z>
+                  </markOffset>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
+        </object>
+        <object>
+          <name>Civilian</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>0</x>
+                <y>3</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>271,4434</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,03</x>
+                <y>0,03</y>
+                <z>0,03</z>
+              </scale>
+            </component>
+            <component>
+              <type>Agent</type>
+              <active>True</active>
+              <agentType>Civilian</agentType>
+              <agentLayer>ENEMY</agentLayer>
+              <separationDistance>1</separationDistance>
+              <attackingRadius>1</attackingRadius>
+              <meatAward>10</meatAward>
+              <heightOffset>2</heightOffset>
+              <directionOffset>180</directionOffset>
+              <deathFrame>0</deathFrame>
+              <attackFrames>
+                <count>0</count>
+              </attackFrames>
+              <agentData>
+                <hp>100</hp>
+                <maxHp>100</maxHp>
+                <alive>True</alive>
+                <awareness>0</awareness>
+                <awarenessThreshold>100</awarenessThreshold>
+                <awarenessDecay>0,1</awarenessDecay>
+                <sightRange>40</sightRange>
+                <sightAngle>60</sightAngle>
+                <sightHeight>4</sightHeight>
+                <minPresenceMultiplier>0,2</minPresenceMultiplier>
+                <wanderingSpeed>5</wanderingSpeed>
+                <fleeingSpeed>7</fleeingSpeed>
+                <maxIdleTime>5</maxIdleTime>
+                <minIdleTime>2</minIdleTime>
+                <maxWanderingDistance>50</maxWanderingDistance>
+                <wanderingDistance>25</wanderingDistance>
+                <minPointDistance>0,5</minPointDistance>
+                <fledDistance>50</fledDistance>
+                <fleeingDistance>40</fleeingDistance>
+                <repathDelay>2</repathDelay>
+              </agentData>
+            </component>
+            <component>
+              <type>AnimatedMeshRenderer</type>
+              <active>True</active>
+              <applyFog>True</applyFog>
+              <animatedModel>
+                <path>peasantSkinned</path>
+                <technique>PBR_Skinned</technique>
+                <speed>1</speed>
+                <currentClip>4</currentClip>
+                <translationInterpolation>Linear</translationInterpolation>
+                <orientationInterpolation>Linear</orientationInterpolation>
+                <scaleInterpolation>Linear</scaleInterpolation>
+                <loop>True</loop>
+              </animatedModel>
+            </component>
+            <component>
+              <type>Pickable</type>
+              <active>True</active>
+              <pickableType>Enemy</pickableType>
+            </component>
+          </components>
+          <childObjects>
             <object>
               <name>AwarenessBar</name>
               <active>True</active>
@@ -3023,13 +4888,18 @@
                   <barOffset>
                     <x>-43,2</x>
                     <y>-92,9</y>
-                    <z>0</z>
+                    <z>0,2</z>
                   </barOffset>
                   <fillingOffset>
                     <x>-42,7</x>
                     <y>-91,1</y>
                     <z>0</z>
                   </fillingOffset>
+                  <eyeOffset>
+                    <x>-69,9</x>
+                    <y>-94,7</y>
+                    <z>0</z>
+                  </eyeOffset>
                 </component>
               </components>
               <childObjects>
@@ -3042,9 +4912,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>475,08356</x>
-                        <y>350,9859</y>
-                        <z>0</z>
+                        <x>706,91223</x>
+                        <y>365,0363</y>
+                        <z>0,2</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -3083,8 +4953,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>475,58356</x>
-                        <y>352,7859</y>
+                        <x>707,41223</x>
+                        <y>366,83627</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -3093,7 +4963,7 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,9757999</x>
+                        <x>0,6766667</x>
                         <y>1</y>
                         <z>1</z>
                       </scale>
@@ -3105,8 +4975,219 @@
                       <sprite>UI/AwerenessBarWhiteSmall</sprite>
                       <color>
                         <r>255</r>
-                        <g>180</g>
-                        <b>6</b>
+                        <g>203</g>
+                        <b>82</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Eye</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>680,2122</x>
+                        <y>363,23627</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/eye</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+              </childObjects>
+            </object>
+            <object>
+              <name>Healthbar</name>
+              <active>True</active>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>1</x>
+                    <y>1</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>Healthbar</type>
+                  <active>True</active>
+                  <barOffset>
+                    <x>-42,8</x>
+                    <y>-67,2</y>
+                    <z>0,1</z>
+                  </barOffset>
+                  <fillingOffset>
+                    <x>-41,6</x>
+                    <y>-64,5</y>
+                    <z>0</z>
+                  </fillingOffset>
+                  <heartOffset>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
+                    <z>0</z>
+                  </heartOffset>
+                </component>
+              </components>
+              <childObjects>
+                <object>
+                  <name>Background</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
+                        <z>0,1</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heroBar</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Filling</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,9</x>
+                        <y>1</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/minionHP</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>255</g>
+                        <b>255</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
                         <a>255</a>
                       </color>
                       <screenSizeX>1600</screenSizeX>
@@ -3126,8 +5207,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>138,40558</x>
-                    <y>161,07245</y>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
                     <z>0,3</z>
                   </position>
                   <rotation>
@@ -3136,8 +5217,8 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
+                    <x>0,08</x>
+                    <y>0,07</y>
                     <z>1</z>
                   </scale>
                 </component>
@@ -3145,7 +5226,7 @@
                   <type>SpiteRenderer</type>
                   <active>False</active>
                   <useLocal>True</useLocal>
-                  <sprite>UI/pauseButton</sprite>
+                  <sprite>UI/exclamationMark</sprite>
                   <color>
                     <r>255</r>
                     <g>0</g>
@@ -3159,8 +5240,8 @@
                   <type>AlertnessMark</type>
                   <active>True</active>
                   <markOffset>
-                    <x>-30,7</x>
-                    <y>-119</y>
+                    <x>-35,7</x>
+                    <y>-124,6</y>
                     <z>0,3</z>
                   </markOffset>
                 </component>

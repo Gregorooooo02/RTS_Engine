@@ -35,7 +35,7 @@
           <active>True</active>
           <position>
             <x>0</x>
-            <y>2</y>
+            <y>3</y>
             <z>0</z>
           </position>
           <rotation>
@@ -91,11 +91,11 @@
             <path>wardrobeSkinned</path>
             <technique>PBR_Skinned</technique>
             <speed>1</speed>
-            <currentClip>2</currentClip>
+            <currentClip>3</currentClip>
             <translationInterpolation>Linear</translationInterpolation>
             <orientationInterpolation>Linear</orientationInterpolation>
             <scaleInterpolation>Linear</scaleInterpolation>
-            <loop>True</loop>
+            <loop>False</loop>
           </animatedModel>
         </component>
         <component>
@@ -287,6 +287,56 @@
           </childObjects>
         </object>
         <object>
+          <name>UnitVisibility</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>691,70667</x>
+                <y>350,40356</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,06</x>
+                <y>0,06</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>UI/eyeNon</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>HiddenIndicator</type>
+              <active>True</active>
+              <markOffset>
+                <x>-22,8</x>
+                <y>-53,5</y>
+                <z>0</z>
+              </markOffset>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
           <name>Healthbar</name>
           <active>True</active>
           <cascadingActive>True</cascadingActive>
@@ -324,8 +374,8 @@
                 <z>0</z>
               </fillingOffset>
               <heartOffset>
-                <x>0</x>
-                <y>0</y>
+                <x>-68,5</x>
+                <y>-68,9</y>
                 <z>0</z>
               </heartOffset>
             </component>
@@ -340,8 +390,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>624,9683</x>
-                    <y>443,1894</y>
+                    <x>707,31226</x>
+                    <y>390,73627</y>
                     <z>0,1</z>
                   </position>
                   <rotation>
@@ -381,8 +431,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>626,16833</x>
-                    <y>445,8894</y>
+                    <x>708,51227</x>
+                    <y>393,43628</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -391,7 +441,7 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,6666667</x>
+                    <x>0,9</x>
                     <y>1</y>
                     <z>1</z>
                   </scale>
@@ -413,57 +463,48 @@
               </components>
               <childObjects></childObjects>
             </object>
-          </childObjects>
-        </object>
-        <object>
-          <name>UnitVisibility</name>
-          <active>True</active>
-          <cascadingActive>True</cascadingActive>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>707,1044</x>
-                <y>429,37448</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>0,06</x>
-                <y>0,06</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>SpiteRenderer</type>
+            <object>
+              <name>Heart</name>
               <active>False</active>
-              <useLocal>True</useLocal>
-              <sprite>UI/eyeNon</sprite>
-              <color>
-                <r>255</r>
-                <g>255</g>
-                <b>255</b>
-                <a>255</a>
-              </color>
-              <screenSizeX>1600</screenSizeX>
-              <screenSizeY>900</screenSizeY>
-            </component>
-            <component>
-              <type>HiddenIndicator</type>
-              <active>True</active>
-              <markOffset>
-                <x>-22,8</x>
-                <y>-53,5</y>
-                <z>0</z>
-              </markOffset>
-            </component>
-          </components>
-          <childObjects></childObjects>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>681,61224</x>
+                    <y>389,0363</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/heart</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
         </object>
       </childObjects>
     </object>
@@ -602,7 +643,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>272</x>
+                    <x>392</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -642,7 +683,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>272</x>
+                        <x>392</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -685,7 +726,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>275</x>
+                    <x>395</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -729,6 +770,56 @@
           </childObjects>
         </object>
         <object>
+          <name>UnitVisibility</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>660,4608</x>
+                <y>416,66797</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,06</x>
+                <y>0,06</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>UI/eyeNon</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>HiddenIndicator</type>
+              <active>True</active>
+              <markOffset>
+                <x>-22,8</x>
+                <y>-53,5</y>
+                <z>0</z>
+              </markOffset>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
           <name>Healthbar</name>
           <active>True</active>
           <cascadingActive>True</cascadingActive>
@@ -766,8 +857,8 @@
                 <z>0</z>
               </fillingOffset>
               <heartOffset>
-                <x>0</x>
-                <y>0</y>
+                <x>-68,5</x>
+                <y>-68,9</y>
                 <z>0</z>
               </heartOffset>
             </component>
@@ -782,8 +873,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>624,9683</x>
-                    <y>443,1894</y>
+                    <x>707,31226</x>
+                    <y>390,73627</y>
                     <z>0,1</z>
                   </position>
                   <rotation>
@@ -823,8 +914,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>626,16833</x>
-                    <y>445,8894</y>
+                    <x>708,51227</x>
+                    <y>393,43628</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -833,7 +924,7 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,6666667</x>
+                    <x>0,9</x>
                     <y>1</y>
                     <z>1</z>
                   </scale>
@@ -855,57 +946,48 @@
               </components>
               <childObjects></childObjects>
             </object>
-          </childObjects>
-        </object>
-        <object>
-          <name>UnitVisibility</name>
-          <active>True</active>
-          <cascadingActive>True</cascadingActive>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>737,10767</x>
-                <y>465,07202</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>0,06</x>
-                <y>0,06</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>SpiteRenderer</type>
+            <object>
+              <name>Heart</name>
               <active>False</active>
-              <useLocal>True</useLocal>
-              <sprite>UI/eyeNon</sprite>
-              <color>
-                <r>255</r>
-                <g>255</g>
-                <b>255</b>
-                <a>255</a>
-              </color>
-              <screenSizeX>1600</screenSizeX>
-              <screenSizeY>900</screenSizeY>
-            </component>
-            <component>
-              <type>HiddenIndicator</type>
-              <active>True</active>
-              <markOffset>
-                <x>-22,8</x>
-                <y>-53,5</y>
-                <z>0</z>
-              </markOffset>
-            </component>
-          </components>
-          <childObjects></childObjects>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>681,61224</x>
+                    <y>389,0363</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/heart</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
         </object>
       </childObjects>
     </object>
@@ -1044,7 +1126,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>272</x>
+                    <x>512</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -1084,7 +1166,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>272</x>
+                        <x>512</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -1127,7 +1209,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>275</x>
+                    <x>515</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -1171,6 +1253,56 @@
           </childObjects>
         </object>
         <object>
+          <name>UnitVisibility</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>769,77686</x>
+                <y>369,63455</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,06</x>
+                <y>0,06</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>UI/eyeNon</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>HiddenIndicator</type>
+              <active>True</active>
+              <markOffset>
+                <x>-22,8</x>
+                <y>-53,5</y>
+                <z>0</z>
+              </markOffset>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
           <name>Healthbar</name>
           <active>True</active>
           <cascadingActive>True</cascadingActive>
@@ -1208,8 +1340,8 @@
                 <z>0</z>
               </fillingOffset>
               <heartOffset>
-                <x>0</x>
-                <y>0</y>
+                <x>-68,5</x>
+                <y>-68,9</y>
                 <z>0</z>
               </heartOffset>
             </component>
@@ -1224,8 +1356,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>624,9683</x>
-                    <y>443,1894</y>
+                    <x>707,31226</x>
+                    <y>390,73627</y>
                     <z>0,1</z>
                   </position>
                   <rotation>
@@ -1265,8 +1397,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>626,16833</x>
-                    <y>445,8894</y>
+                    <x>708,51227</x>
+                    <y>393,43628</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -1275,7 +1407,7 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,6666667</x>
+                    <x>0,9</x>
                     <y>1</y>
                     <z>1</z>
                   </scale>
@@ -1297,57 +1429,48 @@
               </components>
               <childObjects></childObjects>
             </object>
-          </childObjects>
-        </object>
-        <object>
-          <name>UnitVisibility</name>
-          <active>True</active>
-          <cascadingActive>True</cascadingActive>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>737,10767</x>
-                <y>465,07202</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>0,06</x>
-                <y>0,06</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>SpiteRenderer</type>
+            <object>
+              <name>Heart</name>
               <active>False</active>
-              <useLocal>True</useLocal>
-              <sprite>UI/eyeNon</sprite>
-              <color>
-                <r>255</r>
-                <g>255</g>
-                <b>255</b>
-                <a>255</a>
-              </color>
-              <screenSizeX>1600</screenSizeX>
-              <screenSizeY>900</screenSizeY>
-            </component>
-            <component>
-              <type>HiddenIndicator</type>
-              <active>True</active>
-              <markOffset>
-                <x>-22,8</x>
-                <y>-53,5</y>
-                <z>0</z>
-              </markOffset>
-            </component>
-          </components>
-          <childObjects></childObjects>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>681,61224</x>
+                    <y>389,0363</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/heart</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
         </object>
       </childObjects>
     </object>
@@ -1486,7 +1609,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>272</x>
+                    <x>632</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -1526,7 +1649,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>272</x>
+                        <x>632</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -1569,7 +1692,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>275</x>
+                    <x>635</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -1613,6 +1736,56 @@
           </childObjects>
         </object>
         <object>
+          <name>UnitVisibility</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>718,57513</x>
+                <y>293,7532</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>0,06</x>
+                <y>0,06</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>SpiteRenderer</type>
+              <active>True</active>
+              <useLocal>True</useLocal>
+              <sprite>UI/eyeNon</sprite>
+              <color>
+                <r>255</r>
+                <g>255</g>
+                <b>255</b>
+                <a>255</a>
+              </color>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
+            </component>
+            <component>
+              <type>HiddenIndicator</type>
+              <active>True</active>
+              <markOffset>
+                <x>-22,8</x>
+                <y>-53,5</y>
+                <z>0</z>
+              </markOffset>
+            </component>
+          </components>
+          <childObjects></childObjects>
+        </object>
+        <object>
           <name>Healthbar</name>
           <active>True</active>
           <cascadingActive>True</cascadingActive>
@@ -1650,8 +1823,8 @@
                 <z>0</z>
               </fillingOffset>
               <heartOffset>
-                <x>0</x>
-                <y>0</y>
+                <x>-68,5</x>
+                <y>-68,9</y>
                 <z>0</z>
               </heartOffset>
             </component>
@@ -1666,8 +1839,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>624,9683</x>
-                    <y>443,1894</y>
+                    <x>707,31226</x>
+                    <y>390,73627</y>
                     <z>0,1</z>
                   </position>
                   <rotation>
@@ -1707,8 +1880,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>626,16833</x>
-                    <y>445,8894</y>
+                    <x>708,51227</x>
+                    <y>393,43628</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -1717,7 +1890,7 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,6666667</x>
+                    <x>0,9</x>
                     <y>1</y>
                     <z>1</z>
                   </scale>
@@ -1739,57 +1912,48 @@
               </components>
               <childObjects></childObjects>
             </object>
-          </childObjects>
-        </object>
-        <object>
-          <name>UnitVisibility</name>
-          <active>True</active>
-          <cascadingActive>True</cascadingActive>
-          <components>
-            <component>
-              <type>Transform</type>
-              <active>True</active>
-              <position>
-                <x>737,10767</x>
-                <y>465,07202</y>
-                <z>0</z>
-              </position>
-              <rotation>
-                <x>0</x>
-                <y>0</y>
-                <z>0</z>
-              </rotation>
-              <scale>
-                <x>0,06</x>
-                <y>0,06</y>
-                <z>1</z>
-              </scale>
-            </component>
-            <component>
-              <type>SpiteRenderer</type>
+            <object>
+              <name>Heart</name>
               <active>False</active>
-              <useLocal>True</useLocal>
-              <sprite>UI/eyeNon</sprite>
-              <color>
-                <r>255</r>
-                <g>255</g>
-                <b>255</b>
-                <a>255</a>
-              </color>
-              <screenSizeX>1600</screenSizeX>
-              <screenSizeY>900</screenSizeY>
-            </component>
-            <component>
-              <type>HiddenIndicator</type>
-              <active>True</active>
-              <markOffset>
-                <x>-22,8</x>
-                <y>-53,5</y>
-                <z>0</z>
-              </markOffset>
-            </component>
-          </components>
-          <childObjects></childObjects>
+              <cascadingActive>True</cascadingActive>
+              <components>
+                <component>
+                  <type>Transform</type>
+                  <active>True</active>
+                  <position>
+                    <x>681,61224</x>
+                    <y>389,0363</y>
+                    <z>0</z>
+                  </position>
+                  <rotation>
+                    <x>0</x>
+                    <y>0</y>
+                    <z>0</z>
+                  </rotation>
+                  <scale>
+                    <x>0,03</x>
+                    <y>0,03</y>
+                    <z>1</z>
+                  </scale>
+                </component>
+                <component>
+                  <type>SpiteRenderer</type>
+                  <active>True</active>
+                  <useLocal>True</useLocal>
+                  <sprite>UI/heart</sprite>
+                  <color>
+                    <r>255</r>
+                    <g>0</g>
+                    <b>0</b>
+                    <a>255</a>
+                  </color>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
+                </component>
+              </components>
+              <childObjects></childObjects>
+            </object>
+          </childObjects>
         </object>
       </childObjects>
     </object>
