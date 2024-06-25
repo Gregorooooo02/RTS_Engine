@@ -647,7 +647,7 @@ public class WorldRenderer : Component
 #if _WINDOWS
                     ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialUnits.xml");
 #else
-                    ParentObject.LoadPrefab("Prefabs/TutorialUnits.xml");
+                    ParentObject.LoadPrefab("Prefabs/WardrobeHero.xml");
 #endif
                     unitLocation = potentialLocation;
                     foreach (GameObject unit in ParentObject.Children.Last().Children)
@@ -829,10 +829,10 @@ public class WorldRenderer : Component
                                 switch (i)
                                 {
                                     case 0:
-                                        name = "Chair.xml";
+                                        name = "WardrobeHero.xml";
                                         break;
                                     case 1:
-                                        name = "Cupboard.xml";
+                                        name = "CupboardHero.xml";
                                        break;
                                    case 2:
                                        name = "Minion.xml";
@@ -844,13 +844,12 @@ public class WorldRenderer : Component
 #else
                                 ParentObject.LoadPrefab("Prefabs/" + name);
 #endif
-                                
-                                //foreach (GameObject unit in ParentObject.Children.Last().Children)
-                                //{
-                                //    CorrectObjectPosition(unit, location + (Vector2.One * 5.0f * (i - 1)));
-                                //}
-                                CorrectObjectPosition(ParentObject.Children.Last(),
-                                location + (Vector2.One * 5.0f * (i - 1)));
+                                foreach (GameObject unit in ParentObject.Children.Last().Children)
+                                {
+                                    CorrectObjectPosition(unit, location + (Vector2.One * 10f * (i - 1)));
+                                }
+                                // CorrectObjectPosition(ParentObject.Children.Last(),
+                                // location + (Vector2.One * 5.0f * (i - 1)));
                             }
                             unitsMask >>= 1;
                         }

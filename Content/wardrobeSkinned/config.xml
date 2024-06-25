@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<multimesh>True</multimesh>
+	<meshes>4</meshes>
+	<lod>
+		<used>False</used>
+		<levels>1</levels>
+	</lod>
+</config>
