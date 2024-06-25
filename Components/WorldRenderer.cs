@@ -530,6 +530,54 @@ public class WorldRenderer : Component
         }
     }
 
+    private Vector3 CorrectCentroidPosition(Vector3 centroid, float minDistanceToBorder)
+    {
+        int maxSize = MapNodes.GetLength(0);
+        float toXBorder = maxSize - centroid.X;
+        float toZBorder = maxSize - centroid.Z;
+
+        if (toXBorder < minDistanceToBorder)
+        {
+            centroid.X -= (minDistanceToBorder - toXBorder);
+        }
+
+        if (centroid.X < minDistanceToBorder)
+        {
+            centroid.X += (minDistanceToBorder - centroid.X);
+        }
+
+        if (toZBorder < minDistanceToBorder)
+        {
+            centroid.Z -= (minDistanceToBorder - toZBorder);
+        }
+        
+        if (centroid.Z < minDistanceToBorder)
+        {
+            centroid.Z += (minDistanceToBorder - centroid.Z);
+        }
+
+        return centroid;
+    }
+
+    private bool LocationToCloseToBorder(Vector2 location, float minDistance)
+    {
+        if (location.X < minDistance || location.Y < minDistance)
+        {
+            return true;
+        }
+
+        int maxSize = MapNodes.GetLength(0);
+        float toXBorder = maxSize - location.X;
+        float toZBorder = maxSize - location.Y;
+
+        if (toXBorder < minDistance || toZBorder < minDistance)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private bool PlaceFeatures(Dictionary<Vector2, List<Vector2>> voronoiRegions, bool tutorial = false)
     {
         float bottomGrass = (globalMaxHeight - globalMinHeight) * 0.16f;
@@ -610,6 +658,7 @@ public class WorldRenderer : Component
                 var region = kvp.Value;
                 
                 Vector3 centroid = CalculateCentroid(region);
+                centroid = CorrectCentroidPosition(centroid, 20);
                 Vector2 location = new Vector2(centroid.X, centroid.Z);
                 
                 float height = PickingManager.InterpolateWorldHeight(location, this);
@@ -639,6 +688,7 @@ public class WorldRenderer : Component
             {
                 Vector2 direction = CivilianWander.RandomUnitVector2();
                 Vector2 potentialLocation = tutorialVillageLocation + direction * minVillageDistance;
+                if (LocationToCloseToBorder(potentialLocation, 7.5f)) continue;
                 //Check if potential location is valid for spawning units
                 float height = PickingManager.InterpolateWorldHeight(potentialLocation, this);
                 if (height > minHeight && height < maxHeight)
@@ -761,6 +811,7 @@ public class WorldRenderer : Component
                 bool skip = false;
                 
                 Vector3 centroid = CalculateCentroid(region);
+                centroid = CorrectCentroidPosition(centroid, 20);
                 Vector2 location = new Vector2(centroid.X, centroid.Z);
                 foreach (Vector2 position in villagePositions)
                 {
@@ -806,6 +857,7 @@ public class WorldRenderer : Component
                     bool skip = false;
    
                     Vector3 centroid = CalculateCentroid(region);
+                    centroid = CorrectCentroidPosition(centroid, 20);
                     Vector2 location = new Vector2(centroid.X, centroid.Z);
                     foreach (Vector2 position in villagePositions)
                     {
