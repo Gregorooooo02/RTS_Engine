@@ -835,7 +835,7 @@ public class WorldRenderer : Component
                                         name = "CupboardHero.xml";
                                        break;
                                    case 2:
-                                       name = "Minion.xml";
+                                       name = "ChandelierHero.xml";
                                        break;
                                }
                                if (name == null) continue;

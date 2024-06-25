@@ -463,7 +463,7 @@
 /processorParam:BakeMeshTransforms=True
 /processorParam:GenerateTangentFrame=False
 /processorParam:ModelRotate=0, 0, 0
-/processorParam:ModelScale=1
+/processorParam:ModelScale=0.0015
 /build:chandelierSkinned/chandelierSkinned.fbx
 
 #begin chandelierSkinned/metalness.png
