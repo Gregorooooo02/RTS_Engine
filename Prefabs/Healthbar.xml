@@ -2,6 +2,7 @@
 <rootObject>
   <name>Healthbar</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -35,19 +36,25 @@
         <y>-64,5</y>
         <z>0</z>
       </fillingOffset>
+      <heartOffset>
+        <x>-68,5</x>
+        <y>-68,9</y>
+        <z>0</z>
+      </heartOffset>
     </component>
   </components>
   <childObjects>
     <object>
       <name>Background</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>893,8656</x>
-            <y>433,94464</y>
+            <x>589,34845</x>
+            <y>354,1468</y>
             <z>0,1</z>
           </position>
           <rotation>
@@ -56,9 +63,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,81600004</x>
-            <y>1,14</y>
-            <z>1,2</z>
+            <x>0,68</x>
+            <y>0,95</y>
+            <z>1</z>
           </scale>
         </component>
         <component>
@@ -72,8 +79,8 @@
             <b>255</b>
             <a>255</a>
           </color>
-          <screenSizeX>1920</screenSizeX>
-          <screenSizeY>1080</screenSizeY>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
         </component>
       </components>
       <childObjects></childObjects>
@@ -81,13 +88,14 @@
     <object>
       <name>Filling</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
           <active>True</active>
           <position>
-            <x>895,0656</x>
-            <y>436,64465</y>
+            <x>590,54846</x>
+            <y>356,84677</y>
             <z>0</z>
           </position>
           <rotation>
@@ -96,9 +104,9 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>1,1880001</x>
-            <y>1,2</y>
-            <z>1,2</z>
+            <x>0,98</x>
+            <y>1</y>
+            <z>1</z>
           </scale>
         </component>
         <component>
@@ -112,8 +120,49 @@
             <b>255</b>
             <a>255</a>
           </color>
-          <screenSizeX>1920</screenSizeX>
-          <screenSizeY>1080</screenSizeY>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>Heart</name>
+      <active>True</active>
+      <cascadingActive>True</cascadingActive>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>563,64844</x>
+            <y>352,44678</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>0,03</x>
+            <y>0,03</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>SpiteRenderer</type>
+          <active>True</active>
+          <useLocal>True</useLocal>
+          <sprite>UI/heart</sprite>
+          <color>
+            <r>255</r>
+            <g>0</g>
+            <b>0</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
         </component>
       </components>
       <childObjects></childObjects>
