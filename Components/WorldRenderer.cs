@@ -74,7 +74,7 @@ public class WorldRenderer : Component
 
     private Color[] _scannedHeightData;
 
-    private float[] rockOffsets = { 1.0f, 1.0f, 1.0f };
+    private float[] rockOffsets = { 0.5f, 1.0f, 1.0f };
     
     private float globalMinHeight = float.MaxValue;
     private float globalMaxHeight = float.MinValue;
@@ -609,18 +609,17 @@ public class WorldRenderer : Component
         trees.AddComponent<InstancedRendererController>();
         trees.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
         
-        //TODO: Load models for rocks
         ParentObject.AddChildObject(rocks1);
         rocks1.AddComponent<InstancedRendererController>();
-        //rocks1.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+        rocks1.GetComponent<InstancedRendererController>().LoadModel("Env/rocks/rock2");
         
         ParentObject.AddChildObject(rocks2);
         rocks2.AddComponent<InstancedRendererController>();
-        //rocks2.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+        rocks2.GetComponent<InstancedRendererController>().LoadModel("Env/rocks/rock3");
         
         ParentObject.AddChildObject(rocks3);
         rocks3.AddComponent<InstancedRendererController>();
-        //rocks3.GetComponent<InstancedRendererController>().LoadModel("Env/Trees/drzewoiglaste");
+        rocks3.GetComponent<InstancedRendererController>().LoadModel("Env/rocks/rock4");
 
         ParentObject.AddChildObject(villages);
         villages.Name = "Villages";

@@ -49,6 +49,11 @@
             <z>1</z>
           </scale>
         </component>
+        <component>
+          <type>Village</type>
+          <active>True</active>
+          <attentionBonus>40</attentionBonus>
+        </component>
       </components>
       <childObjects>
         <object>
@@ -89,11 +94,12 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -149,8 +155,8 @@
                     <z>0</z>
                   </fillingOffset>
                   <heartOffset>
-                    <x>0</x>
-                    <y>0</y>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
                     <z>0</z>
                   </heartOffset>
                 </component>
@@ -165,8 +171,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>665,17993</x>
-                        <y>267,53387</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -175,9 +181,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,81600004</x>
-                        <y>1,14</y>
-                        <z>1,2</z>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -191,8 +197,8 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -206,8 +212,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>666,37994</x>
-                        <y>270,2339</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -216,9 +222,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>1,1880001</x>
-                        <y>1,2</y>
-                        <z>1,2</z>
+                        <x>0,9</x>
+                        <y>1</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -232,8 +238,49 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -280,11 +327,12 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -340,8 +388,8 @@
                     <z>0</z>
                   </fillingOffset>
                   <heartOffset>
-                    <x>0</x>
-                    <y>0</y>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
                     <z>0</z>
                   </heartOffset>
                 </component>
@@ -356,8 +404,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>665,17993</x>
-                        <y>267,53387</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -366,9 +414,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,81600004</x>
-                        <y>1,14</y>
-                        <z>1,2</z>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -382,8 +430,8 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -397,8 +445,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>666,37994</x>
-                        <y>270,2339</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -407,9 +455,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>1,1880001</x>
-                        <y>1,2</y>
-                        <z>1,2</z>
+                        <x>0,9</x>
+                        <y>1</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -423,8 +471,49 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -471,11 +560,12 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -531,8 +621,8 @@
                     <z>0</z>
                   </fillingOffset>
                   <heartOffset>
-                    <x>0</x>
-                    <y>0</y>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
                     <z>0</z>
                   </heartOffset>
                 </component>
@@ -547,8 +637,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>665,17993</x>
-                        <y>267,53387</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -557,9 +647,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,81600004</x>
-                        <y>1,14</y>
-                        <z>1,2</z>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -573,8 +663,8 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -588,8 +678,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>666,37994</x>
-                        <y>270,2339</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -598,9 +688,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>1,1880001</x>
-                        <y>1,2</y>
-                        <z>1,2</z>
+                        <x>0,9</x>
+                        <y>1</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -614,8 +704,49 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -662,11 +793,12 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -722,8 +854,8 @@
                     <z>0</z>
                   </fillingOffset>
                   <heartOffset>
-                    <x>0</x>
-                    <y>0</y>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
                     <z>0</z>
                   </heartOffset>
                 </component>
@@ -738,8 +870,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>665,17993</x>
-                        <y>267,53387</y>
+                        <x>707,31226</x>
+                        <y>390,73627</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -748,9 +880,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,81600004</x>
-                        <y>1,14</y>
-                        <z>1,2</z>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -764,8 +896,8 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -779,8 +911,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>666,37994</x>
-                        <y>270,2339</y>
+                        <x>708,51227</x>
+                        <y>393,43628</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -789,9 +921,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>1,1880001</x>
-                        <y>1,2</y>
-                        <z>1,2</z>
+                        <x>0,9</x>
+                        <y>1</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -805,8 +937,49 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>681,61224</x>
+                        <y>389,0363</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -814,6 +987,39 @@
               </childObjects>
             </object>
           </childObjects>
+        </object>
+        <object>
+          <name>FogReveler</name>
+          <active>True</active>
+          <cascadingActive>True</cascadingActive>
+          <components>
+            <component>
+              <type>Transform</type>
+              <active>True</active>
+              <position>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </position>
+              <rotation>
+                <x>0</x>
+                <y>0</y>
+                <z>0</z>
+              </rotation>
+              <scale>
+                <x>1</x>
+                <y>1</y>
+                <z>1</z>
+              </scale>
+            </component>
+            <component>
+              <type>FogReveler</type>
+              <active>True</active>
+              <oneUse>True</oneUse>
+              <revealRadius>40</revealRadius>
+            </component>
+          </components>
+          <childObjects></childObjects>
         </object>
       </childObjects>
     </object>
@@ -1219,6 +1425,7 @@
                   <meatAward>10</meatAward>
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
+                  <killAwarenessCost>2,5</killAwarenessCost>
                   <deathFrame>0</deathFrame>
                   <attackFrames>
                     <count>0</count>
@@ -1940,6 +2147,7 @@
                   <meatAward>10</meatAward>
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
+                  <killAwarenessCost>2,5</killAwarenessCost>
                   <deathFrame>0</deathFrame>
                   <attackFrames>
                     <count>0</count>
@@ -2661,6 +2869,7 @@
                   <meatAward>10</meatAward>
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
+                  <killAwarenessCost>2,5</killAwarenessCost>
                   <deathFrame>0</deathFrame>
                   <attackFrames>
                     <count>0</count>
@@ -3384,6 +3593,7 @@
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -3409,6 +3619,7 @@
                 <fledDistance>50</fledDistance>
                 <fleeingDistance>40</fleeingDistance>
                 <repathDelay>2</repathDelay>
+                <fledPenalty>10</fledPenalty>
               </agentData>
             </component>
             <component>
@@ -3859,6 +4070,7 @@
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -3884,6 +4096,7 @@
                 <fledDistance>50</fledDistance>
                 <fleeingDistance>40</fleeingDistance>
                 <repathDelay>2</repathDelay>
+                <fledPenalty>10</fledPenalty>
               </agentData>
             </component>
             <component>
@@ -4334,6 +4547,7 @@
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -4359,6 +4573,7 @@
                 <fledDistance>50</fledDistance>
                 <fleeingDistance>40</fleeingDistance>
                 <repathDelay>2</repathDelay>
+                <fledPenalty>10</fledPenalty>
               </agentData>
             </component>
             <component>
@@ -4809,6 +5024,7 @@
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
+              <killAwarenessCost>2,5</killAwarenessCost>
               <deathFrame>0</deathFrame>
               <attackFrames>
                 <count>0</count>
@@ -4834,6 +5050,7 @@
                 <fledDistance>50</fledDistance>
                 <fleeingDistance>40</fleeingDistance>
                 <repathDelay>2</repathDelay>
+                <fledPenalty>10</fledPenalty>
               </agentData>
             </component>
             <component>
