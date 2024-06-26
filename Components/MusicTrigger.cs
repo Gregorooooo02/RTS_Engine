@@ -23,6 +23,7 @@ public class MusicTrigger : Component
         switch (_track)
         {
             case MusicTrack.Camp:
+                if(AudioManager.CurrentlyPlayedTheme == AudioManager.BaseThemeInstance) return;
                 AudioManager.CurrentlyPlayedTheme?.Stop();
                 AudioManager.CurrentlyPlayedTheme = AudioManager.BaseThemeInstance;
                 AudioManager.CurrentlyPlayedTheme.IsLooped = true;
@@ -30,6 +31,7 @@ public class MusicTrigger : Component
                 break;
             
             case MusicTrack.Mission:
+                if(AudioManager.CurrentlyPlayedTheme == AudioManager.MissionThemeInstance) return;
                 AudioManager.CurrentlyPlayedTheme?.Stop();
                 AudioManager.CurrentlyPlayedTheme = AudioManager.MissionThemeInstance;
                 AudioManager.CurrentlyPlayedTheme.IsLooped = true;
@@ -38,9 +40,9 @@ public class MusicTrigger : Component
             
             case MusicTrack.None:
                 AudioManager.CurrentlyPlayedTheme?.Stop();
+                AudioManager.CurrentlyPlayedTheme = null;
                 break;
         }
-        Active = false;
     }
 
     public override void Initialize()

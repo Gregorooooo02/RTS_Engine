@@ -83,6 +83,12 @@ public class SceneManager
                             missionRoot.LoadPrefab("Prefabs/Marker.xml");
 #endif
                         
+#if _WINDOWS
+                            missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/MissionMusic.xml");
+#else
+                            missionRoot.LoadPrefab("Prefabs/MissionMusic.xml");
+#endif
+                            
                             AddScene(missionScene);
 
                             Globals.PickingManager.SinglePickingActive = true;
