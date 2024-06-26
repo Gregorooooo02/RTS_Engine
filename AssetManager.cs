@@ -147,6 +147,7 @@ public class AssetManager
     
     //THEMES
     public static SoundEffect MissionTheme { get; private set; }
+    public static SoundEffect BaseTheme { get; private set; }
     
     private class ModelPointer
     {
@@ -331,6 +332,7 @@ public class AssetManager
         WardrobeMove.Add(_content.Load<SoundEffect>("Sounds/wardrobe_move3"));
         
         MissionTheme = _content.Load<SoundEffect>("Sounds/Mission_Theme");
+        BaseTheme = _content.Load<SoundEffect>("Sounds/Base_Theme");
         
         //DefaultHeightMaps = new List<Texture2D>
         //{
