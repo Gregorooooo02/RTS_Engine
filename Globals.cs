@@ -32,6 +32,14 @@ namespace RTS_Engine
         Civilian,
         Knight
     }
+    
+    public enum SceneType
+    {
+        MISSION,
+        BASE
+    }
+    
+    
 
     public enum ScreenSize
     {
@@ -76,6 +84,7 @@ namespace RTS_Engine
         
         //Audio
         public static AudioListener Listener = new AudioListener();
+        public static SceneType CurrentSceneType = SceneType.BASE;
         
         #region Shaders
 

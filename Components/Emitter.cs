@@ -18,7 +18,6 @@ public class Emitter : Component
     private List<SoundEffect> Idle = new List<SoundEffect>();
     private List<SoundEffect> Move = new List<SoundEffect>();
     private List<SoundEffect> Attack = new List<SoundEffect>();
-    private List<SoundEffect> Wander = new List<SoundEffect>();
     private List<SoundEffect> Damage = new List<SoundEffect>();
     private List<SoundEffect> Flee = new List<SoundEffect>();
     private float volume;
@@ -27,7 +26,6 @@ public class Emitter : Component
     private SoundEffectInstance IdleInstance;
     private SoundEffectInstance MoveInstance;
     private SoundEffectInstance AttackInstance;
-    private SoundEffectInstance WanderInstance;
     private SoundEffectInstance DamageInstance;
     private SoundEffectInstance FleeInstance;
     
@@ -92,25 +90,22 @@ public class Emitter : Component
                 SetFurnitureInstances();
                 break;
             case UnitType.Archer:
-                Flee = AssetManager.ArcherFlee;
                 Idle = AssetManager.ArcherIdle;
-                Wander = AssetManager.ArcherWander;
+                Attack = AssetManager.ArcherAttack;
                 Damage = AssetManager.ArcherDamage;
-                SetHumanInstances();
+                SetKnightArcherInstances();
                 break;
             case UnitType.Civilian:
                 Flee = AssetManager.CivilianFlee;
                 Idle = AssetManager.CivilianIdle;
-                Wander = AssetManager.CivilianWander;
                 Damage = AssetManager.CivilianDamage;
-                SetHumanInstances();
+                SetCivilianInstances();
                 break;
             case UnitType.Knight:
-                Flee = AssetManager.KnightFlee;
                 Idle = AssetManager.KnightIdle;
-                Wander = AssetManager.KnightWander;
+                Attack = AssetManager.KnightAttack;
                 Damage = AssetManager.KnightDamage;
-                SetHumanInstances();
+                SetKnightArcherInstances();
                 break;
             default:
                 Console.WriteLine("No sound effect for this unit type");
@@ -124,12 +119,18 @@ public class Emitter : Component
             AttackInstance = RandomSound(Attack).CreateInstance();
         }
 
-        void SetHumanInstances()
+        void SetKnightArcherInstances()
         {
             IdleInstance = RandomSound(Idle).CreateInstance();
-            FleeInstance = RandomSound(Flee).CreateInstance();
-            WanderInstance = RandomSound(Wander).CreateInstance();
+            AttackInstance = RandomSound(Attack).CreateInstance();
             DamageInstance = RandomSound(Damage).CreateInstance();
+        }
+
+        void SetCivilianInstances()
+        {
+            DamageInstance = RandomSound(Damage).CreateInstance();
+            FleeInstance = RandomSound(Flee).CreateInstance();
+            IdleInstance = RandomSound(Idle).CreateInstance();
         }
     }
 
@@ -169,6 +170,18 @@ public class Emitter : Component
         DamageInstance.Play();
     }
 
+    public void PlayFlee()
+    {
+        FleeInstance = RandomSound(Flee).CreateInstance();
+        FleeInstance.Play();
+    }
+    
+    public void PlayDamage()
+    {
+        DamageInstance = RandomSound(Damage).CreateInstance();
+        DamageInstance.Play();
+    }
+    
     public void PlayFlee()
     {
         FleeInstance = RandomSound(Flee).CreateInstance();
@@ -253,6 +266,15 @@ public class Emitter : Component
                 }
             }
             
+            if(ImGui.Button("Archer"))
+                SetType(UnitType.Archer);
+            
+            if(ImGui.Button("Civilian"))
+                SetType(UnitType.Civilian);
+            
+            if(ImGui.Button("Knight"))
+                SetType(UnitType.Knight);
+            
             ImGui.Text("Unit type: " + Type);
             
             if (ImGui.Button("PlayIdle"))
@@ -268,6 +290,16 @@ public class Emitter : Component
             if (ImGui.Button("PlayAttack"))
             {
                 PlayAttack();
+            }
+            
+            if (ImGui.Button("PlayDamage"))
+            {
+                PlayDamage();
+            }
+            
+            if (ImGui.Button("PlayFlee"))
+            {
+                PlayFlee();
             }
 
             if (ImGui.DragFloat("Volume", ref volume, 0.01f, 0f, 1f))

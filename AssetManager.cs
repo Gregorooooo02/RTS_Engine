@@ -128,25 +128,23 @@ public class AssetManager
     public static List<SoundEffect> WardrobeAttack = new List<SoundEffect>();
     
     //ARCHER
-    public static List<SoundEffect> ArcherFlee = new List<SoundEffect>();
+    public static List<SoundEffect> ArcherAttack = new List<SoundEffect>();
     public static List<SoundEffect> ArcherIdle = new List<SoundEffect>();
-    public static List<SoundEffect> ArcherWander = new List<SoundEffect>();
     public static List<SoundEffect> ArcherDamage = new List<SoundEffect>();
     
     //CIVILIAN
     public static List<SoundEffect> CivilianFlee = new List<SoundEffect>();
     public static List<SoundEffect> CivilianIdle = new List<SoundEffect>();
-    public static List<SoundEffect> CivilianWander = new List<SoundEffect>();
     public static List<SoundEffect> CivilianDamage = new List<SoundEffect>();
     
     //KNIGHT
-    public static List<SoundEffect> KnightFlee = new List<SoundEffect>();
+    public static List<SoundEffect> KnightAttack = new List<SoundEffect>();
     public static List<SoundEffect> KnightIdle = new List<SoundEffect>();
-    public static List<SoundEffect> KnightWander = new List<SoundEffect>();
     public static List<SoundEffect> KnightDamage = new List<SoundEffect>();
     
     //THEMES
     public static SoundEffect MissionTheme { get; private set; }
+    public static SoundEffect BaseTheme { get; private set; }
     
     private class ModelPointer
     {
@@ -330,7 +328,58 @@ public class AssetManager
         WardrobeMove.Add(_content.Load<SoundEffect>("Sounds/wardrobe_move2"));
         WardrobeMove.Add(_content.Load<SoundEffect>("Sounds/wardrobe_move3"));
         
+        //ARCHER
+        ArcherAttack.Add(_content.Load<SoundEffect>("Sounds/archer_attack1"));
+        ArcherAttack.Add(_content.Load<SoundEffect>("Sounds/archer_attack2"));
+        ArcherAttack.Add(_content.Load<SoundEffect>("Sounds/archer_attack3"));
+        
+        ArcherDamage.Add(_content.Load<SoundEffect>("Sounds/archer_damage1"));
+        ArcherDamage.Add(_content.Load<SoundEffect>("Sounds/archer_damage2"));
+        ArcherDamage.Add(_content.Load<SoundEffect>("Sounds/archer_damage3"));
+        ArcherDamage.Add(_content.Load<SoundEffect>("Sounds/archer_damage4"));
+        ArcherDamage.Add(_content.Load<SoundEffect>("Sounds/archer_damage5"));
+        
+        ArcherIdle.Add(_content.Load<SoundEffect>("Sounds/archer_idle1"));
+        ArcherIdle.Add(_content.Load<SoundEffect>("Sounds/archer_idle2"));
+        ArcherIdle.Add(_content.Load<SoundEffect>("Sounds/archer_idle3"));
+        ArcherIdle.Add(_content.Load<SoundEffect>("Sounds/archer_idle4"));
+        
+        //CIVILIAN
+        CivilianDamage.Add(_content.Load<SoundEffect>("Sounds/civilian_damage1"));
+        CivilianDamage.Add(_content.Load<SoundEffect>("Sounds/civilian_damage2"));
+        CivilianDamage.Add(_content.Load<SoundEffect>("Sounds/civilian_damage3"));
+        CivilianDamage.Add(_content.Load<SoundEffect>("Sounds/civilian_damage4"));
+        CivilianDamage.Add(_content.Load<SoundEffect>("Sounds/civilian_damage5"));
+        
+        CivilianFlee.Add(_content.Load<SoundEffect>("Sounds/civilian_flee1"));
+        CivilianFlee.Add(_content.Load<SoundEffect>("Sounds/civilian_flee2"));
+        CivilianFlee.Add(_content.Load<SoundEffect>("Sounds/civilian_flee3"));
+        CivilianFlee.Add(_content.Load<SoundEffect>("Sounds/civilian_flee4"));
+        
+        CivilianIdle.Add(_content.Load<SoundEffect>("Sounds/civilian_idle1"));
+        CivilianIdle.Add(_content.Load<SoundEffect>("Sounds/civilian_idle2"));
+        CivilianIdle.Add(_content.Load<SoundEffect>("Sounds/civilian_idle3"));
+        CivilianIdle.Add(_content.Load<SoundEffect>("Sounds/civilian_idle4"));
+        
+        //KNIGHT
+        KnightAttack.Add(_content.Load<SoundEffect>("Sounds/knight_attack1"));
+        KnightAttack.Add(_content.Load<SoundEffect>("Sounds/knight_attack2"));
+        KnightAttack.Add(_content.Load<SoundEffect>("Sounds/knight_attack3"));
+        KnightAttack.Add(_content.Load<SoundEffect>("Sounds/knight_attack4"));
+        KnightAttack.Add(_content.Load<SoundEffect>("Sounds/knight_attack5"));
+        
+        KnightDamage.Add(_content.Load<SoundEffect>("Sounds/knight_damage1"));
+        KnightDamage.Add(_content.Load<SoundEffect>("Sounds/knight_damage2"));
+        KnightDamage.Add(_content.Load<SoundEffect>("Sounds/knight_damage3"));
+        KnightDamage.Add(_content.Load<SoundEffect>("Sounds/knight_damage4"));
+        
+        KnightIdle.Add(_content.Load<SoundEffect>("Sounds/knight_idle1"));
+        KnightIdle.Add(_content.Load<SoundEffect>("Sounds/knight_idle2"));
+        KnightIdle.Add(_content.Load<SoundEffect>("Sounds/knight_idle3"));
+        KnightIdle.Add(_content.Load<SoundEffect>("Sounds/knight_idle4"));
+        
         MissionTheme = _content.Load<SoundEffect>("Sounds/Mission_Theme");
+        BaseTheme = _content.Load<SoundEffect>("Sounds/Furninotura Camp");
         
         //DefaultHeightMaps = new List<Texture2D>
         //{
