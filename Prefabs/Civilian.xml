@@ -14,7 +14,7 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>271,4434</y>
+        <y>285,79996</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -33,7 +33,8 @@
       <meatAward>10</meatAward>
       <heightOffset>2</heightOffset>
       <directionOffset>180</directionOffset>
-      <deathFrame>60</deathFrame>
+      <killAwarenessCost>2,5</killAwarenessCost>
+      <deathFrame>0</deathFrame>
       <attackFrames>
         <count>0</count>
       </attackFrames>
@@ -58,6 +59,7 @@
         <fledDistance>50</fledDistance>
         <fleeingDistance>40</fleeingDistance>
         <repathDelay>2</repathDelay>
+        <fledPenalty>10</fledPenalty>
       </agentData>
     </component>
     <component>
@@ -68,7 +70,7 @@
         <path>peasantSkinned</path>
         <technique>PBR_Skinned</technique>
         <speed>1</speed>
-        <currentClip>4</currentClip>
+        <currentClip>3</currentClip>
         <translationInterpolation>Linear</translationInterpolation>
         <orientationInterpolation>Linear</orientationInterpolation>
         <scaleInterpolation>Linear</scaleInterpolation>
@@ -79,6 +81,13 @@
       <type>Pickable</type>
       <active>True</active>
       <pickableType>Enemy</pickableType>
+    </component>
+    <component>
+      <type>Emitter</type>
+      <active>True</active>
+      <emitterType>Civilian</emitterType>
+      <emitterVolume>1</emitterVolume>
+      <emitterScale>5</emitterScale>
     </component>
   </components>
   <childObjects>
@@ -441,7 +450,7 @@
             <z>0</z>
           </rotation>
           <scale>
-            <x>0,08</x>
+            <x>0,080000006</x>
             <y>0,07</y>
             <z>1</z>
           </scale>
