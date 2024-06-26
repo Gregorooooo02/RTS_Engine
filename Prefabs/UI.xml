@@ -720,7 +720,7 @@
               <reward>100</reward>
               <rewardType2>Puzzle</rewardType2>
               <reward2>9</reward2>
-              <description>Kill 4 civilians </description>
+              <description>Consume 4 peasants </description>
               <target>Civilian</target>
             </component>
           </components>
@@ -753,7 +753,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Kill 4 civilians  (0/4)</contents>
+                  <contents>Consume 4 peasants  (0/4)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>
@@ -816,7 +816,7 @@
               <reward>100</reward>
               <rewardType2>Puzzle</rewardType2>
               <reward2>9</reward2>
-              <description>Kill 3 soldiers </description>
+              <description>Consume 3 soldiers </description>
               <target>Soldier</target>
             </component>
           </components>
@@ -849,7 +849,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Kill 3 soldiers  (0/3)</contents>
+                  <contents>Consume 3 soldiers  (0/3)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>

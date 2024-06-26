@@ -1157,7 +1157,7 @@
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
                   <killAwarenessCost>2,5</killAwarenessCost>
-                  <deathFrame>0</deathFrame>
+                  <deathFrame>70</deathFrame>
                   <attackFrames>
                     <count>0</count>
                   </attackFrames>
@@ -1886,7 +1886,7 @@
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
                   <killAwarenessCost>2,5</killAwarenessCost>
-                  <deathFrame>0</deathFrame>
+                  <deathFrame>70</deathFrame>
                   <attackFrames>
                     <count>0</count>
                   </attackFrames>
@@ -2615,7 +2615,7 @@
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
                   <killAwarenessCost>2,5</killAwarenessCost>
-                  <deathFrame>0</deathFrame>
+                  <deathFrame>70</deathFrame>
                   <attackFrames>
                     <count>0</count>
                   </attackFrames>
@@ -3344,7 +3344,7 @@
                   <heightOffset>1,7</heightOffset>
                   <directionOffset>180</directionOffset>
                   <killAwarenessCost>2,5</killAwarenessCost>
-                  <deathFrame>0</deathFrame>
+                  <deathFrame>70</deathFrame>
                   <attackFrames>
                     <count>0</count>
                   </attackFrames>
@@ -4075,7 +4075,7 @@
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <killAwarenessCost>2,5</killAwarenessCost>
-              <deathFrame>0</deathFrame>
+              <deathFrame>70</deathFrame>
               <attackFrames>
                 <count>0</count>
               </attackFrames>
@@ -4559,7 +4559,7 @@
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <killAwarenessCost>2,5</killAwarenessCost>
-              <deathFrame>0</deathFrame>
+              <deathFrame>70</deathFrame>
               <attackFrames>
                 <count>0</count>
               </attackFrames>
@@ -5043,7 +5043,7 @@
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <killAwarenessCost>2,5</killAwarenessCost>
-              <deathFrame>0</deathFrame>
+              <deathFrame>70</deathFrame>
               <attackFrames>
                 <count>0</count>
               </attackFrames>
@@ -5527,7 +5527,7 @@
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <killAwarenessCost>2,5</killAwarenessCost>
-              <deathFrame>0</deathFrame>
+              <deathFrame>70</deathFrame>
               <attackFrames>
                 <count>0</count>
               </attackFrames>
@@ -6011,7 +6011,7 @@
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <killAwarenessCost>2,5</killAwarenessCost>
-              <deathFrame>0</deathFrame>
+              <deathFrame>70</deathFrame>
               <attackFrames>
                 <count>0</count>
               </attackFrames>
@@ -6495,7 +6495,7 @@
               <heightOffset>2</heightOffset>
               <directionOffset>180</directionOffset>
               <killAwarenessCost>2,5</killAwarenessCost>
-              <deathFrame>0</deathFrame>
+              <deathFrame>70</deathFrame>
               <attackFrames>
                 <count>0</count>
               </attackFrames>
