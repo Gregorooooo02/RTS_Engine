@@ -630,7 +630,7 @@ public class WorldRenderer : Component
         List<Vector2> villagePositions = new();
 
         //How many village prefabs there are
-        int villageVariants = 1;
+        int villageVariants = 3;
         //List of already used variants
         List<int> availableVariants = new();
 
