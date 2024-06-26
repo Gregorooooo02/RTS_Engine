@@ -86,7 +86,7 @@
       <type>Emitter</type>
       <active>True</active>
       <emitterType>Civilian</emitterType>
-      <emitterVolume>0.3</emitterVolume>
+      <emitterVolume>0.1</emitterVolume>
       <emitterScale>10</emitterScale>
     </component>
   </components>

@@ -94,8 +94,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>3</separationDistance>
-              <attackingRadius>4</attackingRadius>
+              <separationDistance>5,75</separationDistance>
+              <attackingRadius>1</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -105,8 +105,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>100</hp>
-                <maxHp>100</maxHp>
+                <hp>200</hp>
+                <maxHp>200</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
@@ -327,8 +327,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>3</separationDistance>
-              <attackingRadius>4</attackingRadius>
+              <separationDistance>5,75</separationDistance>
+              <attackingRadius>1</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -338,8 +338,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>100</hp>
-                <maxHp>100</maxHp>
+                <hp>200</hp>
+                <maxHp>200</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
@@ -560,8 +560,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>3</separationDistance>
-              <attackingRadius>4</attackingRadius>
+              <separationDistance>5,75</separationDistance>
+              <attackingRadius>1</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -571,8 +571,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>100</hp>
-                <maxHp>100</maxHp>
+                <hp>200</hp>
+                <maxHp>200</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
@@ -793,8 +793,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>3</separationDistance>
-              <attackingRadius>4</attackingRadius>
+              <separationDistance>5,75</separationDistance>
+              <attackingRadius>1</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -804,8 +804,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>100</hp>
-                <maxHp>100</maxHp>
+                <hp>200</hp>
+                <maxHp>200</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
@@ -1431,8 +1431,8 @@
                     <count>0</count>
                   </attackFrames>
                   <agentData>
-                    <hp>100</hp>
-                    <maxHp>100</maxHp>
+                    <hp>200</hp>
+                    <maxHp>200</maxHp>
                     <alive>True</alive>
                     <pathId>Path1_1</pathId>
                     <patrollingType>Circle</patrollingType>
@@ -1479,6 +1479,13 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
+                </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Knight</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>
@@ -2153,8 +2160,8 @@
                     <count>0</count>
                   </attackFrames>
                   <agentData>
-                    <hp>100</hp>
-                    <maxHp>100</maxHp>
+                    <hp>200</hp>
+                    <maxHp>200</maxHp>
                     <alive>True</alive>
                     <pathId>Path1_2</pathId>
                     <patrollingType>Circle</patrollingType>
@@ -2201,6 +2208,13 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
+                </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Knight</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>
@@ -2875,8 +2889,8 @@
                     <count>0</count>
                   </attackFrames>
                   <agentData>
-                    <hp>100</hp>
-                    <maxHp>100</maxHp>
+                    <hp>200</hp>
+                    <maxHp>200</maxHp>
                     <alive>True</alive>
                     <pathId>Path1_3</pathId>
                     <patrollingType>Circle</patrollingType>
@@ -2923,6 +2937,13 @@
                   <type>Pickable</type>
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
+                </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Archer</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>

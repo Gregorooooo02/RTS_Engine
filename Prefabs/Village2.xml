@@ -1030,19 +1030,19 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>-12,6</x>
-                <y>1</y>
-                <z>-13</z>
+                <x>-19,3</x>
+                <y>2,4</y>
+                <z>-11,7</z>
               </position>
               <rotation>
                 <x>0</x>
-                <y>-21</y>
+                <y>-16</y>
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,45</x>
-                <y>0,45</y>
-                <z>0,45</z>
+                <x>0,5</x>
+                <y>0,5</y>
+                <z>0,5</z>
               </scale>
             </component>
             <component>
@@ -1070,15 +1070,15 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>600</hp>
-                <maxHp>600</maxHp>
+                <hp>500</hp>
+                <maxHp>500</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
             <component>
               <type>Pickable</type>
               <active>True</active>
-              <pickableType>EnemyBuilding</pickableType>
+              <pickableType>Enemy</pickableType>
             </component>
           </components>
           <childObjects>
@@ -1120,8 +1120,8 @@
                     <z>0</z>
                   </fillingOffset>
                   <heartOffset>
-                    <x>0</x>
-                    <y>0</y>
+                    <x>-68,5</x>
+                    <y>-68,9</y>
                     <z>0</z>
                   </heartOffset>
                 </component>
@@ -1136,8 +1136,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>665,17993</x>
-                        <y>267,53387</y>
+                        <x>844,4806</x>
+                        <y>504,17468</y>
                         <z>0,1</z>
                       </position>
                       <rotation>
@@ -1146,9 +1146,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,81600004</x>
-                        <y>1,14</y>
-                        <z>1,2</z>
+                        <x>0,68</x>
+                        <y>0,95</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -1162,8 +1162,8 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -1177,8 +1177,8 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>666,37994</x>
-                        <y>270,2339</y>
+                        <x>845,6806</x>
+                        <y>506,8747</y>
                         <z>0</z>
                       </position>
                       <rotation>
@@ -1187,9 +1187,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>1,1880001</x>
-                        <y>1,2</y>
-                        <z>1,2</z>
+                        <x>0,5</x>
+                        <y>1</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -1203,8 +1203,49 @@
                         <b>255</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>1920</screenSizeX>
-                      <screenSizeY>1080</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
+                    </component>
+                  </components>
+                  <childObjects></childObjects>
+                </object>
+                <object>
+                  <name>Heart</name>
+                  <active>False</active>
+                  <cascadingActive>True</cascadingActive>
+                  <components>
+                    <component>
+                      <type>Transform</type>
+                      <active>True</active>
+                      <position>
+                        <x>818,7806</x>
+                        <y>502,4747</y>
+                        <z>0</z>
+                      </position>
+                      <rotation>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>0</z>
+                      </rotation>
+                      <scale>
+                        <x>0,03</x>
+                        <y>0,03</y>
+                        <z>1</z>
+                      </scale>
+                    </component>
+                    <component>
+                      <type>SpiteRenderer</type>
+                      <active>True</active>
+                      <useLocal>True</useLocal>
+                      <sprite>UI/heart</sprite>
+                      <color>
+                        <r>255</r>
+                        <g>0</g>
+                        <b>0</b>
+                        <a>255</a>
+                      </color>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                   </components>
                   <childObjects></childObjects>
@@ -1708,6 +1749,13 @@
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Knight</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
+                </component>
               </components>
               <childObjects>
                 <object>
@@ -1889,9 +1937,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>1088,7574</x>
-                        <y>561,7883</y>
-                        <z>0,48000002</z>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -1899,9 +1947,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,128</x>
-                        <y>0,112</y>
-                        <z>1,6</z>
+                        <x>0,080000006</x>
+                        <y>0,07</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -1915,8 +1963,8 @@
                         <b>0</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>2560</screenSizeX>
-                      <screenSizeY>1440</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
                       <type>AlertnessMark</type>
@@ -2430,6 +2478,13 @@
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Knight</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
+                </component>
               </components>
               <childObjects>
                 <object>
@@ -2611,9 +2666,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>1088,7574</x>
-                        <y>561,7883</y>
-                        <z>0,48000002</z>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -2621,9 +2676,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,128</x>
-                        <y>0,112</y>
-                        <z>1,6</z>
+                        <x>0,080000006</x>
+                        <y>0,07</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -2637,8 +2692,8 @@
                         <b>0</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>2560</screenSizeX>
-                      <screenSizeY>1440</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
                       <type>AlertnessMark</type>
@@ -3152,6 +3207,13 @@
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Archer</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
+                </component>
               </components>
               <childObjects>
                 <object>
@@ -3333,9 +3395,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>1088,7574</x>
-                        <y>561,7883</y>
-                        <z>0,48000002</z>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -3343,9 +3405,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,128</x>
-                        <y>0,112</y>
-                        <z>1,6</z>
+                        <x>0,080000006</x>
+                        <y>0,07</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -3359,8 +3421,8 @@
                         <b>0</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>2560</screenSizeX>
-                      <screenSizeY>1440</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
                       <type>AlertnessMark</type>
@@ -3874,6 +3936,13 @@
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Knight</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
+                </component>
               </components>
               <childObjects>
                 <object>
@@ -4055,9 +4124,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>1088,7574</x>
-                        <y>561,7883</y>
-                        <z>0,48000002</z>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -4065,9 +4134,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,128</x>
-                        <y>0,112</y>
-                        <z>1,6</z>
+                        <x>0,080000006</x>
+                        <y>0,07</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -4081,8 +4150,8 @@
                         <b>0</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>2560</screenSizeX>
-                      <screenSizeY>1440</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
                       <type>AlertnessMark</type>
@@ -4596,6 +4665,13 @@
                   <active>True</active>
                   <pickableType>Enemy</pickableType>
                 </component>
+                <component>
+                  <type>Emitter</type>
+                  <active>True</active>
+                  <emitterType>Archer</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
+                </component>
               </components>
               <childObjects>
                 <object>
@@ -4777,9 +4853,9 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>1088,7574</x>
-                        <y>561,7883</y>
-                        <z>0,48000002</z>
+                        <x>680,4734</x>
+                        <y>351,1177</y>
+                        <z>0,3</z>
                       </position>
                       <rotation>
                         <x>0</x>
@@ -4787,9 +4863,9 @@
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>0,128</x>
-                        <y>0,112</y>
-                        <z>1,6</z>
+                        <x>0,080000006</x>
+                        <y>0,07</y>
+                        <z>1</z>
                       </scale>
                     </component>
                     <component>
@@ -4803,8 +4879,8 @@
                         <b>0</b>
                         <a>255</a>
                       </color>
-                      <screenSizeX>2560</screenSizeX>
-                      <screenSizeY>1440</screenSizeY>
+                      <screenSizeX>1600</screenSizeX>
+                      <screenSizeY>900</screenSizeY>
                     </component>
                     <component>
                       <type>AlertnessMark</type>
@@ -5665,9 +5741,9 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1088,7574</x>
-                    <y>561,7883</y>
-                    <z>0,48000002</z>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
+                    <z>0,3</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -5675,9 +5751,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,128</x>
-                    <y>0,112</y>
-                    <z>1,6</z>
+                    <x>0,080000006</x>
+                    <y>0,07</y>
+                    <z>1</z>
                   </scale>
                 </component>
                 <component>
@@ -5691,8 +5767,8 @@
                     <b>0</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>2560</screenSizeX>
-                  <screenSizeY>1440</screenSizeY>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
                 </component>
                 <component>
                   <type>AlertnessMark</type>
@@ -6142,9 +6218,9 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1088,7574</x>
-                    <y>561,7883</y>
-                    <z>0,48000002</z>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
+                    <z>0,3</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -6152,9 +6228,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,128</x>
-                    <y>0,112</y>
-                    <z>1,6</z>
+                    <x>0,080000006</x>
+                    <y>0,07</y>
+                    <z>1</z>
                   </scale>
                 </component>
                 <component>
@@ -6168,8 +6244,8 @@
                     <b>0</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>2560</screenSizeX>
-                  <screenSizeY>1440</screenSizeY>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
                 </component>
                 <component>
                   <type>AlertnessMark</type>
@@ -6619,9 +6695,9 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1088,7574</x>
-                    <y>561,7883</y>
-                    <z>0,48000002</z>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
+                    <z>0,3</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -6629,9 +6705,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,128</x>
-                    <y>0,112</y>
-                    <z>1,6</z>
+                    <x>0,080000006</x>
+                    <y>0,07</y>
+                    <z>1</z>
                   </scale>
                 </component>
                 <component>
@@ -6645,8 +6721,8 @@
                     <b>0</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>2560</screenSizeX>
-                  <screenSizeY>1440</screenSizeY>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
                 </component>
                 <component>
                   <type>AlertnessMark</type>
@@ -7096,9 +7172,9 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1088,7574</x>
-                    <y>561,7883</y>
-                    <z>0,48000002</z>
+                    <x>680,4734</x>
+                    <y>351,1177</y>
+                    <z>0,3</z>
                   </position>
                   <rotation>
                     <x>0</x>
@@ -7106,9 +7182,9 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>0,128</x>
-                    <y>0,112</y>
-                    <z>1,6</z>
+                    <x>0,080000006</x>
+                    <y>0,07</y>
+                    <z>1</z>
                   </scale>
                 </component>
                 <component>
@@ -7122,8 +7198,8 @@
                     <b>0</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>2560</screenSizeX>
-                  <screenSizeY>1440</screenSizeY>
+                  <screenSizeX>1600</screenSizeX>
+                  <screenSizeY>900</screenSizeY>
                 </component>
                 <component>
                   <type>AlertnessMark</type>

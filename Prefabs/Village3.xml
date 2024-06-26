@@ -1215,8 +1215,8 @@
                   <type>Emitter</type>
                   <active>True</active>
                   <emitterType>Knight</emitterType>
-                  <emitterVolume>1</emitterVolume>
-                  <emitterScale>10</emitterScale>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>
@@ -1944,8 +1944,8 @@
                   <type>Emitter</type>
                   <active>True</active>
                   <emitterType>Knight</emitterType>
-                  <emitterVolume>1</emitterVolume>
-                  <emitterScale>10</emitterScale>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>
@@ -2673,8 +2673,8 @@
                   <type>Emitter</type>
                   <active>True</active>
                   <emitterType>Archer</emitterType>
-                  <emitterVolume>1</emitterVolume>
-                  <emitterScale>10</emitterScale>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>
@@ -3401,9 +3401,9 @@
                 <component>
                   <type>Emitter</type>
                   <active>True</active>
-                  <emitterType>Cabinet</emitterType>
-                  <emitterVolume>1</emitterVolume>
-                  <emitterScale>10</emitterScale>
+                  <emitterType>Archer</emitterType>
+                  <emitterVolume>0,5</emitterVolume>
+                  <emitterScale>8</emitterScale>
                 </component>
               </components>
               <childObjects>
@@ -4127,8 +4127,8 @@
               <type>Emitter</type>
               <active>True</active>
               <emitterType>Civilian</emitterType>
-              <emitterVolume>1</emitterVolume>
-              <emitterScale>10</emitterScale>
+              <emitterVolume>0,5</emitterVolume>
+              <emitterScale>8</emitterScale>
             </component>
           </components>
           <childObjects>
@@ -4611,8 +4611,8 @@
               <type>Emitter</type>
               <active>True</active>
               <emitterType>Civilian</emitterType>
-              <emitterVolume>1</emitterVolume>
-              <emitterScale>10</emitterScale>
+              <emitterVolume>0,5</emitterVolume>
+              <emitterScale>8</emitterScale>
             </component>
           </components>
           <childObjects>
@@ -5095,8 +5095,8 @@
               <type>Emitter</type>
               <active>True</active>
               <emitterType>Civilian</emitterType>
-              <emitterVolume>1</emitterVolume>
-              <emitterScale>10</emitterScale>
+              <emitterVolume>0,5</emitterVolume>
+              <emitterScale>8</emitterScale>
             </component>
           </components>
           <childObjects>
@@ -5579,8 +5579,8 @@
               <type>Emitter</type>
               <active>True</active>
               <emitterType>Civilian</emitterType>
-              <emitterVolume>1</emitterVolume>
-              <emitterScale>10</emitterScale>
+              <emitterVolume>0,5</emitterVolume>
+              <emitterScale>8</emitterScale>
             </component>
           </components>
           <childObjects>
@@ -6063,8 +6063,8 @@
               <type>Emitter</type>
               <active>True</active>
               <emitterType>Civilian</emitterType>
-              <emitterVolume>1</emitterVolume>
-              <emitterScale>10</emitterScale>
+              <emitterVolume>0,5</emitterVolume>
+              <emitterScale>8</emitterScale>
             </component>
           </components>
           <childObjects>
@@ -6547,8 +6547,8 @@
               <type>Emitter</type>
               <active>True</active>
               <emitterType>Civilian</emitterType>
-              <emitterVolume>1</emitterVolume>
-              <emitterScale>10</emitterScale>
+              <emitterVolume>0,5</emitterVolume>
+              <emitterScale>8</emitterScale>
             </component>
           </components>
           <childObjects>

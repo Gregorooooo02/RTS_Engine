@@ -115,7 +115,7 @@
           <active>True</active>
           <emitterType>Chandelier</emitterType>
           <emitterVolume>1</emitterVolume>
-          <emitterScale>10</emitterScale>
+          <emitterScale>8</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -606,7 +606,7 @@
           <active>True</active>
           <emitterType>Candle</emitterType>
           <emitterVolume>1</emitterVolume>
-          <emitterScale>10</emitterScale>
+          <emitterScale>8</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -1097,7 +1097,7 @@
           <active>True</active>
           <emitterType>Candle</emitterType>
           <emitterVolume>1</emitterVolume>
-          <emitterScale>10</emitterScale>
+          <emitterScale>8</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -1588,7 +1588,7 @@
           <active>True</active>
           <emitterType>Candle</emitterType>
           <emitterVolume>1</emitterVolume>
-          <emitterScale>10</emitterScale>
+          <emitterScale>8</emitterScale>
         </component>
       </components>
       <childObjects>

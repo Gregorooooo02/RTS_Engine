@@ -8,13 +8,13 @@
       <type>Transform</type>
       <active>True</active>
       <position>
-        <x>12,7</x>
-        <y>2</y>
-        <z>6,3</z>
+        <x>12,2</x>
+        <y>2,4</y>
+        <z>0</z>
       </position>
       <rotation>
         <x>0</x>
-        <y>-182</y>
+        <y>-140</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -114,8 +114,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1157,4312</x>
-                <y>866,28204</y>
+                <x>844,4806</x>
+                <y>504,17468</y>
                 <z>0,1</z>
               </position>
               <rotation>
@@ -124,9 +124,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>1,088</x>
-                <y>1,52</y>
-                <z>1,6</z>
+                <x>0,68</x>
+                <y>0,95</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -140,8 +140,8 @@
                 <b>255</b>
                 <a>255</a>
               </color>
-              <screenSizeX>2560</screenSizeX>
-              <screenSizeY>1440</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
@@ -155,8 +155,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1158,6312</x>
-                <y>868,98206</y>
+                <x>845,6806</x>
+                <y>506,8747</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -165,9 +165,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,32000002</x>
-                <y>1,6</y>
-                <z>1,6</z>
+                <x>0,5</x>
+                <y>1</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -181,8 +181,8 @@
                 <b>255</b>
                 <a>255</a>
               </color>
-              <screenSizeX>2560</screenSizeX>
-              <screenSizeY>1440</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
@@ -196,8 +196,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>1131,7312</x>
-                <y>864,58203</y>
+                <x>818,7806</x>
+                <y>502,4747</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -206,9 +206,9 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,048</x>
-                <y>0,048</y>
-                <z>1,6</z>
+                <x>0,03</x>
+                <y>0,03</y>
+                <z>1</z>
               </scale>
             </component>
             <component>
@@ -222,8 +222,8 @@
                 <b>0</b>
                 <a>255</a>
               </color>
-              <screenSizeX>2560</screenSizeX>
-              <screenSizeY>1440</screenSizeY>
+              <screenSizeX>1600</screenSizeX>
+              <screenSizeY>900</screenSizeY>
             </component>
           </components>
           <childObjects></childObjects>
