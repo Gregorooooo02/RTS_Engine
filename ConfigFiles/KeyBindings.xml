@@ -41,6 +41,22 @@
             <Key>LeftControl</Key>
             <Action>CTRL</Action>
         </KeyBinding>
+        <KeyBinding>
+            <Key>OemMinus</Key>
+            <Action>LOWER_EFFECTS_VOLUME</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>OemPlus</Key>
+            <Action>INCREASE_EFFECTS_VOLUME</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>OemOpenBrackets</Key>
+            <Action>LOWER_GAMMA</Action>
+        </KeyBinding>
+        <KeyBinding>
+            <Key>OemCloseBrackets</Key>
+            <Action>INCREASE_GAMMA</Action>
+        </KeyBinding>
     </Keyboard>
     <Mouse>
         <MouseBinding>

@@ -190,6 +190,16 @@ namespace RTS_Engine
                 volume = MathHelper.Clamp(volume + 0.05f, 0, 1);
                 SoundEffect.MasterVolume = volume;
             }
+            
+            if (InputManager.Instance.GetAction(GameAction.LOWER_GAMMA)?.state == ActionState.RELEASED)
+            {
+                Gamma = MathHelper.Clamp(Gamma - 0.2f, 1.4f, 4);
+            }
+
+            if (InputManager.Instance.GetAction(GameAction.INCREASE_GAMMA)?.state == ActionState.RELEASED)
+            {
+                Gamma = MathHelper.Clamp(Gamma + 0.2f, 1.4f, 4);
+            }
         }
         
         private static List<Type> GetAllComponents()

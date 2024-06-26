@@ -48,7 +48,9 @@ public enum GameAction
     ENABLE_PICKING,
     TOGGLE_PICKING,
     LOWER_EFFECTS_VOLUME,
-    INCREASE_EFFECTS_VOLUME
+    INCREASE_EFFECTS_VOLUME,
+    LOWER_GAMMA,
+    INCREASE_GAMMA
 }
 
 public class InputManager
