@@ -986,7 +986,7 @@ public class WorldRenderer : Component
             {
                 Name = "Civilians"
             };
-            int numberOfCivilians = random.Next(5, 10);
+            int numberOfCivilians = random.Next(15,30);
             for (int i = 0; i < numberOfCivilians; i++)
             {
 #if _WINDOWS
