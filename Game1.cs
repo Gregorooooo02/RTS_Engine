@@ -164,6 +164,8 @@ public sealed class Game1 : Game
         return sum / _size;
     }
 
+    private float Volume;
+    
     private void ImGuiLayout()
     {
 
@@ -192,6 +194,9 @@ public sealed class Game1 : Game
         ImGui.Checkbox("Pause active", ref Globals.IsPaused);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
+        Volume = SoundEffect.MasterVolume;
+        ImGui.SliderFloat("Master volume", ref Volume, 0,1);
+        SoundEffect.MasterVolume = Volume;
         ImGui.Text("Master volume: " + SoundEffect.MasterVolume);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         ImGui.Text("Average from " + _size +"x: " + Math.Round(_currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
