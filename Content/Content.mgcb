@@ -3017,6 +3017,78 @@
 /processorParam:Quality=Medium
 /build:SoundFX/testBeat.wav
 
+#begin Sounds/archer_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_attack1.wav
+
+#begin Sounds/archer_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_attack2.wav
+
+#begin Sounds/archer_attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_attack3.wav
+
+#begin Sounds/archer_damage1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_damage1.wav
+
+#begin Sounds/archer_damage2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_damage2.wav
+
+#begin Sounds/archer_damage3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_damage3.wav
+
+#begin Sounds/archer_damage4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_damage4.wav
+
+#begin Sounds/archer_damage5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_damage5.wav
+
+#begin Sounds/archer_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_idle1.wav
+
+#begin Sounds/archer_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_idle2.wav
+
+#begin Sounds/archer_idle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_idle3.wav
+
+#begin Sounds/archer_idle4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/archer_idle4.wav
+
 #begin Sounds/cabinet_attack1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -3286,6 +3358,174 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/chandelier_move3.wav
+
+#begin Sounds/civilian_damage1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_damage1.wav
+
+#begin Sounds/civilian_damage2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_damage2.wav
+
+#begin Sounds/civilian_damage3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_damage3.wav
+
+#begin Sounds/civilian_damage4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_damage4.wav
+
+#begin Sounds/civilian_damage5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_damage5.wav
+
+#begin Sounds/civilian_damage6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_damage6.wav
+
+#begin Sounds/civilian_flee1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_flee1.wav
+
+#begin Sounds/civilian_flee2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_flee2.wav
+
+#begin Sounds/civilian_flee3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_flee3.wav
+
+#begin Sounds/civilian_flee4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_flee4.wav
+
+#begin Sounds/civilian_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_idle1.wav
+
+#begin Sounds/civilian_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_idle2.wav
+
+#begin Sounds/civilian_idle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_idle3.wav
+
+#begin Sounds/civilian_idle4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/civilian_idle4.wav
+
+#begin Sounds/Furninotura Camp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Furninotura Camp.wav
+
+#begin Sounds/knight_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_attack1.wav
+
+#begin Sounds/knight_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_attack2.wav
+
+#begin Sounds/knight_attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_attack3.wav
+
+#begin Sounds/knight_attack4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_attack4.wav
+
+#begin Sounds/knight_attack5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_attack5.wav
+
+#begin Sounds/knight_damage1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_damage1.wav
+
+#begin Sounds/knight_damage2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_damage2.wav
+
+#begin Sounds/knight_damage3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_damage3.wav
+
+#begin Sounds/knight_damage4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_damage4.wav
+
+#begin Sounds/knight_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_idle1.wav
+
+#begin Sounds/knight_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_idle2.wav
+
+#begin Sounds/knight_idle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_idle3.wav
+
+#begin Sounds/knight_idle4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/knight_idle4.wav
 
 #begin Sounds/mini_attack1.wav
 /importer:WavImporter
