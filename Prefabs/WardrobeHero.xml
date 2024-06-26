@@ -60,7 +60,7 @@
           <heightOffset>2</heightOffset>
           <directionOffset>-90</directionOffset>
           <killAwarenessCost>2,5</killAwarenessCost>
-          <deathFrame>30</deathFrame>
+          <deathFrame>150</deathFrame>
           <attackFrames>
             <count>1</count>
             <f0>10</f0>
