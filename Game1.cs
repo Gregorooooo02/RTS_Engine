@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ImGuiNET;
+using Microsoft.Xna.Framework.Audio;
 using Num = System.Numerics;
 
 namespace RTS_Engine;
@@ -191,6 +192,7 @@ public sealed class Game1 : Game
         ImGui.Checkbox("Pause active", ref Globals.IsPaused);
 
         ImGui.SliderFloat("Gamma value", ref Globals.Gamma,0.1f,8);
+        ImGui.Text("Master volume: " + SoundEffect.MasterVolume);
         ImGui.Text(ImGui.GetIO().Framerate + " FPS");
         ImGui.Text("Average from " + _size +"x: " + Math.Round(_currentAvg,4,MidpointRounding.AwayFromZero) + "ms");
         

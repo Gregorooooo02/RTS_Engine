@@ -167,6 +167,20 @@ namespace RTS_Engine
             {
                 SceneManager.Instance.CreateMissionScene(CreatingTutorial);
             }
+
+            if (InputManager.Instance.GetAction(GameAction.LOWER_EFFECTS_VOLUME)?.state == ActionState.RELEASED)
+            {
+                float volume = SoundEffect.MasterVolume;
+                volume = MathHelper.Clamp(volume - 0.05f, 0, 1);
+                SoundEffect.MasterVolume = volume;
+            }
+
+            if (InputManager.Instance.GetAction(GameAction.INCREASE_EFFECTS_VOLUME)?.state == ActionState.RELEASED)
+            {
+                float volume = SoundEffect.MasterVolume;
+                volume = MathHelper.Clamp(volume + 0.05f, 0, 1);
+                SoundEffect.MasterVolume = volume;
+            }
         }
         
         private static List<Type> GetAllComponents()
