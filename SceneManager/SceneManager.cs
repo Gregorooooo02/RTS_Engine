@@ -187,6 +187,7 @@ public class SceneManager
             GameManager.UnitsSelectedForMission = 0;
             GameManager.TutorialDone = false;
             GameManager.MissionTutorialStep = 1;
+            GameManager.BaseTutorialStep = 1;
             GameManager.ClearMissionRewards();
             //TODO: Add any necessary resets here
         }

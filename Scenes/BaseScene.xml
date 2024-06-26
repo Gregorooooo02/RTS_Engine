@@ -1080,8 +1080,8 @@
                                 <z>0</z>
                               </rotation>
                               <scale>
-                                <x>0,2</x>
-                                <y>0,2</y>
+                                <x>0,22</x>
+                                <y>0,22</y>
                                 <z>1</z>
                               </scale>
                             </component>
@@ -1089,7 +1089,7 @@
                               <type>SpiteRenderer</type>
                               <active>True</active>
                               <useLocal>True</useLocal>
-                              <sprite>UI/Structures/sawmill</sprite>
+                              <sprite>UI/Structures/househtartak</sprite>
                               <color>
                                 <r>255</r>
                                 <g>255</g>
@@ -1140,15 +1140,6 @@
                               <screenSizeX>1600</screenSizeX>
                               <screenSizeY>900</screenSizeY>
                             </component>
-                            <component>
-                              <type>Button</type>
-                              <active>True</active>
-                              <portrait>False</portrait>
-                              <isUnitSelect>False</isUnitSelect>
-                              <isWindowTrigger>False</isWindowTrigger>
-                              <unitID>0</unitID>
-                              <action>TOGGLE_ACTIVE_PUZZLE</action>
-                            </component>
                           </components>
                           <childObjects>
                             <object>
@@ -1160,7 +1151,7 @@
                                   <type>Transform</type>
                                   <active>True</active>
                                   <position>
-                                    <x>935</x>
+                                    <x>885</x>
                                     <y>505</y>
                                     <z>0</z>
                                   </position>
@@ -1179,12 +1170,12 @@
                                   <type>TextRenderer</type>
                                   <active>True</active>
                                   <useLocal>True</useLocal>
-                                  <contents>Upgrade</contents>
+                                  <contents>Cannot upgrade</contents>
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>255</g>
-                                    <b>255</b>
+                                    <g>0</g>
+                                    <b>0</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -1290,91 +1281,6 @@
                             </object>
                           </childObjects>
                         </object>
-                        <object>
-                          <name>Cost</name>
-                          <active>False</active>
-                          <cascadingActive>True</cascadingActive>
-                          <components>
-                            <component>
-                              <type>Transform</type>
-                              <active>True</active>
-                              <position>
-                                <x>902</x>
-                                <y>400</y>
-                                <z>0</z>
-                              </position>
-                              <rotation>
-                                <x>0</x>
-                                <y>0</y>
-                                <z>0</z>
-                              </rotation>
-                              <scale>
-                                <x>1</x>
-                                <y>1</y>
-                                <z>1</z>
-                              </scale>
-                            </component>
-                            <component>
-                              <type>SpiteRenderer</type>
-                              <active>True</active>
-                              <useLocal>True</useLocal>
-                              <sprite>UI/meatCounter</sprite>
-                              <color>
-                                <r>255</r>
-                                <g>255</g>
-                                <b>255</b>
-                                <a>255</a>
-                              </color>
-                              <screenSizeX>1600</screenSizeX>
-                              <screenSizeY>900</screenSizeY>
-                            </component>
-                          </components>
-                          <childObjects>
-                            <object>
-                              <name>Text</name>
-                              <active>False</active>
-                              <cascadingActive>True</cascadingActive>
-                              <components>
-                                <component>
-                                  <type>Transform</type>
-                                  <active>True</active>
-                                  <position>
-                                    <x>977</x>
-                                    <y>420</y>
-                                    <z>0</z>
-                                  </position>
-                                  <rotation>
-                                    <x>0</x>
-                                    <y>0</y>
-                                    <z>0</z>
-                                  </rotation>
-                                  <scale>
-                                    <x>1</x>
-                                    <y>1</y>
-                                    <z>1</z>
-                                  </scale>
-                                </component>
-                                <component>
-                                  <type>TextRenderer</type>
-                                  <active>True</active>
-                                  <useLocal>True</useLocal>
-                                  <contents>0</contents>
-                                  <font>defaultFont</font>
-                                  <color>
-                                    <r>255</r>
-                                    <g>255</g>
-                                    <b>255</b>
-                                    <a>255</a>
-                                  </color>
-                                  <screenSizeX>1600</screenSizeX>
-                                  <screenSizeY>900</screenSizeY>
-                                  <selectedVariables></selectedVariables>
-                                </component>
-                              </components>
-                              <childObjects></childObjects>
-                            </object>
-                          </childObjects>
-                        </object>
                       </childObjects>
                     </object>
                   </childObjects>
@@ -1388,7 +1294,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>496</x>
+                        <x>496,00003</x>
                         <y>146</y>
                         <z>0</z>
                       </position>
@@ -2195,8 +2101,8 @@
                                 <z>0</z>
                               </rotation>
                               <scale>
-                                <x>0,2</x>
-                                <y>0,2</y>
+                                <x>0,11</x>
+                                <y>0,11</y>
                                 <z>1</z>
                               </scale>
                             </component>
@@ -2204,7 +2110,7 @@
                               <type>SpiteRenderer</type>
                               <active>True</active>
                               <useLocal>True</useLocal>
-                              <sprite>UI/Structures/dmgPerk</sprite>
+                              <sprite>UI/Structures/dmghouse</sprite>
                               <color>
                                 <r>255</r>
                                 <g>255</g>
@@ -2503,7 +2409,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>496</x>
+                        <x>496,00003</x>
                         <y>146</y>
                         <z>0</z>
                       </position>
@@ -3232,7 +3138,7 @@
                               <type>TextRenderer</type>
                               <active>True</active>
                               <useLocal>True</useLocal>
-                              <contents>Sawmill</contents>
+                              <contents>Health Buff</contents>
                               <font>defaultFont</font>
                               <color>
                                 <r>255</r>
@@ -3274,7 +3180,7 @@
                                   <type>TextRenderer</type>
                                   <active>True</active>
                                   <useLocal>True</useLocal>
-                                  <contents>Basic building in your base.</contents>
+                                  <contents>Increases health of all units.</contents>
                                   <font>Fonts/lightFont</font>
                                   <color>
                                     <r>255</r>
@@ -3310,8 +3216,8 @@
                                 <z>0</z>
                               </rotation>
                               <scale>
-                                <x>0,2</x>
-                                <y>0,2</y>
+                                <x>0,11</x>
+                                <y>0,11</y>
                                 <z>1</z>
                               </scale>
                             </component>
@@ -3319,7 +3225,7 @@
                               <type>SpiteRenderer</type>
                               <active>True</active>
                               <useLocal>True</useLocal>
-                              <sprite>UI/Structures/sawmill</sprite>
+                              <sprite>UI/Structures/househp</sprite>
                               <color>
                                 <r>255</r>
                                 <g>255</g>
@@ -4823,8 +4729,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>73</x>
-                    <y>20</y>
+                    <x>72</x>
+                    <y>22,222223</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -4833,15 +4739,15 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>1,1111112</x>
+                    <y>1,1111112</y>
+                    <z>1,1111112</z>
                   </scale>
                 </component>
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
-                  <useLocal>False</useLocal>
+                  <useLocal>True</useLocal>
                   <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
@@ -4850,7 +4756,7 @@
                     <b>255</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeX>1600</screenSizeX>
                   <screenSizeY>900</screenSizeY>
                   <selectedVariables>
                     <variable>MeatNumber</variable>
@@ -4910,8 +4816,8 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>75</x>
-                    <y>20</y>
+                    <x>72</x>
+                    <y>102</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -4920,15 +4826,15 @@
                     <z>0</z>
                   </rotation>
                   <scale>
-                    <x>1</x>
-                    <y>1</y>
-                    <z>1</z>
+                    <x>1,1111112</x>
+                    <y>1,1111112</y>
+                    <z>1,1111112</z>
                   </scale>
                 </component>
                 <component>
                   <type>TextRenderer</type>
                   <active>True</active>
-                  <useLocal>False</useLocal>
+                  <useLocal>True</useLocal>
                   <contents>0</contents>
                   <font>defaultFont</font>
                   <color>
@@ -4937,7 +4843,7 @@
                     <b>255</b>
                     <a>255</a>
                   </color>
-                  <screenSizeX>1440</screenSizeX>
+                  <screenSizeX>1600</screenSizeX>
                   <screenSizeY>900</screenSizeY>
                   <selectedVariables>
                     <variable>PuzzleNumber</variable>
@@ -5339,6 +5245,56 @@
           <type>MusicTrigger</type>
           <active>True</active>
           <track>Camp</track>
+        </component>
+      </components>
+      <childObjects></childObjects>
+    </object>
+    <object>
+      <name>TutorialUI</name>
+      <active>True</active>
+      <cascadingActive>True</cascadingActive>
+      <components>
+        <component>
+          <type>Transform</type>
+          <active>True</active>
+          <position>
+            <x>0</x>
+            <y>530</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </rotation>
+          <scale>
+            <x>0,75</x>
+            <y>0,75</y>
+            <z>1</z>
+          </scale>
+        </component>
+        <component>
+          <type>SpiteRenderer</type>
+          <active>True</active>
+          <useLocal>True</useLocal>
+          <sprite>UI/TutorialCamp/CampTutorial1</sprite>
+          <color>
+            <r>255</r>
+            <g>255</g>
+            <b>255</b>
+            <a>255</a>
+          </color>
+          <screenSizeX>1600</screenSizeX>
+          <screenSizeY>900</screenSizeY>
+        </component>
+        <component>
+          <type>Button</type>
+          <active>True</active>
+          <portrait>False</portrait>
+          <isUnitSelect>False</isUnitSelect>
+          <isWindowTrigger>False</isWindowTrigger>
+          <unitID>0</unitID>
+          <action>NEXT_HINT_BASE</action>
         </component>
       </components>
       <childObjects></childObjects>

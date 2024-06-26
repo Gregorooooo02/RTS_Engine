@@ -160,7 +160,7 @@ public class SpiteRenderer : Component
         }
         else
         {
-            newSpriteName = currentSpriteName.Replace("BaseTutorial" + count, "BaseTutorial" + (count + 1));
+            newSpriteName = currentSpriteName.Replace("CampTutorial" + count, "CampTutorial" + (count + 1));
             LoadSprite(newSpriteName);
         }
     }

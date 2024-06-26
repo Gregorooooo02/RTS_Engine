@@ -140,7 +140,7 @@ public class Button : Component
                                 GameManager.MissionTutorialStep++;
                             }
                             
-                            if (_buttonAction == GameAction.NEXT_HINT_BASE && GameManager.BaseTutorialStep < GameManager.BaseTutorialStepMax)
+                            if (_buttonAction == GameAction.NEXT_HINT_BASE && GameManager.BaseTutorialStep <= GameManager.BaseTutorialStepMax)
                             {
                                 ButtonVisual.NextHintBase(GameManager.BaseTutorialStep);
                                 GameManager.BaseTutorialStep++;

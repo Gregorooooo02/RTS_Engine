@@ -59,6 +59,7 @@
           <meatAward>0</meatAward>
           <heightOffset>2</heightOffset>
           <directionOffset>-90</directionOffset>
+          <killAwarenessCost>2,5</killAwarenessCost>
           <deathFrame>30</deathFrame>
           <attackFrames>
             <count>1</count>
@@ -108,6 +109,13 @@
           <active>True</active>
           <oneUse>False</oneUse>
           <revealRadius>24</revealRadius>
+        </component>
+        <component>
+          <type>Emitter</type>
+          <active>True</active>
+          <emitterType>Cabinet</emitterType>
+          <emitterVolume>1</emitterVolume>
+          <emitterScale>10</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -160,7 +168,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>752</x>
+                    <x>272</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -200,7 +208,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>752</x>
+                        <x>272</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -243,7 +251,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>755</x>
+                    <x>275</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -295,8 +303,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>622,63153</x>
-                <y>493,3593</y>
+                <x>828,27</x>
+                <y>336,915</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -542,6 +550,7 @@
           <meatAward>0</meatAward>
           <heightOffset>2</heightOffset>
           <directionOffset>-90</directionOffset>
+          <killAwarenessCost>2,5</killAwarenessCost>
           <deathFrame>30</deathFrame>
           <attackFrames>
             <count>1</count>
@@ -591,6 +600,13 @@
           <active>True</active>
           <oneUse>False</oneUse>
           <revealRadius>22</revealRadius>
+        </component>
+        <component>
+          <type>Emitter</type>
+          <active>True</active>
+          <emitterType>MiniCabinet</emitterType>
+          <emitterVolume>1</emitterVolume>
+          <emitterScale>10</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -643,7 +659,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>872</x>
+                    <x>392</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -683,7 +699,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>872</x>
+                        <x>392</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -726,7 +742,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>875</x>
+                    <x>395</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -778,8 +794,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>574,88574</x>
-                <y>585,22565</y>
+                <x>806,2224</x>
+                <y>413,81345</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -1025,6 +1041,7 @@
           <meatAward>0</meatAward>
           <heightOffset>2</heightOffset>
           <directionOffset>-90</directionOffset>
+          <killAwarenessCost>2,5</killAwarenessCost>
           <deathFrame>30</deathFrame>
           <attackFrames>
             <count>1</count>
@@ -1074,6 +1091,13 @@
           <active>True</active>
           <oneUse>False</oneUse>
           <revealRadius>22</revealRadius>
+        </component>
+        <component>
+          <type>Emitter</type>
+          <active>True</active>
+          <emitterType>MiniCabinet</emitterType>
+          <emitterVolume>1</emitterVolume>
+          <emitterScale>10</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -1126,7 +1150,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>992</x>
+                    <x>512</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -1166,7 +1190,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>992</x>
+                        <x>512</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -1209,7 +1233,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>995</x>
+                    <x>515</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -1261,8 +1285,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>712,90546</x>
-                <y>515,6269</y>
+                <x>911,86206</x>
+                <y>362,38385</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -1508,6 +1532,7 @@
           <meatAward>0</meatAward>
           <heightOffset>2</heightOffset>
           <directionOffset>-90</directionOffset>
+          <killAwarenessCost>2,5</killAwarenessCost>
           <deathFrame>30</deathFrame>
           <attackFrames>
             <count>1</count>
@@ -1557,6 +1582,13 @@
           <active>True</active>
           <oneUse>False</oneUse>
           <revealRadius>22</revealRadius>
+        </component>
+        <component>
+          <type>Emitter</type>
+          <active>True</active>
+          <emitterType>MiniCabinet</emitterType>
+          <emitterVolume>1</emitterVolume>
+          <emitterScale>10</emitterScale>
         </component>
       </components>
       <childObjects>
@@ -1609,7 +1641,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1112</x>
+                    <x>632</x>
                     <y>740</y>
                     <z>0,1</z>
                   </position>
@@ -1649,7 +1681,7 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>1112</x>
+                        <x>632</x>
                         <y>740</y>
                         <z>0</z>
                       </position>
@@ -1692,7 +1724,7 @@
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>1115</x>
+                    <x>635</x>
                     <y>770</y>
                     <z>0</z>
                   </position>
@@ -1744,8 +1776,8 @@
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>658,25024</x>
-                <y>410,9185</y>
+                <x>848,0342</x>
+                <y>267,55292</y>
                 <z>0</z>
               </position>
               <rotation>

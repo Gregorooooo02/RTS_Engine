@@ -22,7 +22,7 @@ public static class GameManager
     public static int MissionTutorialStepMax = 8;
     
     public static int BaseTutorialStep = 1;
-    public static int BaseTutorialStepMax = 4;
+    public static int BaseTutorialStepMax = 6;
     
     // 0000 0000
     // 1st bit - Wardrobe
