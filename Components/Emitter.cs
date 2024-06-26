@@ -160,8 +160,8 @@ public class Emitter : Component
 
     public void PlayWander()
     {
-        WanderInstance = RandomSound(Wander).CreateInstance();
-        WanderInstance.Play();
+        IdleInstance = RandomSound(Idle).CreateInstance();
+        IdleInstance.Play();
     }
 
     public void PlayDamage()
@@ -170,18 +170,6 @@ public class Emitter : Component
         DamageInstance.Play();
     }
 
-    public void PlayFlee()
-    {
-        FleeInstance = RandomSound(Flee).CreateInstance();
-        FleeInstance.Play();
-    }
-    
-    public void PlayDamage()
-    {
-        DamageInstance = RandomSound(Damage).CreateInstance();
-        DamageInstance.Play();
-    }
-    
     public void PlayFlee()
     {
         FleeInstance = RandomSound(Flee).CreateInstance();

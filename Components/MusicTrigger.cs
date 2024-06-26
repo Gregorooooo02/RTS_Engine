@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace RTS_Engine;
 
-
-
 public class MusicTrigger : Component
 {
     public enum MusicTrack
@@ -26,8 +24,8 @@ public class MusicTrigger : Component
         {
             case MusicTrack.Camp:
                 AudioManager.CurrentlyPlayedTheme?.Stop();
-                //TODO: Add changing to camp theme here
-                //AudioManager.CurrentlyPlayedTheme = AudioManager.CampThemeInstance;
+                AudioManager.CurrentlyPlayedTheme = AudioManager.BaseThemeInstance;
+                AudioManager.CurrentlyPlayedTheme.IsLooped = true;
                 AudioManager.CurrentlyPlayedTheme?.Play();
                 break;
             
