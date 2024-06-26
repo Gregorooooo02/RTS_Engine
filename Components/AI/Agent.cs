@@ -139,7 +139,7 @@ public class Agent : Component
         if (AgentData.TookDamage)
         {
             AgentData.TookDamage = false;
-            if (Emitter != null && AggressiveTimer >= AggressiveDelay)
+            if (Emitter != null && (Type == AgentType.Civilian || Type == AgentType.Soldier) && AggressiveTimer >= AggressiveDelay)
             {
                 AggressiveTimer = 0;
                 PeacefulTimer = 0;
