@@ -135,7 +135,7 @@ public class SpiteRenderer : Component
         string currentSpriteName = Sprite.Name;
         string newSpriteName;
         
-        if (count >= 4)
+        if (count >= GameManager.MissionTutorialStepMax)
         {
             // The tutorial is over, so we deactivate the sprite
             ParentObject.Active = false;
@@ -144,6 +144,23 @@ public class SpiteRenderer : Component
         {
             newSpriteName = currentSpriteName.Replace("Tutorial" + count, "Tutorial" + (count + 1));
             LoadSprite(newSpriteName);    
+        }
+    }
+
+    public void NextHintBase(int count)
+    {
+        string currentSpriteName = Sprite.Name;
+        string newSpriteName;
+        
+        if (count >= GameManager.BaseTutorialStepMax)
+        {
+            // The tutorial is over, so we deactivate the sprite
+            ParentObject.Active = false;
+        }
+        else
+        {
+            newSpriteName = currentSpriteName.Replace("BaseTutorial" + count, "BaseTutorial" + (count + 1));
+            LoadSprite(newSpriteName);
         }
     }
 

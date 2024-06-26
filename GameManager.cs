@@ -15,8 +15,15 @@ public static class GameManager
     public static float AwarenessLimit = 100.0f;
     public static float DamageMultiplier = 1.0f;
     public static float HealthMultiplier = 1.0f;
+    
     public static bool TutorialDone = false;
-
+    
+    public static int MissionTutorialStep = 1;
+    public static int MissionTutorialStepMax = 4;
+    
+    public static int BaseTutorialStep = 1;
+    public static int BaseTutorialStepMax = 4;
+    
     // 0000 0000
     // 1st bit - Wardrobe
     // 2nd bit - Cabinet

@@ -40,6 +40,7 @@ public enum GameAction
     COMPLETE,
     INCOMPLETE,
     NEXT_HINT,
+    NEXT_HINT_BASE,
     GAME_OVER,
     WIN,
     RESET,

@@ -28,8 +28,6 @@ public class Button : Component
     private int _unitID = 0;
     private Agent _agent;
     
-    private int _tutorialStep = 1;
-    
     public override void Update()
     {
         if (Active)
@@ -136,10 +134,16 @@ public class Button : Component
                                 return;
                             }
 
-                            if (_buttonAction == GameAction.NEXT_HINT && _tutorialStep < 5)
+                            if (_buttonAction == GameAction.NEXT_HINT && GameManager.MissionTutorialStep <= GameManager.MissionTutorialStepMax)
                             {
-                                ButtonVisual.NextHint(_tutorialStep);
-                                _tutorialStep++;
+                                ButtonVisual.NextHint(GameManager.MissionTutorialStep);
+                                GameManager.MissionTutorialStep++;
+                            }
+                            
+                            if (_buttonAction == GameAction.NEXT_HINT_BASE && GameManager.BaseTutorialStep < GameManager.BaseTutorialStepMax)
+                            {
+                                ButtonVisual.NextHintBase(GameManager.BaseTutorialStep);
+                                GameManager.BaseTutorialStep++;
                             }
                             
                             Globals.HitUI = true;
