@@ -96,8 +96,8 @@ public class Agent : Component
     public float AggressiveTimer = 0;
     public float PeacefulTimer = 0;
 
-    public float AggressiveDelay = 1.25f;
-    public float PeacefulDelay = 4.5f;
+    public float AggressiveDelay = 1.75f;
+    public float PeacefulDelay = 7.5f;
     
     public Agent(){}
     
@@ -695,6 +695,9 @@ public class Agent : Component
                 AttackFrames.Add(b);
             }
         }
+
+        Random random = new();
+        PeacefulDelay = (float)(random.NextDouble() * 5.0f) + 8.0f;
     }
 
     public override void RemoveComponent()
