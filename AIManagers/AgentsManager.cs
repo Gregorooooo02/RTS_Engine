@@ -93,6 +93,11 @@ public class AgentsManager
                 {
                     ChangeUnitSelection(temp, true);
                     SelectedUnits.Add(temp);
+                    if (unit.ParentObject.GetComponent<Agent>().Emitter != null)
+                    {
+                        SelectedUnits[0].Emitter.PlayIdle();
+                    }
+                    
                 }
             }
         }

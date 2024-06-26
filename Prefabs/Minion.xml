@@ -66,11 +66,11 @@
         <path>minion</path>
         <technique>PBR_Skinned</technique>
         <speed>1</speed>
-        <currentClip>2</currentClip>
+        <currentClip>3</currentClip>
         <translationInterpolation>Linear</translationInterpolation>
         <orientationInterpolation>Linear</orientationInterpolation>
         <scaleInterpolation>Linear</scaleInterpolation>
-        <loop>True</loop>
+        <loop>False</loop>
       </animatedModel>
     </component>
     <component>
@@ -83,6 +83,13 @@
       <active>True</active>
       <oneUse>False</oneUse>
       <revealRadius>20</revealRadius>
+    </component>
+    <component>
+      <type>Emitter</type>
+      <active>True</active>
+      <emitterType>Candle</emitterType>
+      <emitterVolume>1</emitterVolume>
+      <emitterScale>10</emitterScale>
     </component>
   </components>
   <childObjects>

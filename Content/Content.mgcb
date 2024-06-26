@@ -3017,113 +3017,395 @@
 /processorParam:Quality=Medium
 /build:SoundFX/testBeat.wav
 
-#begin Sounds/Cabinet_Attack.wav
+#begin Sounds/cabinet_attack1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Cabinet_Attack.wav
+/build:Sounds/cabinet_attack1.wav
 
-#begin Sounds/Cabinet_Idle.wav
+#begin Sounds/cabinet_attack2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Cabinet_Idle.wav
+/build:Sounds/cabinet_attack2.wav
 
-#begin Sounds/Cabinet_Move.wav
+#begin Sounds/cabinet_attack3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Cabinet_Move.wav
+/build:Sounds/cabinet_attack3.wav
 
-#begin Sounds/Candle_Attack.wav
+#begin Sounds/cabinet_attack4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Candle_Attack.wav
+/build:Sounds/cabinet_attack4.wav
 
-#begin Sounds/Candle_Idle.wav
+#begin Sounds/cabinet_idle1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Candle_Idle.wav
+/build:Sounds/cabinet_idle1.wav
 
-#begin Sounds/Candle_Move.wav
+#begin Sounds/cabinet_idle2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Candle_Move.wav
+/build:Sounds/cabinet_idle2.wav
 
-#begin Sounds/Chair_Attack.wav
+#begin Sounds/cabinet_idle3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Chair_Attack.wav
+/build:Sounds/cabinet_idle3.wav
 
-#begin Sounds/Chair_Idle.wav
+#begin Sounds/cabinet_move1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Chair_Idle.wav
+/build:Sounds/cabinet_move1.wav
 
-#begin Sounds/Chair_Move.wav
+#begin Sounds/cabinet_move2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Chair_Move.wav
+/build:Sounds/cabinet_move2.wav
 
-#begin Sounds/Chandelier_Attack.wav
+#begin Sounds/cabinet_move3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Chandelier_Attack.wav
+/build:Sounds/cabinet_move3.wav
 
-#begin Sounds/Chandelier_Idle.wav
+#begin Sounds/candle_attack1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Chandelier_Idle.wav
+/build:Sounds/candle_attack1.wav
 
-#begin Sounds/Chandelier_Move.wav
+#begin Sounds/candle_attack2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Chandelier_Move.wav
+/build:Sounds/candle_attack2.wav
 
-#begin Sounds/MiniCabinet_Attack.wav
+#begin Sounds/candle_idle1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/MiniCabinet_Attack.wav
+/build:Sounds/candle_idle1.wav
 
-#begin Sounds/MiniCabinet_Idle.wav
+#begin Sounds/candle_idle2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/MiniCabinet_Idle.wav
+/build:Sounds/candle_idle2.wav
 
-#begin Sounds/MiniCabinet_Move.wav
+#begin Sounds/candle_idle3.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/MiniCabinet_Move.wav
+/build:Sounds/candle_idle3.wav
 
-#begin Sounds/Wardrobe_Attack.wav
+#begin Sounds/candle_idle4.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Wardrobe_Attack.wav
+/build:Sounds/candle_idle4.wav
 
-#begin Sounds/Wardrobe_Idle.wav
+#begin Sounds/candle_idle5.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Wardrobe_Idle.wav
+/build:Sounds/candle_idle5.wav
 
-#begin Sounds/Wardrobe_Move.wav
+#begin Sounds/candle_move1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/Wardrobe_Move.wav
+/build:Sounds/candle_move1.wav
+
+#begin Sounds/candle_move2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/candle_move2.wav
+
+#begin Sounds/candle_move3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/candle_move3.wav
+
+#begin Sounds/chair_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_attack1.wav
+
+#begin Sounds/chair_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_attack2.wav
+
+#begin Sounds/chair_attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_attack3.wav
+
+#begin Sounds/chair_attack4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_attack4.wav
+
+#begin Sounds/chair_attack5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_attack5.wav
+
+#begin Sounds/chair_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_idle1.wav
+
+#begin Sounds/chair_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_idle2.wav
+
+#begin Sounds/chair_idle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_idle3.wav
+
+#begin Sounds/chair_idle4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_idle4.wav
+
+#begin Sounds/chair_idle5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_idle5.wav
+
+#begin Sounds/chair_move1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_move1.wav
+
+#begin Sounds/chair_move2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_move2.wav
+
+#begin Sounds/chair_move3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_move3.wav
+
+#begin Sounds/chair_move4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_move4.wav
+
+#begin Sounds/chair_move5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chair_move5.wav
+
+#begin Sounds/chandelier_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_attack1.wav
+
+#begin Sounds/chandelier_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_attack2.wav
+
+#begin Sounds/chandelier_attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_attack3.wav
+
+#begin Sounds/chandelier_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_idle1.wav
+
+#begin Sounds/chandelier_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_idle2.wav
+
+#begin Sounds/chandelier_idle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_idle3.wav
+
+#begin Sounds/chandelier_idle4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_idle4.wav
+
+#begin Sounds/chandelier_move1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_move1.wav
+
+#begin Sounds/chandelier_move2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_move2.wav
+
+#begin Sounds/chandelier_move3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/chandelier_move3.wav
+
+#begin Sounds/mini_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_attack1.wav
+
+#begin Sounds/mini_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_attack2.wav
+
+#begin Sounds/mini_attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_attack3.wav
+
+#begin Sounds/mini_attack4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_attack4.wav
+
+#begin Sounds/mini_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_idle1.wav
+
+#begin Sounds/mini_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_idle2.wav
+
+#begin Sounds/mini_idle3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_idle3.wav
+
+#begin Sounds/mini_move1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_move1.wav
+
+#begin Sounds/mini_move2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_move2.wav
+
+#begin Sounds/mini_move3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mini_move3.wav
+
+#begin Sounds/Mission_Theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Mission_Theme.wav
+
+#begin Sounds/wardrobe_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_attack1.wav
+
+#begin Sounds/wardrobe_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_attack2.wav
+
+#begin Sounds/wardrobe_attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_attack3.wav
+
+#begin Sounds/wardrobe_attack4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_attack4.wav
+
+#begin Sounds/wardrobe_idle1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_idle1.wav
+
+#begin Sounds/wardrobe_idle2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_idle2.wav
+
+#begin Sounds/wardrobe_move1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_move1.wav
+
+#begin Sounds/wardrobe_move2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_move2.wav
+
+#begin Sounds/wardrobe_move3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/wardrobe_move3.wav
 
 #begin sprite.jpg
 /importer:TextureImporter

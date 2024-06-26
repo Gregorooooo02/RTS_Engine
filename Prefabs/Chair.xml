@@ -14,7 +14,7 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>91,978096</y>
+        <y>15,018243</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -82,6 +82,13 @@
       <active>True</active>
       <oneUse>False</oneUse>
       <revealRadius>16</revealRadius>
+    </component>
+    <component>
+      <type>Emitter</type>
+      <active>True</active>
+      <emitterType>Chair</emitterType>
+      <emitterVolume>1</emitterVolume>
+      <emitterScale>10</emitterScale>
     </component>
   </components>
   <childObjects>
