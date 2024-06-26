@@ -105,8 +105,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>500</hp>
-                <maxHp>500</maxHp>
+                <hp>400</hp>
+                <maxHp>400</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
@@ -338,8 +338,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>500</hp>
-                <maxHp>500</maxHp>
+                <hp>400</hp>
+                <maxHp>400</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
@@ -604,8 +604,8 @@
                 <count>0</count>
               </attackFrames>
               <agentData>
-                <hp>500</hp>
-                <maxHp>500</maxHp>
+                <hp>400</hp>
+                <maxHp>400</maxHp>
                 <alive>True</alive>
               </agentData>
             </component>
