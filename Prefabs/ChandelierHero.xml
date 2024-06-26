@@ -69,7 +69,7 @@
             <hp>125</hp>
             <maxHp>125</maxHp>
             <alive>True</alive>
-            <presence>3,5</presence>
+            <presence>4,2</presence>
             <walkingSpeed>12</walkingSpeed>
             <damage>10</damage>
             <attackDelay>0,5</attackDelay>
@@ -560,7 +560,7 @@
             <hp>75</hp>
             <maxHp>75</maxHp>
             <alive>True</alive>
-            <presence>3,5</presence>
+            <presence>3</presence>
             <walkingSpeed>10,5</walkingSpeed>
             <damage>7,5</damage>
             <attackDelay>0,5</attackDelay>
@@ -1051,7 +1051,7 @@
             <hp>75</hp>
             <maxHp>75</maxHp>
             <alive>True</alive>
-            <presence>3,5</presence>
+            <presence>3</presence>
             <walkingSpeed>10,5</walkingSpeed>
             <damage>7,5</damage>
             <attackDelay>0,5</attackDelay>
@@ -1542,7 +1542,7 @@
             <hp>75</hp>
             <maxHp>75</maxHp>
             <alive>True</alive>
-            <presence>3,5</presence>
+            <presence>3</presence>
             <walkingSpeed>10,5</walkingSpeed>
             <damage>7,5</damage>
             <attackDelay>0,5</attackDelay>
