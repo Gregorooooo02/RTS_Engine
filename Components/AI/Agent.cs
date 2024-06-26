@@ -97,7 +97,7 @@ public class Agent : Component
     public float PeacefulTimer = 0;
 
     public float AggressiveDelay = 1.25f;
-    public float PeacefulDelay = 2.5f;
+    public float PeacefulDelay = 4.5f;
     
     public Agent(){}
     
@@ -213,7 +213,7 @@ public class Agent : Component
             }
             else
             {
-                if (Type is AgentType.Civilian or AgentType.Soldier)
+                if (Type is AgentType.Civilian)
                 {
                     if (_ChangeDeath)
                     {
@@ -223,6 +223,28 @@ public class Agent : Component
                     if (ActiveCivilianClip != 0 || AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
                     {
                         ActiveCivilianClip = 0;
+                        AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        AnimatedRenderer._skinnedModel.AnimationController.LoopEnabled = false;
+                        AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
+                        _ChangeDeath = true;
+                    }
+                    _deathCounter++;
+                    if (_deathCounter >= DeathFrame)
+                    {
+                        ParentObject.Active = false;
+                        _deathCounter = 0;
+                    }
+                } 
+                else if (Type == AgentType.Soldier)
+                {
+                    if (_ChangeDeath)
+                    {
+                        _ChangeDeath = false;
+                        AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    }
+                    if (ActiveCivilianClip != 1 || AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                    {
+                        ActiveCivilianClip = 1;
                         AnimatedRenderer._skinnedModel.ChangedClip = true;
                         AnimatedRenderer._skinnedModel.AnimationController.LoopEnabled = false;
                         AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;

@@ -207,9 +207,9 @@ public class SoldierPatrol : AgentState
                     _changeMove = false;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                 }
-                if (agent.ActiveCivilianClip != 1 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                if (agent.ActiveCivilianClip != 4 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
                 {
-                    agent.ActiveCivilianClip = 1;
+                    agent.ActiveCivilianClip = 4;
                     agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                     _changeMove = true;

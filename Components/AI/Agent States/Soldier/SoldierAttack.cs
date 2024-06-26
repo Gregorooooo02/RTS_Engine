@@ -307,9 +307,9 @@ public class SoldierAttack : AgentState
                         _changeMove = false;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     }
-                    if (agent.ActiveCivilianClip != 1 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                    if (agent.ActiveCivilianClip != 3 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
                     {
-                        agent.ActiveCivilianClip = 1;
+                        agent.ActiveCivilianClip = 3;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                         _changeMove = true;
@@ -340,9 +340,9 @@ public class SoldierAttack : AgentState
                         _changeAttack = false;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                     }
-                    if (agent.ActiveCivilianClip != 3 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
+                    if (agent.ActiveCivilianClip != 0 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
                     {
-                        agent.ActiveCivilianClip = 3;
+                        agent.ActiveCivilianClip = 0;
                         agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
                         agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                         _changeAttack = true;
