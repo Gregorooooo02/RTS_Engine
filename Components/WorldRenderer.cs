@@ -74,7 +74,7 @@ public class WorldRenderer : Component
 
     private Color[] _scannedHeightData;
 
-    private float[] rockOffsets = { 0.5f, 1.0f, 1.0f };
+    private float[] rockOffsets = { 0.28f, 0.7f, 0.35f };
     
     private float globalMinHeight = float.MaxValue;
     private float globalMaxHeight = float.MinValue;
@@ -1148,10 +1148,6 @@ public class WorldRenderer : Component
         root.AddChildObject(rock);
         rock.AddComponent<InstancedRendererUnit>();
 
-        position.Y = PickingManager.InterpolateWorldHeight(new Vector2(position.X, position.Z), this) + rockOffsets[rockId];
-        
-        rock.Transform.SetLocalPosition(position);
-        
         float randomRotation = (float)(random.NextDouble() * 360.0f);
         rock.Transform.SetLocalRotationY(randomRotation);
         
@@ -1160,6 +1156,10 @@ public class WorldRenderer : Component
         float randomScaleY = (float)(random.NextDouble() * 0.7f + 0.7f);
         float randomScaleZ = (float)(random.NextDouble() * 0.7f + 0.7f);
         rock.Transform.SetLocalScale(new Vector3(randomScaleX, randomScaleY, randomScaleZ));
+        
+        position.Y = PickingManager.InterpolateWorldHeight(new Vector2(position.X, position.Z), this) + rockOffsets[rockId] * randomScaleY;
+        
+        rock.Transform.SetLocalPosition(position);
     }
 
     public override string ComponentToXmlString()
