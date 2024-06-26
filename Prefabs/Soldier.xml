@@ -118,7 +118,7 @@
           <type>Emitter</type>
           <active>True</active>
           <emitterType>Knight</emitterType>
-          <emitterVolume>1</emitterVolume>
+          <emitterVolume>0.4</emitterVolume>
           <emitterScale>10</emitterScale>
         </component>
       </components>
