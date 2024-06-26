@@ -94,8 +94,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -327,8 +327,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -560,8 +560,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
@@ -793,8 +793,8 @@
               <active>True</active>
               <agentType>EnemyBuilding</agentType>
               <agentLayer>ENEMY</agentLayer>
-              <separationDistance>5,75</separationDistance>
-              <attackingRadius>1</attackingRadius>
+              <separationDistance>3</separationDistance>
+              <attackingRadius>4</attackingRadius>
               <meatAward>10</meatAward>
               <heightOffset>2</heightOffset>
               <directionOffset>0</directionOffset>
