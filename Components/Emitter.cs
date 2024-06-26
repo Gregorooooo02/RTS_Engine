@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using ImGuiNET;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
 namespace RTS_Engine;
@@ -118,7 +117,7 @@ public class Emitter : Component
                 break;
         }
 
-         void SetFurnitureInstances()
+        void SetFurnitureInstances()
         {
             IdleInstance = RandomSound(Idle).CreateInstance();
             MoveInstance = RandomSound(Move).CreateInstance();
@@ -156,6 +155,24 @@ public class Emitter : Component
     {
         AttackInstance = RandomSound(Attack).CreateInstance();
         AttackInstance.Play();
+    }
+
+    public void PlayWander()
+    {
+        WanderInstance = RandomSound(Wander).CreateInstance();
+        WanderInstance.Play();
+    }
+
+    public void PlayDamage()
+    {
+        DamageInstance = RandomSound(Damage).CreateInstance();
+        DamageInstance.Play();
+    }
+
+    public void PlayFlee()
+    {
+        FleeInstance = RandomSound(Flee).CreateInstance();
+        FleeInstance.Play();
     }
     
     public static void PlayMissionTheme()
@@ -225,24 +242,16 @@ public class Emitter : Component
             }
             
             ImGui.Text("Change unit type:");
-            
-            if(ImGui.Button("Cabinet"))
-                SetType(UnitType.Cabinet);
-            
-            if(ImGui.Button("Candle"))
-                SetType(UnitType.Candle);
-            
-            if(ImGui.Button("Chair"))
-                SetType(UnitType.Chair);
-            
-            if(ImGui.Button("Chandelier"))
-                SetType(UnitType.Chandelier);
-            
-            if(ImGui.Button("MiniCabinet"))
-                SetType(UnitType.MiniCabinet);
-            
-            if(ImGui.Button("Wardrobe"))
-                SetType(UnitType.Wardrobe);
+
+            var values = Enum.GetValues(typeof(UnitType));
+
+            foreach (UnitType type in values)
+            {
+                if (ImGui.Button(type.ToString()))
+                {
+                    SetType(type);
+                }
+            }
             
             ImGui.Text("Unit type: " + Type);
             

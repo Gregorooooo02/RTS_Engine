@@ -92,6 +92,12 @@ public class Agent : Component
     public int ID;
 
     public float AttackingRadius = 1.0f;
+
+    public float AggressiveTimer = 0;
+    public float PeacefulTimer = 0;
+
+    public float AggressiveDelay = 1.25f;
+    public float PeacefulDelay = 2.5f;
     
     public Agent(){}
     
@@ -130,6 +136,17 @@ public class Agent : Component
             AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveCivilianClip;
         }
 
+        if (AgentData.TookDamage)
+        {
+            AgentData.TookDamage = false;
+            if (Emitter != null && AggressiveTimer >= AggressiveDelay)
+            {
+                AggressiveTimer = 0;
+                PeacefulTimer = 0;
+                Emitter.PlayDamage();
+            }
+        }
+        
         if (!AgentData.Alive)
         {
             if (!removed)
@@ -225,6 +242,9 @@ public class Agent : Component
             }
             return;
         }
+
+        AggressiveTimer += Globals.DeltaTime;
+        PeacefulTimer += Globals.DeltaTime;
         
         if (AgentLayer == LayerType.ENEMY)
         {
@@ -678,6 +698,7 @@ public class Agent : Component
         if(ImGui.CollapsingHeader("Agent"))
         {
             ImGui.Text("Agent ID: " + ID);
+            ImGui.Text("Peaceful timer" + PeacefulTimer);
             ImGui.DragFloat("Occupancy distance", ref _occupyDistance);
             ImGui.DragFloat("Attacking distance", ref AttackingRadius);
             ImGui.DragFloat("Height offset", ref _heightOffset);

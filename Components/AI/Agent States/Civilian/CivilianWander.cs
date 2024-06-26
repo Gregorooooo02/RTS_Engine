@@ -140,6 +140,12 @@ public class CivilianWander : AgentState
                     agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                     _changeMove = true;
                 }
+                if (agent.PeacefulTimer >= agent.PeacefulDelay && agent.Emitter != null)
+                {
+                    agent.PeacefulTimer = 0;
+                    agent.Emitter.PlayWander();
+                }
+                
                 agent.MoveToPoint(_currentPoint, data.WanderingSpeed);
             }
         }
