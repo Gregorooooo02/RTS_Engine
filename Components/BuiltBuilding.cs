@@ -40,8 +40,11 @@ public class BuiltBuilding : Component
             _cancelButton.GetComponent<Button>().IsPressed = false;
             Globals.UIActive = false;
         }
+
+        GameObject temp = _ui.FindGameObjectByName("Cost");
+        if(temp == null) return;
+        _costText = temp.Children[0];
         
-        _costText = _ui.FindGameObjectByName("Cost").Children[0];
         _costText.GetComponent<TextRenderer>().Content = MeatCost.ToString();
         
         if (GameManager.MeatNumber - MeatCost >= 0)
