@@ -218,7 +218,7 @@ public class Emitter : Component
         SetType((UnitType)Enum.Parse(typeof(UnitType), element.Element("emitterType")?.Value));
         volume = float.TryParse(element.Element("emitterVolume")?.Value, out float vol) ? vol : 1.0f;
         scale = float.TryParse(element.Element("emitterScale")?.Value, out float sc) ? sc : 1.0f;
-        SoundEffect.DistanceScale = scale;
+        //SoundEffect.DistanceScale = scale;
     }
     public override void RemoveComponent()
     {

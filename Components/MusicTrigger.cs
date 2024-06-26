@@ -36,6 +36,7 @@ public class MusicTrigger : Component
                 AudioManager.CurrentlyPlayedTheme?.Stop();
                 AudioManager.CurrentlyPlayedTheme = AudioManager.MissionThemeInstance;
                 AudioManager.CurrentlyPlayedTheme.IsLooped = true;
+                AudioManager.CurrentlyPlayedTheme.Volume = 0.5f;
                 AudioManager.CurrentlyPlayedTheme?.Play();
                 break;
             

@@ -67,6 +67,7 @@ public sealed class Game1 : Game
         Globals.Initialize();
         AssetManager.Initialize(Content);
         base.Initialize();
+        SoundEffect.DistanceScale = 5.0f;
     }
 
     protected override void LoadContent()
