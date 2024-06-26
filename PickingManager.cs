@@ -175,6 +175,7 @@ public class PickingManager
                      {
                          sphere =
                              entity.AnimatedRenderer._skinnedModel.BoundingSphere.Transform(entity.ParentObject.Transform.ModelMatrix);
+                         sphere.Radius *= 0.7f;
                      }
                      
                      float? dist = sphere.Intersects(ray.Value);
