@@ -664,7 +664,7 @@ public class WorldRenderer : Component
                 if (height > minHeight && height < maxHeight)
                 {
 #if _WINDOWS
-                    villages.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialVillage.xml");
+                    villages.LoadPrefab(Globals.MainPath + "/Prefabs/Village1.xml");
 #else
                     villages.LoadPrefab("Prefabs/Village1.xml");
 #endif
@@ -694,7 +694,7 @@ public class WorldRenderer : Component
                 {
                     validSpot = true;
 #if _WINDOWS
-                    ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialUnits.xml");
+                    ParentObject.LoadPrefab(Globals.MainPath + "/Prefabs/WardrobeHero.xml");
 #else
                     ParentObject.LoadPrefab("Prefabs/WardrobeHero.xml");
 #endif

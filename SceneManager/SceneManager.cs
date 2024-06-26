@@ -61,10 +61,11 @@ public class SceneManager
                             Console.WriteLine("Added Camera");
                             if (isTutorial)
                             {
-                                //Load tutorial UI here
 #if _WINDOWS
+                                missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/TutorialUI.xml");
                                 missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/UI.xml");
 #else
+                                missionRoot.LoadPrefab("Prefabs/TutorialUI.xml");
                                 missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
                             }
@@ -76,8 +77,6 @@ public class SceneManager
                                 missionRoot.LoadPrefab("Prefabs/UI.xml");
 #endif
                             }
-
-
 #if _WINDOWS
                             missionRoot.LoadPrefab(Globals.MainPath + "/Prefabs/Marker.xml");
 #else

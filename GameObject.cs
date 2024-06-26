@@ -154,28 +154,6 @@ public class GameObject
             SetChildrenActive(child);
         }
     }
-
-    private void SetNextChildActive(GameObject parent)
-    {
-        for (int i = 0; i < parent.Children.Count; i++)
-        {
-            if (parent.Children[i].Active)
-            {
-                parent.Children[i].Active = false;
-                if (i + 1 < parent.Children.Count)
-                {
-                    parent.Children[i + 1].Active = true;
-                }
-                break;
-            }
-        }
-    }
-    
-    public void SetNextChildActive()
-    {
-        SetNextChildActive(this);
-        this.Active = false;
-    }
     
     public GameObject FindGameObjectByName(string name)
     {

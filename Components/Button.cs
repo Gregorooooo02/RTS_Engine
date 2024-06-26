@@ -28,6 +28,8 @@ public class Button : Component
     private int _unitID = 0;
     private Agent _agent;
     
+    private int _tutorialStep = 1;
+    
     public override void Update()
     {
         if (Active)
@@ -134,9 +136,10 @@ public class Button : Component
                                 return;
                             }
 
-                            if (_buttonAction == GameAction.TOGGLE_NEXT_CHILD)
+                            if (_buttonAction == GameAction.NEXT_HINT && _tutorialStep < 5)
                             {
-                                ParentObject.SetNextChildActive();
+                                ButtonVisual.NextHint(_tutorialStep);
+                                _tutorialStep++;
                             }
                             
                             Globals.HitUI = true;

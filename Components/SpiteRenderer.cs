@@ -130,6 +130,23 @@ public class SpiteRenderer : Component
         }
     }
 
+    public void NextHint(int count)
+    {
+        string currentSpriteName = Sprite.Name;
+        string newSpriteName;
+        
+        if (count >= 4)
+        {
+            // The tutorial is over, so we deactivate the sprite
+            ParentObject.Active = false;
+        }
+        else
+        {
+            newSpriteName = currentSpriteName.Replace("Tutorial" + count, "Tutorial" + (count + 1));
+            LoadSprite(newSpriteName);    
+        }
+    }
+
     public override string ComponentToXmlString()
     {
         StringBuilder builder = new StringBuilder();
