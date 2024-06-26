@@ -10,6 +10,8 @@ public class SoldierIdle : AgentState
     private float _maxTime;
     private readonly Random _random = new();
     
+    private bool _changeIdle = false;
+    
     public override void Initialize(Agent agent)
     {
         
@@ -29,6 +31,18 @@ public class SoldierIdle : AgentState
         {
             _maxTime = (float)_random.NextDouble() * (data.MaxIdleTime - data.MinIdleTime) + data.MinIdleTime;
             _active = true;
+        }
+        if (_changeIdle)
+        {
+            _changeIdle = false;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+        }
+        if (agent.ActiveCivilianClip != 2 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+        {
+            agent.ActiveCivilianClip = 2;
+            agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+            agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
+            _changeIdle = true;
         }
         if (_active)
         {

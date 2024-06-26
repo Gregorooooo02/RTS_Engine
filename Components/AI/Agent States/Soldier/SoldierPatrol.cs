@@ -29,6 +29,8 @@ public class SoldierPatrol : AgentState
     
     private bool _traversing = false;
     private int _maxAttempts = 10;
+
+    private bool _changeMove = false;
     public override void Initialize(Agent agent)
     {
         if (agent.AgentStates.TryAdd(Agent.State.Idle, new SoldierIdle()) && agent.AgentStates.TryGetValue(Agent.State.Idle, out AgentState idle))
@@ -200,6 +202,18 @@ public class SoldierPatrol : AgentState
             }
             else
             {
+                if (_changeMove)
+                {
+                    _changeMove = false;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                }
+                if (agent.ActiveCivilianClip != 1 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                {
+                    agent.ActiveCivilianClip = 1;
+                    agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
+                    _changeMove = true;
+                }
                 agent.MoveToPoint(_currentPoint, data.PatrollingSpeed);
             }
         }

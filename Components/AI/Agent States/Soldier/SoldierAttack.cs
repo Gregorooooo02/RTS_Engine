@@ -27,6 +27,9 @@ public class SoldierAttack : AgentState
     private Vector2 _currentPoint;
     private readonly int _maxAttempts = 10;
     
+    private bool _changeAttack = false;
+    private bool _changeMove = false;
+    
     public override void Initialize(Agent agent)
     {
         
@@ -299,6 +302,18 @@ public class SoldierAttack : AgentState
                 }
                 else
                 {
+                    if (_changeMove)
+                    {
+                        _changeMove = false;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    }
+                    if (agent.ActiveCivilianClip != 1 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                    {
+                        agent.ActiveCivilianClip = 1;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
+                        _changeMove = true;
+                    }
                     agent.MoveToPoint(_currentPoint, data.AttackingWalkingSpeed);
                     if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId !=
                         agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
@@ -314,6 +329,18 @@ public class SoldierAttack : AgentState
                 float angle = CivilianWander.AngleDegrees(agent.Direction, direction);
                 if (MathF.Abs(angle) < 5.0f)
                 {
+                    if (_changeAttack)
+                    {
+                        _changeAttack = false;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    }
+                    if (agent.ActiveCivilianClip != 3 || agent.AnimatedRenderer._skinnedModel.AnimationController.Speed < 2.0f)
+                    {
+                        agent.ActiveCivilianClip = 3;
+                        agent.AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
+                        _changeAttack = true;
+                    }
                     //TODO: After adding animations remember to modify the if statement below to check for specific animation frame
                     if (_attackTimer >= data.AttackDelay)
                     {
