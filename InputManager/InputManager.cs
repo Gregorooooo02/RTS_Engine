@@ -46,7 +46,9 @@ public enum GameAction
     RESET,
     DISABLE_PICKING,
     ENABLE_PICKING,
-    TOGGLE_PICKING
+    TOGGLE_PICKING,
+    LOWER_EFFECTS_VOLUME,
+    INCREASE_EFFECTS_VOLUME
 }
 
 public class InputManager

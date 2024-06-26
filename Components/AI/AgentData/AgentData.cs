@@ -12,6 +12,7 @@ public class AgentData
     public float HpAsPercentage => Hp / MaxHp;
 
     public bool Alive = true;
+    public bool TookDamage = false;
     
     public AgentData()
     {
@@ -29,6 +30,7 @@ public class AgentData
     {
         if(!Alive) return;
         Hp -= damage;
+        TookDamage = true;
         if (Hp <= 0) Alive = false;
     }
 
@@ -68,6 +70,11 @@ public class AgentData
         if (ImGui.Button("Kill"))
         {
             DealDamage(MaxHp);
+        }
+        ImGui.SameLine();
+        if (ImGui.Button("Deal 1 damage"))
+        {
+            DealDamage(1);
         }
     }
 #endif

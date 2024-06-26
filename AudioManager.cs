@@ -13,9 +13,9 @@ public class AudioManager
    
     public static SoundEffect MissionTheme = AssetManager.MissionTheme;
     public static SoundEffectInstance MissionThemeInstance = MissionTheme.CreateInstance();
+
+    public static SoundEffectInstance CurrentlyPlayedTheme = null;
     
-
-
     public AudioManager()
     {
        

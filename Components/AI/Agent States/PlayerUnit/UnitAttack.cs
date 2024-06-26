@@ -195,6 +195,12 @@ public class UnitAttack : AgentState
                         _changeMove = true;
                     }
                     
+                    if (agent.PeacefulTimer >= agent.PeacefulDelay && agent.Emitter != null)
+                    {
+                        agent.PeacefulTimer = 0;
+                        agent.Emitter.PlayMove();
+                    }
+                    
                     ResetFrameData();
                     agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
                     
@@ -231,6 +237,12 @@ public class UnitAttack : AgentState
                         //Successful attack
                         GetNextAgentAttackIndex(agent);
                         _attackTimer = 0;
+                        if (agent.AggressiveTimer >= agent.AggressiveDelay && agent.Emitter != null)
+                        {
+                            agent.PeacefulTimer = 0;
+                            agent.AggressiveTimer = 0;
+                            agent.Emitter.PlayAttack();
+                        }
                         if (data.Target.Type == Agent.AgentType.Soldier)
                         {
                             SoldierData soldierData = (SoldierData)data.Target.AgentData;

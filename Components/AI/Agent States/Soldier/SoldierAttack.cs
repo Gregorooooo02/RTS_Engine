@@ -314,6 +314,12 @@ public class SoldierAttack : AgentState
                         agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
                         _changeMove = true;
                     }
+                    if (agent.PeacefulTimer >= agent.PeacefulDelay && agent.Emitter != null)
+                    {
+                        agent.PeacefulTimer = 0;
+                        agent.Emitter.PlayMove();
+                    }
+                    
                     agent.MoveToPoint(_currentPoint, data.AttackingWalkingSpeed);
                     if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId !=
                         agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
@@ -346,6 +352,12 @@ public class SoldierAttack : AgentState
                     {
                         //Successful attack
                         _attackTimer = 0;
+                        if (agent.AggressiveTimer >= agent.AggressiveDelay && agent.Emitter != null)
+                        {
+                            agent.PeacefulTimer = 0;
+                            agent.AggressiveDelay = 0;
+                            agent.Emitter.PlayAttack();
+                        }
                         if (data.IsRanged)
                         {
                             Globals.AgentsManager.ProjectileManager.AddProjectile(ProjectileManager.ProjectileType.Arrow,data.Target,data.ProjectileSpeed,data.ProjectileMinDistance, data.Damage, agent.Position);

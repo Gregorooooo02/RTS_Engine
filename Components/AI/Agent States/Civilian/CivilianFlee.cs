@@ -169,6 +169,11 @@ public class CivilianFlee : AgentState
                     agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                     _changeFlee = true;
                 }
+                if (agent.PeacefulTimer >= agent.PeacefulDelay && agent.Emitter != null)
+                {
+                    agent.PeacefulTimer = 0;
+                    agent.Emitter.PlayFlee();
+                }
                 agent.MoveToPoint(_currentPoint, data.FleeingSpeed);
             }
         }

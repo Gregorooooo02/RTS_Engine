@@ -110,6 +110,13 @@ public class UnitMove : AgentState
                     agent.AnimatedRenderer._skinnedModel.AnimationController.Speed = 2.0f;
                     _changeMove = true;
                 }
+
+                if (agent.PeacefulTimer >= agent.PeacefulDelay && agent.Emitter != null)
+                {
+                    agent.PeacefulTimer = 0;
+                    agent.Emitter.PlayMove();
+                }
+                
                 agent.MoveToPoint(_currentPoint, data.WalkingSpeed);
                 if (Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId !=
                     agent.ID && Globals.Renderer.WorldRenderer.MapNodes[(int)_currentPoint.X, (int)_currentPoint.Y].AllyOccupantId != 0)
