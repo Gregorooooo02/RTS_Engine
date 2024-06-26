@@ -1658,8 +1658,8 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,2</x>
-                            <y>0,2</y>
+                            <x>0,22</x>
+                            <y>0,22</y>
                             <z>1</z>
                           </scale>
                         </component>
@@ -1667,7 +1667,7 @@
                           <type>SpiteRenderer</type>
                           <active>True</active>
                           <useLocal>True</useLocal>
-                          <sprite>UI/Structures/sawmill</sprite>
+                          <sprite>UI/Structures/househtartak</sprite>
                           <color>
                             <r>255</r>
                             <g>255</g>
@@ -2011,19 +2011,19 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>218,1</x>
-                        <y>-0,5</y>
-                        <z>215,5</z>
+                        <x>-3,9</x>
+                        <y>35,3</y>
+                        <z>1,6</z>
                       </position>
                       <rotation>
                         <x>0</x>
-                        <y>-221</y>
+                        <y>-47</y>
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>4</x>
-                        <y>4</y>
-                        <z>4</z>
+                        <x>3</x>
+                        <y>3</y>
+                        <z>3</z>
                       </scale>
                     </component>
                     <component>
@@ -2031,7 +2031,7 @@
                       <active>True</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>domludzi</path>
+                        <path>dmgBuilding</path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -2298,8 +2298,8 @@
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>255</g>
-                                    <b>255</b>
+                                    <g>0</g>
+                                    <b>0</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -2477,8 +2477,8 @@
                                   <font>defaultFont</font>
                                   <color>
                                     <r>255</r>
-                                    <g>255</g>
-                                    <b>255</b>
+                                    <g>0</g>
+                                    <b>0</b>
                                     <a>255</a>
                                   </color>
                                   <screenSizeX>1600</screenSizeX>
@@ -2773,8 +2773,8 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,2</x>
-                            <y>0,2</y>
+                            <x>0,11</x>
+                            <y>0,11</y>
                             <z>1</z>
                           </scale>
                         </component>
@@ -2782,7 +2782,7 @@
                           <type>SpiteRenderer</type>
                           <active>True</active>
                           <useLocal>True</useLocal>
-                          <sprite>UI/Structures/dmgPerk</sprite>
+                          <sprite>UI/Structures/dmghouse</sprite>
                           <color>
                             <r>255</r>
                             <g>255</g>
@@ -3126,19 +3126,19 @@
                       <type>Transform</type>
                       <active>True</active>
                       <position>
-                        <x>-13,9</x>
-                        <y>-1,2</y>
-                        <z>0</z>
+                        <x>11,2</x>
+                        <y>-0,2</y>
+                        <z>18,2</z>
                       </position>
                       <rotation>
                         <x>0</x>
-                        <y>0</y>
+                        <y>-56</y>
                         <z>0</z>
                       </rotation>
                       <scale>
-                        <x>4</x>
-                        <y>4</y>
-                        <z>4</z>
+                        <x>6</x>
+                        <y>6</y>
+                        <z>6</z>
                       </scale>
                     </component>
                     <component>
@@ -3146,7 +3146,7 @@
                       <active>True</active>
                       <applyFog>True</applyFog>
                       <model>
-                        <path>Env/props/namiot</path>
+                        <path>hpBuilding</path>
                         <technique>PBR</technique>
                       </model>
                     </component>
@@ -3888,8 +3888,8 @@
                             <z>0</z>
                           </rotation>
                           <scale>
-                            <x>0,22</x>
-                            <y>0,22</y>
+                            <x>0,11</x>
+                            <y>0,11</y>
                             <z>0,22</z>
                           </scale>
                         </component>
@@ -3897,7 +3897,7 @@
                           <type>SpiteRenderer</type>
                           <active>True</active>
                           <useLocal>True</useLocal>
-                          <sprite>UI/PuzzleSprites/healthPuzzle</sprite>
+                          <sprite>UI/Structures/househp</sprite>
                           <color>
                             <r>255</r>
                             <g>255</g>

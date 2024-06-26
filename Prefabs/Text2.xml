@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rootObject>
+  <name>Text2</name>
+  <active>True</active>
+  <cascadingActive>True</cascadingActive>
+  <components>
+    <component>
+      <type>Transform</type>
+      <active>True</active>
+      <position>
+        <x>30</x>
+        <y>680</y>
+        <z>0</z>
+      </position>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <scale>
+        <x>0,75</x>
+        <y>0,75</y>
+        <z>1</z>
+      </scale>
+    </component>
+    <component>
+      <type>TextRenderer</type>
+      <active>True</active>
+      <useLocal>True</useLocal>
+      <contents>Here you can build new structures with</contents>
+      <font>Fonts/lightFont</font>
+      <color>
+        <r>255</r>
+        <g>255</g>
+        <b>255</b>
+        <a>255</a>
+      </color>
+      <screenSizeX>1600</screenSizeX>
+      <screenSizeY>900</screenSizeY>
+      <selectedVariables></selectedVariables>
+    </component>
+  </components>
+  <childObjects></childObjects>
+</rootObject>

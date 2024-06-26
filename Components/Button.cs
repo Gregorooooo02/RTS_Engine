@@ -133,6 +133,11 @@ public class Button : Component
                                 IsPressed = true;
                                 return;
                             }
+
+                            if (_buttonAction == GameAction.TOGGLE_NEXT_CHILD)
+                            {
+                                ParentObject.SetNextChildActive();
+                            }
                             
                             Globals.HitUI = true;
                             InputManager.Instance._actions.Add(new ActionData(_buttonAction));
@@ -159,7 +164,6 @@ public class Button : Component
                                 Globals.PickingManager.PlayerBuildingBuiltPickingActive = true;
                                 Globals.UIActive = false;
                             }
-
 
                             if (_isUnitSelect)
                             {

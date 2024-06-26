@@ -606,7 +606,7 @@
                 <z>0</z>
               </rotation>
               <scale>
-                <x>0,464</x>
+                <x>0</x>
                 <y>0,99999994</y>
                 <z>0,99999994</z>
               </scale>
@@ -715,12 +715,12 @@
             <component>
               <type>Task</type>
               <active>True</active>
-              <goal>5</goal>
+              <goal>4</goal>
               <rewardType>Meat</rewardType>
               <reward>100</reward>
               <rewardType2>Puzzle</rewardType2>
               <reward2>9</reward2>
-              <description>Kill 5 civilians </description>
+              <description>Kill 4 civilians </description>
               <target>Civilian</target>
             </component>
           </components>
@@ -753,7 +753,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Kill 5 civilians  (0/5)</contents>
+                  <contents>Kill 4 civilians  (0/4)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>
@@ -811,12 +811,12 @@
             <component>
               <type>Task</type>
               <active>True</active>
-              <goal>5</goal>
+              <goal>3</goal>
               <rewardType>Meat</rewardType>
               <reward>100</reward>
               <rewardType2>Puzzle</rewardType2>
               <reward2>9</reward2>
-              <description>Kill 5 soldiers </description>
+              <description>Kill 3 soldiers </description>
               <target>Soldier</target>
             </component>
           </components>
@@ -849,7 +849,7 @@
                   <type>TextRenderer</type>
                   <active>True</active>
                   <useLocal>True</useLocal>
-                  <contents>Kill 5 soldiers  (0/5)</contents>
+                  <contents>Kill 3 soldiers  (0/3)</contents>
                   <font>Fonts/taskFont</font>
                   <color>
                     <r>255</r>
