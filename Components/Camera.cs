@@ -35,6 +35,7 @@ public class Camera : Component
     {
         UpdateCameraMatrices();
         ParentObject.Transform.SetLocalRotation(new(-75, 25, 0));
+        ParentObject.AddComponent<Listener>();
     }
     
     public override string ComponentToXmlString()

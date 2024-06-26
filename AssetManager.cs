@@ -127,6 +127,24 @@ public class AssetManager
     public static List<SoundEffect> WardrobeMove = new List<SoundEffect>();
     public static List<SoundEffect> WardrobeAttack = new List<SoundEffect>();
     
+    //ARCHER
+    public static List<SoundEffect> ArcherFlee = new List<SoundEffect>();
+    public static List<SoundEffect> ArcherIdle = new List<SoundEffect>();
+    public static List<SoundEffect> ArcherWander = new List<SoundEffect>();
+    public static List<SoundEffect> ArcherDamage = new List<SoundEffect>();
+    
+    //CIVILIAN
+    public static List<SoundEffect> CivilianFlee = new List<SoundEffect>();
+    public static List<SoundEffect> CivilianIdle = new List<SoundEffect>();
+    public static List<SoundEffect> CivilianWander = new List<SoundEffect>();
+    public static List<SoundEffect> CivilianDamage = new List<SoundEffect>();
+    
+    //KNIGHT
+    public static List<SoundEffect> KnightFlee = new List<SoundEffect>();
+    public static List<SoundEffect> KnightIdle = new List<SoundEffect>();
+    public static List<SoundEffect> KnightWander = new List<SoundEffect>();
+    public static List<SoundEffect> KnightDamage = new List<SoundEffect>();
+    
     //THEMES
     public static SoundEffect MissionTheme { get; private set; }
     

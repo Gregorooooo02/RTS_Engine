@@ -21,12 +21,12 @@ public class AudioManager
        
     }
 
-    public static SoundEffect RandomSound(List<SoundEffect> sounds)
-    {
-        Random random = new Random();
-        int index = random.Next(sounds.Count);
-        return sounds[index];
-    }
+    // public static SoundEffect RandomSound(List<SoundEffect> sounds)
+    // {
+    //     Random random = new Random();
+    //     int index = random.Next(sounds.Count);
+    //     return sounds[index];
+    // }
      
     public static void Apply3D()
     {

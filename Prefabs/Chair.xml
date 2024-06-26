@@ -2,6 +2,7 @@
 <rootObject>
   <name>Chair</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -13,7 +14,7 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>91,978096</y>
+        <y>15,018243</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -29,6 +30,7 @@
       <agentLayer>PLAYER</agentLayer>
       <separationDistance>1</separationDistance>
       <attackingRadius>1</attackingRadius>
+      <meatAward>10</meatAward>
       <heightOffset>1,7</heightOffset>
       <directionOffset>0</directionOffset>
       <deathFrame>30</deathFrame>
@@ -63,11 +65,11 @@
         <path>krzesloSkinned</path>
         <technique>PBR_Skinned</technique>
         <speed>1</speed>
-        <currentClip>2</currentClip>
+        <currentClip>3</currentClip>
         <translationInterpolation>Linear</translationInterpolation>
         <orientationInterpolation>Linear</orientationInterpolation>
         <scaleInterpolation>Linear</scaleInterpolation>
-        <loop>True</loop>
+        <loop>False</loop>
       </animatedModel>
     </component>
     <component>
@@ -80,11 +82,19 @@
       <active>True</active>
       <revealRadius>14</revealRadius>
     </component>
+    <component>
+      <type>Emitter</type>
+      <active>True</active>
+      <emitterType>Chair</emitterType>
+      <emitterVolume>1</emitterVolume>
+      <emitterScale>10</emitterScale>
+    </component>
   </components>
   <childObjects>
     <object>
       <name>UI</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -124,14 +134,15 @@
         <object>
           <name>HP</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>542</x>
-                <y>740,00006</y>
-                <z>0,3</z>
+                <x>272</x>
+                <y>740</y>
+                <z>0,1</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -163,13 +174,14 @@
             <object>
               <name>CurrentHP</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>542</x>
-                    <y>740,00006</y>
+                    <x>272</x>
+                    <y>740</y>
                     <z>0</z>
                   </position>
                   <rotation>
@@ -205,13 +217,14 @@
         <object>
           <name>Icon</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>545</x>
-                <y>770,00006</y>
+                <x>275</x>
+                <y>770</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -243,6 +256,9 @@
               <type>Button</type>
               <active>True</active>
               <portrait>True</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>False</isWindowTrigger>
+              <unitID>0</unitID>
               <action>EXIT</action>
             </component>
           </components>
@@ -253,6 +269,7 @@
     <object>
       <name>Healthbar</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -292,6 +309,7 @@
         <object>
           <name>Background</name>
           <active>False</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -332,6 +350,7 @@
         <object>
           <name>Filling</name>
           <active>False</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>

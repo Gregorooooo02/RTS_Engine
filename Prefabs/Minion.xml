@@ -2,6 +2,7 @@
 <rootObject>
   <name>Minion</name>
   <active>True</active>
+  <cascadingActive>True</cascadingActive>
   <components>
     <component>
       <type>Transform</type>
@@ -13,7 +14,7 @@
       </position>
       <rotation>
         <x>0</x>
-        <y>95,19255</y>
+        <y>-49,20659</y>
         <z>0</z>
       </rotation>
       <scale>
@@ -29,6 +30,7 @@
       <agentLayer>PLAYER</agentLayer>
       <separationDistance>1</separationDistance>
       <attackingRadius>1</attackingRadius>
+      <meatAward>10</meatAward>
       <heightOffset>4</heightOffset>
       <directionOffset>90</directionOffset>
       <deathFrame>0</deathFrame>
@@ -64,11 +66,11 @@
         <path>minion</path>
         <technique>PBR_Skinned</technique>
         <speed>1</speed>
-        <currentClip>2</currentClip>
+        <currentClip>3</currentClip>
         <translationInterpolation>Linear</translationInterpolation>
         <orientationInterpolation>Linear</orientationInterpolation>
         <scaleInterpolation>Linear</scaleInterpolation>
-        <loop>True</loop>
+        <loop>False</loop>
       </animatedModel>
     </component>
     <component>
@@ -81,11 +83,19 @@
       <active>True</active>
       <revealRadius>18</revealRadius>
     </component>
+    <component>
+      <type>Emitter</type>
+      <active>True</active>
+      <emitterType>Candle</emitterType>
+      <emitterVolume>1</emitterVolume>
+      <emitterScale>10</emitterScale>
+    </component>
   </components>
   <childObjects>
     <object>
       <name>UI</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -125,14 +135,15 @@
         <object>
           <name>HP</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>272</x>
-                <y>740,00006</y>
-                <z>0,4</z>
+                <x>362</x>
+                <y>740</y>
+                <z>0,1</z>
               </position>
               <rotation>
                 <x>0</x>
@@ -164,12 +175,13 @@
             <object>
               <name>CurrentHP</name>
               <active>True</active>
+              <cascadingActive>True</cascadingActive>
               <components>
                 <component>
                   <type>Transform</type>
                   <active>True</active>
                   <position>
-                    <x>272</x>
+                    <x>362</x>
                     <y>740</y>
                     <z>0</z>
                   </position>
@@ -206,13 +218,14 @@
         <object>
           <name>Icon</name>
           <active>True</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
               <active>True</active>
               <position>
-                <x>275</x>
-                <y>770,00006</y>
+                <x>365</x>
+                <y>770</y>
                 <z>0</z>
               </position>
               <rotation>
@@ -244,6 +257,9 @@
               <type>Button</type>
               <active>True</active>
               <portrait>True</portrait>
+              <isUnitSelect>False</isUnitSelect>
+              <isWindowTrigger>False</isWindowTrigger>
+              <unitID>0</unitID>
               <action>EXIT</action>
             </component>
           </components>
@@ -254,6 +270,7 @@
     <object>
       <name>Healthbar</name>
       <active>True</active>
+      <cascadingActive>True</cascadingActive>
       <components>
         <component>
           <type>Transform</type>
@@ -293,6 +310,7 @@
         <object>
           <name>Background</name>
           <active>False</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>
@@ -333,6 +351,7 @@
         <object>
           <name>Filling</name>
           <active>False</active>
+          <cascadingActive>True</cascadingActive>
           <components>
             <component>
               <type>Transform</type>

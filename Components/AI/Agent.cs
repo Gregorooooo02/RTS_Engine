@@ -61,7 +61,7 @@ public class Agent : Component
     
     public MeshRenderer Renderer = null;
     public AnimatedMeshRenderer AnimatedRenderer = null;
-
+    public Emitter Emitter = null;
     public List<int> AttackFrames = new();
     public int DeathFrame;
 
@@ -115,7 +115,9 @@ public class Agent : Component
                 return;
             }
         }
-
+        
+        Emitter ??= ParentObject.GetComponent<Emitter>();
+        
         if (AnimatedRenderer != null && Type == AgentType.PlayerUnit)
         {
             AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveClip;

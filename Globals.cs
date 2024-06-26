@@ -28,6 +28,9 @@ namespace RTS_Engine
         Chandelier,
         MiniCabinet,
         Wardrobe,
+        Archer,
+        Civilian,
+        Knight
     }
 
     public enum ScreenSize

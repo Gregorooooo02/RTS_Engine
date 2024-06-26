@@ -11,18 +11,27 @@ namespace RTS_Engine;
 public class Emitter : Component
 {
     
-    public UnitType Type;
-    public AudioEmitter AudioEmitter;
-    public AudioListener Listener;
-    private static List<SoundEffect> Idle = new List<SoundEffect>();
-    private static List<SoundEffect> Move = new List<SoundEffect>();
-    private static List<SoundEffect> Attack = new List<SoundEffect>();
-    private float volume = 1.0f;
-    private float scale = 1.0f;
+    private UnitType Type;
     
-    public SoundEffectInstance IdleInstance;
-    public SoundEffectInstance MoveInstance;
-    public SoundEffectInstance AttackInstance;
+    private AudioEmitter AudioEmitter;
+    
+    private AudioListener Listener;
+    private List<SoundEffect> Idle = new List<SoundEffect>();
+    private List<SoundEffect> Move = new List<SoundEffect>();
+    private List<SoundEffect> Attack = new List<SoundEffect>();
+    private List<SoundEffect> Wander = new List<SoundEffect>();
+    private List<SoundEffect> Damage = new List<SoundEffect>();
+    private List<SoundEffect> Flee = new List<SoundEffect>();
+    private float volume;
+    private float scale;
+    
+    private SoundEffectInstance IdleInstance;
+    private SoundEffectInstance MoveInstance;
+    private SoundEffectInstance AttackInstance;
+    private SoundEffectInstance WanderInstance;
+    private SoundEffectInstance DamageInstance;
+    private SoundEffectInstance FleeInstance;
+    
     public override void Initialize()
     {
         Active = true;
@@ -38,7 +47,7 @@ public class Emitter : Component
     
     public Emitter()
     {
-        
+        Initialize();
     }
     
     private void SetType(UnitType type)
@@ -51,58 +60,101 @@ public class Emitter : Component
                 Idle = AssetManager.CabinetIdle;
                 Move = AssetManager.CabinetMove;
                 Attack = AssetManager.CabinetAttack;
+                SetFurnitureInstances();
                 break;
             case UnitType.Chair:
                 Idle = AssetManager.ChairIdle;
                 Move = AssetManager.ChairMove;
                 Attack = AssetManager.ChairAttack;
+                SetFurnitureInstances();
                 break;
             case UnitType.Candle:
                 Idle = AssetManager.CandleIdle;
                 Move = AssetManager.CandleMove;
                 Attack = AssetManager.CandleAttack;
+                SetFurnitureInstances();
                 break;
             case UnitType.Chandelier:
                 Idle = AssetManager.ChandelierIdle;
                 Move = AssetManager.ChandelierMove;
                 Attack = AssetManager.ChandelierAttack;
+                SetFurnitureInstances();
                 break;
             case UnitType.MiniCabinet:
                 Idle = AssetManager.MiniCabinetIdle;
                 Move = AssetManager.MiniCabinetMove;
                 Attack = AssetManager.MiniCabinetAttack;
+                SetFurnitureInstances();
                 break;
             case UnitType.Wardrobe:
                 Idle = AssetManager.WardrobeIdle;
                 Move = AssetManager.WardrobeMove;
                 Attack = AssetManager.WardrobeAttack;
+                SetFurnitureInstances();
+                break;
+            case UnitType.Archer:
+                Flee = AssetManager.ArcherFlee;
+                Idle = AssetManager.ArcherIdle;
+                Wander = AssetManager.ArcherWander;
+                Damage = AssetManager.ArcherDamage;
+                SetHumanInstances();
+                break;
+            case UnitType.Civilian:
+                Flee = AssetManager.CivilianFlee;
+                Idle = AssetManager.CivilianIdle;
+                Wander = AssetManager.CivilianWander;
+                Damage = AssetManager.CivilianDamage;
+                SetHumanInstances();
+                break;
+            case UnitType.Knight:
+                Flee = AssetManager.KnightFlee;
+                Idle = AssetManager.KnightIdle;
+                Wander = AssetManager.KnightWander;
+                Damage = AssetManager.KnightDamage;
+                SetHumanInstances();
                 break;
             default:
                 Console.WriteLine("No sound effect for this unit type");
                 break;
         }
-        IdleInstance = AudioManager.RandomSound(Idle).CreateInstance();
-        MoveInstance = AudioManager.RandomSound(Move).CreateInstance();
-        AttackInstance = AudioManager.RandomSound(Attack).CreateInstance();
-        
-        
+
+         void SetFurnitureInstances()
+        {
+            IdleInstance = RandomSound(Idle).CreateInstance();
+            MoveInstance = RandomSound(Move).CreateInstance();
+            AttackInstance = RandomSound(Attack).CreateInstance();
+        }
+
+        void SetHumanInstances()
+        {
+            IdleInstance = RandomSound(Idle).CreateInstance();
+            FleeInstance = RandomSound(Flee).CreateInstance();
+            WanderInstance = RandomSound(Wander).CreateInstance();
+            DamageInstance = RandomSound(Damage).CreateInstance();
+        }
     }
 
+    public SoundEffect RandomSound(List<SoundEffect> sounds)
+    {
+        Random random = new Random();
+        int index = random.Next(sounds.Count);
+        return sounds[index];
+    }
     public void PlayIdle()
     {
-        IdleInstance = AudioManager.RandomSound(Idle).CreateInstance();
+        IdleInstance = RandomSound(Idle).CreateInstance();
         IdleInstance.Play();
     }
     
     public void PlayMove()
     {
-        MoveInstance = AudioManager.RandomSound(Move).CreateInstance();
+        MoveInstance = RandomSound(Move).CreateInstance();
         MoveInstance.Play();
     }
     
     public void PlayAttack()
     {
-        AttackInstance = AudioManager.RandomSound(Attack).CreateInstance();
+        AttackInstance = RandomSound(Attack).CreateInstance();
         AttackInstance.Play();
     }
     
@@ -113,7 +165,10 @@ public class Emitter : Component
     public override void Update()
     {
         Listener = Globals.Listener;
+        // EmitterPosition = ParentObject.Transform.Pos;
+
         AudioEmitter.Position = ParentObject.Transform.Pos;
+        
         MoveInstance.Apply3D(Listener, AudioEmitter);
         IdleInstance.Apply3D(Listener, AudioEmitter);
         AttackInstance.Apply3D(Listener, AudioEmitter);
@@ -129,17 +184,28 @@ public class Emitter : Component
         
         builder.Append("<active>" + Active + "</active>");
         
-        builder.Append("<type>" + Type + "</type>");
+        builder.Append("<emitterType>" + Type + "</emitterType>");
         
-        builder.Append("<volume>" + volume + "</volume>");
+        builder.Append("<emitterVolume>" + volume + "</emitterVolume>");
         
-        builder.Append("<scale>" + scale + "</scale>");
+        builder.Append("<emitterScale>" + scale + "</emitterScale>");
         
         builder.Append("</component>");
         return builder.ToString();
     }
 
-    
+    public override void Deserialize(XElement element)
+    {
+        Active = element.Element("active")?.Value == "True";
+        SetType((UnitType)Enum.Parse(typeof(UnitType), element.Element("emitterType")?.Value));
+        volume = float.TryParse(element.Element("emitterVolume")?.Value, out float vol) ? vol : 1.0f;
+        scale = float.TryParse(element.Element("emitterScale")?.Value, out float sc) ? sc : 1.0f;
+        SoundEffect.DistanceScale = scale;
+    }
+    public override void RemoveComponent()
+    {
+        ParentObject.RemoveComponent(this);
+    }
     
     
 #if DEBUG   
@@ -209,16 +275,6 @@ public class Emitter : Component
         }
     }
 #endif
-
-    public override void Deserialize(XElement element)
-    {
-        Active = element.Element("active")?.Value == "True";
-        Type = Enum.TryParse(element.Element("type")?.Value, out Type) ? Type : UnitType.Cabinet;
-    }
-    public override void RemoveComponent()
-    {
-        ParentObject.RemoveComponent(this);
-    }
 }
 
 
