@@ -33,7 +33,7 @@
       <meatAward>10</meatAward>
       <heightOffset>2</heightOffset>
       <directionOffset>180</directionOffset>
-      <deathFrame>0</deathFrame>
+      <deathFrame>60</deathFrame>
       <attackFrames>
         <count>0</count>
       </attackFrames>

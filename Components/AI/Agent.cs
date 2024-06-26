@@ -123,7 +123,7 @@ public class Agent : Component
             AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveClip;
         }
         
-        if (AnimatedRenderer != null && Type == AgentType.Civilian)
+        if (AnimatedRenderer != null && (Type == AgentType.Civilian || Type == AgentType.Soldier))
         {
             AnimatedRenderer._skinnedModel.ActiveAnimationClip = ActiveCivilianClip;
         }
@@ -189,12 +189,37 @@ public class Agent : Component
                     FogReveler reveler = ParentObject.GetComponent<FogReveler>();
                     if (reveler != null) reveler.Active = false;
                     ParentObject.Active = false;
+                    _deathCounter = 0;
                 }
             }
             else
             {
-                //Implement for others
-                ParentObject.Active = false;
+                if (Type is AgentType.Civilian or AgentType.Soldier)
+                {
+                    if (_ChangeDeath)
+                    {
+                        _ChangeDeath = false;
+                        AnimatedRenderer._skinnedModel.ChangedClip = true;
+                    }
+                    if (ActiveCivilianClip != 0 || AnimatedRenderer._skinnedModel.AnimationController.Speed > 1.0f)
+                    {
+                        ActiveCivilianClip = 0;
+                        AnimatedRenderer._skinnedModel.ChangedClip = true;
+                        AnimatedRenderer._skinnedModel.AnimationController.LoopEnabled = false;
+                        AnimatedRenderer._skinnedModel.AnimationController.Speed = 1.0f;
+                        _ChangeDeath = true;
+                    }
+                    _deathCounter++;
+                    if (_deathCounter >= DeathFrame)
+                    {
+                        ParentObject.Active = false;
+                        _deathCounter = 0;
+                    }
+                }
+                else
+                {
+                    ParentObject.Active = false;
+                }
             }
             return;
         }
