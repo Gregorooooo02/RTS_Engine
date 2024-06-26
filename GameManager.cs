@@ -19,7 +19,7 @@ public static class GameManager
     public static bool TutorialDone = false;
     
     public static int MissionTutorialStep = 1;
-    public static int MissionTutorialStepMax = 4;
+    public static int MissionTutorialStepMax = 8;
     
     public static int BaseTutorialStep = 1;
     public static int BaseTutorialStepMax = 4;

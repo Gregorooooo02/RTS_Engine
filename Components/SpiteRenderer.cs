@@ -139,6 +139,7 @@ public class SpiteRenderer : Component
         {
             // The tutorial is over, so we deactivate the sprite
             ParentObject.Active = false;
+            Globals.UIActive = false;
         }
         else
         {

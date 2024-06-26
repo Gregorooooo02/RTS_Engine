@@ -162,6 +162,7 @@ public class SceneManager
             Globals.GraphicsDevice.Clear(new Color(0,0,0,255));
             Globals.GraphicsDevice.SetRenderTarget(null);
             GameManager.TutorialDone = true;
+            Globals.UIActive = true;
         }
 
         if (InputManager.Instance.GetAction(GameAction.RESET)?.state == ActionState.RELEASED)
