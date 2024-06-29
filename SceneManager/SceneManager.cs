@@ -186,6 +186,7 @@ public class SceneManager
             GameManager.HealthMultiplier = 1.0f;
             GameManager.UnitsSelectedForMission = 0;
             GameManager.TutorialDone = false;
+            GameManager.Tasks.Clear();
             GameManager.MissionTutorialStep = 1;
             GameManager.BaseTutorialStep = 1;
             GameManager.ClearMissionRewards();
