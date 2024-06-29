@@ -14,7 +14,7 @@ public class Camera : Component
     private float _lerpSpeed = 3.5f;
     private int _previousScrollValue;
     public float FovDegrees = 45.0f;
-    private float _targetFov = 45.0f;
+    public float _targetFov = 45.0f;
     private float _zoomMin = 25.0f;
     private float _zoomMax = 75.0f;
 
@@ -23,7 +23,7 @@ public class Camera : Component
     private const float NearPlane = 0.5f;
     private const float FarPlane = 2000.0f;
 
-    private float _aboveGroundOffset = 40.0f;
+    public float _aboveGroundOffset = 40.0f;
     private float currentHeight = -10f;
     private float _heightLerpSpeed = 6.5f;
     

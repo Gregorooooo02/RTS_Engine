@@ -55,9 +55,15 @@ public class SceneManager
                             Camera cameraComponent = camera.GetComponent<Camera>();
                             cameraComponent.IsWorldCamera = true;
                             camera.Transform.SetLocalPosition(new Vector3(120, 50, 160));
-                            if (Globals.AgentsManager.Units.Count > 0)
+                            /*if (Globals.AgentsManager.Units.Count > 0)
                                 cameraComponent.MoveCameraToPosition(
                                     Globals.AgentsManager.Units[0].ParentObject.Transform.Pos, currentWorld);
+                                    */
+                            cameraComponent.MoveCameraToPosition(
+                                new Vector3(500,0,400), currentWorld);
+                            cameraComponent._aboveGroundOffset = 450.0f;
+                            cameraComponent._targetFov = 75.0f;
+                            
                             Console.WriteLine("Added Camera");
                             if (isTutorial)
                             {
@@ -95,7 +101,7 @@ public class SceneManager
                             Globals.PickingManager.BoxPickingActive = true;
                             Globals.PickingManager.GroundPickingActive = true;
                             Globals.PickingManager.EnemyPickingActive = true;
-                            Globals.FogManager.FogActive = true;
+                            Globals.FogManager.FogActive = false;
                             ChangeScene(_scenes.Count - 1);
                             Globals.AgentsManager.Initialize();
                             Globals.CreatingTutorial = false;
