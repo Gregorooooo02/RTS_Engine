@@ -28,7 +28,7 @@ public class GenerateMap
 
         noiseTexture = transformer.Transform(filter.Filter(perlinNoise));
         
-        SaveTextureData(noiseTexture, "Content/heightmap");
+        //SaveTextureData(noiseTexture, "Content/heightmap");
         // ExtractSubTextures(noiseTexture, "Content/heightmap");
     }
 

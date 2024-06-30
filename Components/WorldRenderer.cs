@@ -439,6 +439,7 @@ public class WorldRenderer : Component
     
     public override void Initialize()
     {
+        GenerateMap.GenerateNoiseTexture();
          ScanHeightDataFromTexture(GenerateMap.noiseTexture);
     }
 
