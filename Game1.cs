@@ -18,11 +18,13 @@ public sealed class Game1 : Game
     private int _shiftHead;
     private double _currentAvg;
     
-    private ImGuiRenderer _imGuiRenderer;
     private readonly Num.Vector3 _position = new(0,0,10);
     private SceneCamera _sceneCamera;
 #endif
-    
+
+    private ImGuiRenderer _imGuiRenderer;
+    private float minFps = float.MaxValue;
+    private float maxFps = float.MinValue;
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SceneManager _sceneManager;
@@ -51,10 +53,10 @@ public sealed class Game1 : Game
         _sceneManager = new SceneManager();
         
 
-#if DEBUG
+//#if DEBUG
         _imGuiRenderer = new ImGuiRenderer(this);
         _imGuiRenderer.RebuildFontAtlas();
-#endif
+//#endif
         
         GenerateMap.GenerateNoiseTexture();
 
@@ -142,6 +144,17 @@ public sealed class Game1 : Game
 #if DEBUG
         _imGuiRenderer.BeforeLayout(gameTime);
         ImGuiLayout();
+        _imGuiRenderer.AfterLayout();
+#else   
+        _imGuiRenderer.BeforeLayout(gameTime);
+        ImGui.Begin("Framerate info");
+        float framerate = ImGui.GetIO().Framerate;
+        minFps = Math.Min(framerate, minFps);
+        maxFps = Math.Max(framerate, maxFps);
+        ImGui.Text(framerate + " FPS");
+        ImGui.Text("Min: " + minFps + " FPS");
+        ImGui.Text("Max: " + maxFps + " FPS");
+        ImGui.End();
         _imGuiRenderer.AfterLayout();
 #endif
         Globals.Renderer.PrepareForNextFrame();
